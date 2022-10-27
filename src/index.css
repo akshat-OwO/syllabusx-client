@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=K2D&family=Khand&display=swap');
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --_size: 1.5rem;
+    --bg: #1F2833;
+    --txt: #FFFFFF;
+    --accent1: #49C5B6;
+    --accent2: #44A29E;
+}
+
+::selection {
+    color: var(--bg);
+    background-color: var(--accent1);
+}
+
+.body {
+    background-image: url('/Sprinkle.svg');
+    font-family: 'K2D', sans-serif;
+}
+
+.nav {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 0.25fr 0.5fr 0.25fr;
+    height: 100vh;
+}
+
+.search {
+    color: var(--accent1);
+    width: 56px;
+    margin: var(--_size) 0 0 var(--_size);
+}
+
+.heading {
+    text-align: center;
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    display: grid;
+    place-content: center;
+    gap: calc(var(--_size) * 1.5);
+}
+
+.heading > h1 {
+    font-size: calc(var(--_size) * 5.5);
+    color: var(--accent1);
+}
+
+.heading > p {
+    font-family: 'Khand', sans-serif;
+    font-size: calc(var(--_size) * 1.2);
+    color: var(--txt);
+    opacity: 0.6;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    color: var(--txt);
+    grid-column: span 3;
+    grid-row: 3;
+}
+
+.btn {
+    padding: calc(var(--_size) * 0.25) calc(var(--_size) + 2rem);
+    font-size: calc(var(--_size) + 2rem);
+    background-color: var(--bg);
+    color: var(--txt);
+    border: 5px solid var(--accent1);
+    cursor: pointer;
+}
