@@ -27,8 +27,8 @@
 .nav {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 0.25fr 0.5fr 0.25fr;
-    height: 100vh;
+    grid-template-rows: 0.1fr 0.25fr 0.1fr;
+    min-height: 100vh;
 }
 
 .search {
@@ -43,17 +43,20 @@
     grid-row: 2 / 3;
     display: grid;
     place-content: center;
+    place-items: center;
     gap: calc(var(--_size) * 1.5);
 }
 
 .heading > h1 {
-    font-size: calc(var(--_size) * 5.5);
+    font-size: calc(var(--_size) * 3.5);
+    letter-spacing: .1em;
     color: var(--accent1);
 }
 
 .heading > p {
     font-family: 'Khand', sans-serif;
-    font-size: calc(var(--_size) * 1.2);
+    font-size: calc(var(--_size) * 0.75);
+    width: 250px;
     color: var(--txt);
     opacity: 0.6;
 }
@@ -65,13 +68,53 @@
     color: var(--txt);
     grid-column: span 3;
     grid-row: 3;
+    margin-top: calc(var(--_size) + 2rem);
 }
 
 .btn {
-    padding: calc(var(--_size) * 0.25) calc(var(--_size) + 2rem);
-    font-size: calc(var(--_size) + 2rem);
-    background-color: var(--bg);
+    /* padding: calc(var(--_size) * 0.2) calc(var(--_size) + 1.75rem); */
+    font-size: calc(var(--_size) * 1.1);
+    background-color: transparent;
     color: var(--txt);
     border: 5px solid var(--accent1);
     cursor: pointer;
+    height: 50px;
+    width: 200px;
+}
+
+.buttons select {
+    appearance: none;
+    outline: 0;
+    overflow: hidden;
+}
+
+.option-wrapper {
+    position: relative;
+}
+
+.options {
+    position: absolute;
+    width: 100%;
+    color: var(--txt);
+    background-color: var(--bg);
+    font-size: calc(var(--_size) * 0.9);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    /* gap: .5rem; */
+    box-shadow: -8px 8px 64px 2px rgba(0, 0, 0, 0.25), 8px 8px 64px 2px rgba(0, 0, 0, 0.25);
+}
+
+.hide {
+    display: none;
+}
+
+.options > p {
+    opacity: .6;
+    cursor: pointer;
+    margin-bottom: .25rem;
+}
+
+.options > p:hover {
+    opacity: 1;
 }

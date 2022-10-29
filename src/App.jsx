@@ -1,8 +1,13 @@
 import { useState } from 'react'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 
+import SemButton from './components/formFields/SemButton';
+import BranchButton from './components/formFields/BranchButton';
+
 function App() {
-  const [count, setCount] = useState(0)
+  const [sem, setSem] = useState('Sem');
+  const [semShow, setSemShow] = useState('Sem');
+  const [branch, setBranch] = useState('Branch');
 
   return (
     <div className="body">
@@ -14,10 +19,18 @@ function App() {
           <h1>i-board</h1>
           <p>This is the best dashboard for students akkad bakkad bambe bo</p>
         </div>
-        <div className="buttons">
-          <button className="btn">Sem</button>
-          <button className="btn">Branch</button>
-        </div>
+        <form className="buttons">
+          <SemButton 
+            sem={sem} 
+            semShow={semShow} 
+            setSem={setSem} 
+            setSemShow={setSemShow} 
+          />
+          <BranchButton 
+            branch={branch}
+            setBranch={setBranch}
+          />
+        </form>
       </div>
     </div>
   )
