@@ -24,6 +24,26 @@
     font-family: 'K2D', sans-serif;
 }
 
+#trailer {
+    height: 20px;
+    width: 20px;
+    background-color: var(--accent2);
+    border-radius: 20px;
+    
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 10000;
+    
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 500ms ease;
+  }
+  
+  .body:hover > #trailer {
+    opacity: 1;
+  }
+
 .nav {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -80,12 +100,6 @@
     cursor: pointer;
     height: 50px;
     width: 200px;
-}
-
-.buttons select {
-    appearance: none;
-    outline: 0;
-    overflow: hidden;
 }
 
 .option-wrapper {
