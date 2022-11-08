@@ -1,4 +1,4 @@
-const BranchButton = ({ branch, setBranch }) => {
+const BranchButton = ({ branch, setBranch, branchShow, setBranchShow }) => {
 
     const toggleBranch = (e) => {
         e.preventDefault();
@@ -8,13 +8,14 @@ const BranchButton = ({ branch, setBranch }) => {
 
     const selectBranch = (e) => {
         setBranch(e.target.dataset.value);
+        setBranchShow(e.target.dataset.value);
         const options = document.querySelector('.branches');
         options.classList.toggle('hide');
     }
 
     return (
         <div className="option-wrapper">
-            <button className='btn' onClick={toggleBranch}>{branch}</button>
+            <button className='btn' onClick={toggleBranch}>{branchShow}</button>
             <div className="options branches hide">
               <p data-value="CSE" onClick={selectBranch}>CSE</p>
               <p data-value="IT" onClick={selectBranch}>IT</p>

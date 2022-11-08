@@ -19,7 +19,7 @@
     background-color: var(--accent1);
 }
 
-.body {
+body {
     background-image: url('/Sprinkle.svg');
     font-family: 'K2D', sans-serif;
 }
@@ -47,8 +47,12 @@
 .nav {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 0.1fr 0.25fr 0.1fr;
+    grid-template-rows: 0fr 0.5fr 0.1fr;
     min-height: 100vh;
+    min-width: 100vw;
+    transition: all 0.8s ease-in-out;
+    position: absolute;
+    top: 0;
 }
 
 .search {
@@ -71,6 +75,7 @@
     font-size: calc(var(--_size) * 3.5);
     letter-spacing: .1em;
     color: var(--accent1);
+    transition: all 0.8s ease-in-out;
 }
 
 .heading > p {
@@ -89,6 +94,7 @@
     grid-column: span 3;
     grid-row: 3;
     margin-top: calc(var(--_size) + 2rem);
+    transition: all 0.8s ease-in-out;
 }
 
 .btn {
