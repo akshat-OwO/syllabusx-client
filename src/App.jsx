@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
+import { CheckIcon, ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 
 import SemButton from './components/formFields/SemButton';
 import BranchButton from './components/formFields/BranchButton';
@@ -9,6 +9,7 @@ function App() {
   const [semShow, setSemShow] = useState('Sem');
   const [branch, setBranch] = useState('');
   const [branchShow, setBranchShow] = useState('Branch');
+  const [data, setData] = useState([]);
 
   const [searching, setSearching] = useState(false);
 
@@ -43,12 +44,25 @@ function App() {
       buttons.style.gap = '25vw';
       heading.firstChild.style.fontSize = 'calc(var(--_size) * 2.5)';
       heading.firstChild.style.paddingLeft = 'var(--_size)';
+      heading.style.alignSelf = 'center';
       heading.firstChild.style.position = 'relative';
-      heading.firstChild.style.left = '37.5vw';
+      heading.firstChild.style.left = '40vw';
       heading.lastChild.style.display = 'none';
       
+      setTimeout(() => {
+        setSearching(true);
+      }, 1000);
     }
   }, [sem, branch]);
+
+  useEffect(() => {
+    const getData = async () => {
+      const response = await fetch(`https://iboard-web-server.cyclic.app/${sem}/${branch}`);
+      const json = await response.json();
+      setData(json);
+    }
+    getData();
+  }, [searching]);
 
   return (
     <div className="body">
@@ -76,6 +90,23 @@ function App() {
           />
         </form>
       </div>
+      {searching ? (
+        <div className="subjects hidden">
+          <div className="sub-header">
+            <h1>Subjects</h1>
+            <p>Better to complete it now then later!</p>
+          </div>
+          <div className="sub-wrapper">
+            {
+              data.length && (
+                data.map(d => (
+                  <div className="sub-title">{d.subject}</div>
+                ))
+              )
+            }
+          </div>
+        </div>
+      ) : <></>}
     </div>
   )
 }

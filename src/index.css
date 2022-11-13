@@ -9,6 +9,7 @@
 :root {
     --_size: 1.5rem;
     --bg: #1F2833;
+    --bg2: #2E3B4B;
     --txt: #FFFFFF;
     --accent1: #49C5B6;
     --accent2: #44A29E;
@@ -137,4 +138,48 @@ body {
 
 .options > p:hover {
     opacity: 1;
+}
+
+.subjects {
+    margin: 6rem auto;
+    padding: var(--_size);
+    color: var(--txt);
+    text-align: center;
+}
+
+.sub-header h1 {
+    text-transform: uppercase;
+    text-decoration: underline;
+    letter-spacing: .2em;
+    line-height: 60px;
+}
+
+.sub-header p {
+    opacity: .6;
+    line-height: 33px;
+}
+
+.sub-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: calc(var(--_size) + 2rem);
+    margin-top: var(--_size);
+    margin-inline: calc(var(--_size) * 8);
+}
+
+.sub-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(var(--_size) * .8);
+    background-color: var(--accent2);
+    padding: calc(var(--_size) * .7) calc(var(--_size) * .4);
+    cursor: pointer;
+    border: 5px solid var(--accent2);
+    transition: all 800ms ease;
+}
+
+.sub-title:hover {
+    background-color: var(--bg);
+    color: var(--accent2);
 }
