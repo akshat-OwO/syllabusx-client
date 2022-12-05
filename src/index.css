@@ -23,6 +23,7 @@
 body {
     background-image: url('/Sprinkle.svg');
     font-family: 'K2D', sans-serif;
+    overflow-x: hidden;
 }
 
 #trailer {
@@ -182,4 +183,66 @@ body {
 .sub-title:hover {
     background-color: var(--bg);
     color: var(--accent2);
+}
+
+.syllabus {
+    margin: 10rem 12.5rem .5rem 12.5rem;
+    padding: var(--_size);
+    color: var(--txt);
+    text-align: center;
+    background-color: var(--bg2);
+    border-radius: 12px;
+    position: relative;
+}
+
+.syll-header h1 {
+    letter-spacing: .1em;
+    line-height: 60px;
+}
+
+.syll-header p {
+    opacity: .6;
+    line-height: 33px;
+}
+
+.syll-tags {
+    display: flex;
+    padding: var(--_size);
+    justify-content: space-between;
+}
+
+.syll-tags h3 {
+    font-size: calc(var(--_size));
+    color: var(--accent1);
+}
+
+.syll-tags span {
+    margin-left: 1em;
+    color: var(--txt);
+}
+
+.back-btn {
+    position: absolute;
+    left: var(--_size);
+    top: var(--_size);
+    width: calc(var(--_size) * 1.25);
+    cursor: pointer;
+}
+
+.syll-theory {
+    color: black;
+}
+
+.unit-head {
+    background-color: var(--txt);
+    display: flex;
+    margin: calc(var(--_size) * .85);
+    opacity: 0.8;
+    padding: calc(var(--_size) * 0.75);
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.drop-icon {
+    width: var(--_size);
 }

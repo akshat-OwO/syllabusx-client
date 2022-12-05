@@ -19,7 +19,7 @@ const useTransform = (sem, branch, setSearching) => {
           heading.firstChild.style.paddingLeft = 'var(--_size)';
           heading.style.alignSelf = 'center';
           heading.firstChild.style.position = 'relative';
-          heading.firstChild.style.left = '40vw';
+          heading.firstChild.style.left = '41vw';
           heading.lastChild.style.display = 'none';
           
           setTimeout(() => {

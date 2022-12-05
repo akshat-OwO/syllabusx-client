@@ -1,4 +1,15 @@
 const Subjects = (props) => {
+
+  const handleShowSubject = (e) => {
+    props.data.map(d => {
+      if (e.target.textContent === d.subject) {
+        props.setShowcase(d);
+        props.setSearching(false);
+        props.setSubjectShow(true);
+      }
+    });
+  }
+
     return (
       <div className="subjects hidden">
       <div className="sub-header">
@@ -9,7 +20,7 @@ const Subjects = (props) => {
         {
           props.data.length && (
             props.data.map(d => (
-              <div className="sub-title" key={d._id}>{d.subject}</div>
+              <div className="sub-title" key={d._id} onClick={handleShowSubject}>{d.subject}</div>
             ))
           )
         }

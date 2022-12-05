@@ -6,6 +6,7 @@ import Nav from './components/Nav';
 import Subjects from './components/Subjects';
 import useTransform from './hooks/useTransform';
 import useData from './hooks/useData';
+import Syllabus from './components/Syllabus';
 
 function App() {
   const [sem, setSem] = useState('');
@@ -14,6 +15,9 @@ function App() {
   const [branchShow, setBranchShow] = useState('Branch');
   const [data, setData] = useState([]);
 
+  const [showcase, setShowcase] = useState({});
+
+  const [subjectShow, setSubjectShow] = useState(false);
   const [searching, setSearching] = useState(false);
 
   // custom hooks
@@ -35,7 +39,20 @@ function App() {
         setBranchShow={setBranchShow}
       />
       {searching ? (
-        <Subjects data={data} />
+        <Subjects
+          data={data}
+          showcase={showcase}
+          setShowcase={setShowcase}
+          setSearching={setSearching}
+          setSubjectShow={setSubjectShow}
+        />
+      ) : <></>}
+      {subjectShow ? (
+        <Syllabus
+          showcase={showcase}
+          setSearching={setSearching}
+          setSubjectShow={setSubjectShow}
+        />
       ) : <></>}
     </div>
   )

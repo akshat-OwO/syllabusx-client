@@ -8,7 +8,7 @@ const useData = (setData, searching, sem, branch) => {
           setData(json);
         }
         getData();
-      }, [searching]);
+      }, [searching, sem, branch]);
     return
 }
  
