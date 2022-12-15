@@ -10,6 +10,7 @@
     --_size: 1.5rem;
     --bg: #1F2833;
     --bg2: #2E3B4B;
+    --bg3: rgba(217, 217, 217, 0.6);
     --txt: #FFFFFF;
     --accent1: #49C5B6;
     --accent2: #44A29E;
@@ -236,7 +237,7 @@ body {
 .unit-head {
     background-color: var(--txt);
     display: flex;
-    margin: calc(var(--_size) * .85);
+    margin: 0 calc(var(--_size) * .85);
     opacity: 0.8;
     padding: calc(var(--_size) * 0.75);
     justify-content: space-between;
@@ -245,4 +246,30 @@ body {
 
 .drop-icon {
     width: var(--_size);
+}
+
+.topics {
+    /* border: 1px solid red; */
+    display: block;
+    position: relative;
+    margin: 0 calc(var(--_size) * 1.8) calc(var(--_size) * .85) calc(var(--_size) * 1.8);
+    padding: calc(var(--_size) * 0.2);
+    text-align: left;
+    /* cursor; */
+    background-color: var(--bg3);
+    color: var(--txt)
+}
+
+.topic-items {
+    display: flex;
+}
+
+.topic-items .bullet {
+    color: var(--bg);
+}
+
+.topic-items li {
+    list-style: none;
+    margin: calc(var(--_size) * 0.1) 0 ;
+    padding: calc(var(--_size) * 0.5) ;
 }
