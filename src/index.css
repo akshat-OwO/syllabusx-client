@@ -56,6 +56,7 @@ body {
     transition: all 0.8s ease-in-out;
     position: absolute;
     top: 0;
+    z-index: 10;
 }
 
 .search {
@@ -187,12 +188,12 @@ body {
 }
 
 .syllabus {
-    margin: 10rem 12.5rem .5rem 12.5rem;
+    margin: 10rem 13.5rem .5rem 13.5rem;
     padding: var(--_size);
     color: var(--txt);
     text-align: center;
     background-color: var(--bg2);
-    border-radius: 12px;
+    border-radius: 0px 12px 12px 12px;
     position: relative;
 }
 
@@ -272,4 +273,47 @@ body {
     list-style: none;
     margin: calc(var(--_size) * 0.1) 0 ;
     padding: calc(var(--_size) * 0.5) ;
+}
+
+.tabs {
+    position: absolute;
+    left: calc(var(--_size) * -6.15);
+    top: calc(var(--_size) * -1);
+    padding: var(--_size);
+}
+
+.tab {
+    padding: calc(var(--_size) * .5) calc(var(--_size));
+    background-color: var(--bg);
+    color: var(--accent2);
+    border-radius: 12px 0px 0px 12px;
+    border: 2px solid var(--accent2);
+    border-right: 0px;
+    font-size: var(--_size);
+    cursor: pointer;
+}
+
+.tab:hover {
+    background-color: var(--accent2);
+    color: var(--bg);
+    transition: all .2s ease-in-out;
+}
+
+.tab-selected {
+    background-color: var(--accent2);
+    color: var(--bg);
+}
+
+.null-data {
+    margin: 0rem 25rem;
+    text-align: center;
+    padding: var(--_size);
+    letter-spacing: .1em;
+    border-radius: 12px;
+    border: 5px solid var(--accent2);
+    color: var(--accent2);
+}
+
+.null-data p {
+    color: var(--txt);
 }

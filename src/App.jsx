@@ -7,6 +7,7 @@ import Subjects from './components/Subjects';
 import useTransform from './hooks/useTransform';
 import useData from './hooks/useData';
 import Syllabus from './components/Syllabus';
+import useNull from './hooks/useNull';
 
 function App() {
   const [sem, setSem] = useState('');
@@ -19,11 +20,13 @@ function App() {
 
   const [subjectShow, setSubjectShow] = useState(false);
   const [searching, setSearching] = useState(false);
+  const [nullData, setNullData] = useState(false);
 
   // custom hooks
   useTrailer();
   useTransform(sem, branch, setSearching);
   useData(setData, searching, sem, branch);
+  useNull(setNullData, data);
 
   return (
     <div className="body">
@@ -41,6 +44,7 @@ function App() {
       {searching ? (
         <Subjects
           data={data}
+          nullData={nullData}
           showcase={showcase}
           setShowcase={setShowcase}
           setSearching={setSearching}
@@ -49,6 +53,7 @@ function App() {
       ) : <></>}
       {subjectShow ? (
         <Syllabus
+          nullData={nullData}
           showcase={showcase}
           setSearching={setSearching}
           setSubjectShow={setSubjectShow}

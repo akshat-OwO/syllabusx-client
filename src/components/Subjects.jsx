@@ -1,3 +1,5 @@
+import NoData from "./NoData";
+
 const Subjects = (props) => {
 
   const handleShowSubject = (e) => {
@@ -16,7 +18,7 @@ const Subjects = (props) => {
         <h1>Subjects</h1>
         <p>Better to complete it now then later!</p>
       </div>
-      <div className="sub-wrapper">
+      {!props.nullData ? (<div className="sub-wrapper">
         {
           props.data.length && (
             props.data.map(d => (
@@ -24,7 +26,7 @@ const Subjects = (props) => {
             ))
           )
         }
-      </div>
+      </div>) : <NoData />}
     </div>
     );
 }
