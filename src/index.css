@@ -231,8 +231,10 @@ body {
     cursor: pointer;
 }
 
-.syll-theory {
+.syll-theory, .syll-lab {
     color: black;
+    display: grid;
+    gap: calc(var(--_size) * .5);
 }
 
 .unit-head {
@@ -249,7 +251,7 @@ body {
     width: var(--_size);
 }
 
-.topics {
+.topics, .steps {
     /* border: 1px solid red; */
     display: block;
     position: relative;
@@ -261,15 +263,16 @@ body {
     color: var(--txt)
 }
 
-.topic-items {
+.topic-items, .step-items {
     display: flex;
+    align-items: center;
 }
 
-.topic-items .bullet {
+.topic-items .bullet, .step-items .bullet {
     color: var(--bg);
 }
 
-.topic-items li {
+.topic-items li, .step-items li {
     list-style: none;
     margin: calc(var(--_size) * 0.1) 0 ;
     padding: calc(var(--_size) * 0.5) ;
@@ -302,6 +305,8 @@ body {
 .tab-selected {
     background-color: var(--accent2);
     color: var(--bg);
+    scale: 1.2;
+    border-radius: 12px;
 }
 
 .null-data {
@@ -316,4 +321,19 @@ body {
 
 .null-data p {
     color: var(--txt);
+}
+
+.lab-head {
+    background-color: var(--txt);
+    display: flex;
+    margin: 0 calc(var(--_size) * .85);
+    opacity: 0.8;
+    padding: calc(var(--_size) * 0.75);
+    justify-content: space-between;
+    cursor: pointer;
+    text-align: left;
+}
+
+.lab-heads h4 span {
+    color: var(--bg);
 }
