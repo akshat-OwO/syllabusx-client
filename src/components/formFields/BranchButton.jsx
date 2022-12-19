@@ -14,7 +14,7 @@ const BranchButton = ({ branch, setBranch, branchShow, setBranchShow }) => {
     }
 
     return (
-        <div className="option-wrapper">
+        <div className="option-wrapper branch-btn" id="branch-btn">
             <button className='btn' onClick={toggleBranch}>{branchShow}</button>
             <div className="options branches hide">
               <p data-value="CSE" onClick={selectBranch}>CSE</p>
