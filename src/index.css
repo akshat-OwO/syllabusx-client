@@ -391,6 +391,9 @@ body {
 }
 
 @media (width <= 900px) {
+    #trailer {
+        display: none;
+    }
     .heading > h1 {
         font-size: calc(var(--_size) * 1.75);
     }
