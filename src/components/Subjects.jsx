@@ -16,7 +16,7 @@ const Subjects = (props) => {
       <div className="subjects hidden">
       <div className="sub-header">
         <h1>Subjects</h1>
-        <p>Better to complete it now then later!</p>
+        <p>Better to complete it now than later!</p>
       </div>
       {!props.nullData ? (<div className="sub-wrapper">
         {
