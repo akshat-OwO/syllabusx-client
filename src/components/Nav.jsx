@@ -12,8 +12,8 @@ const Nav = (props) => {
             setSemShow={props.setSemShow} 
           />
           <div className="heading">
-            <h1>i-board</h1>
-            <h2>This is the best dashboard for students akkad bakkad bambe bo</h2>
+            <h1>Syllabus-X</h1>
+            <h2>Stay organized and informed about the course material and expectations</h2>
           </div>
           <BranchButton
             branch={props.branch}
