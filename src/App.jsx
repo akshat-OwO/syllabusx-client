@@ -51,7 +51,7 @@ function App() {
           setSubjectShow={setSubjectShow}
         />
       ) : <></>}
-      {subjectShow ? (
+      {(!searching && subjectShow) ? (
         <Syllabus
           nullData={nullData}
           showcase={showcase}
