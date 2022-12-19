@@ -4,13 +4,6 @@ import SemButton from "./formFields/SemButton";
 const Nav = (props) => {
     return (
         <div className="nav">
-        {/* <div className="search">
-          <MagnifyingGlassIcon className='h-24 w-24' />
-        </div> */}
-        <div className="heading">
-          <h1>i-board</h1>
-          <p>This is the best dashboard for students akkad bakkad bambe bo</p>
-        </div>
         <form className="buttons">
           <SemButton
             sem={props.sem} 
@@ -18,6 +11,10 @@ const Nav = (props) => {
             setSem={props.setSem} 
             setSemShow={props.setSemShow} 
           />
+          <div className="heading">
+            <h1>i-board</h1>
+            <h2>This is the best dashboard for students akkad bakkad bambe bo</h2>
+          </div>
           <BranchButton
             branch={props.branch}
             setBranch={props.setBranch}
