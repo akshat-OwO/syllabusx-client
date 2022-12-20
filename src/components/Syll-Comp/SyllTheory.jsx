@@ -1,4 +1,9 @@
 import { ChevronDownIcon, ChevronUpIcon, StopCircleIcon } from "@heroicons/react/24/solid";
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import NoData from "../NoData";
 
 const SyllTheory = ({
@@ -10,7 +15,7 @@ const SyllTheory = ({
     return (
         <div>
             {currentTab === 'Theory' && (data.theory.length > 0) ? (data.theory && (<div className="syll-theory">
-                    {
+                    {/* {
                         data.theory.map(t => (
                             <div key={t.unit}>
                                 <div className="unit-head" key={t.unit} onClick={() => dropdown(t.unit)}>
@@ -32,6 +37,33 @@ const SyllTheory = ({
                                     </div>
                                 )}
                             </div>
+                        ))
+                    } */}
+                    {
+                        data.theory.map(t => (
+                            <Accordion key={t.unit} sx={{color: '#FFFFFF', opacity: '0.8'}} TransitionProps={{ unmountOnExit: true }}>
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel1a-content"
+                                id="panel1a-header"
+                            >
+                            <Typography sx={{color: 'black', fontFamily: 'K2D', fontSize: '1.25rem'}} component={'span'}><h3>Unit - {t.unit}</h3></Typography>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <Typography sx={{color: 'black', fontFamily: 'K2D'}} component={'span'}>
+                                <div className="topics">
+                                        {
+                                            t.topics.map(p => (
+                                                <div className="topic-items" key={p}>
+                                                    {/* <StopCircleIcon className="drop-icon bullet"/> */}
+                                                    <h4>{p}</h4>
+                                                </div>
+                                            ))
+                                        }
+                                    </div>
+                                </Typography>
+                            </AccordionDetails>
+                            </Accordion>
                         ))
                     }
                 </div>)) : (currentTab === 'Theory' && (<NoData />))}

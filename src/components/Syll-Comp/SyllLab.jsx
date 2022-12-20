@@ -1,4 +1,9 @@
 import { ChevronDownIcon, ChevronUpIcon, StopCircleIcon } from "@heroicons/react/24/solid";
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import NoData from "../NoData";
 
 const SyllLab = ({
@@ -10,7 +15,7 @@ const SyllLab = ({
     return (
         <div>
             {currentTab === 'Lab' && (data.lab.length > 0) ? (data.lab && (<div className="syll-lab">
-                {
+                {/* {
                     data.lab.map(l => (
                         <div key={l.experiment}>
                             <div className="lab-head" key={l.experiment} onClick={() => dropdown(l.experiment)}>
@@ -35,6 +40,35 @@ const SyllLab = ({
                                 </div>
                             )}
                         </div>
+                    ))
+                } */}
+                {
+                    data.lab.map(l => (
+                        <Accordion key={l.experiment} sx={{color: '#FFFFFF', opacity: '0.8'}} TransitionProps={{ unmountOnExit: true }}>
+                            <AccordionSummary
+                            expandIcon={l.aim.steps.length > 0 && (<ExpandMoreIcon />)}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                            >
+                            <Typography sx={{color: 'black', fontFamily: 'K2D', fontSize: '1.25rem', textAlign: 'left'}} component={'span'}>
+                                <h3>Experiment - {l.experiment}</h3>
+                                <p><span>Objective</span> - {l.aim.objective}</p>
+                            </Typography>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                            <Typography sx={{color: 'black', fontFamily: 'K2D'}} component={'span'}>
+                                <div className="topics">
+                                    {
+                                        l.aim.steps.map(s => (
+                                            <div className="topic-items" key={s}>
+                                                <h4>{s}</h4>
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+                            </Typography>
+                            </AccordionDetails>
+                        </Accordion>
                     ))
                 }
             </div>)): (currentTab === 'Lab' && (<NoData />))}
