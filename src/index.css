@@ -493,7 +493,7 @@ body {
         letter-spacing: .5em;
     }
     .syllabus {
-        margin: 12rem 2rem 0.5rem 2rem;
+        margin: 12rem 0rem 0.5rem 0rem;
     }
     .syll-tags {
         justify-content: center;
@@ -506,9 +506,14 @@ body {
         font-size: calc(var(--_size));
     }
     .tabs {
-        top: calc(var(--_size) * -3.05);
+        position: static;
     }
     .tab {
         font-size: calc(var(--_size) * .75);
+        border-radius: 12px;
+        border-bottom: 2px solid var(--accent1);
+    }
+    .tab.tab-selected {
+        scale: 1.1;
     }
 }
