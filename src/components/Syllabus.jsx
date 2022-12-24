@@ -1,13 +1,18 @@
 import { useState } from "react";
+import useDrive from "../hooks/useDrive";
 import SyllHead from "./Syll-Comp/SyllHead";
 import SyllLab from "./Syll-Comp/SyllLab";
+import SyllNote from "./Syll-Comp/SyllNote";
 import SyllTheory from "./Syll-Comp/SyllTheory";
 
 const Syllabus = (props) => {
     const [down, setDown] = useState(0)
+    const [drive, setDrive] = useState([]);
     const [currentTab, setCurrentTab] = useState('Theory');
 
     const data = props.showcase;
+    let query = data.camel;
+    useDrive(query, currentTab, setDrive);
 
     const goBack = () => {
         props.setSearching(true);
@@ -56,6 +61,13 @@ const Syllabus = (props) => {
                 down={down}
             />
             
+            <SyllNote
+                data={data}
+                drive={drive}
+                dropdown={dropdown}
+                currentTab={currentTab}
+                down={down}
+            />
         </div>
     );
 }
