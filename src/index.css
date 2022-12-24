@@ -373,6 +373,35 @@ body {
     color: var(--bg);
 }
 
+.syll-notes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: calc(var(--_size) + 2rem);
+}
+
+.note-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(var(--_size) * .8);
+    background-color: var(--accent2);
+    padding: calc(var(--_size) * .7) calc(var(--_size) * .4);
+    cursor: pointer;
+    border: 5px solid var(--accent2);
+    transition: all 800ms ease;
+}
+
+.note-title:hover {
+    background-color: var(--bg);
+    color: var(--accent2);
+}
+
+.note-title a {
+    text-align: center;
+    text-decoration: none;
+    color: white;
+}
+
 @media (width <= 1500px) {
     .heading > h1 {
         font-size: calc(var(--_size) * 2.9);
@@ -518,6 +547,9 @@ body {
     }
     .syll-header h1{
         font-size: calc(var(--_size));
+    }
+    .syll-notes {
+        grid-template-columns: repeat(1, 1fr);
     }
     .tabs {
         position: static;
