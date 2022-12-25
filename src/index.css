@@ -354,6 +354,15 @@ body {
     color: var(--accent2);
 }
 
+.load-data {
+    text-align: center;
+    padding: var(--_size);
+    letter-spacing: .1em;
+    border-radius: 12px;
+    border: 5px solid var(--accent2);
+    color: var(--accent2);
+}
+
 .null-data p {
     color: var(--txt);
 }
