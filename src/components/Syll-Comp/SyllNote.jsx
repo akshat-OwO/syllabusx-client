@@ -4,9 +4,7 @@ import NoData from "../NoData";
 const SyllNote = ({
     currentTab,
     data,
-    drive,
-    dropdown,
-    down
+    drive
 }) => {
     return (
         <div>

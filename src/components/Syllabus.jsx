@@ -6,7 +6,6 @@ import SyllNote from "./Syll-Comp/SyllNote";
 import SyllTheory from "./Syll-Comp/SyllTheory";
 
 const Syllabus = (props) => {
-    const [down, setDown] = useState(0)
     const [drive, setDrive] = useState([]);
     const [currentTab, setCurrentTab] = useState('Theory');
 
@@ -17,25 +16,10 @@ const Syllabus = (props) => {
     const goBack = () => {
         props.setSearching(true);
         props.setSubjectShow(false);
-        setDown(0);
-        window.clickedUnit = null;
-    }
-
-    function dropdown(clickedUnit){
-        if (down == 0) {
-            window.clickedUnit = clickedUnit
-            setDown(1);
-        }
-        else {
-            window.clickedUnit = clickedUnit
-            setDown(0);
-        }
     }
 
     const changeTab = (e) => {
-        setCurrentTab(e.target.innerHTML);
-        setDown(0);
-        window.clickedUnit = null;
+        setCurrentTab(e.target.dataset.tab);
     }
 
     return (
@@ -49,24 +33,18 @@ const Syllabus = (props) => {
             
             <SyllTheory 
                 data={data}
-                dropdown={dropdown}
                 currentTab={currentTab}
-                down={down}
             />
 
             <SyllLab 
                 data={data}
-                dropdown={dropdown}
                 currentTab={currentTab}
-                down={down}
             />
             
             <SyllNote
                 data={data}
                 drive={drive}
-                dropdown={dropdown}
                 currentTab={currentTab}
-                down={down}
             />
         </div>
     );

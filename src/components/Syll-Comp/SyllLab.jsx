@@ -8,9 +8,7 @@ import NoData from "../NoData";
 
 const SyllLab = ({
     currentTab,
-    data,
-    dropdown,
-    down
+    data
 }) => {
     return (
         <div>
@@ -44,13 +42,13 @@ const SyllLab = ({
                 } */}
                 {
                     data.lab.map(l => (
-                        <Accordion key={l.experiment} sx={{color: '#FFFFFF', opacity: '0.8'}} TransitionProps={{ unmountOnExit: true }}>
+                        <Accordion key={l.experiment} sx={{backgroundColor: '#1F2833', border: '2px solid #44A29E', margin: '0 1.5rem'}} TransitionProps={{ unmountOnExit: true }}>
                             <AccordionSummary
-                            expandIcon={l.aim.steps.length > 0 && (<ExpandMoreIcon />)}
+                            expandIcon={l.aim.steps.length > 0 && (<ExpandMoreIcon className="icon expand-icon" />)}
                             aria-controls="panel1a-content"
                             id="panel1a-header"
                             >
-                            <Typography sx={{color: 'black', fontFamily: 'K2D', fontSize: '1.25rem', textAlign: 'left'}} component={'span'}>
+                            <Typography sx={{color: 'white', fontFamily: 'K2D', fontSize: '1.25rem'}} component={'span'}>
                                 <h3>Experiment - {l.experiment}</h3>
                                 <p><span>Objective</span> - {l.aim.objective}</p>
                             </Typography>

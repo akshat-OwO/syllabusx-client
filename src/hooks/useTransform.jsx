@@ -8,7 +8,7 @@ const useTransform = (sem, branch, setSearching) => {
           const optionWrappers = document.querySelectorAll('.option-wrapper');
           const footer = document.querySelector('.footer');
           const feedbackForm = document.querySelector('.feedback-form');
-          
+          const body = document.querySelector('.body');
           heading.classList.add('disappear');
           footer.classList.add('disappear');
           feedbackForm.classList.add('disappear');
@@ -20,6 +20,7 @@ const useTransform = (sem, branch, setSearching) => {
             optionWrappers.forEach((option) => {
               option.style.gridRow = '2';
             });
+            body.style.backgroundImage = 'none';
           }, 800);
           
           setTimeout(() => {
