@@ -15,7 +15,7 @@ const SemButton = ({ sem, semShow, setSem, setSemShow }) => {
     
     return (
         <div className="option-wrapper sem-btn" id="sem-btn">
-            <button className='btn' onClick={toggleSem}>{semShow}</button>
+            <button className='btn' tabIndex={1} onClick={toggleSem}>{semShow}</button>
             <div className="options semesters hide">
               <p data-show="1st" data-value="firstsemesters" onClick={selectSem}>1st</p>
               <p data-show="2nd" data-value="secondsemesters" onClick={selectSem}>2nd</p>

@@ -54,6 +54,7 @@
 .heading {
     grid-column: span 2;
     grid-row: 4;
+    transition: opacity 800ms ease-in-out;
 }
 
 .heading h1 {
@@ -104,10 +105,12 @@
     cursor: pointer;
     height: 44px;
     width: 154px;
+    box-shadow: inset -5px -5px 5px 5px rgba(68, 162, 158, 0.5), inset 5px 5px 5px 5px rgba(68, 162, 158, 0.5);
 }
 
 .option-wrapper {
     position: relative;
+    transition: all 800ms ease-in-out;
     grid-row: 5;
 }
 
@@ -127,10 +130,6 @@
     z-index: 20;
     /* gap: .5rem; */
     box-shadow: -8px 8px 64px 2px rgba(0, 0, 0, 0.25), 8px 8px 64px 2px rgba(0, 0, 0, 0.25);
-}
-
-.hide {
-    display: none;
 }
 
 .options > p {
@@ -200,4 +199,65 @@
 .background {
     width: 300px;
     height: 10vh;
+}
+
+/* transforming */
+.disappear {
+    opacity: 0;
+}
+
+.hide {
+    display: none;
+}
+
+/* subjects */
+.subjects {
+    margin: var(--_size) auto;
+}
+
+.sub-header h1 {
+    font-family: 'K2D';
+    font-weight: 700;
+    font-size: calc(var(--_size) + 1.25rem);
+    color: var(--txt);
+    text-align: center;
+    line-height: 57px;
+    letter-spacing: 0.1em;
+    text-shadow: 0px 4px 0px #000000;
+}
+
+.sub-wrapper {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: calc(var(--_size) * .65);
+    margin: var(--_size) auto;
+}
+
+.sub-title {
+    font-family: 'Nunito Sans';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 400;
+    font-size: calc(var(--_size) - .25rem);
+    line-height: 27px;
+    letter-spacing: 0.085em;
+    background-color: var(--accent);
+    text-align: center;
+    border-radius: calc(var(--_radius) * 5);
+    padding: calc(var(--_size) * .7);
+    margin: 0 var(--_size);
+    color: var(--txt);
+    cursor: pointer;
+    box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+    transition: box-shadow 500ms ease-in-out;
+}
+
+.sub-title:focus {
+    outline: none;
+}
+
+.sub-title:hover, .sub-title:focus-visible {
+    box-shadow: 0 0 0 var(--accent), 0 0 0 0.2em var(--bg),
+    0 0 0 0.4em var(--accent);
 }
