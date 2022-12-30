@@ -1,0 +1,203 @@
+@import url('https://fonts.googleapis.com/css2?family=K2D&family=Khand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap');
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: var(--bg);
+}
+
+:root {
+    --_size: 1.5rem;
+    --_hue: 177;
+    --_radius: .2em;
+
+    --bg: hsl(calc(var(--_hue) + 36) 24% 16%);
+    --txt: hsl(var(--_hue) 30% 88%);
+    --accent: hsl(var(--_hue) 41% 45%);
+    --accent1: hsl(calc(var(--_hue) - 4) 52% 53%);
+    --muted: hsl(var(--_hue) 0% 60%);
+}
+
+/* body */
+.body {
+    background-color: var(--bg);
+}
+
+/* popup-heading */
+.pop-header {
+    background-color: hsl(212, 25%, 10%);
+    color: #FFFFFF;
+    text-align: center;
+    padding: var(--_size);
+    font-size: calc(var(--_size) - 5);
+    font-weight: 700;
+    font-family: 'Nunito Sans';
+    line-height: 20px;
+    letter-spacing: 0.06em;
+}
+
+.pop-header p {
+    background: none;
+}
+
+/* navbar */
+.nav {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    place-items: center;
+    gap: var(--_size);
+}
+
+/* nav heading */
+.heading {
+    grid-column: span 2;
+    grid-row: 4;
+}
+
+.heading h1 {
+    font-family: 'K2D';
+    font-weight: 800;
+    font-size: calc(var(--_size) + 2rem);
+    line-height: 74px;
+    letter-spacing: 0.1em;
+    text-align: center;
+    color: var(--accent);
+    text-shadow: -5px 0px 2px #131920;
+    position: relative;
+}
+
+.heading .underline {
+    border-bottom: 3px solid var(--muted);
+    position: absolute;
+    width: 274px;
+    left: 60px;
+    bottom: 0;
+}
+
+.heading p {
+    font-family: 'Nunito Sans';
+    font-weight: 400;
+    font-size: calc(var(--_size) - 5);
+    line-height: 20px;
+    text-align: center;
+    color: var(--txt);
+    padding: var(--_size);
+    margin: var(--_size);
+    border-radius: calc(var(--_radius) * 5);
+    background-color: var(--accent);
+}
+
+/* nav buttons & options */
+.btn {
+    font-size: calc(var(--_size) - .25rem);
+    text-transform: uppercase;
+    font-family: 'Nunito Sans';
+    background-color: var(--bg);
+    color: var(--txt);
+    border: 2px solid var(--accent1);
+    font-weight: 700;
+    line-height: 27px;
+    text-align: center;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    height: 44px;
+    width: 154px;
+}
+
+.option-wrapper {
+    position: relative;
+    grid-row: 5;
+}
+
+.options {
+    position: absolute;
+    font-family: 'Nunito Sans';
+    width: 100%;
+    color: var(--txt);
+    background-color: var(--bg);
+    font-size: calc(var(--_size) - .25rem);
+    font-weight: 400;
+    line-height: 27px;
+    letter-spacing: 0.025em;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    z-index: 20;
+    /* gap: .5rem; */
+    box-shadow: -8px 8px 64px 2px rgba(0, 0, 0, 0.25), 8px 8px 64px 2px rgba(0, 0, 0, 0.25);
+}
+
+.hide {
+    display: none;
+}
+
+.options > p {
+    opacity: .6;
+    cursor: pointer;
+    margin-bottom: .25rem;
+}
+
+.options > p:hover {
+    opacity: 1;
+}
+
+/* feedback form */
+.feedback-form {
+    grid-column: span 2;
+    grid-row: 10;
+    cursor: pointer;
+}
+
+.feedback-form a {
+    font-family: 'Nunito Sans';
+    background-color: var(--bg);
+    border-radius: calc(var(--_radius) * 5);
+    font-weight: 700;
+    font-size: calc(var(--_size) - .25rem);
+    line-height: 27px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--muted);
+    display: flex;
+    padding: calc(var(--_size) * .7);
+    gap: calc(var(--_size) * .4);
+    box-shadow: -4px -4px 10px rgba(0, 0, 0, 0.25), 4px 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.icon {
+    width: var(--_size);
+    height: var(--_size);
+}
+
+/* footer */
+.footer {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    font-family: 'K2D';
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.footer p {
+    display: flex;
+    color: var(--txt);
+    gap: 10px;
+}
+
+.footer a {
+    text-decoration: none;
+    color: var(--txt);
+}
+
+.footer a:hover {
+    color: var(--accent);
+}
+
+.background {
+    width: 300px;
+    height: 10vh;
+}

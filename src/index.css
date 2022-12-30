@@ -27,7 +27,7 @@ body {
     overflow-x: hidden;
 }
 
-#trailer {
+/* #trailer {
     height: 20px;
     width: 20px;
     background-color: var(--accent2);
@@ -45,7 +45,7 @@ body {
   
   .body:hover > #trailer {
     opacity: 1;
-  }
+  } */
 
 .buttons {
     display: grid;
