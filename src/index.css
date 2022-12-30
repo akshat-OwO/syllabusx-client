@@ -111,7 +111,7 @@
     cursor: pointer;
     height: 44px;
     width: 154px;
-    box-shadow: inset -5px -5px 5px 5px rgba(68, 162, 158, 0.5), inset 5px 5px 5px 5px rgba(68, 162, 158, 0.5);
+    box-shadow: inset 0px 0px 10px 4px rgba(68, 162, 158, 0.5);
 }
 
 .option-wrapper {
@@ -189,7 +189,9 @@
 
 .footer p {
     display: flex;
+    font-style: bold;
     color: var(--txt);
+    padding: calc(var(--_size) * .5);
     gap: 10px;
 }
 

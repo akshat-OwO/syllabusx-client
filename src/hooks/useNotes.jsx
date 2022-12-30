@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 
-const useDrive = (query, currentTab, setDrive) => {
+const useNotes = (query, currentTab, setDrive) => {
     useEffect(() => {
         if (currentTab === 'Notes') {
             const getDrive = async () => {
-                const response = await fetch(`https://syllabusx-drive.cyclic.app/${query}`);
+                const response = await fetch(`https://syllabusx-drive.cyclic.app/notes/${query}`);
                 const json = await response.json();
                 setDrive(json);
             }
@@ -14,4 +14,4 @@ const useDrive = (query, currentTab, setDrive) => {
     return;
 }
  
-export default useDrive;
+export default useNotes;

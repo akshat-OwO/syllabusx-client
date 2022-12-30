@@ -41,7 +41,7 @@ const SyllHead = ({
                     <div className="tag-title">
                         <h3>Theory Code</h3>
                         <h3>Theory Credits</h3>
-                        <h3>Lab Cdoe</h3>
+                        <h3>Lab Code</h3>
                         <h3>Lab Credits</h3>
                     </div>
                     <div className="tags">
