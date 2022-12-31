@@ -1,11 +1,7 @@
+/* mobile S */
 @media (width >= 320px) {
     :root {
         --_size: .85rem;
-    }
-    .heading .underline {
-        left: 0;
-        right: 0;
-        margin: 0 auto;
     }
     .btn {
         width: 130px;
@@ -46,5 +42,53 @@
     .syllabus .syll-theory div,
     .syllabus .syll-lab div {
         font-size: calc(var(--_size) - .025rem);
+    }
+}
+
+/* mobile M */
+@media (width >= 375px) {
+    :root {
+        --_size: 1rem;
+    }
+    .btn {
+        width: 145px;
+    }
+}
+
+/* mobile L */
+@media (width >= 425px) {
+    :root {
+        --_size: 1.25rem;
+    }
+    .btn {
+        width: 150px;
+        font-size: calc(var(--_size) * .8);
+    }
+    .options {
+        font-size: calc(var(--_size) * .8);
+    }
+    .feedback-form a {
+        font-size: calc(var(--_size) * .8);
+    }
+    .nav {
+        gap: calc(var(--_size) * .5);
+    }
+    .sub-title, .note-title, .pyq-title, .book-title, .practical-title {
+        font-size: calc(var(--_size) * .8);
+    }
+    .syll-header h1 {
+        font-size: calc(var(--_size) * 1.25);
+    }
+    .syll-tags h3 {
+        font-size: calc(var(--_size) * .8);
+    }
+    .syllabus .syll-theory div span h3,
+    .syllabus .syll-lab div span h3,
+    .syllabus .syll-lab div span p {
+        font-size: calc(var(--_size) + .025rem);
+    }
+    .syllabus .syll-theory div,
+    .syllabus .syll-lab div {
+        font-size: calc(var(--_size) * .8);
     }
 }
