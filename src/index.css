@@ -22,8 +22,8 @@
 /* body */
 .body {
     background-image: url('./wave.svg');
+    background-size: contain;
     background-position-y: bottom;
-    background-position-x: 50%;
     background-color: var(--bg);
     background-repeat: no-repeat;
     min-height: 100vh;
@@ -234,25 +234,22 @@
     text-shadow: 0px 4px 0px #000000;
 }
 
-.sub-wrapper, .syll-notes {
+.sub-wrapper, .syll-notes, .syll-pyqs, .syll-books, .syll-practicals {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     gap: calc(var(--_size) * .65);
     margin: var(--_size) auto;
 }
 
-.note-title a {
-    text-decoration: none;
-    color: var(--txt);
-}
-
-.sub-title, .note-title {
+.sub-title, .note-title, .pyq-title, .book-title, .practical-title {
     font-family: 'Nunito Sans';
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 400;
     font-size: calc(var(--_size) - .25rem);
+    text-decoration: none;
+    color: var(--txt);
     line-height: 27px;
     letter-spacing: 0.085em;
     background-color: var(--accent);
@@ -293,6 +290,9 @@
     color: var(--muted);
     cursor: pointer;
     padding: calc(var(--_size) * .2);
+    background-color: var(--bg);
+    outline: none;
+    border: none;
 }
 
 .tab-selected {

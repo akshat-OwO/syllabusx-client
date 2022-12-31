@@ -15,24 +15,24 @@ const SyllHead = ({
             
                 <div className="tabs">
                     <ChevronLeftIcon className="icon back-btn" onClick={goBack} />
-                    <div className={`tab ${currentTab==='Theory' ? 'tab-selected' : ''}`} onClick={changeTab} data-tab='Theory'>
+                    <button className={`tab ${currentTab==='Theory' ? 'tab-selected' : ''}`} onClick={changeTab} data-tab='Theory'>
                         <BookOutlinedIcon data-tab='Theory' className="icon" /> <span data-tab='Theory'>Theory</span>
-                    </div>
-                    <div className={`tab ${currentTab==='Lab' ? 'tab-selected' : ''}`} onClick={changeTab} data-tab='Lab'>
+                    </button>
+                    <button className={`tab ${currentTab==='Lab' ? 'tab-selected' : ''}`} onClick={changeTab} data-tab='Lab'>
                         <BeakerIcon data-tab='Lab' className="icon" /> <span data-tab='Lab'>Lab</span>
-                    </div>
-                    <div className={`tab ${currentTab==='Notes' ? 'tab-selected' : ''}`} onClick={changeTab} data-tab='Notes'>
+                    </button>
+                    <button className={`tab ${currentTab==='Notes' ? 'tab-selected' : ''}`} onClick={changeTab} data-tab='Notes'>
                         <PencilSquareIcon data-tab='Notes' className="icon" /> <span data-tab='Notes'>Notes</span>
-                    </div>
-                    <div className={`tab ${currentTab==='PYQ' ? 'tab-selected' : ''}`} onClick={changeTab} data-tab='PYQ'>
+                    </button>
+                    <button className={`tab ${currentTab==='PYQ' ? 'tab-selected' : ''}`} onClick={changeTab} data-tab='PYQ'>
                         <QuestionMarkOutlinedIcon data-tab='PYQ' className="icon" /> <span data-tab='PYQ'>PYQ</span>
-                    </div>
-                    <div className={`tab ${currentTab==='Books' ? 'tab-selected' : ''}`} onClick={changeTab} data-tab='Books'>
+                    </button>
+                    <button className={`tab ${currentTab==='Books' ? 'tab-selected' : ''}`} onClick={changeTab} data-tab='Books'>
                     <LibraryBooksOutlinedIcon className='icon' data-tab='Books' /> <span data-tab='Books'>Books</span>
-                    </div>
-                    <div className={`tab ${currentTab==='PracticalFiles' ? 'tab-selected' : ''}`} onClick={changeTab} data-tab='PracticalFiles'>
-                        <FileCopyOutlinedIcon data-tab='PracticalFiles' className='icon' /> <span data-tab='PracticalFiles'>Practicals</span>
-                    </div>
+                    </button>
+                    <button className={`tab ${currentTab==='PracticalFile' ? 'tab-selected' : ''}`} onClick={changeTab} data-tab='PracticalFile'>
+                        <FileCopyOutlinedIcon data-tab='PracticalFile' className='icon' /> <span data-tab='PracticalFile'>Practicals</span>
+                    </button>
                 </div>
                 <div className="syll-header">
                     <h1>{data.subject}</h1>
