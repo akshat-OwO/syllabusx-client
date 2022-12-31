@@ -48,7 +48,7 @@ const SyllLab = ({
                             aria-controls="panel1a-content"
                             id="panel1a-header"
                             >
-                            <Typography sx={{color: 'white', fontFamily: 'K2D', fontSize: '1.25rem'}} component={'span'}>
+                            <Typography sx={{color: '#d7eae9', fontFamily: 'K2D', fontSize: '1.25rem'}} component={'span'}>
                                 <h3>Experiment - {l.experiment}</h3>
                                 <p><span>Objective</span> - {l.aim.objective}</p>
                             </Typography>

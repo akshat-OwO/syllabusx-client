@@ -45,7 +45,7 @@ const SyllTheory = ({
                                 aria-controls="panel1a-content"
                                 id="panel1a-header"
                             >
-                            <Typography sx={{color: 'white', fontFamily: 'K2D', fontSize: '1.25rem'}} component={'span'}><h3>Unit - {t.unit}</h3></Typography>
+                            <Typography sx={{color: '#d7eae9', fontFamily: 'K2D', fontSize: '1.25rem'}} component={'span'}><h3>Unit - {t.unit}</h3></Typography>
                             </AccordionSummary>
                             <AccordionDetails>
                                 <Typography sx={{color: 'black', fontFamily: 'K2D'}} component={'span'}>

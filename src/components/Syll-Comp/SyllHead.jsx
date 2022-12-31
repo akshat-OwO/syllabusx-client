@@ -50,10 +50,10 @@ const SyllHead = ({
                         <h3>{`${(data.labpapercode) ? data.labpapercode : 'N/A'}`}</h3>
                         <h3>{`${(data.labcredits) ? data.labcredits : 'N/A'}`}</h3>
                     </div>
-                    {/* <h3>Theory Code <span>{`${(data.theorypapercode) ? data.theorypapercode : 'N/A'}`}</span></h3>
-                    <h3>Theory Credits <span>{`${(data.theorycredits) ? data.theorycredits : 'N/A'}`}</span></h3>
-                    <h3>Lab Code <span>{`${(data.labpapercode) ? data.labpapercode : 'N/A'}`}</span></h3>
-                    <h3>Lab Credits <span>{`${(data.labcredits) ? data.labcredits : 'N/A'}`}</span></h3> */}
+                    <h3 className="laptop-only">Theory Code <span>{`${(data.theorypapercode) ? data.theorypapercode : 'N/A'}`}</span></h3>
+                    <h3 className="laptop-only">Theory Credits <span>{`${(data.theorycredits) ? data.theorycredits : 'N/A'}`}</span></h3>
+                    <h3 className="laptop-only">Lab Code <span>{`${(data.labpapercode) ? data.labpapercode : 'N/A'}`}</span></h3>
+                    <h3 className="laptop-only">Lab Credits <span>{`${(data.labcredits) ? data.labcredits : 'N/A'}`}</span></h3>
                 </div>
         </div>
     );

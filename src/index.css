@@ -19,6 +19,26 @@
     --muted: hsl(var(--_hue) 0% 60%);
 }
 
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #1F2833; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #49C5B6; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #44A29E; 
+  }
+
 /* body */
 .body {
     background-image: url('/wave.svg');
@@ -54,13 +74,18 @@
     grid-template-columns: repeat(2, 1fr);
     place-items: center;
     gap: var(--_size);
+    transition: all 800ms ease-in-out;
+}
+
+.laptop-only {
+    display: none;
 }
 
 /* nav heading */
 .heading {
     grid-column: span 2;
     grid-row: 2;
-    transition: opacity 800ms ease-in-out;
+    transition: all 800ms ease-in-out;
 }
 
 .heading h1 {
@@ -88,7 +113,7 @@
 .heading p {
     font-family: 'Nunito Sans';
     font-weight: 400;
-    font-size: calc(var(--_size) - .5rem);
+    font-size: calc(var(--_size) - 5);
     line-height: 20px;
     text-align: center;
     color: var(--txt);
@@ -96,6 +121,26 @@
     margin: var(--_size);
     border-radius: calc(var(--_radius) * 5);
     background-color: var(--accent);
+}
+
+.info h4{
+    font-family: 'Nunito Sans';
+    font-weight: 700;
+    font-size: calc(var(--_size) + 1rem);
+    line-height: 55px;
+    letter-spacing: 0.1em;
+    padding: var(--_size);
+    color: var(--muted);
+}
+
+.info-left {
+    text-align: left;
+    border-left: 3px solid var(--muted);
+}
+
+.info-right {
+    text-align: right;
+    border-right: 3px solid var(--muted);
 }
 
 /* nav buttons & options */
@@ -155,6 +200,7 @@
     grid-column: span 2;
     grid-row: 10;
     cursor: pointer;
+    transition: all 800ms ease-in-out;
 }
 
 .feedback-form a {
@@ -188,6 +234,7 @@
     left: 0;
     right: 0;
     bottom: 0;
+    transition: all 800ms ease-in-out;
 }
 
 .footer p {
@@ -270,7 +317,11 @@
     outline: none;
 }
 
-.sub-title:hover, .sub-title:focus-visible {
+.sub-title:hover, .sub-title:focus-visible,
+.note-title:hover, .note-title:focus-visible,
+.pyq-title:hover, .pyq-title:focus-visible,
+.book-title:hover, .book-title:focus-visible,
+.practical-title:hover, .practical-title:focus-visible {
     box-shadow: 0 0 0 var(--accent), 0 0 0 0.2em var(--bg),
     0 0 0 0.4em var(--accent);
 }
@@ -381,7 +432,7 @@
 }
 
 .topic-items {
-    background-color: white;
+    background-color: var(--txt);
     padding: calc(var(--_size) * .25) var(--_size);
     width: 100%;
 }

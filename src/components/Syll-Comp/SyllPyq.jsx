@@ -10,7 +10,7 @@ const SyllPyq = ({
         <div>
             {pyq.length > 0 ? (currentTab === 'PYQ' && (pyq.length > 0) ? (
                 <div className="syll-pyqs">
-                    {pvq.map(p => (
+                    {pyq.map(p => (
                             <a href={p.webViewLink} target="_blank" rel="noopener noreferrer" className="pyq-title" key={p.id}>{p.name}</a>
                     ))}
                 </div>

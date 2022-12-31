@@ -9,6 +9,9 @@ const Nav = (props) => {
             <h1>SYLLABUSX<span className="underline"></span></h1>
             <p>Stay organized and informed about the course material and expectations</p>
           </div>
+          <div className="info info-left laptop-only">
+            <h4>PYQs AND MORE HELPFUL MATERIAL COMING SOON...</h4>
+          </div>
           <SemButton
             sem={props.sem} 
             semShow={props.semShow} 
@@ -21,6 +24,9 @@ const Nav = (props) => {
             branchShow={props.branchShow}
             setBranchShow={props.setBranchShow}
           />
+          <div className="info info-right laptop-only">
+            <h4>HELP US ADD MORE VALUE TO THIS PROJECT</h4>
+          </div>
           <FeedbackLink />
       </div>
     );

@@ -20,7 +20,7 @@ const Syllabus = (props) => {
 
     const data = props.showcase;
     let query = data.camel;
-    let pyqQuery = data.pvq;
+    let pyqQuery = data.pYq;
     let bookQuery = data.book;
     let practicalQuery = data.practical;
     useNotes(query, currentTab, setDrive);
