@@ -234,6 +234,7 @@
     }
     .sub-wrapper {
         grid-template-columns: repeat(4, 1fr);
+        margin: var(--_size) calc(var(--_size) * 2);
     }
     .syll-notes, .syll-pyqs, .syll-books, .syll-practicals {
         grid-template-columns: repeat(3, 1fr);
@@ -249,5 +250,29 @@
     }
     .null-data, .load-data {
         margin: 0 calc(var(--_size) * 5) 0 calc(var(--_size) * 7.25);
+    }
+}
+
+/* laptop L */
+@media (width >= 1440px) {
+    :root {
+        --_size: 1.75rem;
+    }
+    .tabs {
+        left: calc(var(--_size) * 3.425);
+        top: calc(var(--_size) * 5.519 + 12.75px);
+    }
+    .tab {
+        width: 100px;
+        height: 55px;
+    }
+    .syll-theory, .syll-lab, .syll-notes, .syll-pyqs, .syll-books, .syll-practicals {
+        gap: calc(var(--_size) * .425);
+    }
+}
+
+@media (width >= 2560px) {
+    :root {
+        --_size: 3.5rem;
     }
 }

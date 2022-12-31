@@ -1,7 +1,7 @@
 import { BeakerIcon, ChevronLeftIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 import BookOutlinedIcon from '@mui/icons-material/BookOutlined';
 import QuestionMarkOutlinedIcon from '@mui/icons-material/QuestionMarkOutlined';
-import LibraryBooksOutlinedIcon from '@mui/icons-material/LibraryBooksOutlined';
+import ViewAgendaOutlinedIcon from '@mui/icons-material/ViewAgendaOutlined';
 import FileCopyOutlinedIcon from '@mui/icons-material/FileCopyOutlined';
 
 const SyllHead = ({
@@ -28,7 +28,7 @@ const SyllHead = ({
                         <QuestionMarkOutlinedIcon data-tab='PYQ' className="icon" /> <span data-tab='PYQ'>PYQ</span>
                     </button>
                     <button className={`tab ${currentTab==='Books' ? 'tab-selected' : ''}`} onClick={changeTab} data-tab='Books'>
-                    <LibraryBooksOutlinedIcon className='icon' data-tab='Books' /> <span data-tab='Books'>Books</span>
+                    <ViewAgendaOutlinedIcon className='icon' data-tab='Books' /> <span data-tab='Books'>Books</span>
                     </button>
                     <button className={`tab ${currentTab==='PracticalFile' ? 'tab-selected' : ''}`} onClick={changeTab} data-tab='PracticalFile'>
                         <FileCopyOutlinedIcon data-tab='PracticalFile' className='icon' /> <span data-tab='PracticalFile'>Practicals</span>

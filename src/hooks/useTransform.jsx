@@ -29,7 +29,7 @@ const useTransform = (sem, branch, setSearching) => {
               option.style.gridRow = '1';
               option.style.gridColumn = 'span 2';
             });
-            body.style.backgroundImage = 'none';
+            // body.style.backgroundImage = 'none';
             nav.style.display = 'flex';
             nav.style.justifyContent = 'space-evenly';
             nav.style.marginTop = '1.5rem';
