@@ -92,3 +92,45 @@
         font-size: calc(var(--_size) * .8);
     }
 }
+
+/* tablet */
+@media (width >= 768px) {
+    :root {
+        --_size: 1.5rem;
+    }
+    .heading p {
+        font-size: calc(var(--_size) - .25rem);
+        margin: var(--_size) calc(var(--_size) * 4.5);
+    }
+    .btn {
+        width: 165px;
+        font-size: calc(var(--_size) * .9);
+    }
+    .options {
+        font-size: calc(var(--_size) * .9);
+    }
+    .feedback-form a {
+        font-size: calc(var(--_size) * .9);
+    }
+    .sub-wrapper, .syll-notes, .syll-pyqs, .syll-books, .syll-practicals {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .sub-title, .note-title, .pyq-title, .book-title, .practical-title {
+        padding: calc(var(--_size) * .65) calc(var(--_size) * .7);
+    }
+    .syll-header h1 {
+        font-size: calc(var(--_size) * 1.5);
+    }
+    .syll-tags h3 {
+        font-size: calc(var(--_size) * .9);
+    }
+    .syllabus .syll-theory div span h3,
+    .syllabus .syll-lab div span h3,
+    .syllabus .syll-lab div span p {
+        font-size: calc(var(--_size) + .25rem);
+    }
+    .syllabus .syll-theory div,
+    .syllabus .syll-lab div {
+        font-size: calc(var(--_size) * .9);
+    }
+}
