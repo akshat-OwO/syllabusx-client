@@ -19,6 +19,11 @@
     --muted: hsl(var(--_hue) 0% 60%);
 }
 
+::selection {
+    background-color: #44A29E;
+    color: var(--bg);
+}
+
 /* width */
 ::-webkit-scrollbar {
     width: 5px;
@@ -42,7 +47,7 @@
 /* body */
 .body {
     background-image: url('/wave.svg');
-    background-size: contain;
+    background-size: auto;
     background-position-y: bottom;
     background-color: var(--bg);
     background-repeat: no-repeat;
@@ -298,6 +303,7 @@
     justify-content: center;
     font-weight: 400;
     font-size: calc(var(--_size) - .25rem);
+    font-weight: 700;
     text-decoration: none;
     color: var(--txt);
     line-height: 27px;
@@ -376,6 +382,7 @@
     background-color: var(--txt);
     /* margin: var(--_size) 0 calc(var(--_size) * .01) 0; */
     border-radius: calc(var(--_size) * 4);
+    cursor: pointer;
 }
 
 .syll-header h1 {
