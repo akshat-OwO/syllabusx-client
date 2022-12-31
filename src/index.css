@@ -21,7 +21,7 @@
 
 /* body */
 .body {
-    background-image: url('./wave.svg');
+    background-image: url('/wave.svg');
     background-size: contain;
     background-position-y: bottom;
     background-color: var(--bg);
