@@ -15,7 +15,7 @@ const BranchButton = ({ branch, setBranch, branchShow, setBranchShow }) => {
 
     return (
         <div className="option-wrapper branch-btn" id="branch-btn">
-            <button className='btn' onClick={toggleBranch}>{branchShow}</button>
+            <button className='btn' tabIndex={2} onClick={toggleBranch}>{branchShow}</button>
             <div className="options branches hide">
               <p data-value="CSE" onClick={selectBranch}>CSE</p>
               <p data-value="IT" onClick={selectBranch}>IT</p>

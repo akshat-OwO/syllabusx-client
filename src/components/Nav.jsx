@@ -1,27 +1,33 @@
 import BranchButton from "./formFields/BranchButton";
 import SemButton from "./formFields/SemButton";
+import FeedbackLink from "./siteInfo/FeedbackLink";
 
 const Nav = (props) => {
     return (
         <div className="nav">
-        <form className="buttons">
+          <div className="heading">
+            <h1>SYLLABUSX<span className="underline"></span></h1>
+            <p>Stay organized and informed about the course material and expectations</p>
+          </div>
+          <div className="info info-left laptop-only">
+            <h4>PYQs AND MORE HELPFUL MATERIAL COMING SOON...</h4>
+          </div>
           <SemButton
             sem={props.sem} 
             semShow={props.semShow} 
             setSem={props.setSem} 
             setSemShow={props.setSemShow} 
           />
-          <div className="heading">
-            <h1>Syllabus-X</h1>
-            <h2>Stay organized and informed about the course material and expectations</h2>
-          </div>
           <BranchButton
             branch={props.branch}
             setBranch={props.setBranch}
             branchShow={props.branchShow}
             setBranchShow={props.setBranchShow}
           />
-        </form>
+          <div className="info info-right laptop-only">
+            <h4>HELP US ADD MORE VALUE TO THIS PROJECT</h4>
+          </div>
+          <FeedbackLink />
       </div>
     );
 }

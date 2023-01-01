@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const useDrive = (query, currentTab, setDrive) => {
+const useNotes = (query, currentTab, setDrive) => {
     useEffect(() => {
         if (currentTab === 'Notes') {
             const getDrive = async () => {
@@ -14,4 +14,4 @@ const useDrive = (query, currentTab, setDrive) => {
     return;
 }
  
-export default useDrive;
+export default useNotes;

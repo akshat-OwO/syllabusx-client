@@ -16,13 +16,12 @@ const Subjects = (props) => {
       <div className="subjects hidden">
       <div className="sub-header">
         <h1>Subjects</h1>
-        <p>Better to complete it now than later!</p>
       </div>
       {!props.nullData ? (<div className="sub-wrapper">
         {
           props.data.length && (
-            props.data.map(d => (
-              <div className="sub-title" key={d._id} onClick={handleShowSubject}>{d.subject}</div>
+            props.data.map((d, index) => (
+              <div className="sub-title" tabIndex={index + 2} key={d._id} onClick={handleShowSubject}>{d.subject}</div>
             ))
           )
         }
