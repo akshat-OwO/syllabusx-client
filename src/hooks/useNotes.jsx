@@ -14,4 +14,8 @@ const useNotes = (query, currentTab, setDrive) => {
     return;
 }
  
+<<<<<<< HEAD:src/hooks/useNotes.jsx
 export default useNotes;
+=======
+export default useDrive;
+>>>>>>> main:src/hooks/useDrive.jsx
