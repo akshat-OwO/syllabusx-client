@@ -147,6 +147,9 @@
         grid-template-columns: repeat(3, 1fr);
         margin-top: var(--_size);
     }
+    .btn {
+        border-radius: calc(var(--_radius) * 2);
+    }
     .heading {
         grid-column: span 1;
         grid-row: 1 / 2;
