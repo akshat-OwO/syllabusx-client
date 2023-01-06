@@ -59,9 +59,9 @@
 /* popup-heading */
 .pop-header {
     background-color: hsl(212, 25%, 10%);
-    color: #FFFFFF;
+    color: var(--txt);
     text-align: center;
-    padding: var(--_size);
+    padding: calc(var(--_size) * .5);
     font-size: calc(var(--_size) - 5);
     font-weight: 700;
     font-family: 'Nunito Sans';
@@ -71,6 +71,23 @@
 
 .pop-header p {
     background: none;
+}
+
+.pop-header span {
+    display: inline-block;
+    animation: highlight 4s ease-in-out infinite;
+}
+
+@keyframes highlight {
+    0% {
+        color: var(--accent);
+    } 
+    50% {
+        color: var(--txt);
+    }
+    100% {
+        color: var(--accent);
+    }
 }
 
 /* navbar */
@@ -257,6 +274,7 @@
 
 .footer a:hover {
     color: var(--accent);
+    background-color: var(--bg);
 }
 
 .background {
