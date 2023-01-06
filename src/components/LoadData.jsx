@@ -1,7 +1,10 @@
+import { CircularProgress } from "@mui/material";
+
+
 const LoadData = () => {
     return (
         <div className="load-data">
-            <h1>Loading...</h1>
+            <CircularProgress sx={{color: '#49C5B6'}} />
         </div>
     );
 }

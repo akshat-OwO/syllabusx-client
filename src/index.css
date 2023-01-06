@@ -471,3 +471,7 @@
     color: var(--accent);
     font-family: 'Nunito Sans';
 }
+
+.load-data {
+    border: none;
+}
