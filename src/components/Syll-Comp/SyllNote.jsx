@@ -11,7 +11,7 @@ const SyllNote = ({
             {drive.length > 0 ? (currentTab === 'Notes' && (drive.length > 0) ? (
             <div className="syll-notes">
                 {drive.map(d => (
-                        <a href={d.webViewLink} target="_blank" rel="noopener noreferrer" className="note-title" key={d.id} >{d.name}</a>
+                        <a href={d.webViewLink} target="_blank" rel="noopener noreferrer" className="note-title" key={d.id} >{d.name.slice(0, -4)}</a>
                 ))}
             </div>
             ): (currentTab === 'Notes' && (<NoData />))) : (currentTab === 'Notes' && (data.camel ? (<LoadData />): <NoData />))}
