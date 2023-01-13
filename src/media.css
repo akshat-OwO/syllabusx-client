@@ -228,6 +228,9 @@
     .syll-tags .laptop-only span {
         color: var(--txt);
     }
+    .syll-header h1 {
+        line-height: 57px;
+    }
     .syll-theory, .syll-lab, .syll-notes, .syll-pyqs, .syll-books, .syll-practicals {
         background-color: var(--bg);
         padding: var(--_size);
