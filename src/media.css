@@ -30,6 +30,8 @@
     }
     .syll-header h1 {
         font-size: calc(var(--_size) * 1.5);
+        line-height: 1.5em;
+        padding: 0 1.25em;
     }
     .syll-tags h3 {
         font-size: calc(var(--_size) - .025rem);

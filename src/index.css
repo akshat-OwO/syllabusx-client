@@ -261,6 +261,8 @@
 
 .footer p {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     font-style: bold;
     color: var(--txt);
     padding: calc(var(--_size) * .5);
@@ -270,6 +272,11 @@
 .footer a {
     text-decoration: none;
     color: var(--txt);
+}
+
+.insta a {
+    display: flex;
+    align-items: center;
 }
 
 .footer a:hover {
