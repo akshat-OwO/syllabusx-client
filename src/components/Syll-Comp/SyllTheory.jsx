@@ -48,7 +48,7 @@ const SyllTheory = ({
                             <Typography sx={{color: '#d7eae9', fontFamily: 'K2D', fontSize: '1.25rem'}} component={'span'}><h3>Unit - {t.unit}</h3></Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                                <Typography sx={{color: 'black', fontFamily: 'K2D'}} component={'span'}>
+                                <Typography sx={{color: 'black', fontFamily: 'Nunito Sans'}} component={'span'}>
                                 <div className="topics">
                                         {
                                             t.topics.map(p => (
