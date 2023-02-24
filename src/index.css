@@ -142,7 +142,7 @@
     padding: var(--_size);
     margin: var(--_size);
     border-radius: calc(var(--_radius) * 5);
-    background-color: var(--accent);
+    background-color: #131920;
 }
 
 .info h4{
@@ -180,7 +180,6 @@
     cursor: pointer;
     height: 44px;
     width: 154px;
-    box-shadow: inset 0px 0px 10px 4px rgba(68, 162, 158, 0.5);
 }
 
 .option-wrapper {
@@ -317,7 +316,7 @@
 .sub-wrapper, .syll-notes, .syll-pyqs, .syll-books, .syll-practicals {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
-    gap: calc(var(--_size) * .65);
+    gap: calc(var(--_size) * .95);
     margin: var(--_size) auto;
 }
 
@@ -333,11 +332,11 @@
     color: var(--txt);
     line-height: 27px;
     letter-spacing: 0.085em;
-    background-color: var(--accent);
+    background-color: #131920;
     text-align: center;
     border-radius: calc(var(--_radius) * 5);
     padding: calc(var(--_size) * .7);
-    margin: 0 var(--_size);
+    margin: 0 calc(var(--_size) * .7);
     color: var(--txt);
     cursor: pointer;
     box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
