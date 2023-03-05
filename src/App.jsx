@@ -9,6 +9,7 @@ import Syllabus from './components/Syllabus';
 import useNull from './hooks/useNull';
 import PopHeader from './components/siteInfo/PopHeader';
 import Footer from './components/siteInfo/Footer';
+import AdUnit from './components/AdUnit';
 
 function App() {
   const [sem, setSem] = useState('');
@@ -44,14 +45,17 @@ function App() {
       />
       <Footer />
       {searching ? (
-        <Subjects
-          data={data}
-          nullData={nullData}
-          showcase={showcase}
-          setShowcase={setShowcase}
-          setSearching={setSearching}
-          setSubjectShow={setSubjectShow}
-        />
+        <div>
+          <Subjects
+            data={data}
+            nullData={nullData}
+            showcase={showcase}
+            setShowcase={setShowcase}
+            setSearching={setSearching}
+            setSubjectShow={setSubjectShow}
+          />
+          <AdUnit dataAdSlot='4004981540' />
+        </div>
       ) : <></>}
       {(!searching && subjectShow) ? (
         <Syllabus
