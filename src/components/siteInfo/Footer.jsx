@@ -3,7 +3,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 const Footer = () => {
     return (
         <div className="footer">
-            <p>
+            <div className='footer-wrapper'>
                 Made with ♡ by{' '}
                 <div className="footer-links">
                     <a
@@ -33,7 +33,7 @@ const Footer = () => {
                         Follow Us! <InstagramIcon className='icon' />
                     </a>
                 </div>
-            </p>
+            </div>
         </div>
     );
 };
