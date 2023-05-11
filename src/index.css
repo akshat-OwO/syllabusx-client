@@ -258,15 +258,19 @@
     transition: all 800ms ease-in-out;
 }
 
-.footer .p {
+.footer .footer-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
     font-style: bold;
     color: var(--txt);
     padding: calc(var(--_size) * .5);
-    gap: 10px;
+    gap: var(--_size);
 }
+
+/* .footer .footer-links {
+    flex-direction: row;
+} */
 
 .footer a {
     text-decoration: none;
@@ -444,7 +448,7 @@
 .tags {
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: flex-end;
     color: var(--txt);
 }
 
