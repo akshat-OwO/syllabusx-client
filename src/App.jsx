@@ -44,14 +44,14 @@ function App() {
       />
       <Footer />
       {searching ? (
-        <Subjects
-          data={data}
-          nullData={nullData}
-          showcase={showcase}
-          setShowcase={setShowcase}
-          setSearching={setSearching}
-          setSubjectShow={setSubjectShow}
-        />
+          <Subjects
+            data={data}
+            nullData={nullData}
+            showcase={showcase}
+            setShowcase={setShowcase}
+            setSearching={setSearching}
+            setSubjectShow={setSubjectShow}
+          />
       ) : <></>}
       {(!searching && subjectShow) ? (
         <Syllabus

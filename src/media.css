@@ -1,4 +1,14 @@
 /* mobile S */
+@media (height <= 585px) {
+    .nav {
+        gap: calc(var(--_size) * .5);
+    }
+    .footer {
+        position: static;
+        margin-top: calc(var(--_size));
+    }
+}
+
 @media (width >= 320px) {
     :root {
         --_size: .85rem;
@@ -32,6 +42,7 @@
         font-size: calc(var(--_size) * 1.5);
         line-height: 1.5em;
         padding: 0 1.25em;
+        margin-top: calc(var(--_size) * .5);
     }
     .syll-tags h3 {
         font-size: calc(var(--_size) - .025rem);
