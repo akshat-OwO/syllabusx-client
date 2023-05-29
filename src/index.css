@@ -482,6 +482,10 @@
     font-family: 'Nunito Sans';
 }
 
+.null-data img {
+    width: calc(var(--_size) * 10);
+}
+
 .load-data {
     border: none;
 }

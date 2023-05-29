@@ -104,6 +104,10 @@
     .syllabus .syll-lab div {
         font-size: calc(var(--_size) * .7);
     }
+    
+    .null-data img {
+        width: calc(var(--_size) * 6.5);
+    }
 }
 
 /* tablet */
@@ -145,6 +149,18 @@
     .syllabus .syll-theory div,
     .syllabus .syll-lab div {
         font-size: calc(var(--_size) * .7);
+    }
+
+    .null-data h1 {
+        font-size: var(--_size);
+    }
+
+    .null-data p {
+        font-size: calc(var(--_size) * .7);
+    }
+
+    .null-data img {
+        width: calc(var(--_size) * 4);
     }
 }
 
@@ -275,6 +291,18 @@
     .null-data, .load-data {
         margin: 0 calc(var(--_size) * 5) 0 calc(var(--_size) * 7.25);
     }
+
+    .null-data h1 {
+        font-size: var(--_size);
+    }
+
+    .null-data p {
+        font-size: calc(var(--_size) * .7);
+    }
+
+    .null-data img {
+        width: calc(var(--_size) * 8.45);
+    }
 }
 
 /* laptop L */
@@ -292,6 +320,10 @@
     }
     .syll-theory {
         gap: calc(var(--_size) * .425);
+    }
+
+    .null-data img {
+        width: calc(var(--_size) * 8.6);
     }
 }
 
