@@ -1,17 +1,20 @@
 import BranchButton from "./formFields/BranchButton";
 import SemButton from "./formFields/SemButton";
 import FeedbackLink from "./siteInfo/FeedbackLink";
+import Logo from "../assets/LogoV3.svg";
 
 const Nav = (props) => {
     return (
         <div className="nav">
-          <div className="heading">
+          <img  className="heading" src={Logo} alt=""/>
+          {/* <div className="heading">
+
             <h1>SYLLABUSX<span className="underline"></span></h1>
             <p>Stay organized and informed about the course material and expectations</p>
           </div>
           <div className="info info-left laptop-only">
             <h4>PYQs AND MORE HELPFUL MATERIAL COMING SOON...</h4>
-          </div>
+          </div>  */}
           <SemButton
             sem={props.sem} 
             semShow={props.semShow} 
@@ -25,7 +28,7 @@ const Nav = (props) => {
             setBranchShow={props.setBranchShow}
           />
           <div className="info info-right laptop-only">
-            <h4>HELP US ADD MORE VALUE TO THIS PROJECT</h4>
+            {/* <h4>HELP US ADD MORE VALUE TO THIS PROJECT</h4> */}
           </div>
           <FeedbackLink />
       </div>

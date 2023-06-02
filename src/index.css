@@ -17,6 +17,8 @@
     --accent: hsl(var(--_hue) 41% 45%);
     --accent1: hsl(calc(var(--_hue) - 4) 52% 53%);
     --muted: hsl(var(--_hue) 0% 60%);
+
+    --gradient: radial-gradient(229.13% 48.75% at -143.64% 15.67%, #525252 0%, #000000 100%);
 }
 
 ::selection {
@@ -49,7 +51,7 @@
     background-image: url('/wave.svg');
     background-size: auto;
     background-position-y: bottom;
-    background-color: var(--bg);
+    background: var(--gradient);
     background-repeat: no-repeat;
     min-height: 100vh;
     transition: all 800ms ease-in-out;
@@ -106,11 +108,13 @@
 /* nav heading */
 .heading {
     grid-column: span 2;
-    grid-row: 2;
+    grid-row: 5;
     transition: all 800ms ease-in-out;
+    margin-top: var(--_size);
 }
 
-.heading h1 {
+/* Legacy V2 Style */
+/* .heading h1 {
     font-family: 'K2D';
     font-weight: 800;
     font-size: calc(var(--_size) + 2rem);
@@ -120,9 +124,9 @@
     color: var(--accent);
     text-shadow: -5px 0px 2px #131920;
     position: relative;
-}
+} */
 
-.heading .underline {
+/* .heading .underline {
     border-bottom: 3px solid var(--muted);
     position: absolute;
     width: 274px;
@@ -130,9 +134,9 @@
     right: 0;
     margin: 0 auto;
     bottom: 0;
-}
+} */
 
-.heading p {
+/* .heading p {
     font-family: 'Nunito Sans';
     font-weight: 400;
     font-size: calc(var(--_size) - 5);
@@ -143,9 +147,9 @@
     margin: var(--_size);
     border-radius: calc(var(--_radius) * 5);
     background-color: #131920;
-}
+} */
 
-.info h4{
+/* .info h4{
     font-family: 'Nunito Sans';
     font-weight: 700;
     font-size: calc(var(--_size) + 1rem);
@@ -163,7 +167,7 @@
 .info-right {
     text-align: right;
     border-right: 3px solid var(--muted);
-}
+} */
 
 /* nav buttons & options */
 .btn {
@@ -185,7 +189,7 @@
 .option-wrapper {
     position: relative;
     transition: all 800ms ease-in-out;
-    grid-row: 5;
+    grid-row: 25;
 }
 
 .options {
@@ -219,7 +223,7 @@
 /* feedback form */
 .feedback-form {
     grid-column: span 2;
-    grid-row: 10;
+    grid-row: 35;
     cursor: pointer;
     transition: all 800ms ease-in-out;
 }
