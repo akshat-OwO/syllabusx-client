@@ -1,12 +1,13 @@
+import Logo from "./Logo";
 import BranchButton from "./formFields/BranchButton";
 import SemButton from "./formFields/SemButton";
 import FeedbackLink from "./siteInfo/FeedbackLink";
-import Logo from "../assets/LogoV3.svg";
+
 
 const Nav = (props) => {
     return (
         <div className="nav">
-          <img  className="heading" src={Logo} alt=""/>
+          {/* <img  className="heading" src={Logo} alt=""/> */}
           {/* <div className="heading">
 
             <h1>SYLLABUSX<span className="underline"></span></h1>
@@ -15,6 +16,8 @@ const Nav = (props) => {
           <div className="info info-left laptop-only">
             <h4>PYQs AND MORE HELPFUL MATERIAL COMING SOON...</h4>
           </div>  */}
+
+          <Logo />
           <SemButton
             sem={props.sem} 
             semShow={props.semShow} 
