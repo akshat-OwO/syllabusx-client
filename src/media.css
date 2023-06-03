@@ -64,7 +64,7 @@
         --_size: 1rem;
     }
     .btn {
-        width: 145px;
+        width: calc(var(--_size) * 14);
     }
 }
 

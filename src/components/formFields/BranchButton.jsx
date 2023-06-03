@@ -14,8 +14,13 @@ const BranchButton = ({ branch, setBranch, branchShow, setBranchShow }) => {
     }
 
     return (
-        <div className="option-wrapper branch-btn" id="branch-btn">
-            <button className='btn' tabIndex={2} onClick={toggleBranch}>{branchShow}</button>
+        <div className="option-wrapper-branch branch-btn" id="branch-btn">
+            <button className='btn' tabIndex={2} onClick={toggleBranch}>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="down-icon">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+              {branchShow}
+            </button>
             <div className="options branches hide">
               <p data-value="CSE" onClick={selectBranch}>CSE</p>
               <p data-value="IT" onClick={selectBranch}>IT</p>

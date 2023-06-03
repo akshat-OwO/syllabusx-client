@@ -1,3 +1,4 @@
+
 const SemButton = ({ sem, semShow, setSem, setSemShow }) => {
 
     const toggleSem = (e) => {
@@ -14,8 +15,13 @@ const SemButton = ({ sem, semShow, setSem, setSemShow }) => {
     }
     
     return (
-        <div className="option-wrapper sem-btn" id="sem-btn">
-            <button className='btn' tabIndex={1} onClick={toggleSem}>{semShow}</button>
+        <div className="option-wrapper-sem sem-btn" id="sem-btn">
+            <button className='btn' tabIndex={1} onClick={toggleSem}>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="down-icon">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
+                {semShow}
+            </button>
             <div className="options semesters hide">
                 <p data-show="1st" data-value="firstsemesters" onClick={selectSem}>1st</p>
                 <p data-show="2nd" data-value="secondsemesters" onClick={selectSem}>2nd</p>
