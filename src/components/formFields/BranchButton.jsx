@@ -3,7 +3,9 @@ const BranchButton = ({ branch, setBranch, branchShow, setBranchShow }) => {
     const toggleBranch = (e) => {
         e.preventDefault();
         const options = document.querySelector('.branches');
+        const branchBtnPressed = document.querySelector('.option-wrapper-branch')
         options.classList.toggle('hide');
+        branchBtnPressed.classList.toggle('branchBtnPressed');
     }
 
     const selectBranch = (e) => {
