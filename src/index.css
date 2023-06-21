@@ -347,6 +347,23 @@
     transition: box-shadow 500ms ease-in-out;
 }
 
+.shine {
+    animation: shine 3000ms infinite;
+}
+
+@keyframes shine {
+    0% {
+        box-shadow: none;
+    }
+    50% {
+        box-shadow: 0 0 0 var(--accent), 0 0 0 0.2em var(--bg),
+                    0 0 0 0.4em var(--accent);
+    }
+    100% {
+        box-shadow: none;
+    }
+}
+
 .sub-title:focus {
     outline: none;
 }
