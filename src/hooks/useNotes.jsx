@@ -4,7 +4,7 @@ const useNotes = (query, currentTab, setDrive) => {
     useEffect(() => {
         if (currentTab === 'Notes') {
             const getDrive = async () => {
-                const response = await fetch(`https://syllabusx-drive.cyclic.app/notes/${query}`);
+                const response = await fetch(`https://www.server.drive.syllabusx.live/notes/${query}`);
                 const json = await response.json();
                 setDrive(json);
             }

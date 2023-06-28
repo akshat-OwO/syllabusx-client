@@ -4,7 +4,7 @@ const useBooks = (bookQuery, currentTab, setBook) => {
     useEffect(() => {
         if (currentTab === 'Books') {
             const getDrive = async () => {
-                const response = await fetch(`https://syllabusx-drive.cyclic.app/books/${bookQuery}`);
+                const response = await fetch(`https://www.server.drive.syllabusx.live/books/${bookQuery}`);
                 const json = await response.json();
                 setBook(json);
             }
