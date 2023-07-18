@@ -4,7 +4,13 @@ const usePracticals = (practicalQuery, currentTab, setPractical) => {
     useEffect(() => {
         if (currentTab === 'PracticalFile') {
             const getDrive = async () => {
-                const response = await fetch(`https://www.server.syllabusx.live/drive/practicalfile/${practicalQuery}`);
+                let response;
+                try{
+                    response = await fetch(`https://www.server.syllabusx.live/drive/practicalfile/${practicalQuery}`);
+                }
+                catch(error){
+                    response = await fetch(`https://www.server.backup.syllabusx.live/drive/practicalfile/${practicalQuery}`);
+                }
                 const json = await response.json();
                 setPractical(json);
             }
