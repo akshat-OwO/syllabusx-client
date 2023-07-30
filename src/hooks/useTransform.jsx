@@ -32,7 +32,7 @@ const useTransform = (sem, branch, setSearching) => {
             // body.style.backgroundImage = 'none';
             nav.style.display = 'flex';
             nav.style.justifyContent = 'space-evenly';
-            nav.style.marginTop = '1.5rem';
+            // nav.style.marginTop = '1.5rem';
           }, 800);
           
           setTimeout(() => {

@@ -95,6 +95,14 @@
     }
 }
 
+main {
+    position: relative;
+    background: var(--bg);
+    padding-bottom: calc(var(--_size) * 2);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
 /* navbar */
 .nav {
     display: grid;
@@ -114,6 +122,46 @@
     /* grid-row: 5; */
     transition: all 800ms ease-in-out;
     margin-top: var(--_size);
+}
+
+nav {
+    /* position: sticky;
+    top: 0;
+    background: var(--bg); */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-inline: var(--_size);
+}
+
+nav .navLogo {
+    width: calc(var(--_size) * 12.5);
+}
+
+nav .navIcon {
+    color: var(--light);
+    background-color: var(--btn-bg);
+    border-radius: 6px;
+    padding: calc(var(--_size) * .4);
+}
+
+nav .navIcon svg {
+    pointer-events: none;
+}
+
+.side-nav {
+    position: absolute;
+    width: 100vw;
+    top: 0;
+    right: -100vw;
+    background: var(--bg);
+    min-height: 100vh;
+}
+
+.search-wrapper {
+    display: grid;
+    place-items: center;
+    padding: var(--_size);
 }
 
 /* Legacy V2 Style */
@@ -277,6 +325,17 @@
 
 .options > p:hover {
     opacity: 1;
+}
+
+.send-button {
+    width: calc(var(--_size) * 4);
+    padding: calc(var(--_size) - .5rem);
+    align-self: end;
+    background-color: var(--btn-bg);
+    outline: none;
+    border: none;
+    border-radius: 6px;
+    color: var(--light);
 }
 
 /* feedback form */

@@ -1,6 +1,6 @@
-const Logo = () => {
+const Logo = (props) => {
   return (
-    <svg className="heading"
+    <svg className={props.type !== 'navLogo' ? 'heading' : 'navLogo'}
       width="269"
       height="87"
       viewBox="0 0 269 87"
