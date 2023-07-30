@@ -14,7 +14,7 @@
         --_size: .85rem;
     }
     .btn {
-        width: 130px;
+        /* width: 130px; */
         font-size: calc(var(--_size) - .025rem);
     }
     .options {
@@ -63,8 +63,11 @@
     :root {
         --_size: 1rem;
     }
+    .nav {
+        gap: calc(var(--_size) * 8);
+    }
     .btn {
-        width: 145px;
+        width: calc(var(--_size) * 14);
     }
 }
 
@@ -74,7 +77,7 @@
         --_size: 1.25rem;
     }
     .btn {
-        width: 150px;
+        width: calc(var(--_size) * 12);
         font-size: calc(var(--_size) * .7);
     }
     .options {
@@ -84,7 +87,7 @@
         font-size: calc(var(--_size) * .7);
     }
     .nav {
-        gap: calc(var(--_size) * .5);
+        gap: calc(var(--_size) * 6);
     }
     .sub-title, .note-title, .pyq-title, .book-title, .practical-title {
         font-size: calc(var(--_size) * .7);
@@ -115,12 +118,15 @@
     :root {
         --_size: 1.5rem;
     }
+    .nav {
+        gap: calc(var(--_size) * 5);
+    }
     .heading p {
         font-size: calc(var(--_size) - .025rem);
         margin: var(--_size) calc(var(--_size) * 4.5);
     }
     .btn {
-        width: 165px;
+        width: calc(var(--_size) * 12);
         font-size: calc(var(--_size) * .7);
     }
     .options {
@@ -172,14 +178,14 @@
     .laptop-only {
         display: block;
     }
-    .nav {
+    /* .nav {
         grid-template-columns: repeat(3, 1fr);
         margin-top: var(--_size);
-    }
+    } */
     .btn {
         border-radius: calc(var(--_radius) * 2);
     }
-    .heading {
+    /* .heading {
         grid-column: span 1;
         grid-row: 1 / 2;
     }
@@ -187,7 +193,7 @@
         font-size: calc(var(--_size) * .55);
         margin: var(--_size);
         padding: var(--_size) calc(var(--_size) * .35);
-    }
+    } */
     .info h4{
         font-size: calc(var(--_size) + .025rem);
     }
@@ -209,12 +215,12 @@
     .branch-btn {
         justify-self: end;
     }
-    .feedback-form {
+    /* .feedback-form {
         grid-column: 3;
         grid-row: 3;
-    }
+    } */
     .feedback-form a {
-        font-size: calc(var(--_size) - .85rem);
+        /* font-size: calc(var(--_size) - .85rem); */
         padding: calc(var(--_size) * .3);
     }
     .icon {

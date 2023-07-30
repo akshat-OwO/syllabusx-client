@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react';
 
-import useTrailer from './hooks/useTrailer';
 import Nav from './components/Nav';
 import Subjects from './components/Subjects';
-import useTransform from './hooks/useTransform';
-import useData from './hooks/useData';
 import Syllabus from './components/Syllabus';
-import useNull from './hooks/useNull';
-import PopHeader from './components/siteInfo/PopHeader';
 import Footer from './components/siteInfo/Footer';
+import PopHeader from './components/siteInfo/PopHeader';
+import useData from './hooks/useData';
+import useNull from './hooks/useNull';
+import useTrailer from './hooks/useTrailer';
+import useTransform from './hooks/useTransform';
 
 function App() {
   const [sem, setSem] = useState('');
@@ -31,7 +31,7 @@ function App() {
 
   return (
     <div className="body">
-      <PopHeader />
+      {/* <PopHeader /> */}
       <Nav 
         sem={sem} 
         semShow={semShow} 

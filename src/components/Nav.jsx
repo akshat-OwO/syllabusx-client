@@ -18,21 +18,23 @@ const Nav = (props) => {
           </div>  */}
 
           <Logo />
-          <SemButton
-            sem={props.sem} 
-            semShow={props.semShow} 
-            setSem={props.setSem} 
-            setSemShow={props.setSemShow} 
-          />
-          <BranchButton
-            branch={props.branch}
-            setBranch={props.setBranch}
-            branchShow={props.branchShow}
-            setBranchShow={props.setBranchShow}
-          />
-          <div className="info info-right laptop-only">
-            {/* <h4>HELP US ADD MORE VALUE TO THIS PROJECT</h4> */}
+          <div className="btn-wrapper">
+            <SemButton
+              sem={props.sem}
+              semShow={props.semShow}
+              setSem={props.setSem}
+              setSemShow={props.setSemShow}
+            />
+            <BranchButton
+              branch={props.branch}
+              setBranch={props.setBranch}
+              branchShow={props.branchShow}
+              setBranchShow={props.setBranchShow}
+            />
           </div>
+          {/* <div className="info info-right laptop-only">
+            <h4>HELP US ADD MORE VALUE TO THIS PROJECT</h4>
+          </div> */}
           <FeedbackLink />
       </div>
     );
