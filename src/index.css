@@ -498,10 +498,27 @@
     color: var(--accent);
     font-family: 'Nunito Sans';
 }
+.null-data{
+    background-color: var(--bg);
+    border: 5px solid var(--accent);
+    border-radius: calc(var(--_radius) * 4);
+    text-align: center;
+    padding: var(--_size) 0;
+    color: var(--accent);
+    font-family: 'Nunito Sans';
+    
+}
+
+.null-data h3, .null-data h6 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: white
+}
 
 .null-data img {
     width: calc(var(--_size) * 10);
 }
+
 
 .load-data {
     border: none;
