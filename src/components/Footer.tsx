@@ -1,30 +1,38 @@
 import { AtSign, Instagram } from 'lucide-react';
 import { FC } from 'react';
 
-interface FooterProps {}
+interface FooterProps {
+    type: string;
+}
 
-const Footer: FC<FooterProps> = () => {
+const Footer: FC<FooterProps> = ({ type }) => {
     return (
-        <div className="absolute w-full grid place-items-center bottom-0 bg-neutral-900/80 rounded-lg p-2">
+        <div
+            className={
+                'absolute w-full grid place-items-center bottom-0 bg-neutral-900/80 rounded-lg p-2' +
+                ` ${type === 'search' ? '' : 'small:relative small:mt-2'}`
+            }
+        >
             <div className="grid place-items-center w-full gap-1 bg-neutral-800/80 rounded-lg p-2 mb-2">
-                <div className="text-xs flex gap-1">
+                <div className="text-xs xl:text-sm flex gap-1">
                     <span>For Future Updates!</span>
-                    <p className="text-xs flex gap-1">
+                    <p className="text-xs xl:text-sm flex gap-1 items-center">
                         <a
                             className="flex gap-1 hover:text-teal-700 transition"
                             href="https://www.instagram.com/syllabusx_.live/"
                             target="_blacnk"
                         >
-                            Follow us on <Instagram className="w-4 h-4" />
+                            Follow us on{' '}
+                            <Instagram className="w-4 h-4 xl:h-6 xl:w-6" />
                         </a>
                     </p>
                 </div>
             </div>
             <div className="relative grid place-items-center w-full gap-3 bg-neutral-800/80 rounded-lg p-2">
-                <p className="text-sm">Made with ♡</p>
+                <p className="text-sm xl:text-base">Made with ♡</p>
                 <div className="flex gap-2">
                     <a
-                        className="text-xs flex gap-1 hover:text-teal-700 transition"
+                        className="text-xs xl:text-sm flex gap-1 hover:text-teal-700 transition"
                         href="https://linktr.ee/akshatOwO"
                         target="_blank"
                     >

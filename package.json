@@ -14,6 +14,8 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toast": "^1.1.4",
     "@tanstack/react-query": "^4.32.6",
+    "@tanstack/react-query-devtools": "^4.32.6",
+    "axios": "^1.4.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "lucide-react": "^0.263.1",
@@ -22,7 +24,8 @@
     "react-hook-form": "^7.45.3",
     "react-router-dom": "^6.14.2",
     "tailwind-merge": "^1.14.0",
-    "tailwindcss-animate": "^1.0.6"
+    "tailwindcss-animate": "^1.0.6",
+    "vaul": "^0.1.2"
   },
   "devDependencies": {
     "@types/node": "^20.4.7",

@@ -1,45 +1,33 @@
-import {
-    ChevronsUpDown,
-    Github,
-    Loader2,
-    MessageSquarePlus,
-    SendHorizonal,
-} from 'lucide-react';
-import { FC, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Button, buttonVariants } from '../components/ui/button';
+import { ChevronsUpDown, Loader2, SendHorizonal } from 'lucide-react';
+import { FC, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Drawer } from 'vaul';
+import { branchList, semesterList } from '../config';
+import { useToast } from '../hooks/use-toast';
+import { cn } from '../lib/utils';
+import { Button, buttonVariants } from './ui/button';
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
-} from '../components/ui/dropdown-menu';
-import { branchList, semesterList } from '../config';
-import { useToast } from '../hooks/use-toast';
-import { cn } from '../lib/utils';
+} from './ui/dropdown-menu';
 
-// type FormOutput = {
-//     semester: string;
-//     branch: string;
-// };
+interface SearchProps {}
 
-// export const HomeAction: ActionFunction = async ({
-//     request,
-// }: ActionFunctionArgs) => {
-//     const formData = await request.formData();
-//     const { semester, branch } = Object.fromEntries(formData) as FormOutput;
-//     return redirect(`/${semester}/${branch}`);
-// };
-
-interface HomePageProps {}
-
-const HomePage: FC<HomePageProps> = () => {
+const Search: FC<SearchProps> = () => {
     const [semester, setSemester] = useState<string>('');
     const [branch, setBranch] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const { toast } = useToast();
     const navigate = useNavigate();
+    const params = useParams();
+
+    useEffect(() => {
+        if (params.semester) setSemester(params.semester);
+        if (params.branch) setBranch(params.branch);
+    }, [params]);
 
     const handleSearch = async () => {
         setIsLoading(true);
@@ -58,7 +46,7 @@ const HomePage: FC<HomePageProps> = () => {
     };
 
     return (
-        <div className="flex flex-col gap-4 mt-32 lg:grid lg:grid-cols-3 lg:gap-2 xl:gap-6">
+        <div className="flex flex-col gap-2 mt-0 lg:grid lg:grid-cols-3 lg:gap-2 xl:gap-6">
             <DropdownMenu>
                 <DropdownMenuTrigger className="lg:col-start-2">
                     <div
@@ -116,48 +104,22 @@ const HomePage: FC<HomePageProps> = () => {
                     ))}
                 </DropdownMenuContent>
             </DropdownMenu>
-            <Button
-                disabled={isLoading}
-                isLoading={isLoading}
-                onClick={handleSearch}
-                className="self-end lg:col-start-2 lg:flex lg:justify-self-end lg:self-start"
-            >
-                {isLoading ? (
-                    <Loader2 className="w-4 h-4 xl:h-6 xl:w-6 animate-spin" />
-                ) : (
-                    <SendHorizonal className="w-4 h-4 xl:h-6 xl:w-6" />
-                )}
-            </Button>
-            <a
-                className={cn(
-                    buttonVariants({
-                        variant: 'default',
-                        className:
-                            'mt-5 gap-3 text-sm lg:row-start-1 lg:col-start-3 lg:justify-self-end lg:self-center lg:mt-0 xl:text-lg',
-                    })
-                )}
-                href="https://forms.gle/BFTv1uy8L33ptic6A"
-                target="_blank"
-            >
-                Give Us Feedback{' '}
-                <MessageSquarePlus className="w-4 h-4 xl:h-6 xl:w-6" />
-            </a>
-            <a
-                className={cn(
-                    buttonVariants({
-                        variant: 'default',
-                        className:
-                            'hidden lg:flex mt-5 gap-3 text-sm lg:row-start-2 lg:col-start-3 lg:justify-self-end lg:self-center lg:mt-0 xl:text-lg',
-                    })
-                )}
-                href="https://github.com/akshat-OwO/syllabusx-client/"
-                target="_blank"
-            >
-                Contribute to SyllabusX{' '}
-                <Github className="w-4 h-4 xl:h-6 xl:w-6" />
-            </a>
+            <Drawer.Close asChild>
+                <Button
+                    disabled={isLoading}
+                    isLoading={isLoading}
+                    onClick={handleSearch}
+                    className="self-end lg:col-start-2 lg:flex lg:justify-self-end lg:self-start"
+                >
+                    {isLoading ? (
+                        <Loader2 className="w-4 h-4 xl:h-6 xl:w-6 animate-spin" />
+                    ) : (
+                        <SendHorizonal className="w-4 h-4 xl:h-6 xl:w-6" />
+                    )}
+                </Button>
+            </Drawer.Close>
         </div>
     );
 };
 
-export default HomePage;
+export default Search;
