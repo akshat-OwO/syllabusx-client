@@ -13,9 +13,11 @@ import {
     DropdownMenuTrigger,
 } from './ui/dropdown-menu';
 
-interface SearchProps {}
+interface SearchProps {
+    setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-const Search: FC<SearchProps> = () => {
+const Search: FC<SearchProps> = ({ setOpen }) => {
     const [semester, setSemester] = useState<string>('');
     const [branch, setBranch] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -42,13 +44,14 @@ const Search: FC<SearchProps> = () => {
             await new Promise((resolve) => setTimeout(resolve, 500));
             navigate(`/search/${semester}/${branch}`);
         }
+        if (setOpen) setOpen(false);
         setIsLoading(false);
     };
 
     return (
-        <div className="flex flex-col gap-2 mt-0 lg:grid lg:grid-cols-3 lg:gap-2 xl:gap-6">
+        <div className="flex flex-col gap-2 mt-0">
             <DropdownMenu>
-                <DropdownMenuTrigger className="lg:col-start-2">
+                <DropdownMenuTrigger>
                     <div
                         className={cn(
                             buttonVariants({
@@ -109,7 +112,7 @@ const Search: FC<SearchProps> = () => {
                     disabled={isLoading}
                     isLoading={isLoading}
                     onClick={handleSearch}
-                    className="self-end lg:col-start-2 lg:flex lg:justify-self-end lg:self-start"
+                    className="self-end"
                 >
                     {isLoading ? (
                         <Loader2 className="w-4 h-4 xl:h-6 xl:w-6 animate-spin" />

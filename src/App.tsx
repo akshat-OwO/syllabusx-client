@@ -1,8 +1,8 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import {
-  RouteObject,
-  RouterProvider,
-  createBrowserRouter,
+    RouteObject,
+    RouterProvider,
+    createBrowserRouter,
 } from 'react-router-dom';
 import { ThemeProvider } from './components/theme-provider';
 import { Toaster } from './components/ui/toaster';
