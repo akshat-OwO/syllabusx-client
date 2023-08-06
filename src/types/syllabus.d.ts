@@ -16,4 +16,10 @@ type Drive = {
     id: string;
     name: string;
     description?: string;
+    createdTime: string;
+}
+
+type Embed = {
+    embedLink: string;
+    name: string;
 }

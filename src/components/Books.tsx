@@ -8,9 +8,11 @@ import { buttonVariants } from './ui/button';
 
 interface BooksProps {
     book: string;
+    setEmbed: React.Dispatch<React.SetStateAction<Embed>>
+    setTab: React.Dispatch<React.SetStateAction<string>>
 }
 
-const Books: FC<BooksProps> = ({ book }) => {
+const Books: FC<BooksProps> = ({ book, setEmbed, setTab }) => {
     const params = useParams();
 
     const { semester, branch, subject } = params;
@@ -43,8 +45,7 @@ const Books: FC<BooksProps> = ({ book }) => {
             {data && (
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                     {data.map((d) => (
-                        <a
-                            target='_blank'
+                        <div
                             key={d.id}
                             className={cn(
                                 buttonVariants({
@@ -53,16 +54,23 @@ const Books: FC<BooksProps> = ({ book }) => {
                                         'relative text-center h-full self-center hover:ring-2 hover:ring-neutral-50 hover:ring-offset-4 transition',
                                 })
                             )}
-                            href={d.webViewLink}
+                            onClick={() => {
+                                setTab('pdf')
+                                setEmbed({
+                                    embedLink:
+                                        d.webViewLink.slice(0, -17) + 'preview',
+                                    name: d.name.slice(0, -4),
+                                });
+                            }}
                         >
-                            {d.description?.includes('new') && (
+                            {!((new Date(Date.parse(d.createdTime))).getTime() < (new Date(Date.now() - 2 * 24 * 60 * 60 * 1000)).getTime()) && (
                                 <span className="absolute top-0 left-0 flex h-3 w-3">
                                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-500 opacity-75"></span>
                                     <span className="relative inline-flex rounded-full h-3 w-3 bg-teal-600"></span>
                                 </span>
                             )}
-                            {d.name}
-                        </a>
+                            {d.name.slice(0, -4)}
+                        </div>
                     ))}
                 </div>
             )}

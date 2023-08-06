@@ -4,6 +4,7 @@ import { ChevronRight, Loader2 } from 'lucide-react';
 import { FC, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Books from '../components/Books';
+import EmbedPdf from '../components/EmbedPdf';
 import Lab from '../components/Lab';
 import Notes from '../components/Notes';
 import PracticalFiles from '../components/PracticalFiles';
@@ -17,6 +18,7 @@ interface SubjectPageProps {}
 
 const SubjectPage: FC<SubjectPageProps> = () => {
     const [tab, setTab] = useState<string>('theory');
+    const [embed, setEmbed] = useState<Embed>({ embedLink: '', name: '' });
 
     const params = useParams();
 
@@ -49,11 +51,18 @@ const SubjectPage: FC<SubjectPageProps> = () => {
                 </h1>
                 <div className="flex px-2 sm:px-0 gap-2 sm:col-span-2 md:col-span-3 lg:col-span-4">
                     <h2 className="text-sm flex items-center gap-2">
-                        <Badge>{semesterList.find((s) => semester === s.value)?.label}</Badge>{' '}
+                        <Badge>
+                            {
+                                semesterList.find((s) => semester === s.value)
+                                    ?.label
+                            }
+                        </Badge>{' '}
                         <ChevronRight className="h-4 w-4" />
                     </h2>
                     <h2 className="text-sm flex items-center gap-2">
-                        <Badge>{branchList.find((b) => branch === b.value)?.label}</Badge>
+                        <Badge>
+                            {branchList.find((b) => branch === b.value)?.label}
+                        </Badge>
                     </h2>
                 </div>
                 {isLoading && (
@@ -100,12 +109,35 @@ const SubjectPage: FC<SubjectPageProps> = () => {
                                 <Theory theory={data[0].theory} />
                             )}
                             {tab === 'lab' && <Lab lab={data[0].lab} />}
-                            {tab === 'notes' && <Notes note={data[0].camel} />}
-                            {tab === 'pyqs' && <Pyqs pyq={data[0].pYq} />}
-                            {tab === 'books' && <Books book={data[0].book} />}
-                            {tab === 'practical files' && (
-                                <PracticalFiles practical={data[0].practical} />
+                            {tab === 'notes' && (
+                                <Notes
+                                    setEmbed={setEmbed}
+                                    setTab={setTab}
+                                    note={data[0].camel}
+                                />
                             )}
+                            {tab === 'pyqs' && (
+                                <Pyqs
+                                    setEmbed={setEmbed}
+                                    setTab={setTab}
+                                    pyq={data[0].pYq}
+                                />
+                            )}
+                            {tab === 'books' && (
+                                <Books
+                                    setEmbed={setEmbed}
+                                    setTab={setTab}
+                                    book={data[0].book}
+                                />
+                            )}
+                            {tab === 'practical files' && (
+                                <PracticalFiles
+                                    setEmbed={setEmbed}
+                                    setTab={setTab}
+                                    practical={data[0].practical}
+                                />
+                            )}
+                            {tab === 'pdf' && <EmbedPdf embed={embed} />}
                         </div>
                     </>
                 )}
