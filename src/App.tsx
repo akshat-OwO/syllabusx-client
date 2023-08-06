@@ -10,6 +10,7 @@ import HomeLayout from './layouts/HomeLayout';
 import Layout from './layouts/Layout';
 import HomePage from './pages/HomePage';
 import SubjectPage from './pages/SubjectPage';
+import SubjectsPage from './pages/SubjectsPage';
 
 function App() {
     const queryClient = new QueryClient({
@@ -31,8 +32,12 @@ function App() {
             children: [
                 {
                     path: '/search/:semester/:branch',
-                    element: <SubjectPage />,
+                    element: <SubjectsPage />,
                 },
+                {
+                    path: '/subject/:semester/:branch/:subject',
+                    element: <SubjectPage />
+                }
             ],
         },
     ];
