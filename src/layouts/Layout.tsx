@@ -17,13 +17,13 @@ const Layout: FC<LayoutProps> = () => {
     const navigate = useNavigate();
     return (
         <Drawer.Root shouldScaleBackground>
-            <div className="relative pb-14 sm:pb-20 lg:pb-5 min-h-screen bg-gradient-to-b from-neutral-800 to-black">
+            <div className="relative pb-14 sm:pb-20 lg:pb-2 min-h-screen bg-gradient-to-b from-neutral-800 to-black">
                 <div className="hidden md:block">
                     <Sidebar open={open} setOpen={setOpen} />
                 </div>
                 <div className="flex justify-between items-center p-5 shadow-sm">
                     <Icons.logo
-                        className="w-36 sm:w-64 xl:w-80"
+                        className="w-36 sm:w-44 xl:w-60"
                         onClick={() => navigate('/')}
                     />
                     <div

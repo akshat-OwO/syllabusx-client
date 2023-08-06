@@ -14,7 +14,7 @@ import SubjectsPage from './pages/SubjectsPage';
 
 function App() {
     const queryClient = new QueryClient({
-        defaultOptions: { queries: { staleTime: 1000 * 60 * 5 } },
+        defaultOptions: { queries: { staleTime: 1000 * 60 * 60 * 8 } }, // 8 hours
     });
 
     const routes: RouteObject[] = [

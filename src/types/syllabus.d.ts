@@ -10,3 +10,10 @@ type Lab = {
         steps: string[];
     };
 };
+
+type Drive = {
+    webViewLink: string;
+    id: string;
+    name: string;
+    description?: string;
+}

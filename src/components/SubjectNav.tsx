@@ -29,7 +29,7 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
 
     return (
         <TooltipProvider>
-            <div className="fixed grid place-items-center bottom-0 left-0 w-full lg:w-auto lg:bottom-auto lg:left-10 lg:top-[14.4rem] xl:left-10 xl:top-[15.65rem] bg-neutral-900 rounded-lg p-2">
+            <div className="fixed grid place-items-center bottom-0 left-0 w-full lg:w-auto lg:bottom-auto lg:left-10 lg:top-[12.9rem] xl:left-10 xl:top-1/2 xl:-translate-y-1/2 bg-neutral-900 rounded-lg p-2">
                 <div className="grid grid-cols-7 lg:grid-rows-[7] lg:grid-cols-1 place-items-center w-full gap-1 rounded-lg">
                     <Tooltip>
                         <TooltipTrigger className="sm:flex sm:flex-col sm:gap-1 sm:items-center sm:justify-center">

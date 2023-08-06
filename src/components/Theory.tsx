@@ -17,7 +17,7 @@ const Theory: FC<TheoryProps> = ({ theory }) => {
             <Accordion type="single" collapsible>
                 {theory.map((t) => (
                     <AccordionItem key={t.unit} value={`unit ${t.unit}`}>
-                        <AccordionTrigger className='lg:text-base'>{`Unit ${t.unit}`}</AccordionTrigger>
+                        <AccordionTrigger className='lg:text-base hover:bg-neutral-700 rounded-lg p-2'>{`Unit ${t.unit}`}</AccordionTrigger>
                         <AccordionContent>
                             <div className='flex flex-col items-center gap-2'>
                                 {t.topics.map((topic) => (

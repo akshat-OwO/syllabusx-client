@@ -29,7 +29,7 @@ const Lab: FC<LabProps> = ({ lab }) => {
                             key={l.experiment}
                             value={`experiment ${l.experiment}`}
                         >
-                            <AccordionTrigger className="lg:text-base">
+                            <AccordionTrigger className="lg:text-base hover:bg-neutral-700 rounded-lg p-2">
                                 <div className="flex flex-col gap-1">
                                     <p>{`Experiment ${l.experiment}`}</p>
                                 </div>
