@@ -7,7 +7,7 @@ interface HomeLayoutProps {}
 
 const HomeLayout: FC<HomeLayoutProps> = () => {
     return (
-        <div className="relative min-h-screen bg-gradient-to-b from-neutral-800 to-black">
+        <div className="relative min-h-screen bg-gradient-to-br from-neutral-900 to-black">
             <Icons.logo className="w-52 py-5 mx-auto sm:w-64 xl:w-80" />
             <div className="grid place-content-center">
                 <Outlet />

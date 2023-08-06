@@ -10,6 +10,7 @@ import PracticalFiles from '../components/PracticalFiles';
 import Pyqs from '../components/Pyqs';
 import SubjectNav from '../components/SubjectNav';
 import Theory from '../components/Theory';
+import { Badge } from '../components/ui/badge';
 import { branchList, semesterList } from '../config';
 
 interface SubjectPageProps {}
@@ -27,7 +28,6 @@ const SubjectPage: FC<SubjectPageProps> = () => {
             const response = (await axios.get(
                 `https://server.syllabusx.live/${semester}/${branch}/${subject}`
             )) as AxiosResponse;
-            console.log(response.data);
             return response.data;
         },
     });
@@ -44,18 +44,18 @@ const SubjectPage: FC<SubjectPageProps> = () => {
         <>
             <SubjectNav tab={tab} setTab={setTab} />
             <div className="grid sm:px-10 lg:px-44 xl:px-60 gap-2 w-full mt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                <div className="flex px-5 gap-2 sm:col-span-2 md:col-span-3 lg:col-span-4">
-                    <h2 className="text-sm flex gap-2">
-                        {semesterList.find((s) => semester === s.value)?.label}{' '}
-                        <ChevronRight className="h-4 w-4" />
-                    </h2>
-                    <h2 className="text-sm flex gap-2">
-                        {branchList.find((b) => branch === b.value)?.label}
-                    </h2>
-                </div>
                 <h1 className="text-2xl lg:text-3xl text-center sm:col-span-2 md:col-span-3 lg:col-span-4">
                     {subject}
                 </h1>
+                <div className="flex px-2 sm:px-0 gap-2 sm:col-span-2 md:col-span-3 lg:col-span-4">
+                    <h2 className="text-sm flex items-center gap-2">
+                        <Badge>{semesterList.find((s) => semester === s.value)?.label}</Badge>{' '}
+                        <ChevronRight className="h-4 w-4" />
+                    </h2>
+                    <h2 className="text-sm flex items-center gap-2">
+                        <Badge>{branchList.find((b) => branch === b.value)?.label}</Badge>
+                    </h2>
+                </div>
                 {isLoading && (
                     <Loader2 className="h-24 w-24 animate-spin mt-5 mx-auto sm:col-span-2 md:col-span-3 lg:col-span-4" />
                 )}

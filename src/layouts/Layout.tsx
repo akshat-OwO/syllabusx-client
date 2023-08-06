@@ -17,13 +17,13 @@ const Layout: FC<LayoutProps> = () => {
     const navigate = useNavigate();
     return (
         <Drawer.Root shouldScaleBackground>
-            <div className="relative pb-14 sm:pb-20 lg:pb-2 min-h-screen bg-gradient-to-b from-neutral-800 to-black">
+            <div className="relative pb-14 sm:pb-20 lg:pb-2 min-h-screen bg-gradient-to-br from-neutral-900 to-black">
                 <div className="hidden md:block">
                     <Sidebar open={open} setOpen={setOpen} />
                 </div>
                 <div className="flex justify-between items-center p-5 shadow-sm">
                     <Icons.logo
-                        className="w-36 sm:w-44 xl:w-60"
+                        className="w-36 sm:w-44 xl:w-60 cursor-pointer"
                         onClick={() => navigate('/')}
                     />
                     <div
@@ -53,7 +53,7 @@ const Layout: FC<LayoutProps> = () => {
                 <Outlet />
                 <Drawer.Portal>
                     <Drawer.Overlay className="fixed inset-0 bg-black/40 md:hidden" />
-                    <Drawer.Content className="bg-gradient-to-b from-neutral-800 to-black flex flex-col rounded-t-[10px] h-[96%] mt-24 fixed bottom-0 left-0 right-0 md:hidden">
+                    <Drawer.Content className="bg-gradient-to-br from-neutral-900 to-black flex flex-col rounded-t-[10px] h-[96%] mt-24 fixed bottom-0 left-0 right-0 md:hidden">
                         <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-zinc-300 mb-8 mt-4" />
                         <div className="grid justify-center">
                             <Drawer.Title className="mx-auto mb-32">

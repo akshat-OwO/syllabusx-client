@@ -3,6 +3,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ChevronRight, Loader2 } from 'lucide-react';
 import { FC } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
 import { branchList, semesterList } from '../config';
 
@@ -38,12 +39,12 @@ const SubjectsPage: FC<SubjectsPageProps> = () => {
                 Subjects
             </h1>
             <div className="flex gap-2 sm:col-span-2 md:col-span-3 lg:col-span-4">
-                <h2 className="text-sm flex gap-2">
-                    {semesterList.find((s) => semester === s.value)?.label}{' '}
+                <h2 className="text-sm flex items-center gap-2">
+                    <Badge variant='default'>{semesterList.find((s) => semester === s.value)?.label}</Badge>{' '}
                     <ChevronRight className="h-4 w-4" />
                 </h2>
-                <h2 className="text-sm flex gap-2">
-                    {branchList.find((b) => branch === b.value)?.label}
+                <h2 className="text-sm flex items-center gap-2">
+                    <Badge variant='default'>{branchList.find((b) => branch === b.value)?.label}</Badge>
                 </h2>
             </div>
             {isLoading && (
