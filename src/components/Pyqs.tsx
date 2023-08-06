@@ -19,7 +19,7 @@ const Pyqs: FC<PyqsProps> = ({ pyq }) => {
         queryKey: ['pyqs', semester, branch, subject],
         queryFn: async () => {
             const response = (await axios.get(
-                `http://server.syllabusx.live/drive/pyq/${pyq}`
+                `https://server.syllabusx.live/drive/pyq/${pyq}`
             )) as AxiosResponse;
             return response.data as Drive[];
         },

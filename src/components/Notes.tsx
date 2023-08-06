@@ -19,7 +19,7 @@ const Notes: FC<NotesProps> = ({ note }) => {
         queryKey: ['notes', semester, branch, subject],
         queryFn: async () => {
             const response = (await axios.get(
-                `http://server.syllabusx.live/drive/notes/${note}`
+                `https://server.syllabusx.live/drive/notes/${note}`
             )) as AxiosResponse;
             return response.data as Drive[];
         },

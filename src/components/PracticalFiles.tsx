@@ -19,7 +19,7 @@ const PracticalFiles: FC<PracticalFilesProps> = ({ practical }) => {
         queryKey: ['practicals', semester, branch, subject],
         queryFn: async () => {
             const response = (await axios.get(
-                `http://server.syllabusx.live/drive/practicalfile/${practical}`
+                `https://server.syllabusx.live/drive/practicalfile/${practical}`
             )) as AxiosResponse;
             return response.data as Drive[];
         },
