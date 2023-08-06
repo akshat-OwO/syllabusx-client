@@ -3,6 +3,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ChevronRight, Loader2 } from 'lucide-react';
 import { FC, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Lab from '../components/Lab';
 import SubjectNav from '../components/SubjectNav';
 import Theory from '../components/Theory';
 import { branchList, semesterList } from '../config';
@@ -74,6 +75,7 @@ const SubjectPage: FC<SubjectPageProps> = () => {
                                 </p>
                             </div>
                             {tab === 'theory' && <Theory theory={data[0].theory} />}
+                            {tab === 'lab' && <Lab lab={data[0].lab} />}
                         </div>
                     </>
                 )}
