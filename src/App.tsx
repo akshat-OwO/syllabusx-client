@@ -1,4 +1,6 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
+import { QueryClient } from '@tanstack/react-query';
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 import {
     RouteObject,
     RouterProvider,
@@ -14,7 +16,11 @@ import SubjectsPage from './pages/SubjectsPage';
 
 function App() {
     const queryClient = new QueryClient({
-        defaultOptions: { queries: { staleTime: 1000 * 60 * 60 * 8 } }, // 8 hours
+        defaultOptions: { queries: { staleTime: 1000 * 60 * 60 * 8, cacheTime: 1000 * 60 * 60 * 8 } }, // 8 hours
+    });
+
+    const persister = createSyncStoragePersister({
+        storage: window.localStorage,
     });
 
     const routes: RouteObject[] = [
@@ -36,8 +42,8 @@ function App() {
                 },
                 {
                     path: '/subject/:semester/:branch/:subject',
-                    element: <SubjectPage />
-                }
+                    element: <SubjectPage />,
+                },
             ],
         },
     ];
@@ -46,11 +52,14 @@ function App() {
 
     return (
         <ThemeProvider defaultTheme="dark" storageKey="color-theme">
-            <QueryClientProvider client={queryClient}>
+            <PersistQueryClientProvider
+                client={queryClient}
+                persistOptions={{ persister }}
+            >
                 <RouterProvider router={router} />
                 <Toaster />
                 {/* <ReactQueryDevtools /> */}
-            </QueryClientProvider>
+            </PersistQueryClientProvider>
         </ThemeProvider>
     );
 }
