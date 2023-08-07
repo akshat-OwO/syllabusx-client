@@ -14,6 +14,7 @@ import { branchList, semesterList } from '@/config';
 import { useQuery } from '@tanstack/react-query';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ChevronRight, Loader2 } from 'lucide-react';
+import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
 import { useParams } from 'next/navigation';
 import { FC, useState } from 'react';
 
@@ -29,7 +30,7 @@ const Page: FC<pageProps> = ({}) => {
 
     const params = useParams();
 
-    const { semester, branch, subject } = params;
+    const { semester, branch, subject }: Params = params;
 
     const { data, isLoading, error } = useQuery({
         queryKey: ['subject', semester, branch, subject],
@@ -37,6 +38,8 @@ const Page: FC<pageProps> = ({}) => {
             const response = (await axios.get(
                 `https://server.syllabusx.live/${semester}/${branch}/${subject}`
             )) as AxiosResponse;
+            console.log(response.data);
+            console.log(typeof subject)
             return response.data;
         },
     });
