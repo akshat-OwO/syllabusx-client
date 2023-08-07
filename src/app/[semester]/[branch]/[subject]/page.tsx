@@ -53,28 +53,21 @@ const Page: FC<pageProps> = ({}) => {
     return (
         <>
             <SubjectNav tab={tab} setTab={setTab} />
-            <div className="grid sm:px-10 text-neutral-50 lg:px-44 xl:px-60 gap-2 w-full mt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <div className="grid px-4 sm:px-10 text-neutral-50 lg:px-44 xl:px-60 gap-2 w-full mt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 {isLoading && (
                     <Skeleton className='w-56 h-10 mx-auto rounded-lg sm:col-span-2 md:col-span-3 lg:col-span-4' />
                 )}
                 <h1 className="text-2xl lg:text-3xl text-center sm:col-span-2 md:col-span-3 lg:col-span-4">
                     {data && data[0].subject}
                 </h1>
-                <div className="flex px-2 sm:px-0 gap-2 sm:col-span-2 md:col-span-3 lg:col-span-4">
-                    <h2 className="text-sm flex items-center gap-2">
-                        <Badge>
-                            {
-                                semesterList.find((s) => semester === s.value)
-                                    ?.label
-                            }
-                        </Badge>{' '}
-                        <ChevronRight className="h-4 w-4" />
-                    </h2>
-                    <h2 className="text-sm flex items-center gap-2">
-                        <Badge>
-                            {branchList.find((b) => branch === b.value)?.label}
-                        </Badge>
-                    </h2>
+                <div className="flex px-0.5 sm:px-0 gap-2 sm:col-span-2 md:col-span-3 lg:col-span-4">
+                <h2 className="text-sm flex items-center gap-2">
+                    <Badge variant="secondary" className='flex items-center gap-2 text-md text-neutral-400'>
+                        {semesterList.find((s) => semester === s.value)?.label}
+                    <ChevronRight className="h-4 w-4" />
+                        {branchList.find((b) => branch === b.value)?.label}
+                    </Badge>{' '}
+                </h2>
                 </div>
                 {isLoading && (
                     <Loader2 className="h-24 w-24 animate-spin mt-5 mx-auto sm:col-span-2 md:col-span-3 lg:col-span-4" />
