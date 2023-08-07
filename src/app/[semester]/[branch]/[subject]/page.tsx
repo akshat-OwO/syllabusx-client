@@ -38,8 +38,6 @@ const Page: FC<pageProps> = ({}) => {
             const response = (await axios.get(
                 `https://server.syllabusx.live/${semester}/${branch}/${subject}`
             )) as AxiosResponse;
-            console.log(response.data);
-            console.log(typeof subject)
             return response.data;
         },
     });
