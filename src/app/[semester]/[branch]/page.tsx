@@ -1,17 +1,21 @@
+'use client';
+
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { branchList, semesterList } from '@/config';
 import { useQuery } from '@tanstack/react-query';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ChevronRight, Loader2 } from 'lucide-react';
+import { useParams, useRouter } from 'next/navigation';
 import { FC } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Badge } from '../components/ui/badge';
-import { Button } from '../components/ui/button';
-import { branchList, semesterList } from '../config';
 
-interface SubjectsPageProps {}
+export const dynamic = 'force-dynamic';
 
-const SubjectsPage: FC<SubjectsPageProps> = () => {
+interface pageProps {}
+
+const Page: FC<pageProps> = ({}) => {
     const params = useParams();
-    const navigate = useNavigate();
+    const router = useRouter();
 
     const { semester, branch } = params;
 
@@ -34,17 +38,21 @@ const SubjectsPage: FC<SubjectsPageProps> = () => {
         );
 
     return (
-        <div className="grid px-10 pb-5 gap-4 w-full mt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid text-neutral-50 px-10 pb-5 gap-4 w-full mt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             <h1 className="text-3xl text-center sm:col-span-2 md:col-span-3 lg:col-span-4">
                 Subjects
             </h1>
             <div className="flex gap-2 sm:col-span-2 md:col-span-3 lg:col-span-4">
                 <h2 className="text-sm flex items-center gap-2">
-                    <Badge variant='default'>{semesterList.find((s) => semester === s.value)?.label}</Badge>{' '}
+                    <Badge variant="default">
+                        {semesterList.find((s) => semester === s.value)?.label}
+                    </Badge>{' '}
                     <ChevronRight className="h-4 w-4" />
                 </h2>
                 <h2 className="text-sm flex items-center gap-2">
-                    <Badge variant='default'>{branchList.find((b) => branch === b.value)?.label}</Badge>
+                    <Badge variant="default">
+                        {branchList.find((b) => branch === b.value)?.label}
+                    </Badge>
                 </h2>
             </div>
             {isLoading && (
@@ -52,7 +60,13 @@ const SubjectsPage: FC<SubjectsPageProps> = () => {
             )}
             {data &&
                 data.map((d: string) => (
-                    <Button onClick={() => navigate(`/subject/${semester}/${branch}/${d}`)} size="lg" key={d}>
+                    <Button
+                        onClick={() =>
+                            router.push(`/${semester}/${branch}/${d}`)
+                        }
+                        size="lg"
+                        key={d}
+                    >
                         {d}
                     </Button>
                 ))}
@@ -60,4 +74,4 @@ const SubjectsPage: FC<SubjectsPageProps> = () => {
     );
 };
 
-export default SubjectsPage;
+export default Page;

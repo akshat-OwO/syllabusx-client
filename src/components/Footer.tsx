@@ -9,7 +9,7 @@ const Footer: FC<FooterProps> = ({ type }) => {
     return (
         <div
             className={
-                'absolute w-full grid place-items-center bottom-0 bg-neutral-900/80 rounded-lg p-2' +
+                'absolute text-neutral-50 w-full grid place-items-center bottom-0 bg-neutral-900/80 rounded-lg p-2' +
                 ` ${type === 'search' ? '' : 'small:relative small:mt-2'}`
             }
         >
@@ -30,7 +30,7 @@ const Footer: FC<FooterProps> = ({ type }) => {
             </div>
             <div className="relative grid place-items-center w-full gap-3 bg-neutral-800/80 rounded-lg p-2">
                 <p className="text-sm xl:text-base">Made with ♡</p>
-                <div className="flex gap-2">
+                <div className="flex items-center gap-2">
                     <a
                         className="text-xs xl:text-sm flex gap-1 hover:text-teal-700 transition"
                         href="https://linktr.ee/akshatOwO"

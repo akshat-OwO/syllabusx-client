@@ -1,3 +1,5 @@
+'use client';
+
 import { Dialog, Transition } from '@headlessui/react';
 import { X } from 'lucide-react';
 import { FC, Fragment } from 'react';
@@ -72,8 +74,8 @@ const Sidebar: FC<SidebarProps> = ({ open, setOpen }) => {
                                                 <Icons.logo className="w-36" />
                                             </Dialog.Title>
                                         </div>
-                                        <div className="relative sm:px-6">
-                                            <Search setOpen={setOpen} />
+                                        <div className="flex flex-col gap-2 mt-0 relative sm:px-6">
+                                            <Search where='sidebar' />
                                         </div>
                                         <Footer type="search" />
                                     </div>

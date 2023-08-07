@@ -1,8 +1,10 @@
+'use client';
+
 import { useQuery } from '@tanstack/react-query';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Loader2 } from 'lucide-react';
+import { useParams } from 'next/navigation';
 import { FC } from 'react';
-import { useParams } from 'react-router-dom';
 import { cn } from '../lib/utils';
 import { buttonVariants } from './ui/button';
 

@@ -1,35 +1,25 @@
+'use client';
+
+import { branchList, semesterList } from '@/config';
+import { cn } from '@/lib/utils';
 import { ChevronsUpDown, Loader2, SendHorizonal } from 'lucide-react';
-import { FC, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Drawer } from 'vaul';
-import { branchList, semesterList } from '../config';
-import { useToast } from '../hooks/use-toast';
-import { cn } from '../lib/utils';
+import { useRouter } from 'next/navigation';
+import { FC, useState } from 'react';
 import { Button, buttonVariants } from './ui/button';
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from './ui/dropdown-menu';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './ui/dropdown-menu';
+import { useToast } from './ui/use-toast';
 
 interface SearchProps {
-    setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+    where?: string;
 }
 
-const Search: FC<SearchProps> = ({ setOpen }) => {
+const Search: FC<SearchProps> = ({ where }) => {
     const [semester, setSemester] = useState<string>('');
     const [branch, setBranch] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const { toast } = useToast();
-    const navigate = useNavigate();
-    const params = useParams();
-
-    useEffect(() => {
-        if (params.semester) setSemester(params.semester);
-        if (params.branch) setBranch(params.branch);
-    }, [params]);
+    const router = useRouter();
 
     const handleSearch = async () => {
         setIsLoading(true);
@@ -40,18 +30,17 @@ const Search: FC<SearchProps> = ({ setOpen }) => {
                 variant: 'destructive',
             });
         }
-        if (semester || branch) {
+        if (semester && branch) {
             await new Promise((resolve) => setTimeout(resolve, 500));
-            navigate(`/search/${semester}/${branch}`);
+            router.push(`/${semester}/${branch}`);
         }
-        if (setOpen) setOpen(false);
         setIsLoading(false);
     };
 
     return (
-        <div className="flex flex-col gap-2 mt-0">
+        <>
             <DropdownMenu>
-                <DropdownMenuTrigger>
+                <DropdownMenuTrigger className="lg:col-start-2">
                     <div
                         className={cn(
                             buttonVariants({
@@ -107,21 +96,19 @@ const Search: FC<SearchProps> = ({ setOpen }) => {
                     ))}
                 </DropdownMenuContent>
             </DropdownMenu>
-            <Drawer.Close asChild>
-                <Button
-                    disabled={isLoading}
-                    isLoading={isLoading}
-                    onClick={handleSearch}
-                    className="self-end"
-                >
-                    {isLoading ? (
-                        <Loader2 className="w-4 h-4 xl:h-6 xl:w-6 animate-spin" />
-                    ) : (
-                        <SendHorizonal className="w-4 h-4 xl:h-6 xl:w-6" />
-                    )}
-                </Button>
-            </Drawer.Close>
-        </div>
+            <Button
+                disabled={isLoading}
+                isLoading={isLoading}
+                onClick={handleSearch}
+                className={"self-end lg:col-start-2 lg:flex lg:justify-self-end lg:self-start" + `${where === 'sidebar' ? ' lg:self-end' : ''}`}
+            >
+                {isLoading ? (
+                    <Loader2 className="w-4 h-4 xl:h-6 xl:w-6 animate-spin" />
+                ) : (
+                    <SendHorizonal className="w-4 h-4 xl:h-6 xl:w-6" />
+                )}
+            </Button>
+        </>
     );
 };
 

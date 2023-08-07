@@ -1,13 +1,12 @@
 {
   "name": "syllabusx-client",
+  "version": "0.1.0",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.16",
@@ -20,32 +19,25 @@
     "@tanstack/react-query": "^4.32.6",
     "@tanstack/react-query-devtools": "^4.32.6",
     "@tanstack/react-query-persist-client": "^4.32.6",
+    "@types/node": "20.4.8",
+    "@types/react": "18.2.18",
+    "@types/react-dom": "18.2.7",
+    "@vercel/analytics": "^1.0.1",
+    "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
-    "lucide-react": "^0.263.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-hook-form": "^7.45.3",
-    "react-router-dom": "^6.14.2",
+    "eslint": "8.46.0",
+    "eslint-config-next": "13.4.12",
+    "lucide-react": "^0.264.0",
+    "next": "13.4.12",
+    "postcss": "8.4.27",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "tailwind-merge": "^1.14.0",
+    "tailwindcss": "3.3.3",
     "tailwindcss-animate": "^1.0.6",
-    "vaul": "^0.1.2"
-  },
-  "devDependencies": {
-    "@types/node": "^20.4.7",
-    "@types/react": "^18.2.15",
-    "@types/react-dom": "^18.2.7",
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0",
-    "@vitejs/plugin-react": "^4.0.3",
-    "autoprefixer": "^10.4.14",
-    "eslint": "^8.45.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.3",
-    "postcss": "^8.4.27",
-    "tailwindcss": "^3.3.3",
-    "typescript": "^5.0.2",
-    "vite": "^4.4.5"
+    "typescript": "5.1.6",
+    "vaul": "^0.2.0"
   }
 }

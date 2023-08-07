@@ -1,20 +1,9 @@
-import {
-    Book,
-    BookCopy,
-    ChevronLeft,
-    FileQuestion,
-    FileText,
-    FlaskConical,
-    Pencil,
-} from 'lucide-react';
+'use client';
+
+import { Book, BookCopy, ChevronLeft, FileQuestion, FileText, FlaskConical, Pencil } from 'lucide-react';
+import { useParams, useRouter } from 'next/navigation';
 import { FC } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from './ui/tooltip';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
 
 interface SubjectNavProps {
     tab: string;
@@ -23,21 +12,21 @@ interface SubjectNavProps {
 
 const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
     const params = useParams();
-    const navigate = useNavigate();
+    const router = useRouter();
 
     const { semester, branch } = params;
 
-    return (
-        <TooltipProvider>
-            <div className="fixed grid place-items-center bottom-0 left-0 w-full lg:w-auto lg:bottom-auto lg:left-10 lg:top-[12.9rem] xl:left-10 xl:top-1/2 xl:-translate-y-1/2 bg-neutral-900 z-[2] rounded-lg p-2">
+  return (
+    <TooltipProvider>
+            <div className="fixed grid place-items-center bottom-0 left-0 w-full lg:w-auto lg:bottom-auto lg:left-10 lg:top-[12.9rem] xl:left-10 xl:top-1/2 xl:-translate-y-1/2 bg-neutral-900 z-[2] rounded-t-lg lg:rounded-b-lg p-2">
                 <div className="grid grid-cols-7 lg:grid-rows-[7] lg:grid-cols-1 place-items-center w-full gap-1 rounded-lg">
                     <Tooltip>
                         <TooltipTrigger className="sm:flex sm:flex-col sm:gap-1 sm:items-center sm:justify-center">
                             <div
                                 onClick={() =>
-                                    navigate(`/search/${semester}/${branch}`)
+                                    router.push(`/${semester}/${branch}`)
                                 }
-                                className="bg-primary text-black rounded-md p-2 cursor-pointer"
+                                className="bg-neutral-50 text-black rounded-md p-2 cursor-pointer"
                             >
                                 <ChevronLeft className="h-4 w-4 pointer-events-none" />
                             </div>
@@ -45,7 +34,7 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
                                 Go Back
                             </p>
                         </TooltipTrigger>
-                        <TooltipContent className="bg-primary text-black">
+                        <TooltipContent>
                             Go Back
                         </TooltipContent>
                     </Tooltip>
@@ -57,8 +46,8 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
                                     'rounded-md p-2 cursor-pointer transition ' +
                                     `${
                                         tab === 'theory'
-                                            ? 'bg-neutral-600'
-                                            : 'bg-neutral-800/80'
+                                            ? 'bg-neutral-300'
+                                            : 'bg-neutral-500'
                                     }`
                                 }
                             >
@@ -68,7 +57,7 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
                                 Theory
                             </p>
                         </TooltipTrigger>
-                        <TooltipContent className="bg-primary text-black">
+                        <TooltipContent>
                             Theory
                         </TooltipContent>
                     </Tooltip>
@@ -80,8 +69,8 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
                                     'rounded-md p-2 cursor-pointer transition ' +
                                     `${
                                         tab === 'lab'
-                                            ? 'bg-neutral-600'
-                                            : 'bg-neutral-800/80'
+                                            ? 'bg-neutral-300'
+                                            : 'bg-neutral-500'
                                     }`
                                 }
                             >
@@ -91,7 +80,7 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
                                 Lab
                             </p>
                         </TooltipTrigger>
-                        <TooltipContent className="bg-primary text-black">
+                        <TooltipContent>
                             Lab
                         </TooltipContent>
                     </Tooltip>
@@ -103,8 +92,8 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
                                     'rounded-md p-2 cursor-pointer transition ' +
                                     `${
                                         tab === 'notes'
-                                            ? 'bg-neutral-600'
-                                            : 'bg-neutral-800/80'
+                                            ? 'bg-neutral-300'
+                                            : 'bg-neutral-500'
                                     }`
                                 }
                             >
@@ -114,7 +103,7 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
                                 Notes
                             </p>
                         </TooltipTrigger>
-                        <TooltipContent className="bg-primary text-black">
+                        <TooltipContent>
                             Notes
                         </TooltipContent>
                     </Tooltip>
@@ -126,8 +115,8 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
                                     'rounded-md p-2 cursor-pointer transition ' +
                                     `${
                                         tab === 'pyqs'
-                                            ? 'bg-neutral-600'
-                                            : 'bg-neutral-800/80'
+                                            ? 'bg-neutral-300'
+                                            : 'bg-neutral-500'
                                     }`
                                 }
                             >
@@ -137,7 +126,7 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
                                 PYQs
                             </p>
                         </TooltipTrigger>
-                        <TooltipContent className="bg-primary text-black">
+                        <TooltipContent>
                             PYQs
                         </TooltipContent>
                     </Tooltip>
@@ -149,8 +138,8 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
                                     'rounded-md p-2 cursor-pointer transition ' +
                                     `${
                                         tab === 'books'
-                                            ? 'bg-neutral-600'
-                                            : 'bg-neutral-800/80'
+                                            ? 'bg-neutral-300'
+                                            : 'bg-neutral-500'
                                     }`
                                 }
                             >
@@ -160,7 +149,7 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
                                 Books
                             </p>
                         </TooltipTrigger>
-                        <TooltipContent className="bg-primary text-black">
+                        <TooltipContent>
                             Books
                         </TooltipContent>
                     </Tooltip>
@@ -172,8 +161,8 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
                                     'rounded-md p-2 cursor-pointer transition ' +
                                     `${
                                         tab === 'practical files'
-                                            ? 'bg-neutral-600'
-                                            : 'bg-neutral-800/80'
+                                            ? 'bg-neutral-300'
+                                            : 'bg-neutral-500'
                                     }`
                                 }
                             >
@@ -183,14 +172,14 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
                                 Practical Files
                             </p>
                         </TooltipTrigger>
-                        <TooltipContent className="bg-primary text-black">
+                        <TooltipContent>
                             Practical Files
                         </TooltipContent>
                     </Tooltip>
                 </div>
             </div>
         </TooltipProvider>
-    );
-};
+  )
+}
 
-export default SubjectNav;
+export default SubjectNav

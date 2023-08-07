@@ -1,22 +1,27 @@
+'use client';
+
+import Footer from '@/components/Footer';
+import { Icons } from '@/components/Icons';
+import Search from '@/components/Search';
+import Sidebar from '@/components/Sidebar';
+import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import { Menu } from 'lucide-react';
-import { FC, useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
+import { FC, ReactNode, useState } from 'react';
 import { Drawer } from 'vaul';
-import Footer from '../components/Footer';
-import { Icons } from '../components/Icons';
-import Search from '../components/Search';
-import Sidebar from '../components/Sidebar';
-import { buttonVariants } from '../components/ui/button';
-import { cn } from '../lib/utils';
 
-interface LayoutProps {}
+interface LayoutProps {
+children: ReactNode
+}
 
-const Layout: FC<LayoutProps> = () => {
+const Layout: FC<LayoutProps> = ({ children }) => {
     const [open, setOpen] = useState<boolean>(false);
 
-    const navigate = useNavigate();
-    return (
-        <Drawer.Root shouldScaleBackground>
+    const router = useRouter();
+
+  return (
+    <Drawer.Root shouldScaleBackground>
             <div className="relative pb-14 sm:pb-20 lg:pb-2 min-h-screen bg-gradient-to-br from-neutral-900 to-black">
                 <div className="hidden md:block">
                     <Sidebar open={open} setOpen={setOpen} />
@@ -24,7 +29,7 @@ const Layout: FC<LayoutProps> = () => {
                 <div className="flex justify-between items-center p-5 shadow-sm">
                     <Icons.logo
                         className="w-36 sm:w-44 xl:w-60 cursor-pointer"
-                        onClick={() => navigate('/')}
+                        onClick={() => router.push('/')}
                     />
                     <div
                         onClick={() => setOpen(!open)}
@@ -50,23 +55,25 @@ const Layout: FC<LayoutProps> = () => {
                         </div>
                     </Drawer.Trigger>
                 </div>
-                <Outlet />
+                { children }
                 <Drawer.Portal>
-                    <Drawer.Overlay className="fixed inset-0 bg-black/40 md:hidden" />
+                    <Drawer.Overlay className="fixed h-full inset-0 bg-black/40 md:hidden" />
                     <Drawer.Content className="z-10 bg-gradient-to-br from-neutral-900 to-black flex flex-col rounded-t-[10px] h-[96%] mt-24 fixed bottom-0 left-0 right-0 md:hidden">
                         <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-zinc-300 mb-8 mt-4" />
                         <div className="grid justify-center">
                             <Drawer.Title className="mx-auto mb-32">
                                 <Icons.logo className="w-36" />
                             </Drawer.Title>
-                            <Search />
+                            <div className='flex flex-col gap-2 mt-0'>
+                                <Search />
+                            </div>
                         </div>
                         <Footer type="" />
                     </Drawer.Content>
                 </Drawer.Portal>
             </div>
         </Drawer.Root>
-    );
-};
+  )
+}
 
-export default Layout;
+export default Layout

@@ -1,22 +1,29 @@
+'use client';
+
+import Books from '@/components/Books';
+import EmbedPdf from '@/components/EmbedPdf';
+import Lab from '@/components/Lab';
+import Notes from '@/components/Notes';
+import PracticalFiles from '@/components/PracticalFiles';
+import Pyqs from '@/components/Pyqs';
+import SubjectNav from '@/components/SubjectNav';
+import Theory from '@/components/Theory';
+import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
+import { branchList, semesterList } from '@/config';
 import { useQuery } from '@tanstack/react-query';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ChevronRight, Loader2 } from 'lucide-react';
+import { useParams } from 'next/navigation';
 import { FC, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import Books from '../components/Books';
-import EmbedPdf from '../components/EmbedPdf';
-import Lab from '../components/Lab';
-import Notes from '../components/Notes';
-import PracticalFiles from '../components/PracticalFiles';
-import Pyqs from '../components/Pyqs';
-import SubjectNav from '../components/SubjectNav';
-import Theory from '../components/Theory';
-import { Badge } from '../components/ui/badge';
-import { branchList, semesterList } from '../config';
 
-interface SubjectPageProps {}
+export const dynamic = 'force-dynamic';
 
-const SubjectPage: FC<SubjectPageProps> = () => {
+interface pageProps {
+  
+}
+
+const Page: FC<pageProps> = ({}) => {
     const [tab, setTab] = useState<string>('theory');
     const [embed, setEmbed] = useState<Embed>({ embedLink: '', name: '' });
 
@@ -45,9 +52,12 @@ const SubjectPage: FC<SubjectPageProps> = () => {
     return (
         <>
             <SubjectNav tab={tab} setTab={setTab} />
-            <div className="grid sm:px-10 lg:px-44 xl:px-60 gap-2 w-full mt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <div className="grid sm:px-10 text-neutral-50 lg:px-44 xl:px-60 gap-2 w-full mt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                {isLoading && (
+                    <Skeleton className='w-56 h-10 mx-auto rounded-lg sm:col-span-2 md:col-span-3 lg:col-span-4' />
+                )}
                 <h1 className="text-2xl lg:text-3xl text-center sm:col-span-2 md:col-span-3 lg:col-span-4">
-                    {subject}
+                    {data && data[0].subject}
                 </h1>
                 <div className="flex px-2 sm:px-0 gap-2 sm:col-span-2 md:col-span-3 lg:col-span-4">
                     <h2 className="text-sm flex items-center gap-2">
@@ -70,7 +80,7 @@ const SubjectPage: FC<SubjectPageProps> = () => {
                 )}
                 {data && (
                     <>
-                        <div className="p-2 sm:col-span-2 md:col-span-3 lg:col-span-4 lg:mt-5 grid gap-2 bg-neutral-900/80 rounded-lg">
+                        <div className="p-2 sm:col-span-2 md:col-span-3 lg:col-span-4 lg:mt-5 grid gap-2 bg-neutral-900/80 text-neutral-50 rounded-lg">
                             <div className="p-2 bg-neutral-800/80 rounded-lg">
                                 <p className="flex text-sm lg:text-base items-center justify-between">
                                     Theory Code{' '}
@@ -143,7 +153,7 @@ const SubjectPage: FC<SubjectPageProps> = () => {
                 )}
             </div>
         </>
-    );
-};
+  )
+}
 
-export default SubjectPage;
+export default Page

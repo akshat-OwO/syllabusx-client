@@ -1,9 +1,11 @@
+'use client';
+
+import { cn } from '@/lib/utils';
 import { useQuery } from '@tanstack/react-query';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Loader2 } from 'lucide-react';
+import { useParams } from 'next/navigation';
 import { FC } from 'react';
-import { useParams } from 'react-router-dom';
-import { cn } from '../lib/utils';
 import { buttonVariants } from './ui/button';
 
 interface NotesProps {
@@ -63,7 +65,12 @@ const Notes: FC<NotesProps> = ({ note, setEmbed, setTab }) => {
                                 });
                             }}
                         >
-                            {!((new Date(Date.parse(d.createdTime))).getTime() < (new Date(Date.now() - 2 * 24 * 60 * 60 * 1000)).getTime()) && (
+                            {!(
+                                new Date(Date.parse(d.createdTime)).getTime() <
+                                new Date(
+                                    Date.now() - 2 * 24 * 60 * 60 * 1000
+                                ).getTime()
+                            ) && (
                                 <span className="absolute top-0 left-0 flex h-3 w-3">
                                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-500 opacity-75"></span>
                                     <span className="relative inline-flex rounded-full h-3 w-3 bg-teal-600"></span>
