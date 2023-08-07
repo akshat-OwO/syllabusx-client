@@ -28,7 +28,7 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
                                 }
                                 className="bg-neutral-50 text-black rounded-md p-2 cursor-pointer"
                             >
-                                <ChevronLeft className="h-4 w-4 pointer-events-none" />
+                                <ChevronLeft className="h-5 w-5 sm:h-4 sm:w-4 pointer-events-none" />
                             </div>
                             <p className="hidden sm:block text-xs text-neutral-400">
                                 Go Back
@@ -51,7 +51,7 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
                                     }`
                                 }
                             >
-                                <Book className="h-4 w-4 pointer-events-none" />
+                                <Book className="h-5 w-5 sm:h-4 sm:w-4 pointer-events-none" />
                             </div>
                             <p className="hidden sm:block text-xs text-neutral-400">
                                 Theory
@@ -74,7 +74,7 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
                                     }`
                                 }
                             >
-                                <FlaskConical className="h-4 w-4 pointer-events-none" />
+                                <FlaskConical className="h-5 w-5 sm:h-4 sm:w-4 pointer-events-none" />
                             </div>
                             <p className="hidden sm:block text-xs text-neutral-400">
                                 Lab
@@ -97,7 +97,7 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
                                     }`
                                 }
                             >
-                                <Pencil className="h-4 w-4 pointer-events-none" />
+                                <Pencil className="h-5 w-5 sm:h-4 sm:w-4 pointer-events-none" />
                             </div>
                             <p className="hidden sm:block text-xs text-neutral-400">
                                 Notes
@@ -120,7 +120,7 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
                                     }`
                                 }
                             >
-                                <FileQuestion className="h-4 w-4 pointer-events-none" />
+                                <FileQuestion className="h-5 w-5 sm:h-4 sm:w-4 pointer-events-none" />
                             </div>
                             <p className="hidden sm:block text-xs text-neutral-400">
                                 PYQs
@@ -143,7 +143,7 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
                                     }`
                                 }
                             >
-                                <BookCopy className="h-4 w-4 pointer-events-none" />
+                                <BookCopy className="h-5 w-5 sm:h-4 sm:w-4 pointer-events-none" />
                             </div>
                             <p className="hidden sm:block text-xs text-neutral-400">
                                 Books
@@ -166,7 +166,7 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
                                     }`
                                 }
                             >
-                                <FileText className="h-4 w-4 pointer-events-none" />
+                                <FileText className="h-5 w-5 sm:h-4 sm:w-4 pointer-events-none" />
                             </div>
                             <p className="hidden sm:block text-xs text-neutral-400">
                                 Practical Files

@@ -38,21 +38,17 @@ const Page: FC<pageProps> = ({}) => {
         );
 
     return (
-        <div className="grid text-neutral-50 px-10 pb-5 gap-4 w-full mt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid text-neutral-50 px-5 pb-5 gap-4 w-full mt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             <h1 className="text-3xl text-center sm:col-span-2 md:col-span-3 lg:col-span-4">
                 Subjects
             </h1>
             <div className="flex gap-2 sm:col-span-2 md:col-span-3 lg:col-span-4">
                 <h2 className="text-sm flex items-center gap-2">
-                    <Badge variant="default">
+                    <Badge variant="secondary" className='flex items-center gap-2 text-md text-neutral-400'>
                         {semesterList.find((s) => semester === s.value)?.label}
-                    </Badge>{' '}
                     <ChevronRight className="h-4 w-4" />
-                </h2>
-                <h2 className="text-sm flex items-center gap-2">
-                    <Badge variant="default">
                         {branchList.find((b) => branch === b.value)?.label}
-                    </Badge>
+                    </Badge>{' '}
                 </h2>
             </div>
             {isLoading && (
