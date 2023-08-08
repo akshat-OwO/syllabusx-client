@@ -1,5 +1,6 @@
 import { AtSign, Instagram } from 'lucide-react';
 import { FC } from 'react';
+import { Badge } from './ui/badge';
 
 interface FooterProps {
     type: string;
@@ -30,7 +31,10 @@ const Footer: FC<FooterProps> = ({ type }) => {
             </div>
             <div className="relative grid place-items-center w-full gap-3 bg-neutral-800/80 rounded-lg p-2">
                 <p className="text-sm xl:text-base">Made with ♡</p>
-                <div className="flex items-center gap-2">
+                <Badge className="absolute text-xs opacity-0 hover:opacity-100 transition bottom-2 right-2">
+                    v3.0.1
+                </Badge>
+                <div className="transition flex items-center gap-2">
                     <a
                         className="text-xs xl:text-sm flex gap-1 hover:text-teal-700 transition"
                         href="https://linktr.ee/akshatOwO"
@@ -56,9 +60,6 @@ const Footer: FC<FooterProps> = ({ type }) => {
                         sparsh
                     </a>
                 </div>
-                <p className="absolute text-xs opacity-0 hover:opacity-100 transition bottom-2 right-2">
-                    V3.0
-                </p>
             </div>
         </div>
     );

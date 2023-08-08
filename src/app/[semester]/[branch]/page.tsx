@@ -62,6 +62,7 @@ const Page: FC<pageProps> = ({}) => {
                         }
                         size="lg"
                         key={d}
+                        className='xl:text-lg'
                     >
                         {d}
                     </Button>
