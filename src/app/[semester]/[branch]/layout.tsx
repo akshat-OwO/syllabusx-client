@@ -40,7 +40,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
                             })
                         )}
                     >
-                        <Menu className="h-8 w-8" />
+                        <Menu className="h-6 w-6" />
                     </div>
                     <Drawer.Trigger asChild className="md:hidden">
                         <div
@@ -51,7 +51,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
                                 })
                             )}
                         >
-                            <Menu className="h-8 w-8" />
+                            <Menu className="h-6 w-6" />
                         </div>
                     </Drawer.Trigger>
                 </div>

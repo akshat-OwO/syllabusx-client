@@ -29,12 +29,11 @@ const Search: FC<SearchProps> = ({ where }) => {
                 description: 'Please provide semester and branch.',
                 variant: 'destructive',
             });
+            setIsLoading(false);
         }
         if (semester && branch) {
-            await new Promise((resolve) => setTimeout(resolve, 500));
             router.push(`/${semester}/${branch}`);
         }
-        setIsLoading(false);
     };
 
     return (
