@@ -29,6 +29,7 @@
     "clsx": "^2.0.0",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
+    "lodash": "^4.17.21",
     "lucide-react": "^0.264.0",
     "next": "13.4.12",
     "postcss": "8.4.27",
@@ -39,5 +40,8 @@
     "tailwindcss-animate": "^1.0.6",
     "typescript": "5.1.6",
     "vaul": "^0.2.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.196"
   }
 }

@@ -6,7 +6,12 @@ import { ChevronsUpDown, Loader2, SendHorizonal } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { FC, useState } from 'react';
 import { Button, buttonVariants } from './ui/button';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './ui/dropdown-menu';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from './ui/dropdown-menu';
 import { useToast } from './ui/use-toast';
 
 interface SearchProps {
@@ -32,7 +37,11 @@ const Search: FC<SearchProps> = ({ where }) => {
             setIsLoading(false);
         }
         if (semester && branch) {
-            router.push(`/${semester}/${branch}`);
+            router.push(
+                `/${semesterList.find((s) => semester === s.value)?.label}/${
+                    branchList.find((b) => branch === b.value)?.label
+                }`
+            );
         }
     };
 
@@ -99,7 +108,10 @@ const Search: FC<SearchProps> = ({ where }) => {
                 disabled={isLoading}
                 isLoading={isLoading}
                 onClick={handleSearch}
-                className={"self-end lg:col-start-2 lg:flex lg:justify-self-end lg:self-start" + `${where === 'sidebar' ? ' lg:self-end' : ''}`}
+                className={
+                    'self-end lg:col-start-2 lg:flex lg:justify-self-end lg:self-start' +
+                    `${where === 'sidebar' ? ' lg:self-end' : ''}`
+                }
             >
                 {isLoading ? (
                     <Loader2 className="w-4 h-4 xl:h-6 xl:w-6 animate-spin" />

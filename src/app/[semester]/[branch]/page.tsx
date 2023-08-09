@@ -3,10 +3,11 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { branchList, semesterList } from '@/config';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosError, AxiosResponse } from 'axios';
+import _ from 'lodash';
 import { ChevronRight, Loader2 } from 'lucide-react';
-import { useParams, useRouter } from 'next/navigation';
+import { redirect, useParams, useRouter } from 'next/navigation';
 import { FC } from 'react';
 
 export const dynamic = 'force-dynamic';
@@ -17,17 +18,26 @@ const Page: FC<pageProps> = ({}) => {
     const params = useParams();
     const router = useRouter();
 
+    const queryClient = useQueryClient();
+
     const { semester, branch } = params;
 
     const { data, isLoading, error } = useQuery({
         queryKey: ['subjects', `${semester}`, `${branch}`],
         queryFn: async () => {
             const response = (await axios.get(
-                `https://server.syllabusx.live/${semester}/${branch}`
+                `https://server.syllabusx.live/${
+                    semesterList.find((s) => semester === s.label)?.value
+                }/${branchList.find((b) => branch === b.label)?.value}`
             )) as AxiosResponse;
             return response.data;
         },
     });
+
+    const clearCache = () => {
+        queryClient.clear();
+        router.push('/');
+    };
 
     if (error instanceof AxiosError)
         return (
@@ -44,25 +54,33 @@ const Page: FC<pageProps> = ({}) => {
             </h1>
             <div className="flex gap-2 sm:col-span-2 md:col-span-3 lg:col-span-4">
                 <h2 className="text-sm flex items-center gap-2">
-                    <Badge variant="secondary" className='flex items-center gap-2 text-md text-neutral-400'>
-                        {semesterList.find((s) => semester === s.value)?.label}
-                    <ChevronRight className="h-4 w-4" />
-                        {branchList.find((b) => branch === b.value)?.label}
+                    <Badge
+                        variant="secondary"
+                        className="flex items-center gap-2 text-md text-neutral-400"
+                    >
+                        {semesterList.find((s) => semester === s.label)?.label}
+                        <ChevronRight className="h-4 w-4" />
+                        {branchList.find((b) => branch === b.label)?.label}
                     </Badge>{' '}
                 </h2>
             </div>
             {isLoading && (
                 <Loader2 className="h-24 w-24 animate-spin mt-5 mx-auto sm:col-span-2 md:col-span-3 lg:col-span-4" />
             )}
+            {data && !(data.length > 0) && (
+                <Button onClick={clearCache}>Clear Cache</Button>
+            )}
             {data &&
                 data.map((d: string) => (
                     <Button
                         onClick={() =>
-                            router.push(`/${semester}/${branch}/${d}`)
+                            router.push(
+                                `/${semester}/${branch}/${_.kebabCase(d)}`
+                            )
                         }
                         size="lg"
                         key={d}
-                        className='xl:text-lg'
+                        className="xl:text-lg"
                     >
                         {d}
                     </Button>

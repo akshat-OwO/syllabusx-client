@@ -13,6 +13,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { branchList, semesterList } from '@/config';
 import { useQuery } from '@tanstack/react-query';
 import axios, { AxiosError, AxiosResponse } from 'axios';
+import _ from 'lodash';
 import { ChevronRight, Loader2 } from 'lucide-react';
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
 import { useParams } from 'next/navigation';
@@ -20,9 +21,7 @@ import { FC, useState } from 'react';
 
 export const dynamic = 'force-dynamic';
 
-interface pageProps {
-  
-}
+interface pageProps {}
 
 const Page: FC<pageProps> = ({}) => {
     const [tab, setTab] = useState<string>('theory');
@@ -36,7 +35,11 @@ const Page: FC<pageProps> = ({}) => {
         queryKey: ['subject', semester, branch, subject],
         queryFn: async () => {
             const response = (await axios.get(
-                `https://server.syllabusx.live/${semester}/${branch}/${subject}`
+                `https://server.syllabusx.live/${
+                    semesterList.find((s) => semester === s.label)?.value
+                }/${
+                    branchList.find((b) => branch === b.label)?.value
+                }/${_.startCase(_.toLower(subject))}`
             )) as AxiosResponse;
             return response.data;
         },
@@ -55,19 +58,25 @@ const Page: FC<pageProps> = ({}) => {
             <SubjectNav tab={tab} setTab={setTab} />
             <div className="grid px-4 sm:px-10 text-neutral-50 lg:px-44 xl:px-60 gap-2 w-full mt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 {isLoading && (
-                    <Skeleton className='w-56 h-10 mx-auto rounded-lg sm:col-span-2 md:col-span-3 lg:col-span-4' />
+                    <Skeleton className="w-56 h-10 mx-auto rounded-lg sm:col-span-2 md:col-span-3 lg:col-span-4" />
                 )}
                 <h1 className="text-2xl lg:text-3xl text-center sm:col-span-2 md:col-span-3 lg:col-span-4">
                     {data && data[0].subject}
                 </h1>
                 <div className="flex px-0.5 sm:px-0 gap-2 sm:col-span-2 md:col-span-3 lg:col-span-4">
-                <h2 className="text-sm flex items-center gap-2">
-                    <Badge variant="secondary" className='flex items-center gap-2 text-md text-neutral-400'>
-                        {semesterList.find((s) => semester === s.value)?.label}
-                    <ChevronRight className="h-4 w-4" />
-                        {branchList.find((b) => branch === b.value)?.label}
-                    </Badge>{' '}
-                </h2>
+                    <h2 className="text-sm flex items-center gap-2">
+                        <Badge
+                            variant="secondary"
+                            className="flex items-center gap-2 text-md text-neutral-400"
+                        >
+                            {
+                                semesterList.find((s) => semester === s.label)
+                                    ?.label
+                            }
+                            <ChevronRight className="h-4 w-4" />
+                            {branchList.find((b) => branch === b.label)?.label}
+                        </Badge>{' '}
+                    </h2>
                 </div>
                 {isLoading && (
                     <Loader2 className="h-24 w-24 animate-spin mt-5 mx-auto sm:col-span-2 md:col-span-3 lg:col-span-4" />
@@ -147,7 +156,7 @@ const Page: FC<pageProps> = ({}) => {
                 )}
             </div>
         </>
-  )
-}
+    );
+};
 
-export default Page
+export default Page;
