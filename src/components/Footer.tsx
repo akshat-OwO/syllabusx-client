@@ -32,7 +32,7 @@ const Footer: FC<FooterProps> = ({ type }) => {
             <div className="relative grid place-items-center w-full gap-3 bg-neutral-800/80 rounded-lg p-2">
                 <p className="text-sm xl:text-base">Made with ♡</p>
                 <Badge className="absolute text-xs opacity-0 hover:opacity-100 transition bottom-2 right-2">
-                    v3.0.1
+                    v3.1.0
                 </Badge>
                 <div className="transition flex items-center gap-2">
                     <a
