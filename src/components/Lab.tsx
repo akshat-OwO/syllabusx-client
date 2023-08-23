@@ -23,7 +23,7 @@ const Lab: FC<LabProps> = ({ lab }) => {
                 </div>
             )}
             {lab.length > 0 && (
-                <Accordion type="single" collapsible>
+                <Accordion type="multiple">
                     {lab.map((l) => (
                         <AccordionItem
                             key={l.experiment}

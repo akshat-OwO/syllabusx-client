@@ -1,4 +1,4 @@
-import { AtSign, Instagram } from 'lucide-react';
+import { AtSign, Heart, Instagram } from 'lucide-react';
 import { FC } from 'react';
 import { Badge } from './ui/badge';
 
@@ -21,7 +21,7 @@ const Footer: FC<FooterProps> = ({ type }) => {
                         <a
                             className="flex gap-1 hover:text-teal-700 transition"
                             href="https://www.instagram.com/syllabusx_.live/"
-                            target="_blacnk"
+                            target="_blank"
                         >
                             Follow us on{' '}
                             <Instagram className="w-4 h-4 xl:h-6 xl:w-6" />
@@ -30,13 +30,15 @@ const Footer: FC<FooterProps> = ({ type }) => {
                 </div>
             </div>
             <div className="relative grid place-items-center w-full gap-3 bg-neutral-800/80 rounded-lg p-2">
-                <p className="text-sm xl:text-base">Made with ♡</p>
+                <p className="text-sm flex items-center gap-1 xl:text-base">
+                    Made with <Heart className="h-4 w-4" />
+                </p>
                 <Badge className="absolute text-xs opacity-0 hover:opacity-100 transition bottom-2 right-2">
                     v3.1.0
                 </Badge>
                 <div className="transition flex items-center gap-2">
                     <a
-                        className="text-xs xl:text-sm flex gap-1 hover:text-teal-700 transition"
+                        className="text-xs flex gap-1 hover:text-teal-700 transition"
                         href="https://linktr.ee/akshatOwO"
                         target="_blank"
                     >
