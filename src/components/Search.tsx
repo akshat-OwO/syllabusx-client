@@ -3,7 +3,7 @@
 import { branchList, semesterList } from '@/config';
 import { cn } from '@/lib/utils';
 import { ChevronsUpDown, Loader2, SendHorizonal } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { FC, useState } from 'react';
 import { Button, buttonVariants } from './ui/button';
 import {
@@ -12,6 +12,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from './ui/dropdown-menu';
+import { ScrollArea } from './ui/scroll-area';
 import { useToast } from './ui/use-toast';
 
 interface SearchProps {
@@ -19,8 +20,14 @@ interface SearchProps {
 }
 
 const Search: FC<SearchProps> = ({ where }) => {
-    const [semester, setSemester] = useState<string>('');
-    const [branch, setBranch] = useState<string>('');
+    const params = useParams();
+
+    const [semester, setSemester] = useState<string>(
+        semesterList.find((s) => params.semester === s.label)?.value || ''
+    );
+    const [branch, setBranch] = useState<string>(
+        branchList.find((b) => params.branch === b.label)?.value || ''
+    );
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const { toast } = useToast();
@@ -66,14 +73,16 @@ const Search: FC<SearchProps> = ({ where }) => {
                     </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="bg-neutral-900 border-black shadow-lg">
-                    {semesterList.map((s) => (
-                        <DropdownMenuItem
-                            key={s.value}
-                            onClick={() => setSemester(s.value)}
-                        >
-                            {s.label}
-                        </DropdownMenuItem>
-                    ))}
+                    <ScrollArea className="h-32">
+                        {semesterList.map((s) => (
+                            <DropdownMenuItem
+                                key={s.value}
+                                onClick={() => setSemester(s.value)}
+                            >
+                                {s.label}
+                            </DropdownMenuItem>
+                        ))}
+                    </ScrollArea>
                 </DropdownMenuContent>
             </DropdownMenu>
             <DropdownMenu>
@@ -94,14 +103,16 @@ const Search: FC<SearchProps> = ({ where }) => {
                     </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="bg-neutral-900 border-black shadow-lg">
-                    {branchList.map((b) => (
-                        <DropdownMenuItem
-                            key={b.value}
-                            onClick={() => setBranch(b.value)}
-                        >
-                            {b.label}
-                        </DropdownMenuItem>
-                    ))}
+                    <ScrollArea className="h-32">
+                        {branchList.map((b) => (
+                            <DropdownMenuItem
+                                key={b.value}
+                                onClick={() => setBranch(b.value)}
+                            >
+                                {b.label}
+                            </DropdownMenuItem>
+                        ))}
+                    </ScrollArea>
                 </DropdownMenuContent>
             </DropdownMenu>
             <Button
