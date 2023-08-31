@@ -11,6 +11,7 @@ import Theory from '@/components/Theory';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { branchList, semesterList } from '@/config';
+import { usePrevious } from '@mantine/hooks';
 import { useQuery } from '@tanstack/react-query';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import _ from 'lodash';
@@ -25,6 +26,7 @@ interface pageProps {}
 
 const Page: FC<pageProps> = ({}) => {
     const [tab, setTab] = useState<string>('theory');
+    const previousTab = usePrevious(tab);
     const [embed, setEmbed] = useState<Embed>({ embedLink: '', name: '' });
 
     const params = useParams();
@@ -55,7 +57,7 @@ const Page: FC<pageProps> = ({}) => {
 
     return (
         <>
-            <SubjectNav tab={tab} setTab={setTab} />
+            <SubjectNav tab={tab} previousTab={previousTab} setTab={setTab} />
             <div className="grid px-4 sm:px-10 text-neutral-50 lg:px-44 xl:px-60 gap-2 w-full mt-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 {isLoading && (
                     <Skeleton className="w-56 h-10 mx-auto rounded-lg sm:col-span-2 md:col-span-3 lg:col-span-4" />
