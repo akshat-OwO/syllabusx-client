@@ -1,10 +1,13 @@
-import SubjectsLayout from '@/layouts/SubjectsLayout';
 import _ from 'lodash';
 import { Metadata, ResolvingMetadata } from 'next';
 import { FC, ReactNode } from 'react';
 
+interface LayoutProps {
+children: ReactNode
+}
+
 type Props = {
-    params: { semester: string; branch: string };
+    params: { semester: string; branch: string; subject: string };
 };
 
 export async function generateMetadata(
@@ -13,18 +16,15 @@ export async function generateMetadata(
 ): Promise<Metadata> {
     const semester = params.semester;
     const branch = params.branch;
+    const subject = params.subject;
 
     return {
-        title: `${semester} | ${branch}`,
+        title: `${semester} | ${branch} | ${_.startCase(_.toLower(subject))}`,
     };
 }
 
-interface LayoutProps {
-    children: ReactNode;
+const Layout: FC<LayoutProps> = ({ children }) => {
+  return <>{ children }</>
 }
 
-const Layout: FC<LayoutProps> = ({ children }) => {
-    return <SubjectsLayout>{children}</SubjectsLayout>;
-};
-
-export default Layout;
+export default Layout
