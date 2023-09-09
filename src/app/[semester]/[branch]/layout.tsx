@@ -15,7 +15,10 @@ export async function generateMetadata(
     const branch = params.branch;
 
     return {
-        title: `${semester} | ${branch}`,
+        title: {
+            default: `${semester} | ${branch}`,
+            template: `SyllabusX | %s`,
+        },
     };
 }
 
