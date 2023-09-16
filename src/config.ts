@@ -15,6 +15,10 @@ export const semesterList = [
         value: 'fourthsemesters',
         label: '4th',
     },
+    {
+        value: 'fifthsemesters',
+        label: '5th',
+    },
 ];
 
 export const branchList = [
