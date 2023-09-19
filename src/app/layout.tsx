@@ -7,7 +7,10 @@ import { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-    title: 'SyllabusX',
+    title: {
+        default: 'SyllabusX',
+        template: 'SyllabusX | %s',
+    },
     description:
         'SyllabusX is a website that provides the syllabus and study materials for the B. Tech course offered by IPU',
     applicationName: 'SyllabusX',
@@ -26,7 +29,6 @@ export const metadata: Metadata = {
     viewport: {
         width: 'device-width',
         initialScale: 1,
-        maximumScale: 1,
     },
     openGraph: {
         title: 'SyllabusX',

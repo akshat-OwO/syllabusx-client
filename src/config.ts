@@ -15,6 +15,10 @@ export const semesterList = [
         value: 'fourthsemesters',
         label: '4th',
     },
+    {
+        value: 'fifthsemesters',
+        label: '5th',
+    },
 ];
 
 export const branchList = [
@@ -27,8 +31,20 @@ export const branchList = [
         label: 'IT',
     },
     {
+        value: 'CST',
+        label: 'CST',
+    },
+    {
+        value: 'ITE',
+        label: 'ITE',
+    },
+    {
         value: 'ECE',
         label: 'ECE',
+    },
+    {
+        value: 'EE',
+        label: 'EE',
     },
     {
         value: 'EEE',
@@ -37,5 +53,17 @@ export const branchList = [
     {
         value: 'ICE',
         label: 'ICE',
-    }
-]
+    },
+    {
+        value: 'ME',
+        label: 'ME',
+    },
+    {
+        value: 'CE',
+        label: 'CE',
+    },
+    {
+        value: 'MAE',
+        label: 'MAE',
+    },
+];

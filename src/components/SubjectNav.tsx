@@ -1,31 +1,47 @@
 'use client';
 
-import { Book, BookCopy, ChevronLeft, FileQuestion, FileText, FlaskConical, Pencil } from 'lucide-react';
+import {
+    Book,
+    BookCopy,
+    ChevronLeft,
+    FileQuestion,
+    FileText,
+    FlaskConical,
+    Pencil,
+} from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 import { FC } from 'react';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from './ui/tooltip';
 
 interface SubjectNavProps {
     tab: string;
+    previousTab: string | undefined;
     setTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
+const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab, previousTab }) => {
     const params = useParams();
     const router = useRouter();
 
     const { semester, branch } = params;
 
-  return (
-    <TooltipProvider>
+    return (
+        <TooltipProvider>
             <div className="fixed grid place-items-center bottom-0 left-0 w-full lg:w-auto lg:bottom-auto lg:left-10 lg:top-[12.9rem] xl:left-10 xl:top-1/2 xl:-translate-y-1/2 bg-neutral-900 z-[2] rounded-t-lg lg:rounded-b-lg p-2">
                 <div className="grid grid-cols-7 lg:grid-rows-[7] lg:grid-cols-1 place-items-center w-full gap-1 rounded-lg">
                     <Tooltip>
                         <TooltipTrigger className="sm:flex sm:flex-col sm:gap-1 sm:items-center sm:justify-center">
                             <div
-                                onClick={() =>
-                                    router.push(`/${semester}/${branch}`)
-                                }
+                                onClick={() => {
+                                    if (tab === 'pdf')
+                                        return setTab(previousTab!);
+                                    router.push(`/${semester}/${branch}`);
+                                }}
                                 className="bg-neutral-50 text-black rounded-md p-2 cursor-pointer"
                             >
                                 <ChevronLeft className="h-5 w-5 sm:h-4 sm:w-4 pointer-events-none" />
@@ -34,9 +50,7 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
                                 Go Back
                             </p>
                         </TooltipTrigger>
-                        <TooltipContent>
-                            Go Back
-                        </TooltipContent>
+                        <TooltipContent>Go Back</TooltipContent>
                     </Tooltip>
                     <Tooltip>
                         <TooltipTrigger className="sm:flex sm:flex-col sm:gap-1 sm:items-center sm:justify-center">
@@ -57,9 +71,7 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
                                 Theory
                             </p>
                         </TooltipTrigger>
-                        <TooltipContent>
-                            Theory
-                        </TooltipContent>
+                        <TooltipContent>Theory</TooltipContent>
                     </Tooltip>
                     <Tooltip>
                         <TooltipTrigger className="sm:flex sm:flex-col sm:gap-1 sm:items-center sm:justify-center">
@@ -80,9 +92,7 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
                                 Lab
                             </p>
                         </TooltipTrigger>
-                        <TooltipContent>
-                            Lab
-                        </TooltipContent>
+                        <TooltipContent>Lab</TooltipContent>
                     </Tooltip>
                     <Tooltip>
                         <TooltipTrigger className="sm:flex sm:flex-col sm:gap-1 sm:items-center sm:justify-center">
@@ -103,9 +113,7 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
                                 Notes
                             </p>
                         </TooltipTrigger>
-                        <TooltipContent>
-                            Notes
-                        </TooltipContent>
+                        <TooltipContent>Notes</TooltipContent>
                     </Tooltip>
                     <Tooltip>
                         <TooltipTrigger className="sm:flex sm:flex-col sm:gap-1 sm:items-center sm:justify-center">
@@ -126,9 +134,7 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
                                 PYQs
                             </p>
                         </TooltipTrigger>
-                        <TooltipContent>
-                            PYQs
-                        </TooltipContent>
+                        <TooltipContent>PYQs</TooltipContent>
                     </Tooltip>
                     <Tooltip>
                         <TooltipTrigger className="sm:flex sm:flex-col sm:gap-1 sm:items-center sm:justify-center">
@@ -149,9 +155,7 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
                                 Books
                             </p>
                         </TooltipTrigger>
-                        <TooltipContent>
-                            Books
-                        </TooltipContent>
+                        <TooltipContent>Books</TooltipContent>
                     </Tooltip>
                     <Tooltip>
                         <TooltipTrigger className="sm:flex sm:flex-col sm:gap-1 sm:items-center sm:justify-center">
@@ -172,14 +176,12 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab }) => {
                                 Practical Files
                             </p>
                         </TooltipTrigger>
-                        <TooltipContent>
-                            Practical Files
-                        </TooltipContent>
+                        <TooltipContent>Practical Files</TooltipContent>
                     </Tooltip>
                 </div>
             </div>
         </TooltipProvider>
-  )
-}
+    );
+};
 
-export default SubjectNav
+export default SubjectNav;

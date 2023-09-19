@@ -7,7 +7,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import _ from 'lodash';
 import { ChevronRight, Loader2 } from 'lucide-react';
-import { redirect, useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { FC } from 'react';
 
 export const dynamic = 'force-dynamic';
@@ -80,7 +80,7 @@ const Page: FC<pageProps> = ({}) => {
                         }
                         size="lg"
                         key={d}
-                        className="xl:text-lg"
+                        className="xl:text-lg xl:h-16"
                     >
                         {d}
                     </Button>
