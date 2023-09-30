@@ -1,5 +1,6 @@
 'use client';
 
+import { server } from '@/config';
 import { cn } from '@/lib/utils';
 import { useQuery } from '@tanstack/react-query';
 import axios, { AxiosError, AxiosResponse } from 'axios';
@@ -29,7 +30,7 @@ const Notes: FC<NotesProps> = ({ note, setEmbed, setTab }) => {
         queryKey: ['notes', semester, branch, subject],
         queryFn: async () => {
             const response = (await axios.get(
-                `https://server.syllabusx.live/drive/notes/${note}`
+                `${server}drive/notes/${note}`
             )) as AxiosResponse;
             return response.data as Drive[];
         },

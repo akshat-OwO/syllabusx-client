@@ -34,7 +34,7 @@ const Footer: FC<FooterProps> = ({ type }) => {
                     Made with <Heart className="h-4 w-4" />
                 </p>
                 <Badge className="absolute text-xs opacity-0 hover:opacity-100 transition bottom-2 right-2">
-                    v3.2.0
+                    v3.2.1
                 </Badge>
                 <div className="transition flex items-center gap-2">
                     <a

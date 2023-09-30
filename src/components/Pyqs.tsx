@@ -1,5 +1,6 @@
 'use client';
 
+import { server } from '@/config';
 import { cn } from '@/lib/utils';
 import { useQuery } from '@tanstack/react-query';
 import axios, { AxiosError, AxiosResponse } from 'axios';
@@ -29,7 +30,7 @@ const Pyqs: FC<PyqsProps> = ({ pyq, setEmbed, setTab }) => {
         queryKey: ['pyqs', semester, branch, subject],
         queryFn: async () => {
             const response = (await axios.get(
-                `https://server.syllabusx.live/drive/pyq/${pyq}`
+                `${server}drive/pyq/${pyq}`
             )) as AxiosResponse;
             return response.data as Drive[];
         },

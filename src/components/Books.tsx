@@ -1,5 +1,6 @@
 'use client';
 
+import { server } from '@/config';
 import { useQuery } from '@tanstack/react-query';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Loader2, RefreshCcw } from 'lucide-react';
@@ -29,7 +30,7 @@ const Books: FC<BooksProps> = ({ book, setEmbed, setTab }) => {
         queryKey: ['books', semester, branch, subject],
         queryFn: async () => {
             const response = (await axios.get(
-                `https://server.syllabusx.live/drive/books/${book}`
+                `${server}drive/books/${book}`
             )) as AxiosResponse;
             return response.data as Drive[];
         },
