@@ -2,7 +2,7 @@
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { branchList, semesterList } from '@/config';
+import { branchList, semesterList, server } from '@/config';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import _ from 'lodash';
@@ -26,7 +26,7 @@ const Page: FC<pageProps> = ({}) => {
         queryKey: ['subjects', `${semester}`, `${branch}`],
         queryFn: async () => {
             const response = (await axios.get(
-                `https://server.syllabusx.live/${
+                `${server}${
                     semesterList.find((s) => semester === s.label)?.value
                 }/${branchList.find((b) => branch === b.label)?.value}`
             )) as AxiosResponse;

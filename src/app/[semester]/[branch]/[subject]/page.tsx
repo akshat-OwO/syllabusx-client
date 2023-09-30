@@ -10,7 +10,7 @@ import SubjectNav from '@/components/SubjectNav';
 import Theory from '@/components/Theory';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { branchList, semesterList } from '@/config';
+import { branchList, semesterList, server } from '@/config';
 import { usePrevious } from '@mantine/hooks';
 import { useQuery } from '@tanstack/react-query';
 import axios, { AxiosError, AxiosResponse } from 'axios';
@@ -37,7 +37,7 @@ const Page: FC<pageProps> = ({}) => {
         queryKey: ['subject', semester, branch, subject],
         queryFn: async () => {
             const response = (await axios.get(
-                `https://server.syllabusx.live/${
+                `${server}${
                     semesterList.find((s) => semester === s.label)?.value
                 }/${
                     branchList.find((b) => branch === b.label)?.value

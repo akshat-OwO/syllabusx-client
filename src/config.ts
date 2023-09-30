@@ -67,3 +67,6 @@ export const branchList = [
         label: 'MAE',
     },
 ];
+
+export const server = 'https://server.syllabusx.live/';
+// export const server = 'http://localhost:8080/';
