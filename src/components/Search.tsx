@@ -72,7 +72,7 @@ const Search: FC<SearchProps> = ({ where }) => {
                         <ChevronsUpDown className="h-4 w-4 xl:h-6 xl:w-6" />
                     </div>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="bg-neutral-900 border-black shadow-lg">
+                <DropdownMenuContent className="bg-neutral-900 border-black shadow-lg min-w-[12rem] sm:min-w-[16rem] xl:min-w-[20rem] xl:text-lg">
                     <ScrollArea className="h-32">
                         {semesterList.map((s) => (
                             <DropdownMenuItem
@@ -102,7 +102,7 @@ const Search: FC<SearchProps> = ({ where }) => {
                         <ChevronsUpDown className="h-4 w-4 xl:h-6 xl:w-6" />
                     </div>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="bg-neutral-900 border-black shadow-lg">
+                <DropdownMenuContent className="bg-neutral-900 border-black shadow-lg min-w-[12rem] sm:min-w-[16rem] xl:min-w-[20rem] xl:text-lg">
                     <ScrollArea className="h-32">
                         {branchList.map((b) => (
                             <DropdownMenuItem

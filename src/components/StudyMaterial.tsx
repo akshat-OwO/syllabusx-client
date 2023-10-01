@@ -1,12 +1,14 @@
 'use client';
 
-import { server } from '@/config';
+import { Tab, server } from '@/config';
 import { cn } from '@/lib/utils';
 import { useQuery } from '@tanstack/react-query';
 import axios, { AxiosError, AxiosResponse } from 'axios';
+import _ from 'lodash';
 import { Loader2, RefreshCcw } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import { FC } from 'react';
+import { Badge } from './ui/badge';
 import { Button, buttonVariants } from './ui/button';
 import {
     Tooltip,
@@ -15,24 +17,55 @@ import {
     TooltipTrigger,
 } from './ui/tooltip';
 
-interface PyqsProps {
-    pyq: string;
+interface StudyMaterialProps {
+    tab: Tab;
+    note?: string;
+    pyq?: string;
+    book?: string;
+    practical?: string;
     setEmbed: React.Dispatch<React.SetStateAction<Embed>>;
-    setTab: React.Dispatch<React.SetStateAction<string>>;
+    setTab: React.Dispatch<React.SetStateAction<Tab>>;
 }
 
-const Pyqs: FC<PyqsProps> = ({ pyq, setEmbed, setTab }) => {
+const StudyMaterial: FC<StudyMaterialProps> = ({
+    tab,
+    setEmbed,
+    setTab,
+    book,
+    note,
+    practical,
+    pyq,
+}) => {
     const params = useParams();
 
     const { semester, branch, subject } = params;
 
     const { data, isLoading, error, refetch, isFetching } = useQuery({
-        queryKey: ['pyqs', semester, branch, subject],
+        queryKey: [tab, semester, branch, subject],
         queryFn: async () => {
-            const response = (await axios.get(
-                `${server}drive/pyq/${pyq}`
-            )) as AxiosResponse;
-            return response.data as Drive[];
+            if (tab === Tab.NOTES) {
+                const response = (await axios.get(
+                    `${server}drive/notes/${note}`
+                )) as AxiosResponse;
+                return response.data as Drive[];
+            } else if (tab === Tab.PYQ) {
+                const response = (await axios.get(
+                    `${server}drive/pyq/${pyq}`
+                )) as AxiosResponse;
+                return response.data as Drive[];
+            } else if (tab === Tab.BOOKS) {
+                const response = (await axios.get(
+                    `${server}drive/books/${book}`
+                )) as AxiosResponse;
+                return response.data as Drive[];
+            } else if (tab === Tab.PRACTICAL) {
+                const response = (await axios.get(
+                    `${server}drive/practicalfile/${practical}`
+                )) as AxiosResponse;
+                return response.data as Drive[];
+            }
+
+            return null;
         },
         staleTime: 1000 * 60 * 60 * 2,
     });
@@ -47,7 +80,7 @@ const Pyqs: FC<PyqsProps> = ({ pyq, setEmbed, setTab }) => {
 
     return (
         <div className="relative grid bg-neutral-800/80 lg:mt-5 rounded-lg p-2">
-            <h3 className="mb-4 text-lg lg:text-xl">PYQs</h3>
+            <h3 className="mb-4 text-lg lg:text-xl">{_.capitalize(tab)}</h3>
             <TooltipProvider>
                 <Tooltip>
                     <TooltipTrigger className="absolute right-2 top-2">
@@ -78,11 +111,11 @@ const Pyqs: FC<PyqsProps> = ({ pyq, setEmbed, setTab }) => {
                                 buttonVariants({
                                     variant: 'default',
                                     className:
-                                        'relative text-center h-full self-center hover:ring-2 hover:ring-neutral-50 hover:ring-offset-4 transition cursor-pointer',
+                                        'relative text-center h-full self-center hover:ring-2 hover:ring-neutral-50 hover:ring-offset-4 transition cursor-pointer group',
                                 })
                             )}
                             onClick={() => {
-                                setTab('pdf');
+                                setTab(Tab.PDF);
                                 setEmbed({
                                     embedLink:
                                         d.webViewLink.slice(0, -17) + 'preview',
@@ -96,10 +129,10 @@ const Pyqs: FC<PyqsProps> = ({ pyq, setEmbed, setTab }) => {
                                     Date.now() - 2 * 24 * 60 * 60 * 1000
                                 ).getTime()
                             ) && (
-                                <span className="absolute top-0 left-0 flex h-3 w-3">
-                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-500 opacity-75"></span>
-                                    <span className="relative inline-flex rounded-full h-3 w-3 bg-teal-600"></span>
-                                </span>
+                                <Badge variant={'secondary'} className="absolute -top-2 -left-2 hover:bg-teal-600 group-hover:animate-pulse rounded-sm bg-teal-600">
+                                    {/* <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-slate-900 opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-3 w-3 bg-slate-900"></span> */}New
+                                </Badge>
                             )}
                             {d.name.slice(0, -4)}
                         </div>
@@ -110,4 +143,4 @@ const Pyqs: FC<PyqsProps> = ({ pyq, setEmbed, setTab }) => {
     );
 };
 
-export default Pyqs;
+export default StudyMaterial;

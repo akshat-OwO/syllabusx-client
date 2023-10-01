@@ -1,16 +1,12 @@
 'use client';
 
-import Books from '@/components/Books';
 import EmbedPdf from '@/components/EmbedPdf';
-import Lab from '@/components/Lab';
-import Notes from '@/components/Notes';
-import PracticalFiles from '@/components/PracticalFiles';
-import Pyqs from '@/components/Pyqs';
+import StudyMaterial from '@/components/StudyMaterial';
 import SubjectNav from '@/components/SubjectNav';
-import Theory from '@/components/Theory';
+import Syllabus from '@/components/Syllabus';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { branchList, semesterList, server } from '@/config';
+import { Tab, branchList, semesterList, server } from '@/config';
 import { usePrevious } from '@mantine/hooks';
 import { useQuery } from '@tanstack/react-query';
 import axios, { AxiosError, AxiosResponse } from 'axios';
@@ -25,7 +21,7 @@ export const dynamic = 'force-dynamic';
 interface pageProps {}
 
 const Page: FC<pageProps> = ({}) => {
-    const [tab, setTab] = useState<string>('theory');
+    const [tab, setTab] = useState<Tab>(Tab.THEORY);
     const previousTab = usePrevious(tab);
     const [embed, setEmbed] = useState<Embed>({ embedLink: '', name: '' });
 
@@ -120,39 +116,44 @@ const Page: FC<pageProps> = ({}) => {
                                     </span>
                                 </p>
                             </div>
-                            {tab === 'theory' && (
-                                <Theory theory={data[0].theory} />
-                            )}
-                            {tab === 'lab' && <Lab lab={data[0].lab} />}
-                            {tab === 'notes' && (
-                                <Notes
-                                    setEmbed={setEmbed}
+                            <Syllabus
+                                tab={tab}
+                                theory={data[0].theory}
+                                lab={data[0].lab}
+                            />
+                            {tab === Tab.NOTES && (
+                                <StudyMaterial
+                                    tab={tab}
                                     setTab={setTab}
+                                    setEmbed={setEmbed}
                                     note={data[0].camel}
                                 />
                             )}
-                            {tab === 'pyqs' && (
-                                <Pyqs
-                                    setEmbed={setEmbed}
+                            {tab === Tab.PYQ && (
+                                <StudyMaterial
+                                    tab={tab}
                                     setTab={setTab}
+                                    setEmbed={setEmbed}
                                     pyq={data[0].pYq}
                                 />
                             )}
-                            {tab === 'books' && (
-                                <Books
-                                    setEmbed={setEmbed}
+                            {tab === Tab.BOOKS && (
+                                <StudyMaterial
+                                    tab={tab}
                                     setTab={setTab}
+                                    setEmbed={setEmbed}
                                     book={data[0].book}
                                 />
                             )}
-                            {tab === 'practical files' && (
-                                <PracticalFiles
-                                    setEmbed={setEmbed}
+                            {tab === Tab.PRACTICAL && (
+                                <StudyMaterial
+                                    tab={tab}
                                     setTab={setTab}
+                                    setEmbed={setEmbed}
                                     practical={data[0].practical}
                                 />
                             )}
-                            {tab === 'pdf' && <EmbedPdf embed={embed} />}
+                            {tab === Tab.PDF && <EmbedPdf embed={embed} />}
                         </div>
                     </>
                 )}
