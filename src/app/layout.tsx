@@ -7,6 +7,7 @@ import { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
+    metadataBase: new URL('https://syllabusx.live'),
     title: {
         default: 'SyllabusX',
         template: 'SyllabusX | %s',
@@ -74,7 +75,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="en">
+        <html lang="en" className='dark'>
             <Scripts />
             <body>
                 <Providers>

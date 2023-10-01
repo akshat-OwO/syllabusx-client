@@ -68,5 +68,15 @@ export const branchList = [
     },
 ];
 
+export const enum Tab {
+    THEORY = 'THEORY',
+    LAB = 'LAB',
+    NOTES = 'NOTES',
+    PYQ = 'PYQS',
+    BOOKS = 'BOOKS',
+    PRACTICAL = 'PRACTICAL FILES',
+    PDF = 'PDF',
+}
+
 export const server = 'https://server.syllabusx.live/';
 // export const server = 'http://localhost:8080/';

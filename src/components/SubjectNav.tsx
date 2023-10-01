@@ -1,5 +1,6 @@
 'use client';
 
+import { Tab } from '@/config';
 import {
     Book,
     BookCopy,
@@ -20,8 +21,8 @@ import {
 
 interface SubjectNavProps {
     tab: string;
-    previousTab: string | undefined;
-    setTab: React.Dispatch<React.SetStateAction<string>>;
+    previousTab: Tab | undefined;
+    setTab: React.Dispatch<React.SetStateAction<Tab>>;
 }
 
 const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab, previousTab }) => {
@@ -38,7 +39,7 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab, previousTab }) => {
                         <TooltipTrigger className="sm:flex sm:flex-col sm:gap-1 sm:items-center sm:justify-center">
                             <div
                                 onClick={() => {
-                                    if (tab === 'pdf')
+                                    if (tab === Tab.PDF)
                                         return setTab(previousTab!);
                                     router.push(`/${semester}/${branch}`);
                                 }}
@@ -55,11 +56,11 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab, previousTab }) => {
                     <Tooltip>
                         <TooltipTrigger className="sm:flex sm:flex-col sm:gap-1 sm:items-center sm:justify-center">
                             <div
-                                onClick={() => setTab('theory')}
+                                onClick={() => setTab(Tab.THEORY)}
                                 className={
                                     'rounded-md p-2 cursor-pointer transition ' +
                                     `${
-                                        tab === 'theory'
+                                        tab === Tab.THEORY
                                             ? 'bg-neutral-300'
                                             : 'bg-neutral-500'
                                     }`
@@ -76,11 +77,11 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab, previousTab }) => {
                     <Tooltip>
                         <TooltipTrigger className="sm:flex sm:flex-col sm:gap-1 sm:items-center sm:justify-center">
                             <div
-                                onClick={() => setTab('lab')}
+                                onClick={() => setTab(Tab.LAB)}
                                 className={
                                     'rounded-md p-2 cursor-pointer transition ' +
                                     `${
-                                        tab === 'lab'
+                                        tab === Tab.LAB
                                             ? 'bg-neutral-300'
                                             : 'bg-neutral-500'
                                     }`
@@ -97,11 +98,11 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab, previousTab }) => {
                     <Tooltip>
                         <TooltipTrigger className="sm:flex sm:flex-col sm:gap-1 sm:items-center sm:justify-center">
                             <div
-                                onClick={() => setTab('notes')}
+                                onClick={() => setTab(Tab.NOTES)}
                                 className={
                                     'rounded-md p-2 cursor-pointer transition ' +
                                     `${
-                                        tab === 'notes'
+                                        tab === Tab.NOTES
                                             ? 'bg-neutral-300'
                                             : 'bg-neutral-500'
                                     }`
@@ -118,11 +119,11 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab, previousTab }) => {
                     <Tooltip>
                         <TooltipTrigger className="sm:flex sm:flex-col sm:gap-1 sm:items-center sm:justify-center">
                             <div
-                                onClick={() => setTab('pyqs')}
+                                onClick={() => setTab(Tab.PYQ)}
                                 className={
                                     'rounded-md p-2 cursor-pointer transition ' +
                                     `${
-                                        tab === 'pyqs'
+                                        tab === Tab.PYQ
                                             ? 'bg-neutral-300'
                                             : 'bg-neutral-500'
                                     }`
@@ -139,11 +140,11 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab, previousTab }) => {
                     <Tooltip>
                         <TooltipTrigger className="sm:flex sm:flex-col sm:gap-1 sm:items-center sm:justify-center">
                             <div
-                                onClick={() => setTab('books')}
+                                onClick={() => setTab(Tab.BOOKS)}
                                 className={
                                     'rounded-md p-2 cursor-pointer transition ' +
                                     `${
-                                        tab === 'books'
+                                        tab === Tab.BOOKS
                                             ? 'bg-neutral-300'
                                             : 'bg-neutral-500'
                                     }`
@@ -160,11 +161,11 @@ const SubjectNav: FC<SubjectNavProps> = ({ tab, setTab, previousTab }) => {
                     <Tooltip>
                         <TooltipTrigger className="sm:flex sm:flex-col sm:gap-1 sm:items-center sm:justify-center">
                             <div
-                                onClick={() => setTab('practical files')}
+                                onClick={() => setTab(Tab.PRACTICAL)}
                                 className={
                                     'rounded-md p-2 cursor-pointer transition ' +
                                     `${
-                                        tab === 'practical files'
+                                        tab === Tab.PRACTICAL
                                             ? 'bg-neutral-300'
                                             : 'bg-neutral-500'
                                     }`
