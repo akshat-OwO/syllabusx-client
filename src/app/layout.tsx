@@ -1,5 +1,7 @@
+import Navbar from '@/components/Navbar';
 import Providers from '@/components/Providers';
 import Scripts from '@/components/Scripts';
+import { ThemeProvider } from '@/components/ui/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Analytics } from '@vercel/analytics/react';
@@ -75,13 +77,16 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="en" className='dark'>
+        <html lang="en">
             <Scripts />
-            <body>
+            <body className='min-h-screen bg-gradient-to-br from-primary-foreground to-background dark:to-background'>
                 <Providers>
-                    {children}
-                    <Analytics />
-                    <ReactQueryDevtools />
+                    <ThemeProvider attribute='class' defaultTheme='dark'>
+                        <Navbar />
+                        {children}
+                        <Analytics />
+                        <ReactQueryDevtools />
+                    </ThemeProvider>
                 </Providers>
                 <Toaster />
             </body>
