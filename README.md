@@ -75,7 +75,7 @@ Remember, Good PR makes you a Good contributor!
 
 While we don't require a specific pull request format, we kindly ask our contributors to maintain a reasonable level of organization when submitting pull requests. This includes providing a clear and concise description of the changes and their purpose. Pull requests that are unclear or do not align with the project's goals may be subject to closure or further review.
 
-- Have a look at [Contributing guidelines](/Contributing.md) before contributing.
+- Have a look at [Contributing guidelines](/.github/Contributing.md) before contributing.
 
 
 ## Made By
