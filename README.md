@@ -8,9 +8,7 @@
 
 <br/>
 
-
-    
-![undefined - Imgur](https://github.com/vaibhavx42/syllabusx-client/assets/110530263/eaea6854-ca79-4285-ba3f-6f78da6241b2)
+![undefined - Imgur (1)](https://github.com/vaibhavx42/syllabusx-client/assets/110530263/29f3cd7a-7fb5-4297-85b6-5242d337a1b9)
 
 [![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=22&pause=1000&color=F72F8F&width=435&lines=Simplifying+your+Academic+hustle)](https://git.io/typing-svg)
 </div>
