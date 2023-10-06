@@ -1,6 +1,6 @@
 ## 💥 `How to Contribute to SyllabusX?`
 
-- Take a look at the Existing [Issues](https://github.com/NitinJuyal1610/MedChain/issues) or create your own Issues!
+- Take a look at the Existing [Issues](https://github.com/akshat-OwO/syllabusx-client) or create your own Issues!
 - Wait for the Issue to be assigned to you.
 - Fork the repository
 >click on the uppermost button <img src="https://github.com/vaibhavx42/vaibhavx42/blob/main/.github/workflows/fork.png" width=50>
