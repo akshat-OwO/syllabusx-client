@@ -10,28 +10,27 @@
 
 ![undefined - Imgur (1)](https://github.com/vaibhavx42/syllabusx-client/assets/110530263/29f3cd7a-7fb5-4297-85b6-5242d337a1b9)
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=22&pause=1000&color=F72F8F&width=435&lines=Simplifying+your+Academic+hustle)](https://git.io/typing-svg)
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=22&pause=1000&color=008080&width=435&lines=Simplifying+your+Academic+hustle)](https://git.io/typing-svg)
 </div>
 
 
 # 🧭 `Table of contents`
 
-- [SyllabusX](#-SyllabusX)
-- [Table of contents🧭 ](#-table-of-contents)
 - [Introduction🚀](#Introduction)
 - [Usage](#Usage)
-- [Technologies Used📫](#-Technologies-Used-)
+- [Technologies Used📫](#-Technologies-Used)
 - [Features](#Features)
 - [How to Contributie](#Contributing-to-SyllabusX)
-- [Made By](#Made-By)
+- [Maintainers](#Maintainers)
 - [License](#License)
+- [Contributors](#Contributors)
 - [Support](#Support)
 
 
 <br>
 
 
-## Introduction
+# Introduction
 ### Why SyllabusX?
 - Gathering syllabus for each of your subjects whenever you need is quite hassling, isn't it?
 - At SyllabusX, we understand the challenge of collecting syllabus documents in PDF format. For B.Tech students at GGSIPU, it can be overwhelming to gather all these resources in one centralized place. . That's why we stepped in and created this solution. Currently, syllabusX offers syllabus for batch 2021 - 2025 and onwards. We've added syllabus for all the branches with syllabus you'll find handwritten notes, previous year questions, recommended books, and practical files – everything you need for a successful semester.
@@ -51,9 +50,6 @@ It's that easy! Enjoy using SyllabusX for all your academic needs.
 
 # Technologies-Used  💻
 
-[![HTML5](https://img.shields.io/badge/HTML5-yellow?style=for-the-badge)](https://developer.mozilla.org/en-US/)
-[![CSS](https://img.shields.io/badge/CSS-black?style=for-the-badge)](https://developer.mozilla.org/en-US/)
-![javascript](https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 [![NextJS](https://img.shields.io/badge/NextJS-blue?style=for-the-badge)](https://nextjs.org/docs)
 [![Shadcn Ui](https://img.shields.io/badge/Shadcn_Ui-purple?style=for-the-badge)](https://ui.shadcn.com/)
 [![Typescript](https://img.shields.io/badge/Typescript-2ea44f?style=for-the-badge)](https://www.typescriptlang.org/docs/)
@@ -62,7 +58,6 @@ It's that easy! Enjoy using SyllabusX for all your academic needs.
 
 # Features✨
 - Syllabus for Batch 2021 and Onwards: Access up-to-date syllabus information for B.Tech courses starting from the batch of 2021 and beyond.
-- Professor's Recommended Books: Discover the textbooks and reference materials recommended by your professors to excel in your studies.
 - Handwritten Notes: Gain access to high-quality handwritten notes to supplement your learning and understanding of key concepts.
 - Previous Year Questions (PYQs): Prepare effectively by practicing with the previous year's questions to get a feel for the exam patterns and important topics.
 - Practical Files: Access practical files and resources to excel in laboratory sessions and hands-on coursework.
@@ -78,7 +73,7 @@ While we don't require a specific pull request format, we kindly ask our contrib
 - Have a look at [Contributing guidelines](/.github/Contributing.md) before contributing.
 
 
-## Made By
+# Maintainers
 
 <table>
  <tbody>
@@ -109,6 +104,9 @@ While we don't require a specific pull request format, we kindly ask our contrib
 # License 👮
 
 SyllabusX is Licensed under the <a href="./LICENSE.md">GPL License</a>. Please go through the License at least once before contributing.
+
+# Contributors
+[![Vaibhav Bhardwaj](https://avatars.githubusercontent.com/u/110530263?s=64)](https://github.com/vaibhavx42)
 
 # Support 🙏
 
