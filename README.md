@@ -99,8 +99,4 @@ SyllabusX is Licensed under the [GPL License](./LICENSE.md). Please go through t
 
 # Support 🙏
 
-<<<<<<< HEAD
-If you like the project and want to support us, please consider starring our repository as a token of appreciation. A heartfelt thank you to those who have contributed to this project. We are really grateful for your contribution. You all are amazing. Opensource for the winnnn 🚀
-=======
-If you like the project and want to support us, please consider starring our repository as a token of appreciation. A heartfelt thank you to those who have contributed to this project. We are really grateful for your contribution. You all are amazing. Opensource for the win 🚀
->>>>>>> 95cb6118d21bee0cf59a5a4693ae1ae704820b7a
+If you like the project and want to support us, please consider starring our repository as a token of appreciation. A heartfelt thank you to those who have contributed to this project. We are really grateful for your contribution. You all are amazing. Opensource for the winnn!! 🚀
