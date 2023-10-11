@@ -1,0 +1,55 @@
+Folder PATH listing for volume New Volume
+Volume serial number is 365D-ECF5
+D:.
+|   config.ts
+|   directory_structure.txt
+|   
++---app
+|   |   error.tsx
+|   |   favicon.ico
+|   |   globals.css
+|   |   layout.tsx
+|   |   page.tsx
+|   |   
+|   \---[semester]
+|       \---[branch]
+|           |   layout.tsx
+|           |   page.tsx
+|           |   
+|           \---[subject]
+|                   layout.tsx
+|                   page.tsx
+|                   
++---components
+|   |   EmbedPdf.tsx
+|   |   Footer.tsx
+|   |   Icons.tsx
+|   |   Providers.tsx
+|   |   Scripts.tsx
+|   |   Search.tsx
+|   |   Sidebar.tsx
+|   |   StudyMaterial.tsx
+|   |   SubjectNav.tsx
+|   |   Syllabus.tsx
+|   |   
+|   \---ui
+|           accordion.tsx
+|           badge.tsx
+|           button.tsx
+|           dropdown-menu.tsx
+|           scroll-area.tsx
+|           skeleton.tsx
+|           toast.tsx
+|           toaster.tsx
+|           tooltip.tsx
+|           use-toast.ts
+|           
++---layouts
+|       SubjectsLayout.tsx
+|       
++---lib
+|       utils.ts
+|       
+\---types
+        syllabus.d.ts
+        

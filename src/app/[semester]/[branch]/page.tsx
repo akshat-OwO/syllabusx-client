@@ -52,17 +52,18 @@ const Page: FC<pageProps> = ({}) => {
             <h1 className="text-3xl text-center sm:col-span-2 md:col-span-3 lg:col-span-4">
                 Subjects
             </h1>
-            <div className="flex gap-2 sm:col-span-2 md:col-span-3 lg:col-span-4">
-                <h2 className="text-sm flex items-center gap-2">
-                    <Badge
-                        variant="secondary"
-                        className="flex items-center gap-2 text-md text-neutral-400"
-                    >
-                        {semesterList.find((s) => semester === s.label)?.label}
-                        <ChevronRight className="h-4 w-4" />
-                        {branchList.find((b) => branch === b.label)?.label}
-                    </Badge>{' '}
-                </h2>
+            <div className="flex gap-2 sm:col-span-2 md:col-span-3 lg:col-span-4 justify-center">
+            <h2 className="text-sm flex items-center gap-2" style={{ marginBottom: '-40px' }}>
+            <Badge
+            variant="secondary"
+            className="flex items-center gap-2 text-md text-neutral-400"
+            >
+            {semesterList.find((s) => semester === s.label)?.label}
+            <ChevronRight className="h-4 w-4" />
+            {branchList.find((b) => branch === b.label)?.label}
+            </Badge>{' '}
+            </h2>
+
             </div>
             {isLoading && (
                 <Loader2 className="h-24 w-24 animate-spin mt-5 mx-auto sm:col-span-2 md:col-span-3 lg:col-span-4" />
