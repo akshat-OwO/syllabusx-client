@@ -50,6 +50,10 @@ const Search: FC<SearchProps> = ({ where }) => {
         }
     };
 
+    const buttonSpacing = {
+        margin: '20px 0', // Add margin to create space between buttons
+    };
+    
     return (
         <>
             <DropdownMenu>
@@ -133,7 +137,11 @@ const Search: FC<SearchProps> = ({ where }) => {
                     <SendHorizonal className="w-4 h-4 xl:h-6 xl:w-6" />
                 )}
             </Button>
-                    
+
+            <div style={buttonSpacing}></div>
+            <div style={buttonSpacing}></div>
+            <div style={buttonSpacing}></div>
+                  
             <a></a>
             <a></a>
 
