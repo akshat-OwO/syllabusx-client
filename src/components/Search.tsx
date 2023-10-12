@@ -158,22 +158,26 @@ const Search: FC<SearchProps> = ({ where }) => {
             <a></a>
             <a></a>
             {/* "Contribute to SyllabusX" Button */}
-            <a
-                className={cn(
-                    buttonVariants({
-                        variant: 'secondary',
-                        className: 'text-sm',
-                    })
-                )}
-                href="https://github.com/akshat-OwO/syllabusx-client/"
-                target="_blank"
-            >
-                Contribute to SyllabusX {' '}
-                <Github
-                    style={{ marginLeft: '5px' }}
-                    className="w-4 h-4 xl:h-6 xl:w-6"
-                />
-            </a>
+{where !== 'sidebar' && (
+    <a
+        className={cn(
+            buttonVariants({
+                variant: 'secondary',
+                className: 'text-sm',
+            }),
+            'hidden lg:flex' // Show on PC (large screens)
+        )}
+        href="https://github.com/akshat-OwO/syllabusx-client/"
+        target="_blank"
+    >
+        Contribute to SyllabusX {' '}
+        <Github
+            style={{ marginLeft: '5px' }}
+            className="w-4 h-4 xl:h-6 xl:w-6"
+        />
+    </a>
+)}
+
 
         </>
     );
