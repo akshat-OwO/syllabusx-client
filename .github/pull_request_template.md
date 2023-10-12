@@ -1,7 +1,7 @@
 ### All Submissions:
 
-- [ ] Have you followed the guidelines stated in [README.md](https://github.com/NITRR-Open-Source-Community/NOSC-Website#how-to-contribute) file?
-- [ ] Have you checked to ensure there aren't any other open [Pull Requests](https://github.com/NITRR-Open-Source-Community/NOSC-Website/pulls) for the desired changed?
+- [ ] Have you followed the guidelines stated in [README.md](https://github.com/akshat-OwO/syllabusx-client#readme) file?
+- [ ] Have you checked to ensure there aren't any other open [Pull Requests](https://github.com/akshat-OwO/syllabusx-client/pulls) for the desired changed?
 
 <!-- You can erase any parts of this template not applicable to your Pull Request. -->
 
