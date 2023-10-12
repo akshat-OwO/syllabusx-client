@@ -2,7 +2,7 @@
 
 import { branchList, semesterList } from '@/config';
 import { cn } from '@/lib/utils';
-import { ChevronsUpDown, Loader2, SendHorizonal } from 'lucide-react';
+import { ChevronsUpDown, Loader2, SendHorizonal, MessageSquarePlus, Github } from 'lucide-react'; // Import necessary icons
 import { useParams, useRouter } from 'next/navigation';
 import { FC, useState } from 'react';
 import { Button, buttonVariants } from './ui/button';
@@ -45,17 +45,15 @@ const Search: FC<SearchProps> = ({ where }) => {
         }
         if (semester && branch) {
             router.push(
-                `/${semesterList.find((s) => semester === s.value)?.label}/${
-                    branchList.find((b) => branch === b.value)?.label
-                }`
+                `/${semesterList.find((s) => semester === s.value)?.label}/${branchList.find((b) => branch === b.value)?.label}`
             );
         }
     };
-
+    
     return (
         <>
             <DropdownMenu>
-                <DropdownMenuTrigger className="lg:col-start-2">
+                <DropdownMenuTrigger className="lg:col-start-2 mt--100">
                     <div
                         className={cn(
                             buttonVariants({
@@ -66,8 +64,7 @@ const Search: FC<SearchProps> = ({ where }) => {
                         )}
                     >
                         {semester
-                            ? semesterList.find((s) => semester === s.value)
-                                  ?.label
+                            ? semesterList.find((s) => semester === s.value)?.label
                             : 'Semester'}
                         <ChevronsUpDown className="h-4 w-4 xl:h-6 xl:w-6" />
                     </div>
@@ -85,8 +82,11 @@ const Search: FC<SearchProps> = ({ where }) => {
                     </ScrollArea>
                 </DropdownMenuContent>
             </DropdownMenu>
+
+            
+
             <DropdownMenu>
-                <DropdownMenuTrigger className="lg:col-start-2">
+                <DropdownMenuTrigger className="lg:col-start-2 mt--40">
                     <div
                         className={cn(
                             buttonVariants({
@@ -115,6 +115,9 @@ const Search: FC<SearchProps> = ({ where }) => {
                     </ScrollArea>
                 </DropdownMenuContent>
             </DropdownMenu>
+
+            
+
             <Button
                 disabled={isLoading}
                 isLoading={isLoading}
@@ -130,6 +133,52 @@ const Search: FC<SearchProps> = ({ where }) => {
                     <SendHorizonal className="w-4 h-4 xl:h-6 xl:w-6" />
                 )}
             </Button>
+                  
+            <a></a>
+            <a></a>
+
+            {/* "Give Us Feedback" Button */}
+            <a
+                className={cn(
+                    buttonVariants({
+                        variant: 'secondary',
+                        className: 'text-sm',
+                    })
+                )}
+                href="https://forms.gle/BFTv1uy8L33ptic6A"
+                target="_blank"
+            >
+                Give Us Feedback {' '}
+                <MessageSquarePlus
+                    style={{ marginLeft: '5px' }}
+                    className="h-4 w-4 xl:h-6 xl:w-6"
+                />
+            </a>
+
+            <a></a>
+            <a></a>
+            {/* "Contribute to SyllabusX" Button */}
+{where !== 'sidebar' && (
+    <a
+        className={cn(
+            buttonVariants({
+                variant: 'secondary',
+                className: 'text-sm',
+            }),
+            'hidden lg:flex' // Show on PC (large screens)
+        )}
+        href="https://github.com/akshat-OwO/syllabusx-client/"
+        target="_blank"
+    >
+        Contribute to SyllabusX {' '}
+        <Github
+            style={{ marginLeft: '5px' }}
+            className="w-4 h-4 xl:h-6 xl:w-6"
+        />
+    </a>
+)}
+
+
         </>
     );
 };

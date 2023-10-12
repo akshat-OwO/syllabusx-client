@@ -16,6 +16,7 @@ export default function Home() {
             <div className='grid place-content-center px-5"'>
                 <div className="flex flex-col gap-4 mt-32 lg:grid lg:grid-cols-3 lg:gap-2 xl:gap-6">
                     <Search />
+                    {/*
                     <a
                         className={cn(
                             buttonVariants({
@@ -44,6 +45,7 @@ export default function Home() {
                         Contribute to SyllabusX{' '}
                         <Github className="w-4 h-4 xl:h-6 xl:w-6" />
                     </a>
+                    */}
                 </div>
             </div>
             <Footer type='' />
