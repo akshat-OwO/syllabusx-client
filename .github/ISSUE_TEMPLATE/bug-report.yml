@@ -1,4 +1,4 @@
-=name: 🐞 Bug Report
+name: 🐞 Bug Report
 description: File a bug report
 title: "[Bug]: "
 body:
@@ -13,15 +13,6 @@ body:
       description: Also tell us, what did you expect to happen?
       placeholder: Tell us what you see!
       value: "A bug happened!"
-    validations:
-      required: true
-  - type: dropdown
-    id: version
-    attributes:
-      label: Version
-      description: What version of our software are you running?
-      options:
-        - 1.0.1 (Default)
     validations:
       required: true
   - type: dropdown
