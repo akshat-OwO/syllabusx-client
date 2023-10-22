@@ -38,25 +38,15 @@ const NavLinks: FC<NavLinksProps> = ({}) => {
                                     <DropdownMenuItem asChild>
                                         <Link
                                             href="/btech"
-                                            className={cn(
-                                                buttonVariants({
-                                                    variant: 'outline',
-                                                    className: 'w-full',
-                                                })
-                                            )}
+                                            className="flex justify-center font-semibold cursor-pointer"
                                         >
-                                            B.Tech
+                                            BTECH
                                         </Link>
                                     </DropdownMenuItem>
                                     <DropdownMenuItem asChild>
                                         <Link
                                             href="/bca"
-                                            className={cn(
-                                                buttonVariants({
-                                                    variant: 'outline',
-                                                    className: 'w-full',
-                                                })
-                                            )}
+                                            className="flex justify-center font-semibold cursor-pointer"
                                         >
                                             BCA
                                         </Link>
@@ -114,25 +104,15 @@ const NavLinks: FC<NavLinksProps> = ({}) => {
                         <DropdownMenuItem asChild>
                             <Link
                                 href="/btech"
-                                className={cn(
-                                    buttonVariants({
-                                        variant: 'outline',
-                                        className: 'w-full',
-                                    })
-                                )}
+                                className="flex justify-center font-semibold cursor-pointer"
                             >
-                                B.Tech
+                                BTECH
                             </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
                             <Link
                                 href="/bca"
-                                className={cn(
-                                    buttonVariants({
-                                        variant: 'outline',
-                                        className: 'w-full',
-                                    })
-                                )}
+                                className="flex justify-center font-semibold cursor-pointer"
                             >
                                 BCA
                             </Link>
