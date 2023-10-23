@@ -117,7 +117,6 @@ const Search: FC<SearchProps> = ({ where }) => {
             </DropdownMenu>
             <Button
                 disabled={isLoading}
-                isLoading={isLoading}
                 onClick={handleSearch}
                 className={
                     'self-end lg:col-start-2 lg:flex lg:justify-self-end lg:self-start' +

@@ -6,7 +6,7 @@ interface LayoutProps {
     className?: string;
 }
 
-const Layout: FC<LayoutProps> = ({ children, className }) => {
+const LayoutWrapper: FC<LayoutProps> = ({ children, className }) => {
     return (
         <div
             className={cn(
@@ -19,4 +19,4 @@ const Layout: FC<LayoutProps> = ({ children, className }) => {
     );
 };
 
-export default Layout;
+export default LayoutWrapper;
