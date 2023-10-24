@@ -64,7 +64,14 @@ const NavLinks: FC<NavLinksProps> = ({}) => {
                                 </TooltipProvider>
                                 <DropdownMenuContent className="p-2.5 space-y-2.5">
                                     <DropdownMenuItem asChild>
-                                        <Btech />
+                                        <Btech>
+                                            <Button
+                                                variant={'ghost'}
+                                                className="w-full"
+                                            >
+                                                BTECH
+                                            </Button>
+                                        </Btech>
                                     </DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
@@ -146,7 +153,11 @@ const NavLinks: FC<NavLinksProps> = ({}) => {
                     </TooltipProvider>
                     <DropdownMenuContent className="p-2.5 space-y-2.5">
                         <DropdownMenuItem asChild>
-                            <Btech />
+                            <Btech>
+                                <Button variant={'ghost'} className="w-full">
+                                    BTECH
+                                </Button>
+                            </Btech>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>

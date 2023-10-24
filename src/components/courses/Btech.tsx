@@ -22,9 +22,11 @@ import {
 import { ScrollArea } from '../ui/scroll-area';
 import { useToast } from '../ui/use-toast';
 
-interface BtechProps {}
+interface BtechProps {
+    children: React.ReactNode
+}
 
-const Btech: FC<BtechProps> = ({}) => {
+const Btech: FC<BtechProps> = ({children}) => {
     const [semester, setSemester] = useState<string>('');
     const [branch, setBranch] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -54,9 +56,7 @@ const Btech: FC<BtechProps> = ({}) => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant={'ghost'} className="w-full">
-                    BTECH
-                </Button>
+                {children}
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
