@@ -8,7 +8,7 @@ interface NavbarProps {}
 
 const Navbar: FC<NavbarProps> = ({}) => {
     return (
-        <nav className="sticky h-14 inset-x-0 top-0 z-30 w-full bg-background/75 border-b border-border backdrop-blur-lg transition-all">
+        <nav className="h-14 w-full bg-background/75 border-b border-border backdrop-blur-lg transition-all">
             <LayoutWrapper>
                 <div className="h-14 flex items-center justify-between border-b border-border">
                     <Link
@@ -20,9 +20,9 @@ const Navbar: FC<NavbarProps> = ({}) => {
                             aria-label="syllabus x"
                             className="w-10 h-full"
                         />{' '}
-                        {/* <p className="text-primary text-lg hover:text-primary/75 transition">
+                        <p className="text-primary text-lg hover:text-primary/75 transition">
                             SyllabusX
-                        </p> */}
+                        </p>
                     </Link>
                     <NavLinks />
                 </div>

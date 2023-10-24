@@ -111,7 +111,7 @@ const StudyMaterial: FC<StudyMaterialProps> = ({
                                 buttonVariants({
                                     variant: 'default',
                                     className:
-                                        'relative text-center h-full self-center hover:ring-2 hover:ring-neutral-50 hover:ring-offset-4 transition cursor-pointer group',
+                                        'relative whitespace-normal text-center h-full self-center cursor-pointer group',
                                 })
                             )}
                             onClick={() => {
