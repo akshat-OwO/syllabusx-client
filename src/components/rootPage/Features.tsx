@@ -12,7 +12,7 @@ const Features: FC<FeaturesProps> = ({}) => {
                     We&apos;ve got your back
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-16 gap-y-5 sm:gap-y-10 justify-center items-center">
-                    <div className="flex gap-2 items-center text-xs md:text-base">
+                    <div className="flex gap-2 items-center">
                         <CheckCircle2 className="h-8 w-8 fill-green-500 stroke-background" />
                         <p>Up-to-Date Information</p>
                     </div>
