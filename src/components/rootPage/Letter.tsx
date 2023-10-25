@@ -12,7 +12,7 @@ const Letter: FC<LetterProps> = ({}) => {
                         An Open Letter.
                     </h3>
                 </div>
-                <div className="prose text-foreground mx-auto">
+                <div className="p-3.5 prose text-foreground mx-auto bg-accent rounded-md">
                     <p>
                         Hey there, fellow students and academic aficionados!
                         Ever found yourself endlessly scrolling through endless
