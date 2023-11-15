@@ -1,223 +1,123 @@
+'use client';
+
 import { cn } from '@/lib/utils';
-import {
-    ChevronDown,
-    Github,
-    Heart,
-    Instagram,
-    LibraryBig,
-    Menu,
-    Star,
-} from 'lucide-react';
+import { Instagram, Menu, Star } from 'lucide-react';
 import Link from 'next/link';
 import { FC } from 'react';
 import { ModeToggle } from './ModeToggle';
-import Btech from './courses/Btech';
 import { Button, buttonVariants } from './ui/button';
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from './ui/dropdown-menu';
-import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from './ui/tooltip';
+    Sheet,
+    SheetContent,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from './ui/sheet';
 
 interface NavLinksProps {}
 
 const NavLinks: FC<NavLinksProps> = ({}) => {
     return (
-        <div>
-            <div className="lg:hidden flex gap-2 items-center">
+        <>
+            <div className="hidden md:flex items-center gap-2">
+                <a
+                    className={cn(
+                        buttonVariants({ variant: 'ghost', className: 'gap-2' })
+                    )}
+                    href="https://github.com/akshat-OwO/syllabusx-client"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <Star className="h-4 w-4" />
+                    Star this project
+                </a>
+                <a
+                    className={cn(
+                        buttonVariants({ variant: 'ghost', size: 'icon' })
+                    )}
+                    href="https://www.instagram.com/syllabusx_.live/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <Instagram className="h-4 w-4" />
+                </a>
                 <ModeToggle />
+            </div>
+            <div className="block md:hidden">
                 <Sheet>
                     <SheetTrigger asChild>
-                        <Button variant="outline" size="icon">
-                            <Menu className="h-6 w-6" />
+                        <Button variant={'ghost'} size={'icon'}>
+                            <Menu className="h-4 w-4" />
                         </Button>
                     </SheetTrigger>
                     <SheetContent>
-                        <div className="relative flex flex-col h-full gap-5 justify-center items-center">
-                            <DropdownMenu>
-                                <TooltipProvider>
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <DropdownMenuTrigger asChild>
-                                                <Button
-                                                    variant="outline"
-                                                    className="gap-2"
-                                                >
-                                                    <LibraryBig className="h-6 w-6" />{' '}
-                                                    Courses{' '}
-                                                    <ChevronDown className="h-4 w-4" />
-                                                </Button>
-                                            </DropdownMenuTrigger>
-                                        </TooltipTrigger>
-                                        <TooltipContent>
-                                            <p>Browse Courses</p>
-                                        </TooltipContent>
-                                    </Tooltip>
-                                </TooltipProvider>
-                                <DropdownMenuContent className="p-2.5 space-y-2.5">
-                                    <DropdownMenuItem asChild>
-                                        <Btech>
-                                            <Button
-                                                variant={'ghost'}
-                                                className="w-full"
-                                            >
-                                                BTECH
-                                            </Button>
-                                        </Btech>
-                                    </DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2 items-center">
-                                <TooltipProvider>
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <a
-                                                href="https://github.com/akshat-OwO/syllabusx-client"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className={cn(
-                                                    buttonVariants({
-                                                        variant: 'outline',
-                                                        size: 'icon',
-                                                    })
-                                                )}
-                                                aria-label="github link"
-                                            >
-                                                <Github className="h-6 w-6" />
-                                            </a>
-                                        </TooltipTrigger>
-                                        <TooltipContent>
-                                            <p className="flex items-center gap-2">
-                                                <Star className="text-foreground h-4 w-4" />
-                                                Star This Project
-                                            </p>
-                                        </TooltipContent>
-                                    </Tooltip>
-                                </TooltipProvider>
-                                <TooltipProvider>
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <a
-                                                href="https://www.instagram.com/syllabusx_.live/"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className={cn(
-                                                    buttonVariants({
-                                                        variant: 'outline',
-                                                        size: 'icon',
-                                                    })
-                                                )}
-                                                aria-label="instagram link"
-                                            >
-                                                <Instagram className="h-6 w-6" />
-                                            </a>
-                                        </TooltipTrigger>
-                                        <TooltipContent>
-                                            <p className="flex items-center gap-2">
-                                                <Heart className="text-foreground h-4 w-4" />
-                                                Follow Us
-                                            </p>
-                                        </TooltipContent>
-                                    </Tooltip>
-                                </TooltipProvider>
-                            </div>
+                        <SheetHeader>
+                            <SheetTitle>Menu</SheetTitle>
+                        </SheetHeader>
+                        <ul className="mt-5 grid gap-5">
+                            <ListAnchor title="Courses" href="/courses">
+                                Swipe through the academic menu, and let the
+                                learning feast begin!
+                            </ListAnchor>
+                            <ListAnchor title="Change Log" href="/changelog">
+                                Witness the magic behind SyllabusX&apos;s
+                                updates. Stay nerdy, stay updated!
+                            </ListAnchor>
+                        </ul>
+                        <div className="mt-5 flex justify-center items-center gap-2">
+                            <a
+                                className={cn(
+                                    buttonVariants({
+                                        variant: 'ghost',
+                                        size: 'icon',
+                                    })
+                                )}
+                                href="https://www.instagram.com/syllabusx_.live/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <Instagram className="h-4 w-4" />
+                            </a>
+                            <a
+                                className={cn(
+                                    buttonVariants({
+                                        variant: 'ghost',
+                                        className: 'gap-2',
+                                    })
+                                )}
+                                href="https://github.com/akshat-OwO/syllabusx-client"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <Star className="h-4 w-4" />
+                                Star this project
+                            </a>
+                            <ModeToggle />
                         </div>
                     </SheetContent>
                 </Sheet>
             </div>
-            <div className="hidden lg:flex gap-5 items-center">
-                <DropdownMenu>
-                    <TooltipProvider>
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <DropdownMenuTrigger asChild>
-                                    <Button variant="outline" className="gap-2">
-                                        <LibraryBig className="h-6 w-6" />{' '}
-                                        Courses{' '}
-                                        <ChevronDown className="h-4 w-4" />
-                                    </Button>
-                                </DropdownMenuTrigger>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                                <p>Browse Courses</p>
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
-                    <DropdownMenuContent className="p-2.5 space-y-2.5">
-                        <DropdownMenuItem asChild>
-                            <Btech>
-                                <Button variant={'ghost'} className="w-full">
-                                    BTECH
-                                </Button>
-                            </Btech>
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-                <div className="flex gap-2 items-center">
-                    <TooltipProvider>
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <a
-                                    href="https://github.com/akshat-OwO/syllabusx-client"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className={cn(
-                                        buttonVariants({
-                                            variant: 'outline',
-                                            size: 'icon',
-                                        })
-                                    )}
-                                    aria-label="github link"
-                                >
-                                    <Github className="h-6 w-6" />
-                                </a>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                                <p className="flex items-center gap-2">
-                                    <Star className="text-foreground h-4 w-4" />
-                                    Star This Project
-                                </p>
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
-                    <TooltipProvider>
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <a
-                                    href="https://www.instagram.com/syllabusx_.live/"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className={cn(
-                                        buttonVariants({
-                                            variant: 'outline',
-                                            size: 'icon',
-                                        })
-                                    )}
-                                    aria-label="instagram link"
-                                >
-                                    <Instagram className="h-6 w-6" />
-                                </a>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                                <p className="flex items-center gap-2">
-                                    <Heart className="text-foreground h-4 w-4" />
-                                    Follow Us
-                                </p>
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
-                </div>
-                <ModeToggle />
-            </div>
-        </div>
+        </>
+    );
+};
+
+interface ListAnchorProps {
+    href: string;
+    title: string;
+    children: React.ReactNode;
+}
+
+const ListAnchor: FC<ListAnchorProps> = ({ children, href, title }) => {
+    return (
+        <Link
+            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+            href={href}
+        >
+            <div className="text-sm font-medium leading-none">{title}</div>
+            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                {children}
+            </p>
+        </Link>
     );
 };
 

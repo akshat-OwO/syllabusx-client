@@ -28,10 +28,6 @@ export function constructMetadata(): Metadata {
             'Akash',
             'Practicals IPU',
         ],
-        viewport: {
-            width: 'device-width',
-            initialScale: 1,
-        },
         openGraph: {
             title: 'SyllabusX',
             description:
