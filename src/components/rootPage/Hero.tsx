@@ -45,7 +45,7 @@ const Hero: FC<HeroProps> = ({}) => {
                     Browse Courses
                 </Link>
                 <div className="relative w-full h-full self-center">
-                    <div className='conic-center absolute w-full h-full' />
+                    <div className='-z-10 conic-center absolute w-full h-full' />
                     <div className='z-10 w-full aspect-video bg-accent shadow-2xl rounded-md' />
                 </div>
             </LayoutWrapper>

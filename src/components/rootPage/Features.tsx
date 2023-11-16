@@ -1,44 +1,90 @@
 import LayoutWrapper from '@/layouts/LayoutWrapper';
-import { CheckCircle2 } from 'lucide-react';
+import {
+    BookCheck,
+    CalendarCheck,
+    CheckCircle2,
+    MessageSquarePlus,
+    PackageOpen,
+    Repeat,
+    TabletSmartphone,
+} from 'lucide-react';
 import { FC } from 'react';
+import ShowCard from '../ui/show-card';
 
 interface FeaturesProps {}
 
 const Features: FC<FeaturesProps> = ({}) => {
     return (
-        <LayoutWrapper className="pb-20">
-            <div className="flex flex-col items-center gap-10">
-                <h2 className="text-accent-foreground font-semibold text-xl md:text-3xl">
-                    We&apos;ve got your back
-                </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-16 gap-y-5 sm:gap-y-10 justify-center items-center">
-                    <div className="flex gap-2 items-center">
-                        <CheckCircle2 className="h-8 w-8 fill-green-500 stroke-background" />
-                        <p>Up-to-Date Information</p>
+        <div className='relative w-full'>
+            <div className='hidden dark:block absolute -top-28 sm:-top-12 lg:top-0 -z-10 w-full h-full spotlight' />
+            <LayoutWrapper className="z-10 py-20">
+                <div className="flex flex-col items-center gap-10">
+                    <div className='prose dark:prose-invert prose-neutral text-center'>
+                        <h2 className="text-accent-foreground font-semibold text-xl md:text-3xl">
+                            We&apos;ve got your back
+                        </h2>
                     </div>
-                    <div className="flex gap-2 items-center">
-                        <CheckCircle2 className="h-8 w-8 fill-green-500 stroke-background" />
-                        <p>Comprehensive Coverage</p>
-                    </div>
-                    <div className="flex gap-2 items-center">
-                        <CheckCircle2 className="h-8 w-8 fill-green-500 stroke-background" />
-                        <p>User Friendly Interface</p>
-                    </div>
-                    <div className="flex gap-2 items-center">
-                        <CheckCircle2 className="h-8 w-8 fill-green-500 stroke-background" />
-                        <p>Open Source</p>
-                    </div>
-                    <div className="flex gap-2 items-center">
-                        <CheckCircle2 className="h-8 w-8 fill-green-500 stroke-background" />
-                        <p>Constant Updates</p>
-                    </div>
-                    <div className="flex gap-2 items-center">
-                        <CheckCircle2 className="h-8 w-8 fill-green-500 stroke-background" />
-                        <p>Feedback Loop</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-16 gap-y-5 sm:gap-y-10 justify-center items-center">
+                        <ShowCard
+                            title="Up-to-Date Information"
+                            iconRight={<CalendarCheck className="h-4 w-4" />}
+                        >
+                            Current, Never Outdated Information.
+                        </ShowCard>
+                        <div className="block lg:hidden">
+                            <ShowCard
+                                title="Comprehensive Coverage"
+                                iconLeft={<BookCheck className="h-4 w-4" />}
+                            >
+                                Inclusive grasp of entire curriculum.
+                            </ShowCard>
+                        </div>
+                        <div className="hidden lg:block">
+                            <ShowCard
+                                title="Comprehensive Coverage"
+                                iconRight={<BookCheck className="h-4 w-4" />}
+                            >
+                                Inclusive grasp of entire curriculum.
+                            </ShowCard>
+                        </div>
+                        <ShowCard
+                            title="User Friendly Interface"
+                            iconRight={<TabletSmartphone className="h-4 w-4" />}
+                        >
+                            Intuitive. Navigational Bliss.
+                        </ShowCard>
+                        <ShowCard
+                            title="Open Source"
+                            iconLeft={<PackageOpen className="h-4 w-4" />}
+                        >
+                            Knowledge for All, Code Together.
+                        </ShowCard>
+                        <div className="block lg:hidden">
+                            <ShowCard
+                                title="Constant Updates"
+                                iconRight={<Repeat className="h-4 w-4" />}
+                            >
+                                Always Improving, Never Stagnant.
+                            </ShowCard>
+                        </div>
+                        <div className="hidden lg:block">
+                            <ShowCard
+                                title="Constant Updates"
+                                iconLeft={<Repeat className="h-4 w-4" />}
+                            >
+                                Always Improving, Never Stagnant.
+                            </ShowCard>
+                        </div>
+                        <ShowCard
+                            title="Feedback Loop"
+                            iconLeft={<MessageSquarePlus className="h-4 w-4" />}
+                        >
+                            Your Input Shapes SyllabusX.
+                        </ShowCard>
                     </div>
                 </div>
-            </div>
-        </LayoutWrapper>
+            </LayoutWrapper>
+        </div>
     );
 };
 
