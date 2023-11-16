@@ -72,3 +72,13 @@
 ::-webkit-scrollbar-thumb:hover {
     background: #a3a3a3;
 }
+
+.radial-top {
+    background: radial-gradient(ellipse 80% 50% at 50% -20%,rgba(120,200,255,0.3),rgba(0, 0, 100, 0));
+}
+
+.conic-center {
+    background: conic-gradient(from 230.29deg at 51.63% 52.16%, rgba(120,200,255,0.3) 0deg, rgba(120,200,255,0.3) 360deg);
+    filter: blur(150px);
+    transform: translateZ(0px);
+}

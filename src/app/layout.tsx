@@ -1,6 +1,7 @@
 import Providers from '@/components/Providers';
 import Scripts from '@/components/Scripts';
-import { constructMetadata } from '@/lib/utils';
+import { cn, constructMetadata } from '@/lib/utils';
+import { GeistSans } from 'geist/font/sans';
 import './globals.css';
 
 export const metadata = constructMetadata();
@@ -13,7 +14,12 @@ export default function RootLayout({
     return (
         <html lang="en">
             <Scripts />
-            <body className="min-h-screen bg-gradient-to-br from-primary-foreground to-background dark:to-background">
+            <body
+                className={cn(
+                    'min-h-screen bg-gradient-to-br from-primary-foreground to-background dark:to-background',
+                    GeistSans.className
+                )}
+            >
                 <Providers>{children}</Providers>
             </body>
         </html>

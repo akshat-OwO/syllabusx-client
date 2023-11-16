@@ -9,7 +9,7 @@ interface NavbarProps {}
 
 const Navbar: FC<NavbarProps> = ({}) => {
     return (
-        <nav className="sticky inset-x-0 top-0 z-10 h-14 w-full bg-background/50 border-b border-border backdrop-blur-sm transition-all">
+        <nav className="sticky inset-x-0 top-0 z-50 h-14 w-full bg-background/50 border-b border-border backdrop-blur-lg transition-all">
             <LayoutWrapper>
                 <div className="h-14 flex items-center justify-between border-b border-border">
                     <div className="flex items-center gap-x-10">

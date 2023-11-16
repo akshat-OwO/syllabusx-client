@@ -1,22 +1,55 @@
 import LayoutWrapper from '@/layouts/LayoutWrapper';
+import { cn } from '@/lib/utils';
+import Link from 'next/link';
 import { FC } from 'react';
+import { Icons } from '../Icons';
+import { Badge, badgeVariants } from '../ui/badge';
+import { buttonVariants } from '../ui/button';
 
 interface HeroProps {}
 
 const Hero: FC<HeroProps> = ({}) => {
     return (
-        <LayoutWrapper className="flex flex-col md:flex-row h-[calc(100vh-3.5rem)] gap-10 md:gap-0 justify-center md:justify-between items-center">
-            <div className="flex flex-col justify-center gap-5">
-                <h1 className="text-2xl md:text-5xl font-bold text-foreground">
-                    SyllabusX
-                </h1>
-
-                <p className="text-lg md:text-2xl font-semibold text-muted-foreground">
-                    Your Ultimate IPU resource.
-                </p>
-            </div>
-            <div className="h-64 md:h-96 max-w-xl w-full bg-accent rounded-md md:flex-1 self-center" />
-        </LayoutWrapper>
+        <div className="radial-top w-full">
+            <LayoutWrapper className="flex flex-col p-10 gap-10 justify-center items-center">
+                <div className="flex flex-col gap-5">
+                    <Icons.x className="h-20" />
+                    <Link
+                        href="/changelog"
+                        className={cn(badgeVariants({ variant: 'default' }))}
+                    >
+                        Version 4.0
+                    </Link>
+                </div>
+                <div className="flex flex-col gap-y-2 items-center">
+                    <div className="prose prose-neutral dark:prose-invert md:prose-base">
+                        <h1 className="text-center text-transparent bg-clip-text bg-gradient-to-r from-accent-foreground via-accent-foreground to-transparent">
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-500 via-teal-600 to-teal-500">
+                                SyllabusX
+                            </span>{' '}
+                            is Your academic GPS. Navigate studies effortlessly.
+                        </h1>
+                    </div>
+                    <div className="prose prose-neutral dark:prose-invert md:prose-sm">
+                        <p className="text-center">
+                            Embark on a journey of simplified education.
+                            Navigating through syllabi, study materials, and
+                            course essentials has never been this effortless.
+                        </p>
+                    </div>
+                </div>
+                <Link
+                    href="/courses"
+                    className={cn(buttonVariants({ variant: 'default' }))}
+                >
+                    Browse Courses
+                </Link>
+                <div className="relative w-full h-full self-center">
+                    <div className='conic-center absolute w-full h-full' />
+                    <div className='z-10 w-full aspect-video bg-accent shadow-2xl rounded-md' />
+                </div>
+            </LayoutWrapper>
+        </div>
     );
 };
 
