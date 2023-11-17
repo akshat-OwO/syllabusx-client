@@ -1,5 +1,3 @@
-import SubjectsLayout from '@/layouts/SubjectsLayout';
-import _ from 'lodash';
 import { Metadata, ResolvingMetadata } from 'next';
 import { FC, ReactNode } from 'react';
 
@@ -27,7 +25,7 @@ interface LayoutProps {
 }
 
 const Layout: FC<LayoutProps> = ({ children }) => {
-    return <SubjectsLayout>{children}</SubjectsLayout>;
+    return <>{children}</>;
 };
 
 export default Layout;

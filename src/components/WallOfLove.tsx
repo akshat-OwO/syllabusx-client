@@ -1,6 +1,6 @@
 import LayoutWrapper from '@/layouts/LayoutWrapper';
 import { FC } from 'react';
-import { ScrollArea, ScrollBar } from '../ui/scroll-area';
+import { ScrollArea, ScrollBar } from './ui/scroll-area';
 
 interface WallOfLoveProps {}
 

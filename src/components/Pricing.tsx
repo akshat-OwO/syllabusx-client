@@ -1,7 +1,7 @@
 import LayoutWrapper from '@/layouts/LayoutWrapper';
 import { Gift, Heart, MessageSquarePlus, Star } from 'lucide-react';
 import { FC } from 'react';
-import { Button } from '../ui/button';
+import { Button } from './ui/button';
 
 interface PricingProps {}
 
@@ -9,12 +9,12 @@ const Pricing: FC<PricingProps> = ({}) => {
     return (
         <LayoutWrapper className="py-20">
             <div className="flex flex-col gap-10 justify-center">
-                <div className="flex flex-col items-center gap-5">
-                    <h3 className="text-accent-foreground font-semibold text-xl md:text-3xl">
+                <div className="prose dark:prose-invert prose-neutral text-center self-center">
+                    <h2>
                         Pricing
-                    </h3>
-                    <p className="text-muted-foreground text-base md:text-2xl font-semibold">
-                        Just kidding, SyllabusX is free and open-source
+                    </h2>
+                    <p>
+                        No wallet required! SyllabusX is free and open-source
                     </p>
                 </div>
                 <div className="flex flex-col md:flex-row md:items-end justify-center gap-2 md:gap-0">

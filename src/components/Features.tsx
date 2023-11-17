@@ -9,7 +9,7 @@ import {
     TabletSmartphone,
 } from 'lucide-react';
 import { FC } from 'react';
-import ShowCard from '../ui/show-card';
+import ShowCard from './ui/show-card';
 
 interface FeaturesProps {}
 

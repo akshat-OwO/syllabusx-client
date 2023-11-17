@@ -2,9 +2,9 @@ import LayoutWrapper from '@/layouts/LayoutWrapper';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { FC } from 'react';
-import { Icons } from '../Icons';
-import { Badge, badgeVariants } from '../ui/badge';
-import { buttonVariants } from '../ui/button';
+import { Icons } from './Icons';
+import { Badge, badgeVariants } from './ui/badge';
+import { buttonVariants } from './ui/button';
 
 interface HeroProps {}
 

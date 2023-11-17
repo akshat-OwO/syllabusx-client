@@ -1,3 +1,5 @@
+import Footer from '@/components/Footer';
+import Navbar from '@/components/Navbar';
 import Providers from '@/components/Providers';
 import Scripts from '@/components/Scripts';
 import { cn, constructMetadata } from '@/lib/utils';
@@ -20,7 +22,11 @@ export default function RootLayout({
                     GeistSans.className
                 )}
             >
-                <Providers>{children}</Providers>
+                <Providers>
+                    <Navbar />
+                    {children}
+                    <Footer />
+                </Providers>
             </body>
         </html>
     );

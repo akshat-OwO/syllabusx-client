@@ -7,8 +7,8 @@ const Letter: FC<LetterProps> = ({}) => {
     return (
         <LayoutWrapper className="py-20">
             <div className="flex flex-col gap-10 justify-center">
-                <div className="flex flex-col items-center gap-5">
-                    <h3 className="text-accent-foreground font-semibold text-xl md:text-3xl">
+                <div className="self-center prose dark:prose-invert prose-neutral">
+                    <h3 className="text-center">
                         An Open Letter.
                     </h3>
                 </div>
