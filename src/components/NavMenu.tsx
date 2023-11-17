@@ -26,7 +26,7 @@ const NavMenu: FC<NavMenuProps> = ({}) => {
                         <Link href="/courses">Courses</Link>
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
-                        <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                        <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-2">
                             <ListItem href="/courses/btech" title="B.Tech">
                                 Who needs sleep when you can engineer dreams?
                             </ListItem>

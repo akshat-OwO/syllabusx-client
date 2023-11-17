@@ -15,8 +15,7 @@ interface FeaturesProps {}
 
 const Features: FC<FeaturesProps> = ({}) => {
     return (
-        <div className='relative w-full'>
-            <div className='hidden dark:block absolute -top-28 sm:-top-12 lg:top-0 -z-10 w-full h-full spotlight' />
+        <div className='w-full'>
             <LayoutWrapper className="z-10 py-20">
                 <div className="flex flex-col items-center gap-10">
                     <div className='prose dark:prose-invert prose-neutral text-center'>

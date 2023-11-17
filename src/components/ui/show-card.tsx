@@ -48,7 +48,12 @@ const ShowCard: FC<ShowCardProps> = ({
                     {title}
                 </div>
                 {children ? (
-                    <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                    <p
+                        className={cn(
+                            'line-clamp-2 text-sm leading-snug text-muted-foreground',
+                            iconRight ? 'text-start' : 'text-end'
+                        )}
+                    >
                         {children}
                     </p>
                 ) : null}

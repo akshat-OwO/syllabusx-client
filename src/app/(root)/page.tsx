@@ -4,7 +4,6 @@ import Footer from '@/components/rootPage/Footer';
 import Hero from '@/components/rootPage/Hero';
 import Letter from '@/components/rootPage/Letter';
 import Pricing from '@/components/rootPage/Pricing';
-import WallOfLove from '@/components/rootPage/WallOfLove';
 
 export default function Home() {
     return (
@@ -13,7 +12,7 @@ export default function Home() {
             <Features />
             <CourseList />
             <Pricing />
-            <WallOfLove />
+            {/* <WallOfLove /> */}
             <Letter />
             <Footer />
         </div>

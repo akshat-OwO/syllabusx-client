@@ -22,15 +22,15 @@ const Hero: FC<HeroProps> = ({}) => {
                     </Link>
                 </div>
                 <div className="flex flex-col gap-y-2 items-center">
-                    <div className="prose prose-neutral dark:prose-invert md:prose-base">
-                        <h1 className="text-center text-transparent bg-clip-text bg-gradient-to-r from-accent-foreground via-accent-foreground to-transparent">
+                    <div className="prose prose-sm prose-neutral dark:prose-invert md:prose-base">
+                        <h1 className="text-center">
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-500 via-teal-600 to-teal-500">
                                 SyllabusX
                             </span>{' '}
                             is Your academic GPS. Navigate studies effortlessly.
                         </h1>
                     </div>
-                    <div className="prose prose-neutral dark:prose-invert md:prose-sm">
+                    <div className="prose prose-sm prose-neutral dark:prose-invert">
                         <p className="text-center">
                             Embark on a journey of simplified education.
                             Navigating through syllabi, study materials, and
