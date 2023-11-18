@@ -45,7 +45,7 @@ const BtechCard: FC<BtechCardProps> = ({}) => {
     }
 
     return (
-        <Card className="h-fit shadow-2xl">
+        <Card className="col-span-3 lg:col-span-1 h-fit shadow-2xl">
             <CardHeader>
                 <CardTitle>B.TECH</CardTitle>
                 <CardDescription>

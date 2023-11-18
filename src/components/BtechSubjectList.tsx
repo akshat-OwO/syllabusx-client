@@ -14,6 +14,7 @@ import {
     CardHeader,
     CardTitle,
 } from './ui/card';
+import { ScrollArea, ScrollBar } from './ui/scroll-area';
 import { Skeleton } from './ui/skeleton';
 
 interface BtechSubjectListProps {}
@@ -38,7 +39,7 @@ const BtechSubjectList: FC<BtechSubjectListProps> = ({}) => {
                 !semesterList.some((s) => semester === s.label) ||
                 !branchList.some((b) => branch === b.value)
             ) {
-                throw new Error('Please check semester and branch.');
+                throw new AxiosError('Please check semester and branch.');
             }
             const response = (await axios.get(
                 `${server}${
@@ -49,13 +50,11 @@ const BtechSubjectList: FC<BtechSubjectListProps> = ({}) => {
         },
     });
 
-    if (!semester || !branch) {
-        return <></>;
-    }
+    if (!semester || !branch) <></>;
 
     if (isLoading) {
         return (
-            <Card className="col-span-2">
+            <Card className="col-span-3 lg:col-span-2 shadow-2xl h-fit">
                 <CardHeader>
                     <CardTitle>
                         <Skeleton className="h-8 w-48" />
@@ -64,7 +63,7 @@ const BtechSubjectList: FC<BtechSubjectListProps> = ({}) => {
                         <Skeleton className="h-5 w-52 " />
                     </CardDescription>
                 </CardHeader>
-                <CardContent className="grid grid-cols-4 gap-x-10 gap-y-5">
+                <CardContent className="grid grid-cols-2 sm:grid-cols-3 gap-x-10 gap-y-5">
                     <Skeleton className="w-full h-10" />
                     <Skeleton className="w-full h-10" />
                     <Skeleton className="w-full h-10" />
@@ -80,7 +79,7 @@ const BtechSubjectList: FC<BtechSubjectListProps> = ({}) => {
 
     if (error) {
         return (
-            <Card className="col-span-2">
+            <Card className="col-span-3 lg:col-span-2 shadow-2xl h-fit">
                 <CardHeader>
                     <CardTitle>Temporary Glitch in the Matrix</CardTitle>
                     <CardDescription>
@@ -88,41 +87,50 @@ const BtechSubjectList: FC<BtechSubjectListProps> = ({}) => {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="bg-accent rounded-md h-28 w-full" />
+                    <div className="bg-accent rounded-md h-[7.5rem] w-full" />
                 </CardContent>
             </Card>
         );
     }
 
     return (
-        <Card className="col-span-2">
-            <CardHeader>
-                <CardTitle>Subjects</CardTitle>
-                <CardDescription>
-                    Click on any subject to unveil its syllabus. Spoiler alert:
-                    courage required
-                </CardDescription>
-            </CardHeader>
-            <CardContent className="grid grid-cols-4 gap-x-10 gap-y-5">
-                {list.map((subject: string) => (
-                    <Button
-                        className="whitespace-normal h-auto"
-                        variant={'secondary'}
-                        size={'default'}
-                        key={subject}
-                        onClick={() =>
-                            router.push(
-                                `?semester=${semester}&branch=${branch}&subject=${_.kebabCase(
-                                    subject
-                                )}`
-                            )
-                        }
-                    >
-                        {subject}
-                    </Button>
-                ))}
-            </CardContent>
-        </Card>
+        <>
+            {list && (
+                <Card className="col-span-3 lg:col-span-2 shadow-2xl">
+                    <CardHeader>
+                        <CardTitle>Subjects</CardTitle>
+                        <CardDescription>
+                            Click on any subject to unveil its syllabus. Spoiler
+                            alert: courage required
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <ScrollArea type="always" className="h-28 pr-5">
+                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-5 gap-y-5">
+                                {list.map((subject: string) => (
+                                    <Button
+                                        className="whitespace-normal h-auto shadow-md"
+                                        variant={'secondary'}
+                                        size={'default'}
+                                        key={subject}
+                                        onClick={() =>
+                                            router.push(
+                                                `?semester=${semester}&branch=${branch}&subject=${_.kebabCase(
+                                                    subject
+                                                )}`
+                                            )
+                                        }
+                                    >
+                                        {subject}
+                                    </Button>
+                                ))}
+                            </div>
+                            <ScrollBar />
+                        </ScrollArea>
+                    </CardContent>
+                </Card>
+            )}
+        </>
     );
 };
 

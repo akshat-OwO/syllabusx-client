@@ -1,49 +1,87 @@
 'use client';
 
-import { Tab, server } from '@/config';
+import { Tab, branchList, semesterList, server } from '@/config';
 import { cn } from '@/lib/utils';
+import { useLocalStorage } from '@mantine/hooks';
 import { useQuery } from '@tanstack/react-query';
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import _ from 'lodash';
-import { Loader2, RefreshCcw } from 'lucide-react';
-import { useParams } from 'next/navigation';
-import { FC } from 'react';
+import { Check, Frown, RotateCw, Star, X } from 'lucide-react';
+import React, { FC, useState } from 'react';
 import { Badge } from './ui/badge';
 import { Button, buttonVariants } from './ui/button';
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from './ui/tooltip';
+import { Skeleton } from './ui/skeleton';
+import { TabsContent } from './ui/tabs';
 
 interface StudyMaterialProps {
     tab: Tab;
+    semester: string | null;
+    branch: string | null;
+    subject: string | null;
     note?: string;
     pyq?: string;
     book?: string;
     practical?: string;
+    embed: Embed;
+    showEmbed: boolean;
+    setShowEmbed: React.Dispatch<React.SetStateAction<boolean>>;
     setEmbed: React.Dispatch<React.SetStateAction<Embed>>;
-    setTab: React.Dispatch<React.SetStateAction<Tab>>;
 }
 
 const StudyMaterial: FC<StudyMaterialProps> = ({
     tab,
-    setEmbed,
-    setTab,
     book,
     note,
     practical,
     pyq,
+    semester,
+    branch,
+    subject,
+    embed,
+    showEmbed,
+    setShowEmbed,
+    setEmbed,
 }) => {
-    const params = useParams();
+    const [createFav, setCreateFav] = useState<boolean>(false);
+    const [favorites, setFavorites] = useLocalStorage<string[]>({
+        key: 'favorites',
+        defaultValue: [],
+    });
 
-    const { semester, branch, subject } = params;
+    const handleEmbed = (d: Drive) => {
+        setEmbed({
+            embedLink: d.webViewLink.slice(0, -17) + 'preview',
+            name: d.name.slice(0, -4),
+        });
+        setShowEmbed(true);
+    };
+
+    const exitEmbed = () => {
+        setShowEmbed(false);
+        setEmbed({ embedLink: '', name: '' });
+    };
+
+    const addFavorite = (materialId: string) => {
+        setFavorites((current) => {
+            return [...current, materialId];
+        });
+    };
+
+    const removeFavorite = (materialId: string) => {
+        setFavorites((current) => {
+            return current.filter((id) => id !== materialId);
+        });
+    };
 
     const { data, isLoading, error, refetch, isFetching } = useQuery({
-        queryKey: [tab, semester, branch, subject],
+        queryKey: ['btech', tab, semester, branch, subject],
         queryFn: async () => {
-            if (tab === Tab.NOTES) {
+            if (
+                !semesterList.some((s) => semester === s.label) ||
+                !branchList.some((b) => branch === b.value) ||
+                !subject
+            ) {
+                throw new AxiosError('Please check again what you searched.');
+            } else if (tab === Tab.NOTES) {
                 const response = (await axios.get(
                     `${server}drive/notes/${note}`
                 )) as AxiosResponse;
@@ -58,7 +96,7 @@ const StudyMaterial: FC<StudyMaterialProps> = ({
                     `${server}drive/books/${book}`
                 )) as AxiosResponse;
                 return response.data as Drive[];
-            } else if (tab === Tab.PRACTICAL) {
+            } else if (tab === Tab.FILES) {
                 const response = (await axios.get(
                     `${server}drive/practicalfile/${practical}`
                 )) as AxiosResponse;
@@ -70,76 +108,163 @@ const StudyMaterial: FC<StudyMaterialProps> = ({
         staleTime: 1000 * 60 * 60 * 2,
     });
 
-    if (error instanceof AxiosError)
-        return (
-            <div className="p-4 bg-neutral-900 rounded-lg grid place-content-center text-center">
-                <h1 className="text-3xl">404 Not Found</h1>
-                <p>{error.message}</p>
-            </div>
-        );
-
     return (
-        <div className="relative grid bg-neutral-800/80 lg:mt-5 rounded-lg p-2">
-            <h3 className="mb-4 text-lg lg:text-xl">{_.capitalize(tab)}</h3>
-            <TooltipProvider>
-                <Tooltip>
-                    <TooltipTrigger className="absolute right-2 top-2">
-                        <Button
-                            onClick={() => refetch()}
-                            disabled={isLoading}
-                            className="p-2 h-auto"
-                        >
-                            {isFetching ? (
-                                <RefreshCcw className="h-4 w-4 animate-reverse-spin" />
-                            ) : (
-                                <RefreshCcw className="h-4 w-4" />
-                            )}
+        <TabsContent value={tab}>
+            {error ? (
+                <>
+                    <div className="flex items-center justify-end mb-2">
+                        <Button size={'icon'} onClick={() => refetch()}>
+                            <RotateCw
+                                className={cn(
+                                    'h-4 w-4',
+                                    isFetching ? 'animate-spin' : ''
+                                )}
+                            />
                         </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>Refresh</TooltipContent>
-                </Tooltip>
-            </TooltipProvider>
-            {isLoading && (
-                <Loader2 className="h-24 w-24 animate-spin mt-5 mx-auto sm:col-span-2 md:col-span-3 lg:col-span-4" />
-            )}
-            {data && (
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {data.map((d) => (
-                        <div
-                            key={d.id}
-                            className={cn(
-                                buttonVariants({
-                                    variant: 'default',
-                                    className:
-                                        'relative whitespace-normal text-center h-full self-center cursor-pointer group',
-                                })
-                            )}
-                            onClick={() => {
-                                setTab(Tab.PDF);
-                                setEmbed({
-                                    embedLink:
-                                        d.webViewLink.slice(0, -17) + 'preview',
-                                    name: d.name.slice(0, -4),
-                                });
-                            }}
-                        >
-                            {!(
-                                new Date(Date.parse(d.createdTime)).getTime() <
-                                new Date(
-                                    Date.now() - 2 * 24 * 60 * 60 * 1000
-                                ).getTime()
-                            ) && (
-                                <Badge variant={'secondary'} className="absolute -top-2 -left-2 hover:bg-teal-600 group-hover:animate-pulse rounded-sm bg-teal-600">
-                                    {/* <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-slate-900 opacity-75"></span>
-                                    <span className="relative inline-flex rounded-full h-3 w-3 bg-slate-900"></span> */}New
-                                </Badge>
-                            )}
-                            {d.name.slice(0, -4)}
+                    </div>
+                    <div className="bg-accent p-5 rounded-md flex flex-col justify-center items-center gap-2">
+                        <div className="flex items-center gap-2">
+                            <div className="prose dark:prose-invert prose-neutral">
+                                <h6>No Notes Found!</h6>
+                            </div>
+                            <Frown className="h-4 w-4" />
                         </div>
-                    ))}
+                        <a
+                            href="https://forms.gle/BFTv1uy8L33ptic6A"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={cn(
+                                buttonVariants({ variant: 'tertiary' })
+                            )}
+                        >
+                            Fix This!
+                        </a>
+                    </div>
+                </>
+            ) : null}
+
+            {isLoading ? (
+                <div className="bg-accent rounded-md p-5 grid grid-cols-4 gap-5">
+                    <Skeleton className="bg-background w-full h-10" />
+                    <Skeleton className="bg-background w-full h-10" />
+                    <Skeleton className="bg-background w-full h-10" />
+                    <Skeleton className="bg-background w-full h-10" />
                 </div>
-            )}
-        </div>
+            ) : null}
+
+            {showEmbed ? (
+                <div className="flex flex-col gap-2 bg-accent rounded-md p-2 mb-2">
+                    <div className="flex justify-between items-center">
+                        <div className="prose dark:prose-invert prose-neutral">
+                            <h4>{embed.name}</h4>
+                        </div>
+                        <Button size={'icon'} onClick={exitEmbed}>
+                            <X className="h-4 w-4" />
+                        </Button>
+                    </div>
+                    <iframe src={embed.embedLink} className="h-[75vh]"></iframe>
+                </div>
+            ) : null}
+
+            {data && !error ? (
+                <>
+                    <div className="flex items-center justify-between mb-2">
+                        {createFav ? (
+                            <Button onClick={() => setCreateFav(false)}>
+                                <Check className="h-4 w-4" />
+                            </Button>
+                        ) : (
+                            <Button onClick={() => setCreateFav(true)}>
+                                Favorite
+                            </Button>
+                        )}
+
+                        <Button size={'icon'} onClick={() => refetch()}>
+                            <RotateCw
+                                className={cn(
+                                    'h-4 w-4',
+                                    isFetching ? 'animate-spin' : ''
+                                )}
+                            />
+                        </Button>
+                    </div>
+                    <div className="bg-accent rounded-md p-5 grid grid-cols-4 gap-5">
+                        {data.map((d) => (
+                            <div
+                                key={d.id}
+                                className={cn(
+                                    buttonVariants({
+                                        variant:
+                                            embed.embedLink ===
+                                            d.webViewLink.slice(0, -17) +
+                                                'preview'
+                                                ? 'ghost'
+                                                : favorites.includes(d.id)
+                                                ? 'default'
+                                                : 'tertiary',
+                                        className:
+                                            'relative group cursor-pointer whitespace-normal text-center h-full shadow-sm',
+                                    })
+                                )}
+                            >
+                                {!(
+                                    new Date(
+                                        Date.parse(d.createdTime)
+                                    ).getTime() <
+                                    new Date(
+                                        Date.now() - 2 * 24 * 60 * 60 * 1000
+                                    ).getTime()
+                                ) ? (
+                                    <Badge
+                                        variant={'secondary'}
+                                        className="absolute -top-2 -left-2 hover:bg-teal-600 group-hover:animate-pulse rounded-sm bg-teal-600"
+                                    >
+                                        New
+                                    </Badge>
+                                ) : null}
+                                {createFav ? (
+                                    <div className="flex justify-center items-center absolute top-0 h-full w-full bg-background/90">
+                                        {favorites.includes(d.id) ? (
+                                            <div
+                                                className={cn(
+                                                    buttonVariants({
+                                                        variant: 'ghost',
+                                                        size: 'icon',
+                                                    })
+                                                )}
+                                                onClick={() =>
+                                                    removeFavorite(d.id)
+                                                }
+                                            >
+                                                <Star className="h-4 w-4 fill-yellow-500 stroke-yellow-500" />
+                                            </div>
+                                        ) : (
+                                            <div
+                                                className={cn(
+                                                    buttonVariants({
+                                                        variant: 'ghost',
+                                                        size: 'icon',
+                                                    })
+                                                )}
+                                                onClick={() =>
+                                                    addFavorite(d.id)
+                                                }
+                                            >
+                                                <Star className="h-4 w-4" />
+                                            </div>
+                                        )}
+                                    </div>
+                                ) : null}
+                                <div onClick={() => handleEmbed(d)}>
+                                    {d.name.slice(0, -4)}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </>
+            ) : null}
+        </TabsContent>
+        
     );
 };
 

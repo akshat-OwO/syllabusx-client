@@ -3,6 +3,7 @@
 import { cn } from '@/lib/utils';
 import { useSearchParams } from 'next/navigation';
 import { FC } from 'react';
+import { buttonVariants } from './ui/button';
 import {
     Card,
     CardContent,
@@ -20,11 +21,11 @@ const BtechSearchStepCard: FC<BtechSearchStepCardProps> = ({}) => {
     const branch = searchParams.get('branch');
 
     if (semester && branch) {
-        return <></>
+        return <></>;
     }
 
     return (
-        <Card className="col-span-2 shadow-2xl">
+        <Card className="col-span-3 lg:col-span-2 shadow-2xl">
             <CardHeader>
                 <CardTitle>Simplified Subject Search</CardTitle>
                 <CardDescription>
@@ -32,32 +33,42 @@ const BtechSearchStepCard: FC<BtechSearchStepCardProps> = ({}) => {
                 </CardDescription>
             </CardHeader>
             <CardContent className="pt-6">
-                <div className="grid grid-cols-3 items-center gap-5">
+                <div className="grid sm:grid-cols-3 items-center gap-5">
                     <div
                         className={cn(
-                            'w-full flex flex-col gap-2 p-2 rounded-md shadow-md transition-all ring-2 ring-ring',
-                            semester ? 'bg-background' : 'bg-accent'
+                            buttonVariants({
+                                variant: 'secondary',
+                                className:
+                                    'prose dark:prose-invert prose-neutral h-full flex-col gap-2 items-start',
+                            })
                         )}
                     >
-                        <h6 className="font-semibold tracking-tight">Step 1</h6>
-                        <p className="text-sm">Enter your Semester.</p>
+                        <h4>Step 1</h4>
+                        <p>Enter your Semester.</p>
                     </div>
                     <div
                         className={cn(
-                            'w-full flex flex-col gap-2 p-2 rounded-md shadow-md transition-all ring-2 ring-ring',
-                            branch ? 'bg-background' : 'bg-accent'
+                            buttonVariants({
+                                variant: 'secondary',
+                                className:
+                                    'prose dark:prose-invert prose-neutral h-full flex-col gap-2 items-start',
+                            })
                         )}
                     >
-                        <h6 className="font-semibold tracking-tight">Step 2</h6>
-                        <p className="text-sm">Enter your Branch.</p>
+                        <h4>Step 2</h4>
+                        <p>Enter your Branch.</p>
                     </div>
                     <div
                         className={cn(
-                            'w-full flex flex-col gap-2 p-2 rounded-md shadow-md transition-all bg-accent ring-2 ring-ring'
+                            buttonVariants({
+                                variant: 'secondary',
+                                className:
+                                    'prose dark:prose-invert prose-neutral h-full flex-col gap-2 items-start',
+                            })
                         )}
                     >
-                        <h6 className="font-semibold tracking-tight">Step 3</h6>
-                        <p className="text-sm">There is no Step 3.</p>
+                        <h4>Step 3</h4>
+                        <p>There is no Step 3.</p>
                     </div>
                 </div>
             </CardContent>

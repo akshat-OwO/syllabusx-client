@@ -68,13 +68,13 @@ export const branchList = [
     },
 ];
 
-export const enum Tab {
+export enum Tab {
     THEORY = 'THEORY',
     LAB = 'LAB',
     NOTES = 'NOTES',
-    PYQ = 'PYQS',
+    PYQ = 'PYQ',
     BOOKS = 'BOOKS',
-    PRACTICAL = 'PRACTICAL FILES',
+    FILES = 'FILES',
     PDF = 'PDF',
 }
 
