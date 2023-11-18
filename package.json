@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@contentful/rich-text-react-renderer": "^15.19.0",
     "@headlessui/react": "^1.7.17",
     "@mantine/hooks": "^7.2.2",
     "@radix-ui/react-accordion": "^1.1.2",
@@ -33,6 +34,7 @@
     "axios": "^1.6.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "contentful": "^10.6.10",
     "eslint": "8.54.0",
     "eslint-config-next": "14.0.3",
     "geist": "^1.1.0",

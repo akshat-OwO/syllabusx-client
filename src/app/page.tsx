@@ -3,8 +3,11 @@ import Features from "@/components/Features";
 import Hero from "@/components/Hero";
 import Letter from "@/components/Letter";
 import Pricing from "@/components/Pricing";
+import { getHomePageData } from "@/lib/contentful";
 
-export default function Home() {
+export default async function Home() {
+    const fields = await getHomePageData();
+
     return (
         <div className="flex flex-col justify-center items-center">
             <Hero />
@@ -12,7 +15,7 @@ export default function Home() {
             <CourseList />
             <Pricing />
             {/* <WallOfLove /> */}
-            <Letter />
+            <Letter content={fields} />
         </div>
     );
 }

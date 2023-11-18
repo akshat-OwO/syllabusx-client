@@ -168,7 +168,7 @@ const StudyMaterial: FC<StudyMaterialProps> = ({
 
             {data && !error ? (
                 <>
-                    <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center justify-end gap-2 mb-2">
                         {createFav ? (
                             <Button onClick={() => setCreateFav(false)}>
                                 <Check className="h-4 w-4" />

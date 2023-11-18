@@ -88,7 +88,7 @@ const BtechSubjectView: FC<BtechSubjectViewProps> = ({}) => {
     if (isLoading) {
         return (
             <>
-                <Card className="col-span-3 lg:col-span-2 shadow-2xl h-fit">
+                <Card className="col-span-3 lg:col-span-1 shadow-2xl h-fit">
                     <CardHeader>
                         <CardTitle>
                             <Skeleton className="h-8 w-48" />
@@ -99,7 +99,7 @@ const BtechSubjectView: FC<BtechSubjectViewProps> = ({}) => {
                         <Skeleton className="h-[7.5rem] w-full" />
                     </CardContent>
                 </Card>
-                <Card className="col-span-3 row-start-3 col-start-1 lg:row-start-2 lg:col-start-3 lg:col-span-1 shadow-2xl h-fit">
+                <Card className="col-span-3 lg:col-span-2 shadow-2xl h-fit">
                     <CardHeader>
                         <CardTitle>
                             <Skeleton className="h-8 w-48" />
@@ -118,6 +118,47 @@ const BtechSubjectView: FC<BtechSubjectViewProps> = ({}) => {
         <>
             {sub && (
                 <>
+                    <Card className="col-span-3 lg:col-span-1 shadow-2xl h-fit">
+                        <CardHeader>
+                            <CardTitle>Subject Details</CardTitle>
+                        </CardHeader>
+                        <CardContent className="">
+                            <div className="p-2 bg-accent rounded-md shadow-md flex flex-col gap-2">
+                                {sub[0].theorypapercode ? (
+                                    <div className="flex justify-between items-center">
+                                        <p className="font-semibold">
+                                            Theory Code
+                                        </p>
+                                        <p>{sub[0].theorypapercode}</p>
+                                    </div>
+                                ) : null}
+                                {sub[0].theorycredits ? (
+                                    <div className="flex justify-between items-center">
+                                        <p className="font-semibold">
+                                            Theory Credits
+                                        </p>
+                                        <p>{sub[0].theorycredits}</p>
+                                    </div>
+                                ) : null}
+                                {sub[0].labpapercode ? (
+                                    <div className="flex justify-between items-center">
+                                        <p className="font-semibold">
+                                            Lab Code
+                                        </p>
+                                        <p>{sub[0].labpapercode}</p>
+                                    </div>
+                                ) : null}
+                                {sub[0].labcredits ? (
+                                    <div className="flex justify-between items-center">
+                                        <p className="font-semibold">
+                                            Lab Credits
+                                        </p>
+                                        <p>{sub[0].labcredits}</p>
+                                    </div>
+                                ) : null}
+                            </div>
+                        </CardContent>
+                    </Card>
                     <Card className="col-span-3 lg:col-span-2 shadow-2xl h-fit">
                         <CardHeader>
                             <CardTitle>{sub[0].subject}</CardTitle>
@@ -174,47 +215,6 @@ const BtechSubjectView: FC<BtechSubjectViewProps> = ({}) => {
                                     />
                                 ) : null}
                             </Tabs>
-                        </CardContent>
-                    </Card>
-                    <Card className="col-span-3 row-start-3 col-start-1 lg:row-start-2 lg:col-start-3 lg:col-span-1 shadow-2xl h-fit">
-                        <CardHeader>
-                            <CardTitle>Subject Details</CardTitle>
-                        </CardHeader>
-                        <CardContent className="">
-                            <div className="p-2 bg-accent rounded-md shadow-md flex flex-col gap-2">
-                                {sub[0].theorypapercode ? (
-                                    <div className="flex justify-between items-center">
-                                        <p className="font-semibold">
-                                            Theory Code
-                                        </p>
-                                        <p>{sub[0].theorypapercode}</p>
-                                    </div>
-                                ) : null}
-                                {sub[0].theorycredits ? (
-                                    <div className="flex justify-between items-center">
-                                        <p className="font-semibold">
-                                            Theory Credits
-                                        </p>
-                                        <p>{sub[0].theorycredits}</p>
-                                    </div>
-                                ) : null}
-                                {sub[0].labpapercode ? (
-                                    <div className="flex justify-between items-center">
-                                        <p className="font-semibold">
-                                            Lab Code
-                                        </p>
-                                        <p>{sub[0].labpapercode}</p>
-                                    </div>
-                                ) : null}
-                                {sub[0].labcredits ? (
-                                    <div className="flex justify-between items-center">
-                                        <p className="font-semibold">
-                                            Lab Credits
-                                        </p>
-                                        <p>{sub[0].labcredits}</p>
-                                    </div>
-                                ) : null}
-                            </div>
                         </CardContent>
                     </Card>
                 </>

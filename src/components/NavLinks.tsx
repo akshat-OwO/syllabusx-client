@@ -2,7 +2,6 @@
 
 import { cn } from '@/lib/utils';
 import { Instagram, Menu, Star } from 'lucide-react';
-import Link from 'next/link';
 import { FC } from 'react';
 import { ModeToggle } from './ModeToggle';
 import { Button, buttonVariants } from './ui/button';
@@ -109,7 +108,7 @@ interface ListAnchorProps {
 
 const ListAnchor: FC<ListAnchorProps> = ({ children, href, title }) => {
     return (
-        <Link
+        <a
             className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
             href={href}
         >
@@ -117,7 +116,7 @@ const ListAnchor: FC<ListAnchorProps> = ({ children, href, title }) => {
             <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                 {children}
             </p>
-        </Link>
+        </a>
     );
 };
 
