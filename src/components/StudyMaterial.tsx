@@ -144,7 +144,7 @@ const StudyMaterial: FC<StudyMaterialProps> = ({
             ) : null}
 
             {isLoading ? (
-                <div className="bg-accent rounded-md p-5 grid grid-cols-4 gap-5">
+                <div className="bg-accent rounded-md p-5 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
                     <Skeleton className="bg-background w-full h-10" />
                     <Skeleton className="bg-background w-full h-10" />
                     <Skeleton className="bg-background w-full h-10" />
@@ -188,7 +188,7 @@ const StudyMaterial: FC<StudyMaterialProps> = ({
                             />
                         </Button>
                     </div>
-                    <div className="bg-accent rounded-md p-5 grid grid-cols-4 gap-5">
+                    <div className="bg-accent rounded-md p-5 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
                         {data.map((d) => (
                             <div
                                 key={d.id}

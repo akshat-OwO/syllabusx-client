@@ -62,6 +62,30 @@ const NavLinks: FC<NavLinksProps> = ({}) => {
                                 Witness the magic behind SyllabusX&apos;s
                                 updates. Stay nerdy, stay updated!
                             </ListAnchor>
+                            <ListAnchor title="About Us" href="/about-us">
+                                Because at SyllabusX, it&apos;s not just about
+                                the code; it&apos;s about the people who make it
+                                happen.
+                            </ListAnchor>
+                            <ListAnchor title="Contact Us" href="/contact-us">
+                                Navigate to our Contact Us page and shoot a
+                                signal our way!
+                            </ListAnchor>
+                            <ListAnchor title="Terms & Conditions" href="/t&c">
+                                These guidelines outline the rules of
+                                engagement, responsibilities, and the
+                                collaborative spirit that fuels our open-source
+                                initiative.
+                            </ListAnchor>
+                            <ListAnchor
+                                title="Privacy Policy"
+                                href="privacy-policy"
+                            >
+                                Our Privacy Policy is your trusty guide,
+                                detailing how we collect, use, and protect your
+                                information in this collaborative, open-source
+                                space.
+                            </ListAnchor>
                         </ul>
                         <div className="mt-5 flex justify-center items-center gap-2">
                             <a

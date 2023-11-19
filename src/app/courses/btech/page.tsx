@@ -74,7 +74,7 @@ interface pageProps {
 
 const page: FC<pageProps> = ({ searchParams }) => {
     return (
-        <LayoutWrapper className="py-20 min-h-[calc(100vh-8.5rem)]">
+        <LayoutWrapper className="py-20 min-h-[calc(100vh-7rem)]">
             <div className="grid grid-cols-3 gap-10">
                 <BtechCard />
                 <BtechSearchStepCard />

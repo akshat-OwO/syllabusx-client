@@ -1,18 +1,43 @@
 import LayoutWrapper from '@/layouts/LayoutWrapper';
+import { cn } from '@/lib/utils';
+import Link from 'next/link';
 import { FC } from 'react';
-import { Icons } from './Icons';
+import { buttonVariants } from './ui/button';
 
 interface FooterProps {}
 
 const Footer: FC<FooterProps> = ({}) => {
     return (
-        <div className="self-end w-full h-20">
-            <LayoutWrapper>
-                <div className="h-20 py-5 flex items-center border-t border-border">
-                    <Icons.logo className="h-full" />
+        <LayoutWrapper className='hidden md:block'>
+            <div className="w-full flex justify-end items-center border-t border-border">
+                <div className="flex items-center gap-x-5">
+                    <Link
+                        href={'/about-us'}
+                        className={cn(buttonVariants({ variant: 'link' }))}
+                    >
+                        About Us
+                    </Link>
+                    <Link
+                        href={'/contact-us'}
+                        className={cn(buttonVariants({ variant: 'link' }))}
+                    >
+                        Contact Us
+                    </Link>
+                    <Link
+                        href={'/t&c'}
+                        className={cn(buttonVariants({ variant: 'link' }))}
+                    >
+                        Terms & Conditions
+                    </Link>
+                    <Link
+                        href={'/privacy-policy'}
+                        className={cn(buttonVariants({ variant: 'link' }))}
+                    >
+                        Privacy Policy
+                    </Link>
                 </div>
-            </LayoutWrapper>
-        </div>
+            </div>
+        </LayoutWrapper>
     );
 };
 

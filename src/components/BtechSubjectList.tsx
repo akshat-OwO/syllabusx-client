@@ -117,7 +117,7 @@ const BtechSubjectList: FC<BtechSubjectListProps> = ({}) => {
                                             router.push(
                                                 `?semester=${semester}&branch=${branch}&subject=${_.kebabCase(
                                                     subject
-                                                )}`
+                                                )}`, { scroll: false }
                                             )
                                         }
                                     >

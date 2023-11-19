@@ -32,16 +32,16 @@ const BtechCard: FC<BtechCardProps> = ({}) => {
 
     const semesterPusher = (label: string) => {
         if (branch) {
-            return router.push(`?semester=${label}&branch=${branch}`)
+            return router.push(`?semester=${label}&branch=${branch}`, { scroll: false })
         }
-        return router.push(`?semester=${label}`)
+        return router.push(`?semester=${label}`, { scroll: false })
     }
 
     const branchPusher = (label: string) => {
         if (semester) {
-            return router.push(`?semester=${semester}&branch=${label}`)
+            return router.push(`?semester=${semester}&branch=${label}`, { scroll: false })
         }
-        return router.push(`?branch=${label}`)
+        return router.push(`?branch=${label}`, { scroll: false })
     }
 
     return (

@@ -1,21 +1,28 @@
 import { buttonVariants } from '@/components/ui/button';
 import LayoutWrapper from '@/layouts/LayoutWrapper';
-import { getChange } from '@/lib/contentful';
+import { generateChangesPages, getChange } from '@/lib/contentful';
 import { cn } from '@/lib/utils';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { FC } from 'react';
 
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+    const paths = await generateChangesPages();
+    return paths;
+}
+
 interface pageProps {
-    params: { version: string };
+    params: { versionId: string };
 }
 
 const page: FC<pageProps> = async ({ params }) => {
-    const change: any = await getChange(params.version);
+    const change: any = await getChange(params.versionId);
 
     return (
-        <LayoutWrapper className="py-20 min-h-[calc(100vh-8.5rem)]">
+        <LayoutWrapper className="py-20 min-h-[calc(100vh-7rem)]">
             <div className="flex flex-col gap-y-2 items-center">
                 <div className="prose prose-sm prose-neutral dark:prose-invert md:prose-base">
                     <h1 className="text-center">
