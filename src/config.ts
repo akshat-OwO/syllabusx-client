@@ -21,6 +21,33 @@ export const semesterList = [
     },
 ];
 
+export const bcaSemesterList = [
+    {
+        value: 'firstsemesters',
+        label: '1st',
+    },
+    {
+        value: 'secondsemesters',
+        label: '2nd',
+    },
+    {
+        value: 'thirdsemesters',
+        label: '3rd',
+    },
+    {
+        value: 'fourthsemesters',
+        label: '4th',
+    },
+    {
+        value: 'fifthsemesters',
+        label: '5th',
+    },
+    {
+        value: 'sixthsemesters',
+        label: '6th',
+    },
+];
+
 export const branchList = [
     {
         value: 'CSE',

@@ -3,6 +3,8 @@ import { getPolicy } from '@/lib/contentful';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { FC } from 'react';
 
+export const revalidate = 86400;
+
 interface pageProps {}
 
 const page: FC<pageProps> = async ({}) => {

@@ -1,11 +1,11 @@
 'use client';
 
 import { Tab } from '@/config';
-import { getBtechSubjectDetails } from '@/lib/server';
+import { getBcaSubjectDetails } from '@/lib/server';
 import { useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
 import { FC, useState } from 'react';
-import StudyMaterial from './StudyMaterial';
+import BcaStudyMaterial from './BcaStudyMaterial';
 import Syllabus from './Syllabus';
 import {
     Card,
@@ -17,16 +17,15 @@ import {
 import { Skeleton } from './ui/skeleton';
 import { Tabs, TabsList, TabsTrigger } from './ui/tabs';
 
-interface BtechSubjectViewProps {}
+interface BcaSubjectViewProps {}
 
-const BtechSubjectView: FC<BtechSubjectViewProps> = ({}) => {
+const BcaSubjectView: FC<BcaSubjectViewProps> = ({}) => {
     const searchParams = useSearchParams();
     const [tab, setTab] = useState<Tab>(Tab.THEORY);
     const [embed, setEmbed] = useState<Embed>({ embedLink: '', name: '' });
     const [showEmbed, setShowEmbed] = useState<boolean>(false);
 
     const semester = searchParams.get('semester');
-    const branch = searchParams.get('branch');
     const subject = searchParams.get('subject');
 
     const switchTab = (value: Tab) => {
@@ -40,19 +39,13 @@ const BtechSubjectView: FC<BtechSubjectViewProps> = ({}) => {
         isLoading,
         error,
     } = useQuery({
-        queryKey: [
-            'btech',
-            'subject',
-            `${semester}`,
-            `${branch}`,
-            `${subject}`,
-        ],
+        queryKey: ['bca', 'subject', `${semester}`, `${subject}`],
         queryFn: async () => {
-            return await getBtechSubjectDetails({ semester, branch, subject });
+            return await getBcaSubjectDetails({ semester, subject });
         },
     });
 
-    if (!semester || !branch || !subject) <></>;
+    if (!semester || !subject) <></>;
 
     if (error) {
         return (
@@ -143,14 +136,13 @@ const BtechSubjectView: FC<BtechSubjectViewProps> = ({}) => {
                                 tab === Tab.BOOKS ||
                                 tab === Tab.PYQ ||
                                 tab === Tab.FILES ? (
-                                    <StudyMaterial
+                                    <BcaStudyMaterial
                                         tab={tab}
                                         note={sub[0].camel}
                                         pyq={sub[0].pYq}
                                         book={sub[0].book}
                                         practical={sub[0].practical}
                                         semester={semester}
-                                        branch={branch}
                                         subject={subject}
                                         embed={embed}
                                         setEmbed={setEmbed}
@@ -208,4 +200,4 @@ const BtechSubjectView: FC<BtechSubjectViewProps> = ({}) => {
     );
 };
 
-export default BtechSubjectView;
+export default BcaSubjectView;

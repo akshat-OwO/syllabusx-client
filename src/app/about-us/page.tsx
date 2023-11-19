@@ -3,8 +3,9 @@ import LayoutWrapper from '@/layouts/LayoutWrapper';
 import { getSyllabusxTeam } from '@/lib/contentful';
 import { cn } from '@/lib/utils';
 import { Github, Instagram, Link2 } from 'lucide-react';
-import Link from 'next/link';
 import { FC } from 'react';
+
+export const revalidate = 43200;
 
 interface pageProps {}
 

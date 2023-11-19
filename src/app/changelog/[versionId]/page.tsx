@@ -55,7 +55,7 @@ const page: FC<pageProps> = async ({ params }) => {
                         {change.fields.version}
                     </Link>
                 </div>
-                <div className="px-4 py-2 bg-accent shadow-2xl rounded-md mx-auto prose dark:prose-invert prose-neutral">
+                <div className="px-4 py-2 mx-auto prose dark:prose-invert prose-neutral">
                     <h2 className="underline">
                         Version {change.fields.version}
                     </h2>

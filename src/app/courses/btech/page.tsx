@@ -2,9 +2,11 @@ import BtechCard from '@/components/BtechCard';
 import BtechSearchStepCard from '@/components/BtechSearchStepCard';
 import BtechSubjectList from '@/components/BtechSubjectList';
 import BtechSubjectView from '@/components/BtechSubjectView';
+import { branchList, semesterList } from '@/config';
 import LayoutWrapper from '@/layouts/LayoutWrapper';
 import _ from 'lodash';
 import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { FC } from 'react';
 
 type Props = {
@@ -73,6 +75,17 @@ interface pageProps {
 }
 
 const page: FC<pageProps> = ({ searchParams }) => {
+    if (
+        searchParams.semester &&
+        !semesterList.some((s) => searchParams.semester === s.label)
+    )
+        notFound();
+    if (
+        searchParams.branch &&
+        !branchList.some((b) => searchParams.branch === b.label)
+    )
+        notFound();
+
     return (
         <LayoutWrapper className="py-20 min-h-[calc(100vh-7rem)]">
             <div className="grid grid-cols-3 gap-10">

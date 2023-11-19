@@ -1,40 +1,30 @@
-'use client';
-
 import LayoutWrapper from '@/layouts/LayoutWrapper';
 import Link from 'next/link';
 import { FC } from 'react';
 
-interface errorProps {}
+interface NotFoundProps {}
 
-const Error: FC<errorProps> = ({}) => {
+const NotFound: FC<NotFoundProps> = ({}) => {
     return (
         <LayoutWrapper className="py-20 min-h-[calc(100vh-7rem)]">
             <div className="flex flex-col gap-y-2 items-center">
                 <div className="prose prose-sm prose-neutral dark:prose-invert md:prose-base">
                     <h1 className="text-center">
-                        Uh-oh! Something Went{' '}
+                        Oops! Page Not{' '}
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-500 via-teal-600 to-teal-500">
-                            Wrong
+                            Found
                         </span>
                     </h1>
                 </div>
                 <div className="prose prose-sm prose-neutral dark:prose-invert">
                     <p className="text-center">
-                        Looks like there&apos;s a glitch in the matrix.
-                        Meanwhile, you can try refreshing the page, checking
-                        your internet connection, or returning to the{' '}
-                        <Link href="/">Homepage</Link>.
+                        It seems you&apos;ve ventured into uncharted territory.
+                        The page you are looking for might have taken a detour
+                        or never existed in the first place.
                     </p>
                     <p className="text-center">
-                        If the problem persists, feel free to{' '}
-                        <a
-                            href="https://forms.gle/BFTv1uy8L33ptic6A"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            contact us
-                        </a>{' '}
-                        for assistance. We appreciate your patience!
+                        You can return to the <Link href="/">Homepage</Link> or
+                        try searching for what you&apos;re looking for.
                     </p>
                 </div>
             </div>
@@ -42,4 +32,4 @@ const Error: FC<errorProps> = ({}) => {
     );
 };
 
-export default Error;
+export default NotFound;

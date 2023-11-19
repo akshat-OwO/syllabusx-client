@@ -5,6 +5,8 @@ import Letter from "@/components/Letter";
 import Pricing from "@/components/Pricing";
 import { getHomePageData } from "@/lib/contentful";
 
+export const revalidate = 86400;
+
 export default async function Home() {
     const fields = await getHomePageData();
 

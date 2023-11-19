@@ -1,7 +1,7 @@
 'use client';
 
-import { getBtechSubjectList } from '@/lib/server';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { getBcaSubjectList } from '@/lib/server';
+import { useQuery } from '@tanstack/react-query';
 import _ from 'lodash';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { FC } from 'react';
@@ -16,29 +16,26 @@ import {
 import { ScrollArea, ScrollBar } from './ui/scroll-area';
 import { Skeleton } from './ui/skeleton';
 
-interface BtechSubjectListProps {}
+interface BcaSubjectListProps {}
 
-const BtechSubjectList: FC<BtechSubjectListProps> = ({}) => {
+const BcaSubjectList: FC<BcaSubjectListProps> = ({}) => {
     const searchParams = useSearchParams();
     const router = useRouter();
 
     const semester = searchParams.get('semester');
-    const branch = searchParams.get('branch');
-
-    const queryClient = useQueryClient();
 
     const {
         data: list,
         isLoading,
         error,
     } = useQuery({
-        queryKey: ['btech', 'subjects', `${semester}`, `${branch}`],
+        queryKey: ['bca', 'subjects', `${semester}`],
         queryFn: async () => {
-            return await getBtechSubjectList({ semester, branch });
+            return await getBcaSubjectList({ semester });
         },
     });
 
-    if (!semester || !branch) <></>;
+    if (!semester) <></>;
 
     if (isLoading) {
         return (
@@ -103,7 +100,7 @@ const BtechSubjectList: FC<BtechSubjectListProps> = ({}) => {
                                         key={subject}
                                         onClick={() =>
                                             router.push(
-                                                `?semester=${semester}&branch=${branch}&subject=${_.kebabCase(
+                                                `?semester=${semester}&subject=${_.kebabCase(
                                                     subject
                                                 )}`,
                                                 { scroll: false }
@@ -123,4 +120,4 @@ const BtechSubjectList: FC<BtechSubjectListProps> = ({}) => {
     );
 };
 
-export default BtechSubjectList;
+export default BcaSubjectList;

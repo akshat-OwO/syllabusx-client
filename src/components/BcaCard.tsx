@@ -1,6 +1,6 @@
 'use client';
 
-import { branchList, semesterList } from '@/config';
+import { bcaSemesterList } from '@/config';
 import { cn } from '@/lib/utils';
 import { ChevronsUpDown } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -21,39 +21,24 @@ import {
 } from './ui/dropdown-menu';
 import { ScrollArea } from './ui/scroll-area';
 
-interface BtechCardProps {}
+interface BcaCardProps {}
 
-const BtechCard: FC<BtechCardProps> = ({}) => {
+const BcaCard: FC<BcaCardProps> = ({}) => {
     const searchParams = useSearchParams();
     const router = useRouter();
 
     const semester = searchParams.get('semester');
-    const branch = searchParams.get('branch');
 
     const semesterPusher = (label: string) => {
-        if (branch) {
-            return router.push(`?semester=${label}&branch=${branch}`, {
-                scroll: false,
-            });
-        }
         return router.push(`?semester=${label}`, { scroll: false });
-    };
-
-    const branchPusher = (label: string) => {
-        if (semester) {
-            return router.push(`?semester=${semester}&branch=${label}`, {
-                scroll: false,
-            });
-        }
-        return router.push(`?branch=${label}`, { scroll: false });
     };
 
     return (
         <Card className="col-span-3 lg:col-span-1 h-fit shadow-2xl">
             <CardHeader>
-                <CardTitle>B.TECH</CardTitle>
+                <CardTitle>BCA</CardTitle>
                 <CardDescription>
-                    Who needs sleep when you can engineer dreams?
+                    The degree that turns caffeine into code.
                 </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-5">
@@ -71,7 +56,7 @@ const BtechCard: FC<BtechCardProps> = ({}) => {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-full">
                         <ScrollArea className="h-36">
-                            {semesterList.map((s) => (
+                            {bcaSemesterList.map((s) => (
                                 <DropdownMenuItem
                                     key={s.value}
                                     onClick={() => semesterPusher(s.label)}
@@ -82,34 +67,9 @@ const BtechCard: FC<BtechCardProps> = ({}) => {
                         </ScrollArea>
                     </DropdownMenuContent>
                 </DropdownMenu>
-                <DropdownMenu>
-                    <DropdownMenuTrigger
-                        className={cn(
-                            buttonVariants({
-                                variant: !branch ? 'default' : 'outline',
-                                className: 'justify-between',
-                            })
-                        )}
-                    >
-                        {!branch ? 'Branch' : branch}
-                        <ChevronsUpDown className="h-4 w-4" />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-full">
-                        <ScrollArea className="h-36">
-                            {branchList.map((b) => (
-                                <DropdownMenuItem
-                                    key={b.value}
-                                    onClick={() => branchPusher(b.label)}
-                                >
-                                    {b.label}
-                                </DropdownMenuItem>
-                            ))}
-                        </ScrollArea>
-                    </DropdownMenuContent>
-                </DropdownMenu>
             </CardContent>
         </Card>
     );
 };
 
-export default BtechCard;
+export default BcaCard;

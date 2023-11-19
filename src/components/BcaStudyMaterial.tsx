@@ -1,7 +1,7 @@
 'use client';
 
 import { Tab } from '@/config';
-import { getBtechStudyMaterial } from '@/lib/server';
+import { getBcaStudyMaterial } from '@/lib/server';
 import { cn } from '@/lib/utils';
 import { useLocalStorage } from '@mantine/hooks';
 import { useQuery } from '@tanstack/react-query';
@@ -12,10 +12,9 @@ import { Button, buttonVariants } from './ui/button';
 import { Skeleton } from './ui/skeleton';
 import { TabsContent } from './ui/tabs';
 
-interface StudyMaterialProps {
+interface BcaStudyMaterialProps {
     tab: Tab;
     semester: string | null;
-    branch: string | null;
     subject: string | null;
     note?: string;
     pyq?: string;
@@ -27,14 +26,13 @@ interface StudyMaterialProps {
     setEmbed: React.Dispatch<React.SetStateAction<Embed>>;
 }
 
-const StudyMaterial: FC<StudyMaterialProps> = ({
+const BcaStudyMaterial: FC<BcaStudyMaterialProps> = ({
     tab,
     book,
     note,
     practical,
     pyq,
     semester,
-    branch,
     subject,
     embed,
     showEmbed,
@@ -73,11 +71,10 @@ const StudyMaterial: FC<StudyMaterialProps> = ({
     };
 
     const { data, isLoading, error, refetch, isFetching } = useQuery({
-        queryKey: ['btech', tab, semester, branch, subject],
+        queryKey: ['bca', tab, semester, subject],
         queryFn: async () => {
-            return await getBtechStudyMaterial({
+            return await getBcaStudyMaterial({
                 semester,
-                branch,
                 subject,
                 tab,
                 book,
@@ -248,4 +245,4 @@ const StudyMaterial: FC<StudyMaterialProps> = ({
     );
 };
 
-export default StudyMaterial;
+export default BcaStudyMaterial;

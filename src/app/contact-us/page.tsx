@@ -4,6 +4,8 @@ import { cn } from '@/lib/utils';
 import { MessageSquare } from 'lucide-react';
 import { FC } from 'react';
 
+export const revalidate = 43200;
+
 interface pageProps {}
 
 const page: FC<pageProps> = ({}) => {
