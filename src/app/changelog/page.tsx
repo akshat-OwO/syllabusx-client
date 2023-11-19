@@ -3,6 +3,8 @@ import { getChanges } from '@/lib/contentful';
 import Link from 'next/link';
 import { FC } from 'react';
 
+export const revalidate = 43200;
+
 interface pageProps {}
 
 const page: FC<pageProps> = async ({}) => {
