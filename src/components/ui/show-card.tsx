@@ -20,7 +20,7 @@ const ShowCard: FC<ShowCardProps> = ({
     return (
         <div
             className={cn(
-                'flex items-center justify-between gap-x-5 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors bg-accent text-accent-foreground shadow-2xl',
+                'flex items-center justify-between gap-x-5 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors bg-accent text-accent-foreground shadow-md',
                 className
             )}
         >

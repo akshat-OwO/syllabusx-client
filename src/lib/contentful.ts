@@ -66,3 +66,11 @@ export const getPolicy = async () => {
     const item = content.items[0];
     return item;
 };
+
+export const getAboutUs = async () => {
+    const content = await contentful.getEntries({
+        content_type: 'aboutUs',
+    });
+    const item = content.items[0];
+    return item.fields;
+};

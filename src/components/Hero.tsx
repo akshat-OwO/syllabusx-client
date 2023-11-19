@@ -1,14 +1,21 @@
 import LayoutWrapper from '@/layouts/LayoutWrapper';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
 import Link from 'next/link';
 import { FC } from 'react';
 import { Icons } from './Icons';
-import { Badge, badgeVariants } from './ui/badge';
+import { badgeVariants } from './ui/badge';
 import { buttonVariants } from './ui/button';
 
-interface HeroProps {}
+interface HeroProps {
+    content: any;
+}
 
-const Hero: FC<HeroProps> = ({}) => {
+const Hero: FC<HeroProps> = ({ content }) => {
+    const version = content.version;
+    const heroImage = content.heroImage.fields.file;
+    const heroImageLight = content.heroImageLight.fields.file;
+
     return (
         <div className="radial-top w-full">
             <LayoutWrapper className="flex flex-col p-10 gap-10 justify-center items-center">
@@ -18,7 +25,7 @@ const Hero: FC<HeroProps> = ({}) => {
                         href="/changelog"
                         className={cn(badgeVariants({ variant: 'default' }))}
                     >
-                        Version 4.0
+                        Version {version}
                     </Link>
                 </div>
                 <div className="flex flex-col gap-y-2 items-center">
@@ -45,8 +52,25 @@ const Hero: FC<HeroProps> = ({}) => {
                     Browse Courses
                 </Link>
                 <div className="relative w-full h-full self-center">
-                    <div className='-z-10 conic-center absolute w-full h-full' />
-                    <div className='z-10 w-full aspect-video bg-accent shadow-2xl rounded-md' />
+                    <div className="-z-10 conic-center absolute w-full h-full" />
+                    <div className="hidden dark:block z-10 w-full aspect-video p-2 shadow-2xl">
+                        <Image
+                            src={'https:' + heroImage.url}
+                            alt="Hero Image"
+                            fill
+                            quality={100}
+                            className="rounded-md"
+                        />
+                    </div>
+                    <div className="dark:hidden z-10 w-full aspect-video p-2 shadow-2xl">
+                        <Image
+                            src={'https:' + heroImageLight.url}
+                            alt="Hero Image Light"
+                            fill
+                            quality={100}
+                            className="rounded-md"
+                        />
+                    </div>
                 </div>
             </LayoutWrapper>
         </div>

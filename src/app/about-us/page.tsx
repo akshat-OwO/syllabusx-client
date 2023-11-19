@@ -1,8 +1,9 @@
 import { buttonVariants } from '@/components/ui/button';
 import LayoutWrapper from '@/layouts/LayoutWrapper';
-import { getSyllabusxTeam } from '@/lib/contentful';
+import { getAboutUs, getSyllabusxTeam } from '@/lib/contentful';
 import { cn } from '@/lib/utils';
 import { Github, Instagram, Link2 } from 'lucide-react';
+import Image from 'next/image';
 import { FC } from 'react';
 
 export const revalidate = 43200;
@@ -11,6 +12,8 @@ interface pageProps {}
 
 const page: FC<pageProps> = async ({}) => {
     const team: any = await getSyllabusxTeam();
+    const aboutContent: any = await getAboutUs();
+    const teamImage: any = aboutContent.teamImage.fields.file;
 
     return (
         <LayoutWrapper className="py-20 min-h-[calc(100vh-7rem)]">
@@ -30,7 +33,17 @@ const page: FC<pageProps> = async ({}) => {
                     </p>
                 </div>
             </div>
-            <div className="py-20 grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+            <div className='py-10 w-full'>
+                <div className="relative aspect-video rounded-md">
+                        <Image
+                            src={'https:' + teamImage.url}
+                            alt="Team Image"
+                            fill
+                            className="rounded-md"
+                        />
+                </div>
+            </div>
+            <div className="py-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
                 {team.map((member: any) => (
                     <div
                         key={member.sys.id}

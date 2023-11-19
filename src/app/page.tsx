@@ -12,7 +12,7 @@ export default async function Home() {
 
     return (
         <div className="flex flex-col justify-center items-center">
-            <Hero />
+            <Hero content={fields} />
             <Features />
             <CourseList />
             <Pricing />

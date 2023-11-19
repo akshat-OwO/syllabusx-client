@@ -5,7 +5,7 @@ import { getBtechStudyMaterial } from '@/lib/server';
 import { cn } from '@/lib/utils';
 import { useLocalStorage } from '@mantine/hooks';
 import { useQuery } from '@tanstack/react-query';
-import { Check, Frown, Heart, RotateCw, Star, X } from 'lucide-react';
+import { Check, Frown, Heart, RotateCw, Upload, X } from 'lucide-react';
 import React, { FC, useState } from 'react';
 import { Badge } from './ui/badge';
 import { Button, buttonVariants } from './ui/button';
@@ -151,12 +151,18 @@ const StudyMaterial: FC<StudyMaterialProps> = ({
                 <>
                     <div className="flex items-center justify-end gap-2 mb-2">
                         {createFav ? (
-                            <Button size={'icon'} onClick={() => setCreateFav(false)}>
+                            <Button
+                                size={'icon'}
+                                onClick={() => setCreateFav(false)}
+                            >
                                 <Check className="h-4 w-4" />
                             </Button>
                         ) : (
-                            <Button size={'icon'} onClick={() => setCreateFav(true)}>
-                                <Heart className='h-4 w-4' />
+                            <Button
+                                size={'icon'}
+                                onClick={() => setCreateFav(true)}
+                            >
+                                <Heart className="h-4 w-4" />
                             </Button>
                         )}
 
