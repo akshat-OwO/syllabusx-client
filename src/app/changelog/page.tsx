@@ -10,6 +10,16 @@ export const metadata: Metadata = {
     title: 'Changelog',
     description:
         'Dive into the Changelog Chronicles at SyllabusX, your backstage pass to witness the evolution of academic innovation. Explore the journey through previous versions, unveiling the heartbeat of enhancements and updates that shape your seamless educational experience.',
+    openGraph: {
+        title: 'Changelog',
+        description:
+            'Dive into the Changelog Chronicles at SyllabusX, your backstage pass to witness the evolution of academic innovation. Explore the journey through previous versions, unveiling the heartbeat of enhancements and updates that shape your seamless educational experience.',
+    },
+    twitter: {
+        title: 'Changelog',
+        description:
+            'Dive into the Changelog Chronicles at SyllabusX, your backstage pass to witness the evolution of academic innovation. Explore the journey through previous versions, unveiling the heartbeat of enhancements and updates that shape your seamless educational experience.',
+    },
 };
 
 interface pageProps {}

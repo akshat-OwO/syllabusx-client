@@ -27,6 +27,16 @@ export async function generateMetadata({
             },
             description:
                 'Explore the world of Bachelor of Computer Applications (BCA) at SyllabusX. Dive deep into the detailed syllabi and study materials tailored for BCA students at Guru Gobind Singh Indraprastha University (GGSIPU)',
+            openGraph: {
+                title: `BCA | ${semester}`,
+                description:
+                    'Explore the world of Bachelor of Computer Applications (BCA) at SyllabusX. Dive deep into the detailed syllabi and study materials tailored for BCA students at Guru Gobind Singh Indraprastha University (GGSIPU)',
+            },
+            twitter: {
+                title: `BCA | ${semester}`,
+                description:
+                    'Explore the world of Bachelor of Computer Applications (BCA) at SyllabusX. Dive deep into the detailed syllabi and study materials tailored for BCA students at Guru Gobind Singh Indraprastha University (GGSIPU)',
+            },
         };
     }
 
@@ -38,6 +48,16 @@ export async function generateMetadata({
             },
             description:
                 'Explore the world of Bachelor of Computer Applications (BCA) at SyllabusX. Dive deep into the detailed syllabi and study materials tailored for BCA students at Guru Gobind Singh Indraprastha University (GGSIPU)',
+            openGraph: {
+                title: `BCA | ${_.startCase(_.toLower(subject))}`,
+                description:
+                    'Explore the world of Bachelor of Computer Applications (BCA) at SyllabusX. Dive deep into the detailed syllabi and study materials tailored for BCA students at Guru Gobind Singh Indraprastha University (GGSIPU)',
+            },
+            twitter: {
+                title: `BCA | ${_.startCase(_.toLower(subject))}`,
+                description:
+                    'Explore the world of Bachelor of Computer Applications (BCA) at SyllabusX. Dive deep into the detailed syllabi and study materials tailored for BCA students at Guru Gobind Singh Indraprastha University (GGSIPU)',
+            },
         };
     }
 
@@ -49,6 +69,16 @@ export async function generateMetadata({
             },
             description:
                 'Explore the world of Bachelor of Computer Applications (BCA) at SyllabusX. Dive deep into the detailed syllabi and study materials tailored for BCA students at Guru Gobind Singh Indraprastha University (GGSIPU)',
+            openGraph: {
+                title: `BCA`,
+                description:
+                    'Explore the world of Bachelor of Computer Applications (BCA) at SyllabusX. Dive deep into the detailed syllabi and study materials tailored for BCA students at Guru Gobind Singh Indraprastha University (GGSIPU)',
+            },
+            twitter: {
+                title: `BCA`,
+                description:
+                    'Explore the world of Bachelor of Computer Applications (BCA) at SyllabusX. Dive deep into the detailed syllabi and study materials tailored for BCA students at Guru Gobind Singh Indraprastha University (GGSIPU)',
+            },
         };
     }
 
@@ -59,6 +89,16 @@ export async function generateMetadata({
         },
         description:
             'Explore the world of Bachelor of Computer Applications (BCA) at SyllabusX. Dive deep into the detailed syllabi and study materials tailored for BCA students at Guru Gobind Singh Indraprastha University (GGSIPU)',
+        openGraph: {
+            title: `BCA | ${semester} | ${_.startCase(_.toLower(subject))}`,
+            description:
+                'Explore the world of Bachelor of Computer Applications (BCA) at SyllabusX. Dive deep into the detailed syllabi and study materials tailored for BCA students at Guru Gobind Singh Indraprastha University (GGSIPU)',
+        },
+        twitter: {
+            title: `BCA | ${semester} | ${_.startCase(_.toLower(subject))}`,
+            description:
+                'Explore the world of Bachelor of Computer Applications (BCA) at SyllabusX. Dive deep into the detailed syllabi and study materials tailored for BCA students at Guru Gobind Singh Indraprastha University (GGSIPU)',
+        },
     };
 }
 

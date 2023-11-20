@@ -10,6 +10,16 @@ export const metadata: Metadata = {
     title: 'Terms & Conditions',
     description:
         'Understand the guidelines shaping your academic journey at SyllabusX. Explore our Terms and Conditions, covering acceptance, the nature of our non-profit, open-source project, user responsibilities, intellectual property, privacy policies, and more.',
+    openGraph: {
+        title: 'Terms & Conditions',
+        description:
+            'Understand the guidelines shaping your academic journey at SyllabusX. Explore our Terms and Conditions, covering acceptance, the nature of our non-profit, open-source project, user responsibilities, intellectual property, privacy policies, and more.',
+    },
+    twitter: {
+        title: 'Terms & Conditions',
+        description:
+            'Understand the guidelines shaping your academic journey at SyllabusX. Explore our Terms and Conditions, covering acceptance, the nature of our non-profit, open-source project, user responsibilities, intellectual property, privacy policies, and more.',
+    },
 };
 
 interface pageProps {}
