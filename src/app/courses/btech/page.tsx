@@ -26,6 +26,8 @@ export async function generateMetadata({
                 default: `BTech | ${branch}`,
                 template: `SyllabusX | %s`,
             },
+            description:
+                "Embark on a tech-centric academic voyage with SyllabusX's B.Tech page. Uncover a treasure trove of syllabi and study materials meticulously curated for Guru Gobind Singh Indraprastha University (GGSIPU) B.Tech programs.",
         };
     }
 
@@ -35,6 +37,8 @@ export async function generateMetadata({
                 default: `BTech | ${semester}`,
                 template: `SyllabusX | %s`,
             },
+            description:
+                "Embark on a tech-centric academic voyage with SyllabusX's B.Tech page. Uncover a treasure trove of syllabi and study materials meticulously curated for Guru Gobind Singh Indraprastha University (GGSIPU) B.Tech programs.",
         };
     }
 
@@ -44,6 +48,8 @@ export async function generateMetadata({
                 default: `BTech | ${_.startCase(_.toLower(subject))}`,
                 template: `SyllabusX | %s`,
             },
+            description:
+                "Embark on a tech-centric academic voyage with SyllabusX's B.Tech page. Uncover a treasure trove of syllabi and study materials meticulously curated for Guru Gobind Singh Indraprastha University (GGSIPU) B.Tech programs.",
         };
     }
 
@@ -53,6 +59,8 @@ export async function generateMetadata({
                 default: `BTech`,
                 template: `SyllabusX | %s`,
             },
+            description:
+                "Embark on a tech-centric academic voyage with SyllabusX's B.Tech page. Uncover a treasure trove of syllabi and study materials meticulously curated for Guru Gobind Singh Indraprastha University (GGSIPU) B.Tech programs.",
         };
     }
 
@@ -63,6 +71,8 @@ export async function generateMetadata({
             )}`,
             template: `SyllabusX | %s`,
         },
+        description:
+            "Embark on a tech-centric academic voyage with SyllabusX's B.Tech page. Uncover a treasure trove of syllabi and study materials meticulously curated for Guru Gobind Singh Indraprastha University (GGSIPU) B.Tech programs.",
     };
 }
 

@@ -14,10 +14,11 @@ export function constructMetadata(): Metadata {
             template: 'SyllabusX | %s',
         },
         description:
-            'SyllabusX is a website that provides the syllabus and study materials for the B. Tech course offered by IPU',
+            'Embark on a journey of academic simplicity with SyllabusX. Your one-stop hub for Guru Gobind Singh Indraprastha University (GGSIPU) syllabi and study materials. Navigate seamlessly through courses, collaborate with a vibrant community, and redefine your education experience. Join us at SyllabusX and make student life hassle-free!',
         applicationName: 'SyllabusX',
         keywords: [
             'SyllabusX',
+            'syllabus x',
             'Syllabus',
             'IPU Syllabus',
             'IPU',
@@ -31,26 +32,16 @@ export function constructMetadata(): Metadata {
         openGraph: {
             title: 'SyllabusX',
             description:
-                'SyllabusX is a website that provides the syllabus and study materials for the B. Tech course offered by IPU',
+                'Embark on a journey of academic simplicity with SyllabusX. Your one-stop hub for Guru Gobind Singh Indraprastha University (GGSIPU) syllabi and study materials. Navigate seamlessly through courses, collaborate with a vibrant community, and redefine your education experience. Join us at SyllabusX and make student life hassle-free!',
             url: 'https://syllabusx.live',
             siteName: 'SyllabusX',
-            images: [
-                {
-                    url: 'https://i.postimg.cc/TKX5Pp3g/Syllabus-X.png',
-                },
-            ],
             locale: 'en_US',
             type: 'website',
         },
         twitter: {
             title: 'SyllabusX',
             description:
-                'SyllabusX is a website that provides the syllabus and study materials for the B. Tech course offered by IPU',
-            images: [
-                {
-                    url: 'https://i.postimg.cc/TKX5Pp3g/Syllabus-X.png',
-                },
-            ],
+                'Embark on a journey of academic simplicity with SyllabusX. Your one-stop hub for Guru Gobind Singh Indraprastha University (GGSIPU) syllabi and study materials. Navigate seamlessly through courses, collaborate with a vibrant community, and redefine your education experience. Join us at SyllabusX and make student life hassle-free!',
             app: {
                 name: 'SyllabusX',
                 id: {

@@ -1,9 +1,16 @@
 import LayoutWrapper from '@/layouts/LayoutWrapper';
 import { getChanges } from '@/lib/contentful';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { FC } from 'react';
 
 export const revalidate = 43200;
+
+export const metadata: Metadata = {
+    title: 'Changelog',
+    description:
+        'Dive into the Changelog Chronicles at SyllabusX, your backstage pass to witness the evolution of academic innovation. Explore the journey through previous versions, unveiling the heartbeat of enhancements and updates that shape your seamless educational experience.',
+};
 
 interface pageProps {}
 

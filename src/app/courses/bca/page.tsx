@@ -25,6 +25,8 @@ export async function generateMetadata({
                 default: `BCA | ${semester}`,
                 template: `SyllabusX | %s`,
             },
+            description:
+                'Explore the world of Bachelor of Computer Applications (BCA) at SyllabusX. Dive deep into the detailed syllabi and study materials tailored for BCA students at Guru Gobind Singh Indraprastha University (GGSIPU)',
         };
     }
 
@@ -34,6 +36,8 @@ export async function generateMetadata({
                 default: `BCA | ${_.startCase(_.toLower(subject))}`,
                 template: `SyllabusX | %s`,
             },
+            description:
+                'Explore the world of Bachelor of Computer Applications (BCA) at SyllabusX. Dive deep into the detailed syllabi and study materials tailored for BCA students at Guru Gobind Singh Indraprastha University (GGSIPU)',
         };
     }
 
@@ -43,6 +47,8 @@ export async function generateMetadata({
                 default: `BCA`,
                 template: `SyllabusX | %s`,
             },
+            description:
+                'Explore the world of Bachelor of Computer Applications (BCA) at SyllabusX. Dive deep into the detailed syllabi and study materials tailored for BCA students at Guru Gobind Singh Indraprastha University (GGSIPU)',
         };
     }
 
@@ -51,6 +57,8 @@ export async function generateMetadata({
             default: `BCA | ${semester} | ${_.startCase(_.toLower(subject))}`,
             template: `SyllabusX | %s`,
         },
+        description:
+            'Explore the world of Bachelor of Computer Applications (BCA) at SyllabusX. Dive deep into the detailed syllabi and study materials tailored for BCA students at Guru Gobind Singh Indraprastha University (GGSIPU)',
     };
 }
 

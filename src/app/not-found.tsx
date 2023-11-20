@@ -1,6 +1,13 @@
 import LayoutWrapper from '@/layouts/LayoutWrapper';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { FC } from 'react';
+
+export const metadata: Metadata = {
+    title: 'Oops! Page Not Found',
+    description:
+        "Oops! It seems like you've wandered into uncharted territory. Our SyllabusX compass couldn't locate the page you're looking for. Don't worry, let's guide you back to the main path of academic resources",
+};
 
 interface NotFoundProps {}
 

@@ -1,9 +1,16 @@
 import LayoutWrapper from '@/layouts/LayoutWrapper';
 import { getTAndC } from '@/lib/contentful';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+import { Metadata } from 'next';
 import { FC } from 'react';
 
 export const revalidate = 86400;
+
+export const metadata: Metadata = {
+    title: 'Terms & Conditions',
+    description:
+        'Understand the guidelines shaping your academic journey at SyllabusX. Explore our Terms and Conditions, covering acceptance, the nature of our non-profit, open-source project, user responsibilities, intellectual property, privacy policies, and more.',
+};
 
 interface pageProps {}
 

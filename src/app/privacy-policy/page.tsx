@@ -1,9 +1,16 @@
 import LayoutWrapper from '@/layouts/LayoutWrapper';
 import { getPolicy } from '@/lib/contentful';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+import { Metadata } from 'next';
 import { FC } from 'react';
 
 export const revalidate = 86400;
+
+export const metadata: Metadata = {
+    title: 'Privacy Policy',
+    description:
+        'Navigate SyllabusX with confidence. Our Privacy Policy outlines how we safeguard your information. Explore the terms guiding the collection and use of personal and non-personal data on our open-source platform. Trust SyllabusX for a transparent and secure academic journey.',
+};
 
 interface pageProps {}
 

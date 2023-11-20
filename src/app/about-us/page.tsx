@@ -3,10 +3,17 @@ import LayoutWrapper from '@/layouts/LayoutWrapper';
 import { getAboutUs, getSyllabusxTeam } from '@/lib/contentful';
 import { cn } from '@/lib/utils';
 import { Github, Instagram, Link2 } from 'lucide-react';
+import { Metadata } from 'next';
 import Image from 'next/image';
 import { FC } from 'react';
 
 export const revalidate = 43200;
+
+export const metadata: Metadata = {
+    title: 'About Us',
+    description:
+        "Discover the faces behind SyllabusX – where it's not just about the code, but the passion and dedication of individuals. Meet Akshat, Shourya, and Sparsh, the dynamic team propelling SyllabusX towards a future of simplified academic exploration.",
+};
 
 interface pageProps {}
 
@@ -33,14 +40,14 @@ const page: FC<pageProps> = async ({}) => {
                     </p>
                 </div>
             </div>
-            <div className='py-10 w-full'>
+            <div className="py-10 w-full">
                 <div className="relative aspect-video rounded-md">
-                        <Image
-                            src={'https:' + teamImage.url}
-                            alt="Team Image"
-                            fill
-                            className="rounded-md"
-                        />
+                    <Image
+                        src={'https:' + teamImage.url}
+                        alt="Team Image"
+                        fill
+                        className="rounded-md"
+                    />
                 </div>
             </div>
             <div className="py-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
