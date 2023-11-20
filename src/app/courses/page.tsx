@@ -10,12 +10,12 @@ export const metadata: Metadata = {
     description:
         "Unleash your academic odyssey with SyllabusX's Courses page, charting a course for every program at Guru Gobind Singh Indraprastha University (GGSIPU). Explore detailed syllabi and study materials for B.Tech, USICT B.Tech, BCA, and stay tuned for more exciting programs on the horizon. Your academic journey begins here.",
     openGraph: {
-        title: 'Courses',
+        title: 'SyllabusX | Courses',
         description:
             "Unleash your academic odyssey with SyllabusX's Courses page, charting a course for every program at Guru Gobind Singh Indraprastha University (GGSIPU). Explore detailed syllabi and study materials for B.Tech, USICT B.Tech, BCA, and stay tuned for more exciting programs on the horizon. Your academic journey begins here.",
     },
     twitter: {
-        title: 'Courses',
+        title: 'SyllabusX | Courses',
         description:
             "Unleash your academic odyssey with SyllabusX's Courses page, charting a course for every program at Guru Gobind Singh Indraprastha University (GGSIPU). Explore detailed syllabi and study materials for B.Tech, USICT B.Tech, BCA, and stay tuned for more exciting programs on the horizon. Your academic journey begins here.",
     },

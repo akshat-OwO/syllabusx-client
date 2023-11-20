@@ -14,12 +14,12 @@ export const metadata: Metadata = {
     description:
         "Discover the faces behind SyllabusX – where it's not just about the code, but the passion and dedication of individuals. Meet Akshat, Shourya, and Sparsh, the dynamic team propelling SyllabusX towards a future of simplified academic exploration.",
     openGraph: {
-        title: 'About Us',
+        title: 'SyllabusX | About Us',
         description:
             "Discover the faces behind SyllabusX – where it's not just about the code, but the passion and dedication of individuals. Meet Akshat, Shourya, and Sparsh, the dynamic team propelling SyllabusX towards a future of simplified academic exploration.",
     },
     twitter: {
-        title: 'About Us',
+        title: 'SyllabusX | About Us',
         description:
             "Discover the faces behind SyllabusX – where it's not just about the code, but the passion and dedication of individuals. Meet Akshat, Shourya, and Sparsh, the dynamic team propelling SyllabusX towards a future of simplified academic exploration.",
     },

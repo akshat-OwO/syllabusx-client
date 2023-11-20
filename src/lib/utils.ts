@@ -14,7 +14,7 @@ export function constructMetadata(): Metadata {
             template: 'SyllabusX | %s',
         },
         description:
-            'Embark on a journey of academic simplicity with SyllabusX. Your one-stop hub for Guru Gobind Singh Indraprastha University (GGSIPU) syllabi and study materials. Navigate seamlessly through courses, collaborate with a vibrant community, and redefine your education experience. Join us at SyllabusX and make student life hassle-free!',
+            'Embark on a streamlined academic journey with SyllabusX – the ultimate hub for GGSIPU syllabi and study materials.',
         applicationName: 'SyllabusX',
         keywords: [
             'SyllabusX',
@@ -32,7 +32,7 @@ export function constructMetadata(): Metadata {
         openGraph: {
             title: 'SyllabusX',
             description:
-                'Embark on a journey of academic simplicity with SyllabusX. Your one-stop hub for Guru Gobind Singh Indraprastha University (GGSIPU) syllabi and study materials. Navigate seamlessly through courses, collaborate with a vibrant community, and redefine your education experience. Join us at SyllabusX and make student life hassle-free!',
+                'Embark on a streamlined academic journey with SyllabusX – the ultimate hub for GGSIPU syllabi and study materials.',
             url: 'https://syllabusx.live',
             siteName: 'SyllabusX',
             locale: 'en_US',
@@ -41,19 +41,9 @@ export function constructMetadata(): Metadata {
         twitter: {
             title: 'SyllabusX',
             description:
-                'Embark on a journey of academic simplicity with SyllabusX. Your one-stop hub for Guru Gobind Singh Indraprastha University (GGSIPU) syllabi and study materials. Navigate seamlessly through courses, collaborate with a vibrant community, and redefine your education experience. Join us at SyllabusX and make student life hassle-free!',
-            app: {
-                name: 'SyllabusX',
-                id: {
-                    ipad: '',
-                    iphone: '',
-                    googleplay: '',
-                },
-                url: {
-                    ipad: 'https://syllabusx.live',
-                    iphone: 'https://syllabusx.live',
-                },
-            },
+                'Embark on a streamlined academic journey with SyllabusX – the ultimate hub for GGSIPU syllabi and study materials.',
+            card: 'summary_large_image',
+            site: 'https://syllabusx.live',
         },
     };
 }

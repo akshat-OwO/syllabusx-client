@@ -6,8 +6,8 @@ export const runtime = 'edge';
 export const alt = 'SyllabusX';
 
 export const size = {
-    width: 1200,
-    height: 630,
+    width: 2400,
+    height: 1260,
 };
 
 export const contentType = 'image/png';
@@ -25,7 +25,7 @@ export default async function Image() {
                     background: '#000000',
                 }}
             >
-                <Icons.x style={{ height: '10rem', width: '10rem' }} />
+                <Icons.x style={{ height: '16rem', width: '16rem' }} />
             </div>
         ),
         { ...size }

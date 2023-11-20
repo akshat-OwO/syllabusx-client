@@ -11,12 +11,12 @@ export const metadata: Metadata = {
     description:
         'Navigate SyllabusX with confidence. Our Privacy Policy outlines how we safeguard your information. Explore the terms guiding the collection and use of personal and non-personal data on our open-source platform. Trust SyllabusX for a transparent and secure academic journey.',
     openGraph: {
-        title: 'Privacy Policy',
+        title: 'SyllabusX | Privacy Policy',
         description:
             'Navigate SyllabusX with confidence. Our Privacy Policy outlines how we safeguard your information. Explore the terms guiding the collection and use of personal and non-personal data on our open-source platform. Trust SyllabusX for a transparent and secure academic journey.',
     },
     twitter: {
-        title: 'Privacy Policy',
+        title: 'SyllabusX | Privacy Policy',
         description:
             'Navigate SyllabusX with confidence. Our Privacy Policy outlines how we safeguard your information. Explore the terms guiding the collection and use of personal and non-personal data on our open-source platform. Trust SyllabusX for a transparent and secure academic journey.',
     },
