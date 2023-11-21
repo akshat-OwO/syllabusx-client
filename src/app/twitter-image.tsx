@@ -25,7 +25,7 @@ export default async function Image() {
                     background: '#000000',
                 }}
             >
-                <Icons.x style={{ height: '16rem', width: '16rem' }} />
+                <Icons.x style={{ height: '32rem', width: '32rem' }} />
             </div>
         ),
         { ...size }

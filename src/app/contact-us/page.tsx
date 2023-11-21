@@ -13,11 +13,17 @@ export const metadata: Metadata = {
         title: 'SyllabusX | Contact Us',
         description:
             "Let's connect! Have questions, suggestions, or just want to say hello? Navigate to our Contact Us page – the portal to connect with the SyllabusX team. Your feedback fuels our commitment to simplifying student life. Give us your insights, and let's shape the future of academic navigation together.",
+        url: 'https://syllabusx.live',
+        siteName: 'SyllabusX',
+        locale: 'en_US',
+        type: 'website',
     },
     twitter: {
         title: 'SyllabusX | Contact Us',
         description:
             "Let's connect! Have questions, suggestions, or just want to say hello? Navigate to our Contact Us page – the portal to connect with the SyllabusX team. Your feedback fuels our commitment to simplifying student life. Give us your insights, and let's shape the future of academic navigation together.",
+        card: 'summary_large_image',
+        site: 'https://syllabusx.live',
     },
 };
 

@@ -17,11 +17,17 @@ export const metadata: Metadata = {
         title: 'SyllabusX | About Us',
         description:
             "Discover the faces behind SyllabusX – where it's not just about the code, but the passion and dedication of individuals. Meet Akshat, Shourya, and Sparsh, the dynamic team propelling SyllabusX towards a future of simplified academic exploration.",
+        url: 'https://syllabusx.live',
+        siteName: 'SyllabusX',
+        locale: 'en_US',
+        type: 'website',
     },
     twitter: {
         title: 'SyllabusX | About Us',
         description:
             "Discover the faces behind SyllabusX – where it's not just about the code, but the passion and dedication of individuals. Meet Akshat, Shourya, and Sparsh, the dynamic team propelling SyllabusX towards a future of simplified academic exploration.",
+        card: 'summary_large_image',
+        site: 'https://syllabusx.live',
     },
 };
 

@@ -14,11 +14,17 @@ export const metadata: Metadata = {
         title: 'SyllabusX | Privacy Policy',
         description:
             'Navigate SyllabusX with confidence. Our Privacy Policy outlines how we safeguard your information. Explore the terms guiding the collection and use of personal and non-personal data on our open-source platform. Trust SyllabusX for a transparent and secure academic journey.',
+        url: 'https://syllabusx.live',
+        siteName: 'SyllabusX',
+        locale: 'en_US',
+        type: 'website',
     },
     twitter: {
         title: 'SyllabusX | Privacy Policy',
         description:
             'Navigate SyllabusX with confidence. Our Privacy Policy outlines how we safeguard your information. Explore the terms guiding the collection and use of personal and non-personal data on our open-source platform. Trust SyllabusX for a transparent and secure academic journey.',
+        card: 'summary_large_image',
+        site: 'https://syllabusx.live',
     },
 };
 

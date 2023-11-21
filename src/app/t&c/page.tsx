@@ -14,11 +14,17 @@ export const metadata: Metadata = {
         title: 'SyllabusX | Terms & Conditions',
         description:
             'Understand the guidelines shaping your academic journey at SyllabusX. Explore our Terms and Conditions, covering acceptance, the nature of our non-profit, open-source project, user responsibilities, intellectual property, privacy policies, and more.',
+        url: 'https://syllabusx.live',
+        siteName: 'SyllabusX',
+        locale: 'en_US',
+        type: 'website',
     },
     twitter: {
         title: 'SyllabusX | Terms & Conditions',
         description:
             'Understand the guidelines shaping your academic journey at SyllabusX. Explore our Terms and Conditions, covering acceptance, the nature of our non-profit, open-source project, user responsibilities, intellectual property, privacy policies, and more.',
+        card: 'summary_large_image',
+        site: 'https://syllabusx.live',
     },
 };
 

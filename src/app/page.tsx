@@ -14,7 +14,7 @@ export default async function Home() {
         <div className="flex flex-col justify-center items-center">
             <Hero content={fields} />
             <Features />
-            <CourseList />
+            <CourseList content={fields} />
             <Pricing />
             {/* <WallOfLove /> */}
             <Letter content={fields} />

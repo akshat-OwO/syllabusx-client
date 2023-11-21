@@ -1,7 +1,9 @@
 import { buttonVariants } from '@/components/ui/button';
 import LayoutWrapper from '@/layouts/LayoutWrapper';
+import { getHomePageData } from '@/lib/contentful';
 import { cn } from '@/lib/utils';
 import { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { FC } from 'react';
 
@@ -13,17 +15,27 @@ export const metadata: Metadata = {
         title: 'SyllabusX | Courses',
         description:
             "Unleash your academic odyssey with SyllabusX's Courses page, charting a course for every program at Guru Gobind Singh Indraprastha University (GGSIPU). Explore detailed syllabi and study materials for B.Tech, USICT B.Tech, BCA, and stay tuned for more exciting programs on the horizon. Your academic journey begins here.",
+        url: 'https://syllabusx.live',
+        siteName: 'SyllabusX',
+        locale: 'en_US',
+        type: 'website',
     },
     twitter: {
         title: 'SyllabusX | Courses',
         description:
             "Unleash your academic odyssey with SyllabusX's Courses page, charting a course for every program at Guru Gobind Singh Indraprastha University (GGSIPU). Explore detailed syllabi and study materials for B.Tech, USICT B.Tech, BCA, and stay tuned for more exciting programs on the horizon. Your academic journey begins here.",
+        card: 'summary_large_image',
+        site: 'https://syllabusx.live',
     },
 };
 
 interface pageProps {}
 
-const page: FC<pageProps> = ({}) => {
+const page: FC<pageProps> = async ({}) => {
+    const content: any = await getHomePageData();
+    const btechImageDark = content.btechImage[0].fields.file;
+    const btechImageLight = content.btechImage[1].fields.file;
+
     return (
         <LayoutWrapper className="py-20 min-h-[calc(100vh-7rem)]">
             <div className="flex flex-col gap-y-2 items-center">
@@ -48,13 +60,29 @@ const page: FC<pageProps> = ({}) => {
                         buttonVariants({
                             variant: 'secondary',
                             className:
-                                'ring-2 lg:p-2 lg:items-end ring-foreground row-span-3 dark:ring-0 w-full h-full shadow-2xl',
+                                'lg:p-2 lg:items-end row-span-3 w-full h-full shadow-2xl',
                         })
                     )}
                 >
                     <div className="lg:hidden">B.TECH</div>
                     <div className="hidden lg:flex flex-col relative justify-end p-2 h-full w-full bg-background rounded-md">
-                        <h6 className="absolute bottom-2 right-2">B.TECH</h6>
+                        <div className="hidden dark:block relative h-full aspect-square">
+                            <Image
+                                src={'https:' + btechImageDark.url}
+                                alt="Btech Image (dark)"
+                                fill
+                                className="object-cover rounded-md"
+                            />
+                        </div>
+                        <div className="dark:hidden relative h-full aspect-square">
+                            <Image
+                                src={'https:' + btechImageLight.url}
+                                alt="Btech Image (light)"
+                                fill
+                                className="object-cover rounded-md"
+                            />
+                        </div>
+                        <h6 className="absolute bottom-4 right-4 text-lg text-extrabold">B.TECH</h6>
                     </div>
                 </Link>
                 <Link
@@ -63,7 +91,7 @@ const page: FC<pageProps> = ({}) => {
                         buttonVariants({
                             variant: 'secondary',
                             className:
-                                'ring-2 ring-foreground dark:ring-0 w-full h-full shadow-2xl',
+                                'w-full h-full shadow-2xl',
                         })
                     )}
                 >
@@ -75,7 +103,7 @@ const page: FC<pageProps> = ({}) => {
                         buttonVariants({
                             variant: 'secondary',
                             className:
-                                'ring-2 ring-foreground dark:ring-0 w-full h-full shadow-2xl',
+                                'w-full h-full shadow-2xl',
                         })
                     )}
                 >
@@ -86,7 +114,7 @@ const page: FC<pageProps> = ({}) => {
                         buttonVariants({
                             variant: 'outline',
                             className:
-                                'ring-2 ring-foreground dark:ring-0 w-full h-full shadow-2xl hover:bg-background hover:text-foreground, pointer-events-none',
+                                'w-full h-full shadow-2xl hover:bg-background hover:text-foreground, pointer-events-none',
                         })
                     )}
                 >
