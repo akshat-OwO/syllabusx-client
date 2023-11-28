@@ -3,6 +3,7 @@
 import { Tab } from '@/config';
 import { getBcaSubjectDetails } from '@/lib/server';
 import { useQuery } from '@tanstack/react-query';
+import { Info } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { FC, useState } from 'react';
 import BcaStudyMaterial from './BcaStudyMaterial';
@@ -16,6 +17,12 @@ import {
 } from './ui/card';
 import { Skeleton } from './ui/skeleton';
 import { Tabs, TabsList, TabsTrigger } from './ui/tabs';
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from './ui/tooltip';
 
 interface BcaSubjectViewProps {}
 
@@ -129,7 +136,7 @@ const BcaSubjectView: FC<BcaSubjectViewProps> = ({}) => {
                                     </TabsTrigger>
                                 </TabsList>
                                 <Syllabus
-                                    theory={sub[0].theory}
+                                    theory={sub[0].units}
                                     lab={sub[0].lab}
                                 />
                                 {tab === Tab.NOTES ||
@@ -191,6 +198,21 @@ const BcaSubjectView: FC<BcaSubjectViewProps> = ({}) => {
                                         <p>{sub[0].labcredits}</p>
                                     </div>
                                 ) : null}
+                                <div className="flex justify-between items-center">
+                                    <p className="font-semibold">
+                                        Course Category
+                                    </p>
+                                    <TooltipProvider>
+                                        <Tooltip>
+                                            <TooltipTrigger>
+                                                <Info className="h-4 w-4" />
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                                <p>{sub[0].coursecategory}</p>
+                                            </TooltipContent>
+                                        </Tooltip>
+                                    </TooltipProvider>
+                                </div>
                             </div>
                         </CardContent>
                     </Card>

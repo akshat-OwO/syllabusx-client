@@ -46,7 +46,8 @@ const page: FC<pageProps> = async ({}) => {
                 </div>
             </div>
             <div className="py-10 mx-auto prose dark:prose-invert prose-neutral">
-                {documentToReactComponents(content.fields.tc)}
+                <h5>Last Updated: {content ? new Date(content.sys.updatedAt).toLocaleDateString() : 'DD-MM-YYYY'}</h5>
+                {content ? documentToReactComponents(content.fields.tc) : null}
             </div>
         </LayoutWrapper>
     );

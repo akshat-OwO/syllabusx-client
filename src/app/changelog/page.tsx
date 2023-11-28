@@ -51,7 +51,7 @@ const page: FC<pageProps> = async ({}) => {
                     </p>
                 </div>
             </div>
-            <div className="py-20 grid md:grid-cols-3 gap-10">
+            {logs ? <div className="py-20 grid md:grid-cols-3 gap-10">
                 {logs.map((log: any) => (
                     <ChangeLogCard
                         key={log.fields.version}
@@ -61,7 +61,7 @@ const page: FC<pageProps> = async ({}) => {
                         Release Date: {log.fields.releaseDate}
                     </ChangeLogCard>
                 ))}
-            </div>
+            </div> : null}
         </LayoutWrapper>
     );
 };

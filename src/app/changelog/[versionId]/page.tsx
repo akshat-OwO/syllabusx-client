@@ -8,10 +8,12 @@ import Link from 'next/link';
 import { FC } from 'react';
 
 export const dynamicParams = true;
+export const revalidate = 43200;
 
 export async function generateStaticParams() {
     const paths = await generateChangesPages();
-    return paths;
+    if (paths) return paths;
+    return [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
 }
 
 interface pageProps {
@@ -49,18 +51,18 @@ const page: FC<pageProps> = async ({ params }) => {
                     </Link>
                     <ChevronRight className="h-4 w-4" />
                     <Link
-                        href={`/changelog/${change.sys.id}`}
+                        href={change ? (`/changelog/${change.sys.id}`) : '/changelog'}
                         className={cn(buttonVariants({ variant: 'link' }))}
                     >
-                        {change.fields.version}
+                        {change ? change.fields.version : 'X'}
                     </Link>
                 </div>
                 <div className="px-4 py-2 mx-auto prose dark:prose-invert prose-neutral">
                     <h2 className="underline">
-                        Version {change.fields.version}
+                        Version {change ? change.fields.version : 'X'}
                     </h2>
-                    <p>Release Date: {change.fields.releaseDate}</p>
-                    {documentToReactComponents(change.fields.changes)}
+                    <p>Release Date: {change ? change.fields.releaseDate : 'DD-MM-YYYY'}</p>
+                    {change ? documentToReactComponents(change.fields.changes) : null}
                 </div>
             </div>
         </LayoutWrapper>

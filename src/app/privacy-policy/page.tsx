@@ -32,9 +32,7 @@ interface pageProps {}
 
 const page: FC<pageProps> = async ({}) => {
     const content: any = await getPolicy();
-
-    const lastUpdated = new Date(content.sys.updatedAt).toLocaleDateString();
-
+    
     return (
         <LayoutWrapper className="py-20 min-h-[calc(100vh-7rem)]">
             <div className="flex flex-col gap-y-2 items-center">
@@ -48,8 +46,8 @@ const page: FC<pageProps> = async ({}) => {
                 </div>
             </div>
             <div className="py-10 mx-auto prose dark:prose-invert prose-neutral">
-                <h5>Last Updated: {lastUpdated}</h5>
-                {documentToReactComponents(content.fields.privacy)}
+                <h5>Last Updated: {content ? new Date(content.sys.updatedAt).toLocaleDateString() : 'DD-MM-YYYY'}</h5>
+                {content ? documentToReactComponents(content.fields.privacy) : null}
             </div>
         </LayoutWrapper>
     );

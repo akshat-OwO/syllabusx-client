@@ -1,4 +1,4 @@
-import { Tab, branchList, semesterList, server } from '@/config';
+import { Tab, bcaSemesterList, branchList, semesterList, server } from '@/config';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import _ from 'lodash';
 
@@ -105,13 +105,13 @@ export const getBcaSubjectList = async ({
     semester: string | null;
 }) => {
     if (
-        !semesterList.some((s) => semester === s.label)
+        !bcaSemesterList.some((s) => semester === s.label)
     ) {
         throw new AxiosError('Please check semester and branch.');
     }
     const response = (await axios.get(
         `${server}bca/${
-            semesterList.find((s) => semester === s.label)?.value
+            bcaSemesterList.find((s) => semester === s.label)?.value
         }`
     )) as AxiosResponse;
     return response.data;
@@ -125,14 +125,14 @@ export const getBcaSubjectDetails = async ({
     subject: string | null;
 }) => {
     if (
-        !semesterList.some((s) => semester === s.label) ||
+        !bcaSemesterList.some((s) => semester === s.label) ||
         !subject
     ) {
         throw new AxiosError('Please check again what you searched.');
     } else if (!subject) return null;
     const response = (await axios.get(
         `${server}bca/${
-            semesterList.find((s) => semester === s.label)?.value
+            bcaSemesterList.find((s) => semester === s.label)?.value
         }/${_.startCase(
             _.toLower(subject)
         )}`
@@ -158,7 +158,7 @@ export const getBcaStudyMaterial = async ({
     practical?: string;
 }) => {
     if (
-        !semesterList.some((s) => semester === s.label) ||
+        !bcaSemesterList.some((s) => semester === s.label) ||
         !subject
     ) {
         throw new AxiosError('Please check again what you searched.');

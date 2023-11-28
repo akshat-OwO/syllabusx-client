@@ -1,9 +1,7 @@
 import { buttonVariants } from '@/components/ui/button';
 import LayoutWrapper from '@/layouts/LayoutWrapper';
-import { getHomePageData } from '@/lib/contentful';
 import { cn } from '@/lib/utils';
 import { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import { FC } from 'react';
 
@@ -32,10 +30,6 @@ export const metadata: Metadata = {
 interface pageProps {}
 
 const page: FC<pageProps> = async ({}) => {
-    const content: any = await getHomePageData();
-    const btechImageDark = content.btechImage[0].fields.file;
-    const btechImageLight = content.btechImage[1].fields.file;
-
     return (
         <LayoutWrapper className="py-20 min-h-[calc(100vh-7rem)]">
             <div className="flex flex-col gap-y-2 items-center">
@@ -59,51 +53,18 @@ const page: FC<pageProps> = async ({}) => {
                     className={cn(
                         buttonVariants({
                             variant: 'secondary',
-                            className:
-                                'lg:p-2 lg:items-end row-span-3 w-full h-full shadow-2xl',
+                            className: 'w-full h-full shadow-2xl',
                         })
                     )}
                 >
-                    <div className="lg:hidden">B.TECH</div>
-                    <div className="hidden lg:flex flex-col relative justify-end p-2 h-full w-full bg-background rounded-md">
-                        <div className="hidden dark:block relative h-full aspect-square">
-                            <Image
-                                src={'https:' + btechImageDark.url}
-                                alt="Btech Image (dark)"
-                                fill
-                                className="object-cover rounded-md"
-                            />
-                        </div>
-                        <div className="dark:hidden relative h-full aspect-square">
-                            <Image
-                                src={'https:' + btechImageLight.url}
-                                alt="Btech Image (light)"
-                                fill
-                                className="object-cover rounded-md"
-                            />
-                        </div>
-                        <h6 className="absolute bottom-4 right-4 text-lg text-extrabold">B.TECH</h6>
-                    </div>
-                </Link>
-                <Link
-                    href="/courses/btech"
-                    className={cn(
-                        buttonVariants({
-                            variant: 'secondary',
-                            className:
-                                'w-full h-full shadow-2xl',
-                        })
-                    )}
-                >
-                    USICT B.TECH
+                    B.Tech
                 </Link>
                 <Link
                     href="/courses/bca"
                     className={cn(
                         buttonVariants({
                             variant: 'secondary',
-                            className:
-                                'w-full h-full shadow-2xl',
+                            className: 'row-start-2 w-full h-full shadow-2xl',
                         })
                     )}
                 >
@@ -114,7 +75,7 @@ const page: FC<pageProps> = async ({}) => {
                         buttonVariants({
                             variant: 'outline',
                             className:
-                                'w-full h-full shadow-2xl hover:bg-background hover:text-foreground, pointer-events-none',
+                                'row-span-2 col-start-2 w-full h-full shadow-2xl hover:bg-background hover:text-foreground, pointer-events-none',
                         })
                     )}
                 >

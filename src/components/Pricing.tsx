@@ -23,7 +23,7 @@ const Pricing: FC<PricingProps> = ({}) => {
                             className={cn(
                                 buttonVariants({
                                     variant: 'outline',
-                                    className: 'gap-2 items-center',
+                                    className: 'w-full gap-2 items-center',
                                 })
                             )}
                         >
@@ -37,7 +37,7 @@ const Pricing: FC<PricingProps> = ({}) => {
                             className={cn(
                                 buttonVariants({
                                     variant: 'outline',
-                                    className: 'gap-2 items-center',
+                                    className: 'w-full gap-2 items-center',
                                 })
                             )}
                         >
@@ -51,7 +51,7 @@ const Pricing: FC<PricingProps> = ({}) => {
                             className={cn(
                                 buttonVariants({
                                     variant: 'outline',
-                                    className: 'gap-2 items-center',
+                                    className: 'w-full gap-2 items-center',
                                 })
                             )}
                         >
@@ -68,7 +68,7 @@ const Pricing: FC<PricingProps> = ({}) => {
                                 buttonVariants({
                                     variant: 'outline',
                                     className:
-                                        'gap-2 md:justify-self-end md:items-center',
+                                        'w-full gap-2 md:justify-self-end md:items-center',
                                 })
                             )}
                         >

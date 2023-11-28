@@ -1,4 +1,6 @@
 import { Tab } from '@/config';
+import { cn } from '@/lib/utils';
+import { ExternalLink } from 'lucide-react';
 import { FC } from 'react';
 import {
     Accordion,
@@ -6,6 +8,7 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from './ui/accordion';
+import { buttonVariants } from './ui/button';
 import { TabsContent } from './ui/tabs';
 
 interface SyllabusProps {
@@ -43,7 +46,7 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab }) => {
             </TabsContent>
             <TabsContent value={Tab.LAB}>
                 {lab.length === 0 ? (
-                    <div className='h-[7.5rem] bg-accent rounded-md flex flex-col justify-center items-center'>
+                    <div className="h-[7.5rem] bg-accent rounded-md flex flex-col justify-center items-center">
                         <p>It seems this is not a practical subject.</p>
                     </div>
                 ) : null}
@@ -75,6 +78,23 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab }) => {
                                                   )
                                               )
                                             : null}
+                                        {l.aim.externalLinks ? (
+                                            <a
+                                                href={l.aim.externalLinks}
+                                                className={cn(
+                                                    buttonVariants({
+                                                        variant: 'tertiary',
+                                                        className:
+                                                            'gap-2 rounded-md self-start',
+                                                    })
+                                                )}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                View Image{' '}
+                                                <ExternalLink className="h-4 w-4" />
+                                            </a>
+                                        ) : null}
                                     </div>
                                 </AccordionContent>
                             </AccordionItem>

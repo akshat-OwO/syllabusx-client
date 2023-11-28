@@ -12,10 +12,6 @@ interface HeroProps {
 }
 
 const Hero: FC<HeroProps> = ({ content }) => {
-    const version = content.version;
-    const heroImage = content.heroImage.fields.file;
-    const heroImageLight = content.heroImageLight.fields.file;
-
     return (
         <div className="radial-top w-full">
             <LayoutWrapper className="flex flex-col p-10 gap-10 justify-center items-center">
@@ -25,7 +21,7 @@ const Hero: FC<HeroProps> = ({ content }) => {
                         href="/changelog"
                         className={cn(badgeVariants({ variant: 'default' }))}
                     >
-                        Version {version}
+                        Version {content ? content.version : 'X'}
                     </Link>
                 </div>
                 <div className="flex flex-col gap-y-2 items-center">
@@ -55,7 +51,12 @@ const Hero: FC<HeroProps> = ({ content }) => {
                     <div className="-z-10 conic-center absolute w-full h-full" />
                     <div className="hidden dark:block z-10 w-full aspect-video p-2 shadow-2xl">
                         <Image
-                            src={'https:' + heroImage.url}
+                            src={
+                                content
+                                    ? 'https:' +
+                                      content.heroImage.fields.file.url
+                                    : '/placeholder.png'
+                            }
                             alt="Hero Image"
                             fill
                             quality={100}
@@ -64,7 +65,12 @@ const Hero: FC<HeroProps> = ({ content }) => {
                     </div>
                     <div className="dark:hidden z-10 w-full aspect-video p-2 shadow-2xl">
                         <Image
-                            src={'https:' + heroImageLight.url}
+                            src={
+                                content
+                                    ? 'https:' +
+                                      content.heroImageLight.fields.file.url
+                                    : '/placeholder.png'
+                            }
                             alt="Hero Image Light"
                             fill
                             quality={100}
