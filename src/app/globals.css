@@ -24,14 +24,15 @@
         --input: 0 0% 89.8%;
         --ring: 0 0% 3.9%;
         --radius: 0.5rem;
+        --translucent: rgba(0, 200, 255, 0.3);
     }
 
     .dark {
-        --background: 0 0% 3.9%;
+        --background: 0 0% 8%;
         --foreground: 0 0% 98%;
-        --card: 0 0% 3.9%;
+        --card: 0 0% 8%;
         --card-foreground: 0 0% 98%;
-        --popover: 0 0% 3.9%;
+        --popover: 0 0% 8%;
         --popover-foreground: 0 0% 98%;
         --primary: 0 0% 98%;
         --primary-foreground: 0 0% 9%;
@@ -50,8 +51,8 @@
 }
 
 ::selection {
-    background-color: white;
-    color: black;
+    background-color: hsl(var(--foreground));
+    color: hsl(var(--background));
 }
 
 ::-webkit-scrollbar {
@@ -60,15 +61,33 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #404040;
+    background: hsl(var(--secondary));
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #fafafa;
+    background: hsl(var(--foreground));
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #a3a3a3;
+    background: hsl(var(--foreground) / .7);
+}
+
+.radial-top {
+    background: radial-gradient(
+        ellipse 80% 35% at 50% -20%,
+        var(--translucent),
+        rgba(0, 0, 100, 0)
+    );
+}
+
+.conic-center {
+    background: conic-gradient(
+        from 230.29deg at 51.63% 52.16%,
+        var(--translucent) 0deg,
+        var(--translucent) 360deg
+    );
+    filter: blur(150px);
+    transform: translateZ(0px);
 }

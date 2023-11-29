@@ -1,43 +1,44 @@
 'use client';
 
-import { Icons } from '@/components/Icons';
-import { Button, buttonVariants } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import { useQueryClient } from '@tanstack/react-query';
+import LayoutWrapper from '@/layouts/LayoutWrapper';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 
 interface errorProps {}
 
 const Error: FC<errorProps> = ({}) => {
-    const router = useRouter();
-    const queryClient = useQueryClient();
-
-    const clearCache = () => {
-        queryClient.clear()
-        router.push('/');
-    }
-
     return (
-        <div className="relative min-h-screen text-neutral-50 bg-gradient-to-br from-neutral-900 to-black">
-            <Icons.logo className="w-52 py-5 mx-auto sm:w-64 xl:w-80" />
-            <div className='grid gap-4 place-content-center px-5"'>
-                <h1 className="text-3xl">404 Page Not Found</h1>
-                <Button onClick={clearCache}>Clear Cache</Button>
-                <p className="text-center">
-                    Go back to{' '}
-                    <Link
-                        href="/"
-                        className={cn(
-                            buttonVariants({ variant: 'default', size: 'sm' })
-                        )}
-                    >
-                        Home
-                    </Link>
-                </p>
+        <LayoutWrapper className="py-20 min-h-[calc(100vh-7rem)]">
+            <div className="flex flex-col gap-y-2 items-center">
+                <div className="prose prose-sm prose-neutral dark:prose-invert md:prose-base">
+                    <h1 className="text-center">
+                        Uh-oh! Something Went{' '}
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-500 via-teal-600 to-teal-500">
+                            Wrong
+                        </span>
+                    </h1>
+                </div>
+                <div className="prose prose-sm prose-neutral dark:prose-invert">
+                    <p className="text-center">
+                        Looks like there&apos;s a glitch in the matrix.
+                        Meanwhile, you can try refreshing the page, checking
+                        your internet connection, or returning to the{' '}
+                        <Link href="/">Homepage</Link>.
+                    </p>
+                    <p className="text-center">
+                        If the problem persists, feel free to{' '}
+                        <a
+                            href="https://forms.gle/BFTv1uy8L33ptic6A"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            contact us
+                        </a>{' '}
+                        for assistance. We appreciate your patience!
+                    </p>
+                </div>
             </div>
-        </div>
+        </LayoutWrapper>
     );
 };
 

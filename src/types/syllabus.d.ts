@@ -8,6 +8,7 @@ type Lab = {
     aim: {
         objective: string;
         steps: string[];
+        externalLinks?: string;
     };
 };
 
