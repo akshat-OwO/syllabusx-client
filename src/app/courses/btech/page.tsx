@@ -74,6 +74,33 @@ export async function generateMetadata({
         };
     }
 
+    if (semester && branch && !subject) {
+        return {
+            title: {
+                default: `B.Tech | ${semester} | ${branch}`,
+                template: `SyllabusX | %s`,
+            },
+            description:
+                "Embark on a tech-centric academic voyage with SyllabusX's B.Tech page. Uncover a treasure trove of syllabi and study materials meticulously curated for Guru Gobind Singh Indraprastha University (GGSIPU) B.Tech programs.",
+            openGraph: {
+                title: `B.Tech | ${semester} | ${branch}`,
+                description:
+                    "Embark on a tech-centric academic voyage with SyllabusX's B.Tech page. Uncover a treasure trove of syllabi and study materials meticulously curated for Guru Gobind Singh Indraprastha University (GGSIPU) B.Tech programs.",
+                url: 'https://syllabusx.live',
+                siteName: 'SyllabusX',
+                locale: 'en_US',
+                type: 'website',
+            },
+            twitter: {
+                title: `B.Tech | ${semester} | ${branch}`,
+                description:
+                    "Embark on a tech-centric academic voyage with SyllabusX's B.Tech page. Uncover a treasure trove of syllabi and study materials meticulously curated for Guru Gobind Singh Indraprastha University (GGSIPU) B.Tech programs.",
+                card: 'summary_large_image',
+                site: 'https://syllabusx.live',
+            },
+        };
+    }
+
     if (!semester && !branch && subject) {
         return {
             title: {
