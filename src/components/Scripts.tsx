@@ -19,11 +19,6 @@ const Scripts: FC<ScriptsProps> = ({}) => {
                 
                 gtag('config', 'G-CPHDPDZJXM');`}
             </Script>
-            <Script
-                async
-                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7334463510301650"
-                crossOrigin="anonymous"
-            />
         </>
     );
 };
