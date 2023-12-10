@@ -1,43 +1,39 @@
-'use client';
+"use client";
 
-import { Tab } from '@/config';
-import { getBcaSubjectDetails } from '@/lib/server';
-import { useQuery } from '@tanstack/react-query';
-import { Info } from 'lucide-react';
-import { useSearchParams } from 'next/navigation';
-import { FC, useState } from 'react';
-import BcaStudyMaterial from './BcaStudyMaterial';
-import Syllabus from './Syllabus';
+import { Tab } from "@/config";
+import { getBcaSubjectDetails } from "@/lib/server";
+import { useQuery } from "@tanstack/react-query";
+import { Info } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { FC, useState } from "react";
+import BcaStudyMaterial from "./BcaStudyMaterial";
+import Syllabus from "./Syllabus";
+import { Button } from "./ui/button";
 import {
     Card,
     CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
-} from './ui/card';
-import { Skeleton } from './ui/skeleton';
-import { Tabs, TabsList, TabsTrigger } from './ui/tabs';
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from './ui/tooltip';
+} from "./ui/card";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
+import { Skeleton } from "./ui/skeleton";
+import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 
 interface BcaSubjectViewProps {}
 
 const BcaSubjectView: FC<BcaSubjectViewProps> = ({}) => {
     const searchParams = useSearchParams();
     const [tab, setTab] = useState<Tab>(Tab.THEORY);
-    const [embed, setEmbed] = useState<Embed>({ embedLink: '', name: '' });
+    const [embed, setEmbed] = useState<Embed>({ embedLink: "", name: "" });
     const [showEmbed, setShowEmbed] = useState<boolean>(false);
 
-    const semester = searchParams.get('semester');
-    const subject = searchParams.get('subject');
+    const semester = searchParams.get("semester");
+    const subject = searchParams.get("subject");
 
     const switchTab = (value: Tab) => {
         setShowEmbed(false);
-        setEmbed({ embedLink: '', name: '' });
+        setEmbed({ embedLink: "", name: "" });
         setTab(value);
     };
 
@@ -46,7 +42,7 @@ const BcaSubjectView: FC<BcaSubjectViewProps> = ({}) => {
         isLoading,
         error,
     } = useQuery({
-        queryKey: ['bca', 'subject', `${semester}`, `${subject}`],
+        queryKey: ["bca", "subject", `${semester}`, `${subject}`],
         queryFn: async () => {
             return await getBcaSubjectDetails({ semester, subject });
         },
@@ -202,16 +198,20 @@ const BcaSubjectView: FC<BcaSubjectViewProps> = ({}) => {
                                     <p className="font-semibold">
                                         Course Category
                                     </p>
-                                    <TooltipProvider>
-                                        <Tooltip>
-                                            <TooltipTrigger>
+                                    <HoverCard>
+                                        <HoverCardTrigger asChild>
+                                            <Button
+                                                variant={"secondary"}
+                                                size={"icon"}
+                                                className="p-0 h-4 w-4"
+                                            >
                                                 <Info className="h-4 w-4" />
-                                            </TooltipTrigger>
-                                            <TooltipContent>
-                                                <p>{sub[0].coursecategory}</p>
-                                            </TooltipContent>
-                                        </Tooltip>
-                                    </TooltipProvider>
+                                            </Button>
+                                        </HoverCardTrigger>
+                                        <HoverCardContent>
+                                            <p>{sub[0].coursecategory}</p>
+                                        </HoverCardContent>
+                                    </HoverCard>
                                 </div>
                             </div>
                         </CardContent>
