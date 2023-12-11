@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { Tab } from '@/config';
-import { getBcaStudyMaterial } from '@/lib/server';
-import { cn } from '@/lib/utils';
-import { useLocalStorage } from '@mantine/hooks';
-import { useQuery } from '@tanstack/react-query';
-import { Check, Frown, Heart, RotateCw, Star, X } from 'lucide-react';
-import React, { FC, useState } from 'react';
-import { Badge } from './ui/badge';
-import { Button, buttonVariants } from './ui/button';
-import { Skeleton } from './ui/skeleton';
-import { TabsContent } from './ui/tabs';
+import { Tab } from "@/config";
+import { getBcaStudyMaterial } from "@/lib/server";
+import { cn } from "@/lib/utils";
+import { useLocalStorage } from "@mantine/hooks";
+import { useQuery } from "@tanstack/react-query";
+import { Check, Frown, Heart, RotateCw, Star, X } from "lucide-react";
+import React, { FC, useState } from "react";
+import { Badge } from "./ui/badge";
+import { Button, buttonVariants } from "./ui/button";
+import { Skeleton } from "./ui/skeleton";
+import { TabsContent } from "./ui/tabs";
 
 interface BcaStudyMaterialProps {
     tab: Tab;
@@ -41,13 +41,13 @@ const BcaStudyMaterial: FC<BcaStudyMaterialProps> = ({
 }) => {
     const [createFav, setCreateFav] = useState<boolean>(false);
     const [favorites, setFavorites] = useLocalStorage<string[]>({
-        key: 'favorites',
+        key: "favorites",
         defaultValue: [],
     });
 
     const handleEmbed = (d: Drive) => {
         setEmbed({
-            embedLink: d.webViewLink.slice(0, -17) + 'preview',
+            embedLink: d.webViewLink.slice(0, -17) + "preview",
             name: d.name.slice(0, -4),
         });
         setShowEmbed(true);
@@ -55,7 +55,7 @@ const BcaStudyMaterial: FC<BcaStudyMaterialProps> = ({
 
     const exitEmbed = () => {
         setShowEmbed(false);
-        setEmbed({ embedLink: '', name: '' });
+        setEmbed({ embedLink: "", name: "" });
     };
 
     const addFavorite = (materialId: string) => {
@@ -71,7 +71,7 @@ const BcaStudyMaterial: FC<BcaStudyMaterialProps> = ({
     };
 
     const { data, isLoading, error, refetch, isFetching } = useQuery({
-        queryKey: ['bca', tab, semester, subject],
+        queryKey: ["bca", tab, semester, subject],
         queryFn: async () => {
             return await getBcaStudyMaterial({
                 semester,
@@ -91,11 +91,15 @@ const BcaStudyMaterial: FC<BcaStudyMaterialProps> = ({
             {error ? (
                 <>
                     <div className="flex items-center justify-end mb-2">
-                        <Button size={'icon'} onClick={() => refetch()}>
+                        <Button
+                            size={"icon"}
+                            disabled={isFetching}
+                            onClick={() => refetch()}
+                        >
                             <RotateCw
                                 className={cn(
-                                    'h-4 w-4',
-                                    isFetching ? 'animate-spin' : ''
+                                    "h-4 w-4",
+                                    isFetching ? "animate-spin" : ""
                                 )}
                             />
                         </Button>
@@ -112,7 +116,7 @@ const BcaStudyMaterial: FC<BcaStudyMaterialProps> = ({
                             target="_blank"
                             rel="noopener noreferrer"
                             className={cn(
-                                buttonVariants({ variant: 'tertiary' })
+                                buttonVariants({ variant: "tertiary" })
                             )}
                         >
                             Fix This!
@@ -136,7 +140,7 @@ const BcaStudyMaterial: FC<BcaStudyMaterialProps> = ({
                         <div className="prose dark:prose-invert prose-neutral">
                             <h4>{embed.name}</h4>
                         </div>
-                        <Button size={'icon'} onClick={exitEmbed}>
+                        <Button size={"icon"} onClick={exitEmbed}>
                             <X className="h-4 w-4" />
                         </Button>
                     </div>
@@ -148,20 +152,32 @@ const BcaStudyMaterial: FC<BcaStudyMaterialProps> = ({
                 <>
                     <div className="flex items-center justify-end gap-2 mb-2">
                         {createFav ? (
-                            <Button size={'icon'} onClick={() => setCreateFav(false)}>
+                            <Button
+                                size={"icon"}
+                                onClick={() => setCreateFav(false)}
+                            >
                                 <Check className="h-4 w-4" />
                             </Button>
                         ) : (
-                            <Button size={'icon'} onClick={() => setCreateFav(true)}>
-                                <Heart className='h-4 w-4' />
+                            <Button
+                                variant={"secondary"}
+                                size={"icon"}
+                                onClick={() => setCreateFav(true)}
+                            >
+                                <Heart className="h-4 w-4" />
                             </Button>
                         )}
 
-                        <Button size={'icon'} onClick={() => refetch()}>
+                        <Button
+                            variant={"secondary"}
+                            size={"icon"}
+                            disabled={isFetching}
+                            onClick={() => refetch()}
+                        >
                             <RotateCw
                                 className={cn(
-                                    'h-4 w-4',
-                                    isFetching ? 'animate-spin' : ''
+                                    "h-4 w-4",
+                                    isFetching ? "animate-spin" : ""
                                 )}
                             />
                         </Button>
@@ -175,13 +191,13 @@ const BcaStudyMaterial: FC<BcaStudyMaterialProps> = ({
                                         variant:
                                             embed.embedLink ===
                                             d.webViewLink.slice(0, -17) +
-                                                'preview'
-                                                ? 'ghost'
+                                                "preview"
+                                                ? "ghost"
                                                 : favorites.includes(d.id)
-                                                ? 'default'
-                                                : 'tertiary',
+                                                ? "default"
+                                                : "tertiary",
                                         className:
-                                            'relative group cursor-pointer whitespace-normal text-center h-full shadow-sm',
+                                            "relative group cursor-pointer whitespace-normal text-center h-full shadow-sm",
                                     })
                                 )}
                             >
@@ -194,8 +210,8 @@ const BcaStudyMaterial: FC<BcaStudyMaterialProps> = ({
                                     ).getTime()
                                 ) ? (
                                     <Badge
-                                        variant={'secondary'}
-                                        className="absolute -top-2 -left-2 hover:bg-teal-600 group-hover:animate-pulse rounded-sm bg-teal-600"
+                                        variant={"secondary"}
+                                        className="absolute z-10 -top-2 -left-2 hover:bg-teal-600 group-hover:animate-pulse rounded-sm bg-teal-600"
                                     >
                                         New
                                     </Badge>
@@ -206,8 +222,8 @@ const BcaStudyMaterial: FC<BcaStudyMaterialProps> = ({
                                             <div
                                                 className={cn(
                                                     buttonVariants({
-                                                        variant: 'ghost',
-                                                        size: 'icon',
+                                                        variant: "ghost",
+                                                        size: "icon",
                                                     })
                                                 )}
                                                 onClick={() =>
@@ -220,8 +236,8 @@ const BcaStudyMaterial: FC<BcaStudyMaterialProps> = ({
                                             <div
                                                 className={cn(
                                                     buttonVariants({
-                                                        variant: 'ghost',
-                                                        size: 'icon',
+                                                        variant: "ghost",
+                                                        size: "icon",
                                                     })
                                                 )}
                                                 onClick={() =>
