@@ -1,6 +1,12 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 import LayoutWrapper from '@/layouts/LayoutWrapper';
+import { useQueryClient } from "@tanstack/react-query";
 import { Metadata } from 'next';
 import Link from 'next/link';
+import { useRouter } from "next/navigation";
 import { FC } from 'react';
 
 export const metadata: Metadata = {
@@ -12,6 +18,20 @@ export const metadata: Metadata = {
 interface NotFoundProps {}
 
 const NotFound: FC<NotFoundProps> = ({}) => {
+    const queryClient = useQueryClient();
+    const router = useRouter();
+
+    const { toast } = useToast();
+
+    const clearCache = () => {
+        queryClient.clear();
+        toast({
+            title: "Cache Cleared!",
+            variant: "destructive",
+        });
+        router.push("/");
+    };
+
     return (
         <LayoutWrapper className="py-20 min-h-[calc(100vh-7rem)]">
             <div className="flex flex-col gap-y-2 items-center">
@@ -32,6 +52,17 @@ const NotFound: FC<NotFoundProps> = ({}) => {
                     <p className="text-center">
                         You can return to the <Link href="/">Homepage</Link> or
                         try searching for what you&apos;re looking for.
+                    </p>
+                    <p className="text-xs text-center">
+                        P.S. You can clear cache using this{" "}
+                        <Button
+                            variant={"destructive"}
+                            size={"sm"}
+                            className="text-xs p-2 h-fit"
+                            onClick={clearCache}
+                        >
+                            scary button
+                        </Button>
                     </p>
                 </div>
             </div>
