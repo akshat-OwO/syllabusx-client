@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import { getBtechSubjectList } from '@/lib/server';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import _ from 'lodash';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { FC } from 'react';
-import { Button } from './ui/button';
+import { getBtechSubjectList } from "@/lib/server";
+import { useQuery } from "@tanstack/react-query";
+import _ from "lodash";
+import { useRouter, useSearchParams } from "next/navigation";
+import { FC } from "react";
+import { Button } from "./ui/button";
 import {
     Card,
     CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
-} from './ui/card';
-import { ScrollArea, ScrollBar } from './ui/scroll-area';
-import { Skeleton } from './ui/skeleton';
+} from "./ui/card";
+import { ScrollArea, ScrollBar } from "./ui/scroll-area";
+import { Skeleton } from "./ui/skeleton";
 
 interface BtechSubjectListProps {}
 
@@ -22,17 +22,16 @@ const BtechSubjectList: FC<BtechSubjectListProps> = ({}) => {
     const searchParams = useSearchParams();
     const router = useRouter();
 
-    const semester = searchParams.get('semester');
-    const branch = searchParams.get('branch');
-
-    const queryClient = useQueryClient();
+    const semester = searchParams.get("semester");
+    const branch = searchParams.get("branch");
+    const subjectParam = searchParams.get("subject");
 
     const {
         data: list,
         isLoading,
         error,
     } = useQuery({
-        queryKey: ['btech', 'subjects', `${semester}`, `${branch}`],
+        queryKey: ["btech", "subjects", `${semester}`, `${branch}`],
         queryFn: async () => {
             return await getBtechSubjectList({ semester, branch });
         },
@@ -98,8 +97,15 @@ const BtechSubjectList: FC<BtechSubjectListProps> = ({}) => {
                                 {list.map((subject: string) => (
                                     <Button
                                         className="whitespace-normal h-auto shadow-md"
-                                        variant={'secondary'}
-                                        size={'default'}
+                                        variant={
+                                            subjectParam &&
+                                            _.startCase(
+                                                _.toLower(subjectParam)
+                                            ) === subject
+                                                ? "default"
+                                                : "secondary"
+                                        }
+                                        size={"default"}
                                         key={subject}
                                         onClick={() =>
                                             router.push(
