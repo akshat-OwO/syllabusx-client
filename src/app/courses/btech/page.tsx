@@ -1,9 +1,9 @@
 import BtechSearchStepCard from "@/components/BtechSearchStepCard";
-import BtechSubjectList from "@/components/BtechSubjectList";
 import BtechSubjectView from "@/components/BtechSubjectView";
 import SearchCard from "@/components/SearchCard";
 import SearchInput from "@/components/SearchInput";
-import { branchList, semesterList } from "@/config";
+import SubjectList from "@/components/SubjectList";
+import { Courses, branchList, semesterList } from "@/config";
 import LayoutWrapper from "@/layouts/LayoutWrapper";
 import _ from "lodash";
 import { Metadata } from "next";
@@ -218,7 +218,7 @@ const page: FC<pageProps> = ({ searchParams }) => {
                 </SearchCard>
                 <BtechSearchStepCard />
                 {searchParams.semester && searchParams.branch ? (
-                    <BtechSubjectList />
+                    <SubjectList course={Courses.BTECH} />
                 ) : null}
                 {searchParams.semester &&
                 searchParams.branch &&

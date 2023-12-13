@@ -1,9 +1,9 @@
 import BcaSearchStepCard from "@/components/BcaSearchStepCard";
-import BcaSubjectList from "@/components/BcaSubjectList";
 import BcaSubjectView from "@/components/BcaSubjectView";
 import SearchCard from "@/components/SearchCard";
 import SearchInput from "@/components/SearchInput";
-import { bcaSemesterList } from "@/config";
+import SubjectList from "@/components/SubjectList";
+import { Courses, bcaSemesterList } from "@/config";
 import LayoutWrapper from "@/layouts/LayoutWrapper";
 import _ from "lodash";
 import { Metadata } from "next";
@@ -154,7 +154,9 @@ const page: FC<pageProps> = ({ searchParams }) => {
                     />
                 </SearchCard>
                 <BcaSearchStepCard />
-                {searchParams.semester ? <BcaSubjectList /> : null}
+                {searchParams.semester ? (
+                    <SubjectList course={Courses.BCA} />
+                ) : null}
                 {searchParams.semester && searchParams.subject ? (
                     <BcaSubjectView />
                 ) : null}

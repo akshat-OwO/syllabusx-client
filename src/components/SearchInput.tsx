@@ -78,7 +78,8 @@ const SearchInput: FC<SearchInputProps> = ({ label, searchList }) => {
                                                     createQueryString(
                                                         label,
                                                         list.label
-                                                    )
+                                                    ),
+                                                { scroll: false }
                                             );
                                         }
                                         setOpen(false);

@@ -105,5 +105,10 @@ export enum Tab {
     PDF = "PDF",
 }
 
+export enum Courses {
+    BTECH = "BTECH",
+    BCA = "BCA",
+}
+
 export const server = "https://server.syllabusx.live/";
 // export const server = 'http://localhost:8080/';
