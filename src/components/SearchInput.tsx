@@ -86,7 +86,7 @@ const SearchInput: FC<SearchInputProps> = ({ label, searchList }) => {
                                 >
                                     <Check
                                         className={cn(
-                                            "h-4 w-4 mr-2",
+                                            "mr-2 h-4 w-4",
                                             param === list.label
                                                 ? "opacity-100"
                                                 : "opacity-0"

@@ -1,31 +1,31 @@
-'use client';
+"use client";
 
-import { cn } from '@/lib/utils';
-import { useSearchParams } from 'next/navigation';
-import { FC } from 'react';
-import { buttonVariants } from './ui/button';
+import { cn } from "@/lib/utils";
+import { useSearchParams } from "next/navigation";
+import { FC } from "react";
+import { buttonVariants } from "./ui/button";
 import {
     Card,
     CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
-} from './ui/card';
+} from "./ui/card";
 
 interface BtechSearchStepCardProps {}
 
 const BtechSearchStepCard: FC<BtechSearchStepCardProps> = ({}) => {
     const searchParams = useSearchParams();
 
-    const semester = searchParams.get('semester');
-    const branch = searchParams.get('branch');
+    const semester = searchParams.get("semester");
+    const branch = searchParams.get("branch");
 
     if (semester && branch) {
         return <></>;
     }
 
     return (
-        <Card className="col-span-3 lg:col-span-2 shadow-2xl">
+        <Card className="col-span-3 shadow-2xl lg:col-span-2">
             <CardHeader>
                 <CardTitle>Simplified Subject Search</CardTitle>
                 <CardDescription>
@@ -33,13 +33,13 @@ const BtechSearchStepCard: FC<BtechSearchStepCardProps> = ({}) => {
                 </CardDescription>
             </CardHeader>
             <CardContent className="pt-6">
-                <div className="grid sm:grid-cols-3 items-center gap-5">
+                <div className="grid items-center gap-5 sm:grid-cols-3">
                     <div
                         className={cn(
                             buttonVariants({
-                                variant: 'secondary',
+                                variant: "secondary",
                                 className:
-                                    'prose dark:prose-invert prose-neutral h-full flex-col gap-2 items-start',
+                                    "prose prose-neutral h-full flex-col items-start gap-2 dark:prose-invert",
                             })
                         )}
                     >
@@ -49,9 +49,9 @@ const BtechSearchStepCard: FC<BtechSearchStepCardProps> = ({}) => {
                     <div
                         className={cn(
                             buttonVariants({
-                                variant: 'secondary',
+                                variant: "secondary",
                                 className:
-                                    'prose dark:prose-invert prose-neutral h-full flex-col gap-2 items-start',
+                                    "prose prose-neutral h-full flex-col items-start gap-2 dark:prose-invert",
                             })
                         )}
                     >
@@ -61,9 +61,9 @@ const BtechSearchStepCard: FC<BtechSearchStepCardProps> = ({}) => {
                     <div
                         className={cn(
                             buttonVariants({
-                                variant: 'secondary',
+                                variant: "secondary",
                                 className:
-                                    'prose dark:prose-invert prose-neutral h-full flex-col gap-2 items-start',
+                                    "prose prose-neutral h-full flex-col items-start gap-2 dark:prose-invert",
                             })
                         )}
                     >

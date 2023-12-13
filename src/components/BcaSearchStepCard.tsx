@@ -1,30 +1,30 @@
-'use client';
+"use client";
 
-import { cn } from '@/lib/utils';
-import { useSearchParams } from 'next/navigation';
-import { FC } from 'react';
-import { buttonVariants } from './ui/button';
+import { cn } from "@/lib/utils";
+import { useSearchParams } from "next/navigation";
+import { FC } from "react";
+import { buttonVariants } from "./ui/button";
 import {
     Card,
     CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
-} from './ui/card';
+} from "./ui/card";
 
 interface BcaSearchStepCardProps {}
 
 const BcaSearchStepCard: FC<BcaSearchStepCardProps> = ({}) => {
     const searchParams = useSearchParams();
 
-    const semester = searchParams.get('semester');
+    const semester = searchParams.get("semester");
 
     if (semester) {
         return <></>;
     }
 
     return (
-        <Card className="col-span-3 lg:col-span-2 shadow-2xl">
+        <Card className="col-span-3 shadow-2xl lg:col-span-2">
             <CardHeader>
                 <CardTitle>Simplified Subject Search</CardTitle>
                 <CardDescription>
@@ -32,13 +32,13 @@ const BcaSearchStepCard: FC<BcaSearchStepCardProps> = ({}) => {
                 </CardDescription>
             </CardHeader>
             <CardContent className="pt-6">
-                <div className="grid sm:grid-cols-2 items-center gap-5">
+                <div className="grid items-center gap-5 sm:grid-cols-2">
                     <div
                         className={cn(
                             buttonVariants({
-                                variant: 'secondary',
+                                variant: "secondary",
                                 className:
-                                    'prose dark:prose-invert prose-neutral h-full flex-col gap-2 items-start',
+                                    "prose prose-neutral h-full flex-col items-start gap-2 dark:prose-invert",
                             })
                         )}
                     >
@@ -48,9 +48,9 @@ const BcaSearchStepCard: FC<BcaSearchStepCardProps> = ({}) => {
                     <div
                         className={cn(
                             buttonVariants({
-                                variant: 'secondary',
+                                variant: "secondary",
                                 className:
-                                    'prose dark:prose-invert prose-neutral h-full flex-col gap-2 items-start',
+                                    "prose prose-neutral h-full flex-col items-start gap-2 dark:prose-invert",
                             })
                         )}
                     >

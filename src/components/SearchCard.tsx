@@ -15,7 +15,7 @@ interface SearchCardProps {
 
 const SearchCard: FC<SearchCardProps> = ({ children, description, title }) => {
     return (
-        <Card className="col-span-3 lg:col-span-1 h-fit shadow-2xl">
+        <Card className="col-span-3 h-fit shadow-2xl lg:col-span-1">
             <CardHeader>
                 <CardTitle>{title}</CardTitle>
                 <CardDescription>{description}</CardDescription>

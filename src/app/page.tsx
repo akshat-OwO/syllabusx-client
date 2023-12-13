@@ -11,7 +11,7 @@ export default async function Home() {
     const fields = await getHomePageData();
 
     return (
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col items-center justify-center">
             <Hero content={fields} />
             <Features />
             <CourseList content={fields} />

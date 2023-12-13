@@ -26,12 +26,12 @@ const Error: FC<errorProps> = ({}) => {
     };
 
     return (
-        <LayoutWrapper className="py-20 min-h-[calc(100vh-7rem)]">
-            <div className="flex flex-col gap-y-2 items-center">
+        <LayoutWrapper className="min-h-[calc(100vh-7rem)] py-20">
+            <div className="flex flex-col items-center gap-y-2">
                 <div className="prose prose-sm prose-neutral dark:prose-invert md:prose-base">
                     <h1 className="text-center">
                         Uh-oh! Something Went{" "}
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-500 via-teal-600 to-teal-500">
+                        <span className="bg-gradient-to-r from-teal-500 via-teal-600 to-teal-500 bg-clip-text text-transparent">
                             Wrong
                         </span>
                     </h1>
@@ -54,12 +54,12 @@ const Error: FC<errorProps> = ({}) => {
                         </a>{" "}
                         for assistance. We appreciate your patience!
                     </p>
-                    <p className="text-xs text-center">
+                    <p className="text-center text-xs">
                         P.S. You can clear cache using this{" "}
                         <Button
                             variant={"destructive"}
                             size={"sm"}
-                            className="text-xs p-2 h-fit"
+                            className="h-fit p-2 text-xs"
                             onClick={clearCache}
                         >
                             scary button

@@ -1,11 +1,11 @@
-import { buttonVariants } from '@/components/ui/button';
-import LayoutWrapper from '@/layouts/LayoutWrapper';
-import { generateChangesPages, getChange } from '@/lib/contentful';
-import { cn } from '@/lib/utils';
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-import { ChevronRight } from 'lucide-react';
-import Link from 'next/link';
-import { FC } from 'react';
+import { buttonVariants } from "@/components/ui/button";
+import LayoutWrapper from "@/layouts/LayoutWrapper";
+import { generateChangesPages, getChange } from "@/lib/contentful";
+import { cn } from "@/lib/utils";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import { ChevronRight } from "lucide-react";
+import Link from "next/link";
+import { FC } from "react";
 
 export const dynamicParams = true;
 export const revalidate = 43200;
@@ -24,12 +24,12 @@ const page: FC<pageProps> = async ({ params }) => {
     const change: any = await getChange(params.versionId);
 
     return (
-        <LayoutWrapper className="py-20 min-h-[calc(100vh-7rem)]">
-            <div className="flex flex-col gap-y-2 items-center">
+        <LayoutWrapper className="min-h-[calc(100vh-7rem)] py-20">
+            <div className="flex flex-col items-center gap-y-2">
                 <div className="prose prose-sm prose-neutral dark:prose-invert md:prose-base">
                     <h1 className="text-center">
-                        Changelog{' '}
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-500 via-teal-600 to-teal-500">
+                        Changelog{" "}
+                        <span className="bg-gradient-to-r from-teal-500 via-teal-600 to-teal-500 bg-clip-text text-transparent">
                             Chronicles
                         </span>
                     </h1>
@@ -42,27 +42,36 @@ const page: FC<pageProps> = async ({ params }) => {
                 </div>
             </div>
             <div className="py-10">
-                <div className="max-w-prose mx-auto flex gap-1 items-center">
+                <div className="mx-auto flex max-w-prose items-center gap-1">
                     <Link
                         href="/changelog"
-                        className={cn(buttonVariants({ variant: 'link' }))}
+                        className={cn(buttonVariants({ variant: "link" }))}
                     >
                         Change Log
                     </Link>
                     <ChevronRight className="h-4 w-4" />
                     <Link
-                        href={change ? (`/changelog/${change.sys.id}`) : '/changelog'}
-                        className={cn(buttonVariants({ variant: 'link' }))}
+                        href={
+                            change
+                                ? `/changelog/${change.sys.id}`
+                                : "/changelog"
+                        }
+                        className={cn(buttonVariants({ variant: "link" }))}
                     >
-                        {change ? change.fields.version : 'X'}
+                        {change ? change.fields.version : "X"}
                     </Link>
                 </div>
-                <div className="px-4 py-2 mx-auto prose dark:prose-invert prose-neutral">
+                <div className="prose prose-neutral mx-auto px-4 py-2 dark:prose-invert">
                     <h2 className="underline">
-                        Version {change ? change.fields.version : 'X'}
+                        Version {change ? change.fields.version : "X"}
                     </h2>
-                    <p>Release Date: {change ? change.fields.releaseDate : 'DD-MM-YYYY'}</p>
-                    {change ? documentToReactComponents(change.fields.changes) : null}
+                    <p>
+                        Release Date:{" "}
+                        {change ? change.fields.releaseDate : "DD-MM-YYYY"}
+                    </p>
+                    {change
+                        ? documentToReactComponents(change.fields.changes)
+                        : null}
                 </div>
             </div>
         </LayoutWrapper>

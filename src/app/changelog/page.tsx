@@ -1,30 +1,30 @@
-import LayoutWrapper from '@/layouts/LayoutWrapper';
-import { getChanges } from '@/lib/contentful';
-import { Metadata } from 'next';
-import Link from 'next/link';
-import { FC } from 'react';
+import LayoutWrapper from "@/layouts/LayoutWrapper";
+import { getChanges } from "@/lib/contentful";
+import { Metadata } from "next";
+import Link from "next/link";
+import { FC } from "react";
 
 export const revalidate = 43200;
 
 export const metadata: Metadata = {
-    title: 'Changelog',
+    title: "Changelog",
     description:
-        'Dive into the Changelog Chronicles at SyllabusX, your backstage pass to witness the evolution of academic innovation. Explore the journey through previous versions, unveiling the heartbeat of enhancements and updates that shape your seamless educational experience.',
+        "Dive into the Changelog Chronicles at SyllabusX, your backstage pass to witness the evolution of academic innovation. Explore the journey through previous versions, unveiling the heartbeat of enhancements and updates that shape your seamless educational experience.",
     openGraph: {
-        title: 'SyllabusX | Changelog',
+        title: "SyllabusX | Changelog",
         description:
-            'Dive into the Changelog Chronicles at SyllabusX, your backstage pass to witness the evolution of academic innovation. Explore the journey through previous versions, unveiling the heartbeat of enhancements and updates that shape your seamless educational experience.',
-        url: 'https://syllabusx.live',
-        siteName: 'SyllabusX',
-        locale: 'en_US',
-        type: 'website',
+            "Dive into the Changelog Chronicles at SyllabusX, your backstage pass to witness the evolution of academic innovation. Explore the journey through previous versions, unveiling the heartbeat of enhancements and updates that shape your seamless educational experience.",
+        url: "https://syllabusx.live",
+        siteName: "SyllabusX",
+        locale: "en_US",
+        type: "website",
     },
     twitter: {
-        title: 'SyllabusX | Changelog',
+        title: "SyllabusX | Changelog",
         description:
-            'Dive into the Changelog Chronicles at SyllabusX, your backstage pass to witness the evolution of academic innovation. Explore the journey through previous versions, unveiling the heartbeat of enhancements and updates that shape your seamless educational experience.',
-        card: 'summary_large_image',
-        site: 'https://syllabusx.live',
+            "Dive into the Changelog Chronicles at SyllabusX, your backstage pass to witness the evolution of academic innovation. Explore the journey through previous versions, unveiling the heartbeat of enhancements and updates that shape your seamless educational experience.",
+        card: "summary_large_image",
+        site: "https://syllabusx.live",
     },
 };
 
@@ -34,12 +34,12 @@ const page: FC<pageProps> = async ({}) => {
     const logs: any = await getChanges();
 
     return (
-        <LayoutWrapper className="py-20 min-h-[calc(100vh-7rem)]">
-            <div className="flex flex-col gap-y-2 items-center">
+        <LayoutWrapper className="min-h-[calc(100vh-7rem)] py-20">
+            <div className="flex flex-col items-center gap-y-2">
                 <div className="prose prose-sm prose-neutral dark:prose-invert md:prose-base">
                     <h1 className="text-center">
-                        Changelog{' '}
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-500 via-teal-600 to-teal-500">
+                        Changelog{" "}
+                        <span className="bg-gradient-to-r from-teal-500 via-teal-600 to-teal-500 bg-clip-text text-transparent">
                             Chronicles
                         </span>
                     </h1>
@@ -51,17 +51,19 @@ const page: FC<pageProps> = async ({}) => {
                     </p>
                 </div>
             </div>
-            {logs ? <div className="py-20 grid md:grid-cols-3 gap-10">
-                {logs.map((log: any) => (
-                    <ChangeLogCard
-                        key={log.fields.version}
-                        href={`/changelog/${log.sys.id}`}
-                        title={`Version ${log.fields.version}`}
-                    >
-                        Release Date: {log.fields.releaseDate}
-                    </ChangeLogCard>
-                ))}
-            </div> : null}
+            {logs ? (
+                <div className="grid gap-10 py-20 md:grid-cols-3">
+                    {logs.map((log: any) => (
+                        <ChangeLogCard
+                            key={log.fields.version}
+                            href={`/changelog/${log.sys.id}`}
+                            title={`Version ${log.fields.version}`}
+                        >
+                            Release Date: {log.fields.releaseDate}
+                        </ChangeLogCard>
+                    ))}
+                </div>
+            ) : null}
         </LayoutWrapper>
     );
 };

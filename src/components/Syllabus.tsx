@@ -46,16 +46,16 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab }) => {
                         <AccordionItem
                             key={t.unit}
                             value={`unit ${t.unit}`}
-                            className="border-b-0 bg-accent first:rounded-t-md last:rounded-b-md first:pt-2 last:pb-2 px-2 py-1"
+                            className="border-b-0 bg-accent px-2 py-1 first:rounded-t-md first:pt-2 last:rounded-b-md last:pb-2"
                         >
-                            <AccordionTrigger className="p-2 bg-background rounded-md shadow-sm [&[data-state=open]]:bg-accent">{`Unit ${t.unit}`}</AccordionTrigger>
+                            <AccordionTrigger className="rounded-md bg-background p-2 shadow-sm [&[data-state=open]]:bg-accent">{`Unit ${t.unit}`}</AccordionTrigger>
                             <AccordionContent>
                                 <div className="flex flex-col items-center gap-2 first:mt-2">
                                     {t.topics.map((topic, index) => (
                                         <div
                                             key={index}
                                             className={cn(
-                                                "flex items-center gap-4 text-sm lg:text-base w-full p-2 rounded-md shadow-sm transition-colors",
+                                                "flex w-full items-center gap-4 rounded-md p-2 text-sm shadow-sm transition-colors lg:text-base",
                                                 completed.includes(topic)
                                                     ? "bg-accent"
                                                     : "bg-background"
@@ -87,7 +87,7 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab }) => {
             </TabsContent>
             <TabsContent value={Tab.LAB}>
                 {lab.length === 0 ? (
-                    <div className="h-[7.5rem] bg-accent rounded-md flex flex-col justify-center items-center">
+                    <div className="flex h-[7.5rem] flex-col items-center justify-center rounded-md bg-accent">
                         <p>It seems this is not a practical subject.</p>
                     </div>
                 ) : null}
@@ -97,9 +97,9 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab }) => {
                             <AccordionItem
                                 key={l.experiment}
                                 value={`experiment ${l.experiment}`}
-                                className="border-b-0 bg-accent first:rounded-t-md last:rounded-b-md first:pt-2 last:pb-2 px-2 py-1"
+                                className="border-b-0 bg-accent px-2 py-1 first:rounded-t-md first:pt-2 last:rounded-b-md last:pb-2"
                             >
-                                <AccordionTrigger className="p-2 bg-background rounded-md shadow-sm [&[data-state=open]]:bg-accent">
+                                <AccordionTrigger className="rounded-md bg-background p-2 shadow-sm [&[data-state=open]]:bg-accent">
                                     {`Experiment ${l.experiment}`}
                                 </AccordionTrigger>
                                 <AccordionContent>
@@ -107,7 +107,7 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab }) => {
                                         <div
                                             key={i}
                                             className={cn(
-                                                "flex items-center gap-4 text-sm lg:text-base w-full p-2 rounded-md shadow-sm transition-colors",
+                                                "flex w-full items-center gap-4 rounded-md p-2 text-sm shadow-sm transition-colors lg:text-base",
                                                 completed.includes(
                                                     l.aim.objective
                                                 )
@@ -139,7 +139,7 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab }) => {
                                             ? l.aim.steps.map((step, index) => (
                                                   <div
                                                       className={cn(
-                                                          "flex items-center gap-4 text-sm lg:text-base w-full p-2 rounded-md shadow-sm transition-colors",
+                                                          "flex w-full items-center gap-4 rounded-md p-2 text-sm shadow-sm transition-colors lg:text-base",
                                                           completed.includes(
                                                               l.aim.objective
                                                           ) ||
@@ -192,7 +192,7 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab }) => {
                                                     buttonVariants({
                                                         variant: "tertiary",
                                                         className:
-                                                            "gap-2 rounded-md self-start",
+                                                            "gap-2 self-start rounded-md",
                                                     })
                                                 )}
                                                 target="_blank"

@@ -1,10 +1,10 @@
-import Footer from '@/components/Footer';
-import Navbar from '@/components/Navbar';
-import Providers from '@/components/Providers';
-import Scripts from '@/components/Scripts';
-import { cn, constructMetadata } from '@/lib/utils';
-import { GeistSans } from 'geist/font/sans';
-import './globals.css';
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
+import Providers from "@/components/Providers";
+import Scripts from "@/components/Scripts";
+import { cn, constructMetadata } from "@/lib/utils";
+import { GeistSans } from "geist/font/sans";
+import "./globals.css";
 
 export const metadata = constructMetadata();
 
@@ -18,7 +18,7 @@ export default function RootLayout({
             <Scripts />
             <body
                 className={cn(
-                    'min-h-screen bg-gradient-to-br from-primary-foreground to-background dark:to-background',
+                    "min-h-screen bg-gradient-to-br from-primary-foreground to-background dark:to-background",
                     GeistSans.className
                 )}
             >

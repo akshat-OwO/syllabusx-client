@@ -1,21 +1,21 @@
-import { MetadataRoute } from 'next';
+import { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
     return {
         rules: [
             {
-                userAgent: '*',
+                userAgent: "*",
             },
             {
-                userAgent: 'Googlebot',
+                userAgent: "Googlebot",
             },
             {
-                userAgent: 'Mediapartners-Google',
+                userAgent: "Mediapartners-Google",
             },
             {
-                userAgent: 'Adsbot-Google',
+                userAgent: "Adsbot-Google",
             },
         ],
-        sitemap: 'https://syllabusx-git-dev-akshatowo.vercel.app/sitemap.xml',
+        sitemap: "https://syllabusx-git-dev-akshatowo.vercel.app/sitemap.xml",
     };
 }

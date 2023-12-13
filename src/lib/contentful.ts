@@ -1,4 +1,4 @@
-import { ContentfulClientApi, createClient } from 'contentful';
+import { ContentfulClientApi, createClient } from "contentful";
 
 var contentful: ContentfulClientApi<undefined>;
 
@@ -9,14 +9,14 @@ if (process.env.CONTENTFUL_SPACE_ID && process.env.CONTENTFUL_ACCESS_TOKEN) {
     });
 } else {
     console.log(
-        'Contentful Credentials not present! Switching to placeholder content.'
+        "Contentful Credentials not present! Switching to placeholder content."
     );
 }
 
 export const getHomePageData = async () => {
     try {
         const content = await contentful.getEntries({
-            content_type: 'homePage',
+            content_type: "homePage",
         });
         const items = content.items[0];
         const fields = items.fields;
@@ -29,7 +29,7 @@ export const getHomePageData = async () => {
 export const getChanges = async () => {
     try {
         const content = await contentful.getEntries({
-            content_type: 'changeLogPage',
+            content_type: "changeLogPage",
         });
         const items = content.items;
         const sortedItems = items.sort((a, b) => {
@@ -47,7 +47,7 @@ export const getChanges = async () => {
 export const generateChangesPages = async () => {
     try {
         const content = await contentful.getEntries({
-            content_type: 'changeLogPage',
+            content_type: "changeLogPage",
         });
         const paths = content.items.map((item) => {
             return { id: item.sys.id };
@@ -70,7 +70,7 @@ export const getChange = async (version: string) => {
 export const getSyllabusxTeam = async () => {
     try {
         const content = await contentful.getEntries({
-            content_type: 'syllabusxTeam',
+            content_type: "syllabusxTeam",
         });
         const items = content.items;
         const sortedItems = items.sort((a, b) => {
@@ -86,7 +86,7 @@ export const getSyllabusxTeam = async () => {
 export const getTAndC = async () => {
     try {
         const content = await contentful.getEntries({
-            content_type: 'termsConditions',
+            content_type: "termsConditions",
         });
         const item = content.items[0];
         return item;
@@ -98,7 +98,7 @@ export const getTAndC = async () => {
 export const getPolicy = async () => {
     try {
         const content = await contentful.getEntries({
-            content_type: 'privacyPolicy',
+            content_type: "privacyPolicy",
         });
         const item = content.items[0];
         return item;
@@ -110,7 +110,7 @@ export const getPolicy = async () => {
 export const getAboutUs = async () => {
     try {
         const content = await contentful.getEntries({
-            content_type: 'aboutUs',
+            content_type: "aboutUs",
         });
         const item = content.items[0];
         return item.fields;

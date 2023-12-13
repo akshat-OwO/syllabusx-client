@@ -207,7 +207,7 @@ const page: FC<pageProps> = ({ searchParams }) => {
         notFound();
 
     return (
-        <LayoutWrapper className="py-20 min-h-[calc(100vh-7rem)]">
+        <LayoutWrapper className="min-h-[calc(100vh-7rem)] py-20">
             <div className="grid grid-cols-3 gap-10">
                 <SearchCard
                     title="B.Tech"
