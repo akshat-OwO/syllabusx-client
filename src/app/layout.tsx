@@ -2,7 +2,7 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import Providers from "@/components/Providers";
 import Scripts from "@/components/Scripts";
-import { cn, constructMetadata } from "@/lib/utils";
+import { constructMetadata } from "@/lib/utils";
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 
@@ -16,16 +16,13 @@ export default function RootLayout({
     return (
         <html lang="en">
             <Scripts />
-            <body
-                className={cn(
-                    "min-h-screen bg-gradient-to-br from-primary-foreground to-background dark:to-background",
-                    GeistSans.className
-                )}
-            >
+            <body className={GeistSans.className}>
                 <Providers>
-                    <Navbar />
-                    {children}
-                    <Footer />
+                    <div className="min-h-screen bg-background">
+                        <Navbar />
+                        {children}
+                        <Footer />
+                    </div>
                 </Providers>
             </body>
         </html>

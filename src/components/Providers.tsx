@@ -5,7 +5,9 @@ import { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { Analytics } from "@vercel/analytics/react";
+import "public/theme.css";
 import { FC, ReactNode } from "react";
+import { ThemeWrapper } from "./theme/theme-wrapper";
 import { ThemeProvider } from "./ui/theme-provider";
 import { Toaster } from "./ui/toaster";
 
@@ -33,7 +35,7 @@ const Providers: FC<ProvidersProps> = ({ children }) => {
             persistOptions={{ persister }}
         >
             <ThemeProvider attribute="class" defaultTheme="dark">
-                {children}
+                <ThemeWrapper>{children}</ThemeWrapper>
                 <Analytics />
                 <ReactQueryDevtools />
                 <Toaster />

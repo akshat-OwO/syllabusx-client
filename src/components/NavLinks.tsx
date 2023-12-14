@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import { Github, Instagram, Menu, Star } from "lucide-react";
 import { FC } from "react";
-import { ModeToggle } from "./ModeToggle";
+import ThemeCustomizer from "./theme/theme-customizer";
 import { Button, buttonVariants } from "./ui/button";
 import { ScrollArea } from "./ui/scroll-area";
 import {
@@ -41,9 +41,10 @@ const NavLinks: FC<NavLinksProps> = ({}) => {
                 >
                     <Instagram className="h-4 w-4" />
                 </a>
-                <ModeToggle />
+                <ThemeCustomizer />
             </div>
-            <div className="block md:hidden">
+            <div className="flex gap-2 md:hidden">
+                <ThemeCustomizer />
                 <Sheet>
                     <SheetTrigger asChild>
                         <Button variant={"ghost"} size={"icon"}>
@@ -125,7 +126,6 @@ const NavLinks: FC<NavLinksProps> = ({}) => {
                                 >
                                     <Github className="h-4 w-4" />
                                 </a>
-                                <ModeToggle />
                             </div>
                         </ScrollArea>
                     </SheetContent>
