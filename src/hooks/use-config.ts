@@ -1,4 +1,4 @@
-import { useAtom } from "jotai";
+import { createStore, useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
 import { Theme } from "@/lib/themes";
@@ -13,6 +13,8 @@ const configAtom = atomWithStorage<Config>("config", {
     radius: 0.5,
 });
 
+const store = createStore();
+
 export function useConfig() {
-    return useAtom(configAtom);
+    return useAtom(configAtom, { store });
 }

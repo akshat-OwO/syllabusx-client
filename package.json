@@ -59,6 +59,7 @@
         "vaul": "^0.7.9"
     },
     "devDependencies": {
+        "@swc-jotai/react-refresh": "^0.1.0",
         "@types/lodash": "^4.14.201",
         "eslint-config-prettier": "^9.1.0",
         "prettier": "^3.1.1",

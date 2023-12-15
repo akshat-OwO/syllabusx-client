@@ -5,8 +5,8 @@ import { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { Analytics } from "@vercel/analytics/react";
-import "public/theme.css";
 import { FC, ReactNode } from "react";
+import { ThemeSwitcher } from "./theme/theme-switcher";
 import { ThemeWrapper } from "./theme/theme-wrapper";
 import { ThemeProvider } from "./ui/theme-provider";
 import { Toaster } from "./ui/toaster";
@@ -34,12 +34,13 @@ const Providers: FC<ProvidersProps> = ({ children }) => {
             client={queryClient}
             persistOptions={{ persister }}
         >
-            <ThemeProvider attribute="class" defaultTheme="dark">
+            <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
                 <ThemeWrapper>{children}</ThemeWrapper>
-                <Analytics />
-                <ReactQueryDevtools />
                 <Toaster />
             </ThemeProvider>
+            <ThemeSwitcher />
+            <Analytics />
+            <ReactQueryDevtools />
         </PersistQueryClientProvider>
     );
 };

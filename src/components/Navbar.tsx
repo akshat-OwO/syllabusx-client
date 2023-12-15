@@ -19,7 +19,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
                             className="z-40 flex items-center gap-x-1.5 font-semibold"
                         >
                             <Icons.x aria-label="syllabus x" className="w-6" />{" "}
-                            <p className="text-lg text-primary transition hover:text-primary/75">
+                            <p className="text-lg text-neutral-900 transition hover:opacity-75 dark:text-neutral-50">
                                 SyllabusX
                             </p>
                         </Link>

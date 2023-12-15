@@ -1,16 +1,9 @@
 "use client";
 
 import { useConfig } from "@/hooks/use-config";
-import { Theme, themes } from "@/lib/themes";
+import { themes } from "@/lib/themes";
 import { cn } from "@/lib/utils";
-import {
-    CheckIcon,
-    MoonIcon,
-    Paintbrush,
-    Palette,
-    SunIcon,
-    Undo,
-} from "lucide-react";
+import { CheckIcon, MoonIcon, Palette, SunIcon, Undo } from "lucide-react";
 import { useTheme } from "next-themes";
 import { FC, useEffect, useState } from "react";
 import { Drawer } from "vaul";
@@ -24,14 +17,11 @@ import { ThemeWrapper } from "./theme-wrapper";
 interface ThemeCustomizerProps {}
 
 const ThemeCustomizer: FC<ThemeCustomizerProps> = ({}) => {
-    const [config, setConfig] = useConfig();
-    const { resolvedTheme: mode } = useTheme();
     const [mounted, setMounted] = useState<boolean>(false);
 
     useEffect(() => {
         setMounted(true);
     }, []);
-
     return (
         <div className="flex items-center space-x-2">
             <Drawer.Root>
@@ -45,19 +35,21 @@ const ThemeCustomizer: FC<ThemeCustomizerProps> = ({}) => {
                 </DrawerContent>
             </Drawer.Root>
             <div className="hidden md:flex">
-                <Popover>
-                    <PopoverTrigger asChild>
-                        <Button variant="ghost" size="icon">
-                            <Palette className="h-4 w-4" />
-                        </Button>
-                    </PopoverTrigger>
-                    <PopoverContent
-                        align="end"
-                        className="z-50 w-[340px] rounded-[0.5rem] bg-white p-6 dark:bg-neutral-950"
-                    >
-                        <Customizer />
-                    </PopoverContent>
-                </Popover>
+                {mounted ? (
+                    <Popover>
+                        <PopoverTrigger asChild>
+                            <Button variant="ghost" size="icon">
+                                <Palette className="h-4 w-4" />
+                            </Button>
+                        </PopoverTrigger>
+                        <PopoverContent
+                            align="end"
+                            className="z-50 w-[340px] rounded-[0.5rem] bg-background p-6"
+                        >
+                            <Customizer />
+                        </PopoverContent>
+                    </Popover>
+                ) : null}
             </div>
         </div>
     );
@@ -80,7 +72,7 @@ function Customizer() {
             <div className="flex items-start">
                 <div className="space-y-1 pr-2">
                     <div className="font-semibold leading-none tracking-tight">
-                        Customize
+                        Customize (Beta)
                     </div>
                     <div className="text-xs text-muted-foreground">
                         Pick a style and color.
@@ -137,11 +129,11 @@ function Customizer() {
                                 >
                                     <span
                                         className={cn(
-                                            "mr-1 flex h-5 w-5 shrink-0 -translate-x-1 items-center justify-center rounded-full bg-[--theme-primary]"
+                                            "mr-1 flex h-4 w-4 shrink-0 -translate-x-1 items-center justify-center rounded-full bg-[--theme-primary]"
                                         )}
                                     >
                                         {isActive && (
-                                            <CheckIcon className="h-4 w-4 text-white" />
+                                            <CheckIcon className="h-3 w-3 text-white" />
                                         )}
                                     </span>
                                     {theme.label}
@@ -151,6 +143,32 @@ function Customizer() {
                                     className="h-8 w-full"
                                     key={theme.name}
                                 />
+                            );
+                        })}
+                    </div>
+                </div>
+                <div className="space-y-1.5">
+                    <Label className="text-xs">Radius</Label>
+                    <div className="grid grid-cols-5 gap-2">
+                        {["0", "0.3", "0.5", "0.75", "1.0"].map((value) => {
+                            return (
+                                <Button
+                                    variant={"outline"}
+                                    size="sm"
+                                    key={value}
+                                    onClick={() => {
+                                        setConfig({
+                                            ...config,
+                                            radius: parseFloat(value),
+                                        });
+                                    }}
+                                    className={cn(
+                                        config.radius === parseFloat(value) &&
+                                            "border-2 border-primary"
+                                    )}
+                                >
+                                    {value}
+                                </Button>
                             );
                         })}
                     </div>
