@@ -44,7 +44,7 @@ const ThemeCustomizer: FC<ThemeCustomizerProps> = ({}) => {
                         </PopoverTrigger>
                         <PopoverContent
                             align="end"
-                            className="z-50 w-[340px] rounded-[0.5rem] bg-background p-6"
+                            className="z-50 w-[340px] rounded-[0.5rem] p-6"
                         >
                             <Customizer />
                         </PopoverContent>
@@ -65,10 +65,7 @@ function Customizer() {
     }, []);
 
     return (
-        <ThemeWrapper
-            defaultTheme="neutral"
-            className="flex flex-col space-y-4 md:space-y-6"
-        >
+        <div className="flex flex-col space-y-4 md:space-y-6">
             <div className="flex items-start">
                 <div className="space-y-1 pr-2">
                     <div className="font-semibold leading-none tracking-tight">
@@ -129,7 +126,7 @@ function Customizer() {
                                 >
                                     <span
                                         className={cn(
-                                            "mr-1 flex h-4 w-4 shrink-0 -translate-x-1 items-center justify-center rounded-full bg-[--theme-primary]"
+                                            "mr-1 flex h-4 w-4 shrink-0 -translate-x-1 items-center justify-center rounded bg-[--theme-primary]"
                                         )}
                                     >
                                         {isActive && (
@@ -212,7 +209,7 @@ function Customizer() {
                     </div>
                 </div>
             </div>
-        </ThemeWrapper>
+        </div>
     );
 }
 

@@ -16,11 +16,7 @@ export function ThemeWrapper({
 
     return (
         <div
-            className={cn(
-                `theme-${defaultTheme || config.theme}`,
-                "",
-                className
-            )}
+            className={cn(`theme-${defaultTheme || config.theme}`, className)}
             style={
                 {
                     "--radius": `${defaultTheme ? 0.5 : config.radius}rem`,
