@@ -1,13 +1,14 @@
-'use client';
+"use client";
 
-import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
-import { QueryClient } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
-import { Analytics } from '@vercel/analytics/react';
-import { FC, ReactNode } from 'react';
-import { ThemeProvider } from './ui/theme-provider';
-import { Toaster } from './ui/toaster';
+import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
+import { QueryClient } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
+import { Analytics } from "@vercel/analytics/react";
+import { FC, ReactNode } from "react";
+import { ThemeProvider } from "./theme/theme-provider";
+import { ThemeSwitcher } from "./theme/theme-switcher";
+import { Toaster } from "./ui/toaster";
 
 interface ProvidersProps {
     children: ReactNode;
@@ -24,7 +25,7 @@ const Providers: FC<ProvidersProps> = ({ children }) => {
     });
 
     const persister = createSyncStoragePersister({
-        storage: typeof window !== 'undefined' ? window.localStorage : null,
+        storage: typeof window !== "undefined" ? window.localStorage : null,
     });
 
     return (
@@ -32,12 +33,13 @@ const Providers: FC<ProvidersProps> = ({ children }) => {
             client={queryClient}
             persistOptions={{ persister }}
         >
-            <ThemeProvider attribute="class" defaultTheme="dark">
+            <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
                 {children}
-                <Analytics />
-                <ReactQueryDevtools />
                 <Toaster />
             </ThemeProvider>
+            <ThemeSwitcher />
+            <Analytics />
+            <ReactQueryDevtools />
         </PersistQueryClientProvider>
     );
 };

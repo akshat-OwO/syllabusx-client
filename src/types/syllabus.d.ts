@@ -18,9 +18,9 @@ type Drive = {
     name: string;
     description?: string;
     createdTime: string;
-}
+};
 
 type Embed = {
     embedLink: string;
     name: string;
-}
+};

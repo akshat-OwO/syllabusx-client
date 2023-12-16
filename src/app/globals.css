@@ -71,7 +71,7 @@
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: hsl(var(--foreground) / .7);
+    background: hsl(var(--foreground) / 0.7);
 }
 
 .radial-top {

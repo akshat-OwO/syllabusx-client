@@ -1,47 +1,47 @@
-import { MetadataRoute } from 'next';
+import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
     return [
         {
-            url: 'https://syllabusx.live',
+            url: "https://syllabusx.live",
             lastModified: new Date(),
-            changeFrequency: 'monthly',
+            changeFrequency: "monthly",
             priority: 1,
         },
         {
-            url: 'https://syllabusx.live/courses',
+            url: "https://syllabusx.live/courses",
             lastModified: new Date(),
-            changeFrequency: 'monthly',
+            changeFrequency: "monthly",
             priority: 0.8,
         },
         {
-            url: 'https://syllabusx.live/about-us',
+            url: "https://syllabusx.live/about-us",
             lastModified: new Date(),
-            changeFrequency: 'monthly',
+            changeFrequency: "monthly",
             priority: 0.6,
         },
         {
-            url: 'https://syllabusx.live/contact-us',
+            url: "https://syllabusx.live/contact-us",
             lastModified: new Date(),
-            changeFrequency: 'monthly',
+            changeFrequency: "monthly",
             priority: 0.6,
         },
         {
-            url: 'https://syllabusx.live/changelog',
+            url: "https://syllabusx.live/changelog",
             lastModified: new Date(),
-            changeFrequency: 'monthly',
+            changeFrequency: "monthly",
             priority: 0.4,
         },
         {
-            url: 'https://syllabusx.live/privacy-policy',
+            url: "https://syllabusx.live/privacy-policy",
             lastModified: new Date(),
-            changeFrequency: 'yearly',
+            changeFrequency: "yearly",
             priority: 0.2,
         },
         {
-            url: 'https://syllabusx.live/t&c',
+            url: "https://syllabusx.live/t&c",
             lastModified: new Date(),
-            changeFrequency: 'yearly',
+            changeFrequency: "yearly",
             priority: 0.2,
         },
     ];

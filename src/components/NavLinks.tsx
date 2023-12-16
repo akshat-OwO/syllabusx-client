@@ -1,28 +1,28 @@
-'use client';
+"use client";
 
-import { cn } from '@/lib/utils';
-import { Github, Instagram, Menu, Star } from 'lucide-react';
-import { FC } from 'react';
-import { ModeToggle } from './ModeToggle';
-import { Button, buttonVariants } from './ui/button';
-import { ScrollArea } from './ui/scroll-area';
+import { cn } from "@/lib/utils";
+import { Github, Instagram, Menu, Star } from "lucide-react";
+import { FC } from "react";
+import ThemeCustomizer from "./theme/theme-customizer";
+import { Button, buttonVariants } from "./ui/button";
+import { ScrollArea } from "./ui/scroll-area";
 import {
     Sheet,
     SheetContent,
     SheetHeader,
     SheetTitle,
     SheetTrigger,
-} from './ui/sheet';
+} from "./ui/sheet";
 
 interface NavLinksProps {}
 
 const NavLinks: FC<NavLinksProps> = ({}) => {
     return (
         <>
-            <div className="hidden md:flex items-center gap-2">
+            <div className="hidden items-center gap-2 md:flex">
                 <a
                     className={cn(
-                        buttonVariants({ variant: 'ghost', className: 'gap-2' })
+                        buttonVariants({ variant: "ghost", className: "gap-2" })
                     )}
                     href="https://github.com/akshat-OwO/syllabusx-client"
                     target="_blank"
@@ -33,7 +33,7 @@ const NavLinks: FC<NavLinksProps> = ({}) => {
                 </a>
                 <a
                     className={cn(
-                        buttonVariants({ variant: 'ghost', size: 'icon' })
+                        buttonVariants({ variant: "ghost", size: "icon" })
                     )}
                     href="https://www.instagram.com/syllabusx_.live/"
                     target="_blank"
@@ -41,12 +41,13 @@ const NavLinks: FC<NavLinksProps> = ({}) => {
                 >
                     <Instagram className="h-4 w-4" />
                 </a>
-                <ModeToggle />
+                <ThemeCustomizer />
             </div>
-            <div className="block md:hidden">
+            <div className="flex gap-2 md:hidden">
+                <ThemeCustomizer />
                 <Sheet>
                     <SheetTrigger asChild>
-                        <Button variant={'ghost'} size={'icon'}>
+                        <Button variant={"ghost"} size={"icon"}>
                             <Menu className="h-4 w-4" />
                         </Button>
                     </SheetTrigger>
@@ -98,12 +99,12 @@ const NavLinks: FC<NavLinksProps> = ({}) => {
                                     open-source space.
                                 </ListAnchor>
                             </ul>
-                            <div className="mt-5 flex justify-center items-center gap-2">
+                            <div className="mt-5 flex items-center justify-center gap-2">
                                 <a
                                     className={cn(
                                         buttonVariants({
-                                            variant: 'ghost',
-                                            size: 'icon',
+                                            variant: "ghost",
+                                            size: "icon",
                                         })
                                     )}
                                     href="https://www.instagram.com/syllabusx_.live/"
@@ -115,8 +116,8 @@ const NavLinks: FC<NavLinksProps> = ({}) => {
                                 <a
                                     className={cn(
                                         buttonVariants({
-                                            variant: 'ghost',
-                                            size: 'icon',
+                                            variant: "ghost",
+                                            size: "icon",
                                         })
                                     )}
                                     href="https://github.com/akshat-OwO/syllabusx-client"
@@ -125,7 +126,6 @@ const NavLinks: FC<NavLinksProps> = ({}) => {
                                 >
                                     <Github className="h-4 w-4" />
                                 </a>
-                                <ModeToggle />
                             </div>
                         </ScrollArea>
                     </SheetContent>

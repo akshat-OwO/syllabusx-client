@@ -5,35 +5,34 @@
 [![issues open -  1](https://img.shields.io/badge/issues_open-_1-green?)](https://github.com/akshat-OwO/syllabusx-client/issues)
 [![License - GPL](https://img.shields.io/badge/License-GPL-green?)](https://github.com/akshat-OwO/syllabusx-client/blob/main/LICENSE.md)
 
-
 <br/>
 
 ![undefined - Imgur (1)](https://github.com/vaibhavx42/syllabusx-client/assets/110530263/29f3cd7a-7fb5-4297-85b6-5242d337a1b9)
 
 [![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=22&pause=1000&color=008080&width=435&lines=Simplifying+your+Academic+hustle)](https://git.io/typing-svg)
-</div>
 
+</div>
 
 # 🧭 `Table of contents`
 
-- [Introduction🚀](#Introduction)
-- [Usage](#Usage)
-- [Technologies Used📫](#-Technologies-Used)
-- [Features](#Features)
-- [How to Contributie](#Contributing-to-SyllabusX)
-- [Maintainers](#Maintainers)
-- [License](#License)
-- [Contributors](#Contributors)
-- [Support](#Support)
-
+-   [Introduction🚀](#Introduction)
+-   [Usage](#Usage)
+-   [Technologies Used📫](#-Technologies-Used)
+-   [Features](#Features)
+-   [How to Contributie](#Contributing-to-SyllabusX)
+-   [Maintainers](#Maintainers)
+-   [License](#License)
+-   [Contributors](#Contributors)
+-   [Support](#Support)
 
 <br>
 
-
 # Introduction
+
 ### Why SyllabusX?
-- Gathering syllabus for each of your subjects whenever you need is quite hassling, isn't it?
-- At SyllabusX, we understand the challenge of collecting syllabus documents in PDF format. For B.Tech students at GGSIPU, it can be overwhelming to gather all these resources in one centralized place. . That's why we stepped in and created this solution. Currently, syllabusX offers syllabus for batch 2021 - 2025 and onwards. We've added syllabus for all the branches with syllabus you'll find handwritten notes, previous year questions, recommended books, and practical files – everything you need for a successful semester.
+
+-   Gathering syllabus for each of your subjects whenever you need is quite hassling, isn't it?
+-   At SyllabusX, we understand the challenge of collecting syllabus documents in PDF format. For B.Tech students at GGSIPU, it can be overwhelming to gather all these resources in one centralized place. . That's why we stepped in and created this solution. Currently, syllabusX offers syllabus for batch 2021 - 2025 and onwards. We've added syllabus for all the branches with syllabus you'll find handwritten notes, previous year questions, recommended books, and practical files – everything you need for a successful semester.
 
 # Usage
 
@@ -46,9 +45,7 @@ To access syllabus information for your branch and semester, follow these simple
 
 It's that easy! Enjoy using SyllabusX for all your academic needs.
 
-
-
-# Technologies-Used  💻
+# Technologies-Used 💻
 
 [![NextJS](https://img.shields.io/badge/NextJS-blue?style=for-the-badge)](https://nextjs.org/docs)
 [![Shadcn Ui](https://img.shields.io/badge/Shadcn_Ui-purple?style=for-the-badge)](https://ui.shadcn.com/)
@@ -57,21 +54,19 @@ It's that easy! Enjoy using SyllabusX for all your academic needs.
 </br>
 
 # Features✨
-- Syllabus for Batch 2021 and Onwards: Access up-to-date syllabus information for B.Tech courses starting from the batch of 2021 and beyond.
-- Handwritten Notes: Gain access to high-quality handwritten notes to supplement your learning and understanding of key concepts.
-- Previous Year Questions (PYQs): Prepare effectively by practicing with the previous year's questions to get a feel for the exam patterns and important topics.
-- Practical Files: Access practical files and resources to excel in laboratory sessions and hands-on coursework.
 
+-   Syllabus for Batch 2021 and Onwards: Access up-to-date syllabus information for B.Tech courses starting from the batch of 2021 and beyond.
+-   Handwritten Notes: Gain access to high-quality handwritten notes to supplement your learning and understanding of key concepts.
+-   Previous Year Questions (PYQs): Prepare effectively by practicing with the previous year's questions to get a feel for the exam patterns and important topics.
+-   Practical Files: Access practical files and resources to excel in laboratory sessions and hands-on coursework.
 
-
-# Contributing to SyllabusX 
+# Contributing to SyllabusX
 
 Remember, Good PR makes you a Good contributor!
 
 While we don't require a specific pull request format, we kindly ask our contributors to maintain a reasonable level of organization when submitting pull requests. This includes providing a clear and concise description of the changes and their purpose. Pull requests that are unclear or do not align with the project's goals may be subject to closure or further review.
 
-- Have a look at [Contributing guidelines](/.github/Contributing.md) before contributing.
-
+-   Have a look at [Contributing guidelines](/.github/Contributing.md) before contributing.
 
 # Maintainers
 
@@ -106,8 +101,9 @@ While we don't require a specific pull request format, we kindly ask our contrib
 SyllabusX is Licensed under the <a href="./LICENSE.md">GPL License</a>. Please go through the License at least once before contributing.
 
 # Contributors
+
 [![Vaibhav Bhardwaj](https://avatars.githubusercontent.com/u/110530263?s=64)](https://github.com/vaibhavx42)
 
 # Support 🙏
 
- If you like the project and want to support us, please consider starring our repository as a token of appreciation. A heartfelt thank you to those who have contributed to this project. We are really grateful for your contribution. You all are amazing. Opensource for the win 🚀
+If you like the project and want to support us, please consider starring our repository as a token of appreciation. A heartfelt thank you to those who have contributed to this project. We are really grateful for your contribution. You all are amazing. Opensource for the win 🚀

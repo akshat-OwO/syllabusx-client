@@ -1,13 +1,13 @@
-import BtechCard from '@/components/BtechCard';
-import BtechSearchStepCard from '@/components/BtechSearchStepCard';
-import BtechSubjectList from '@/components/BtechSubjectList';
-import BtechSubjectView from '@/components/BtechSubjectView';
-import { branchList, semesterList } from '@/config';
-import LayoutWrapper from '@/layouts/LayoutWrapper';
-import _ from 'lodash';
-import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
-import { FC } from 'react';
+import BtechSubjectView from "@/components/BtechSubjectView";
+import SearchCard from "@/components/SearchCard";
+import SearchInput from "@/components/SearchInput";
+import SubjectList from "@/components/SubjectList";
+import { Courses, branchList, semesterList } from "@/config";
+import LayoutWrapper from "@/layouts/LayoutWrapper";
+import _ from "lodash";
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { FC } from "react";
 
 type Props = {
     searchParams: { semester: string; branch: string; subject: string };
@@ -32,17 +32,17 @@ export async function generateMetadata({
                 title: `B.Tech | ${branch}`,
                 description:
                     "Embark on a tech-centric academic voyage with SyllabusX's B.Tech page. Uncover a treasure trove of syllabi and study materials meticulously curated for Guru Gobind Singh Indraprastha University (GGSIPU) B.Tech programs.",
-                url: 'https://syllabusx.live',
-                siteName: 'SyllabusX',
-                locale: 'en_US',
-                type: 'website',
+                url: "https://syllabusx.live",
+                siteName: "SyllabusX",
+                locale: "en_US",
+                type: "website",
             },
             twitter: {
                 title: `B.Tech | ${branch}`,
                 description:
                     "Embark on a tech-centric academic voyage with SyllabusX's B.Tech page. Uncover a treasure trove of syllabi and study materials meticulously curated for Guru Gobind Singh Indraprastha University (GGSIPU) B.Tech programs.",
-                card: 'summary_large_image',
-                site: 'https://syllabusx.live',
+                card: "summary_large_image",
+                site: "https://syllabusx.live",
             },
         };
     }
@@ -59,17 +59,17 @@ export async function generateMetadata({
                 title: `B.Tech | ${semester}`,
                 description:
                     "Embark on a tech-centric academic voyage with SyllabusX's B.Tech page. Uncover a treasure trove of syllabi and study materials meticulously curated for Guru Gobind Singh Indraprastha University (GGSIPU) B.Tech programs.",
-                url: 'https://syllabusx.live',
-                siteName: 'SyllabusX',
-                locale: 'en_US',
-                type: 'website',
+                url: "https://syllabusx.live",
+                siteName: "SyllabusX",
+                locale: "en_US",
+                type: "website",
             },
             twitter: {
                 title: `B.Tech | ${semester}`,
                 description:
                     "Embark on a tech-centric academic voyage with SyllabusX's B.Tech page. Uncover a treasure trove of syllabi and study materials meticulously curated for Guru Gobind Singh Indraprastha University (GGSIPU) B.Tech programs.",
-                card: 'summary_large_image',
-                site: 'https://syllabusx.live',
+                card: "summary_large_image",
+                site: "https://syllabusx.live",
             },
         };
     }
@@ -86,17 +86,17 @@ export async function generateMetadata({
                 title: `B.Tech | ${semester} | ${branch}`,
                 description:
                     "Embark on a tech-centric academic voyage with SyllabusX's B.Tech page. Uncover a treasure trove of syllabi and study materials meticulously curated for Guru Gobind Singh Indraprastha University (GGSIPU) B.Tech programs.",
-                url: 'https://syllabusx.live',
-                siteName: 'SyllabusX',
-                locale: 'en_US',
-                type: 'website',
+                url: "https://syllabusx.live",
+                siteName: "SyllabusX",
+                locale: "en_US",
+                type: "website",
             },
             twitter: {
                 title: `B.Tech | ${semester} | ${branch}`,
                 description:
                     "Embark on a tech-centric academic voyage with SyllabusX's B.Tech page. Uncover a treasure trove of syllabi and study materials meticulously curated for Guru Gobind Singh Indraprastha University (GGSIPU) B.Tech programs.",
-                card: 'summary_large_image',
-                site: 'https://syllabusx.live',
+                card: "summary_large_image",
+                site: "https://syllabusx.live",
             },
         };
     }
@@ -113,17 +113,17 @@ export async function generateMetadata({
                 title: `B.Tech | ${_.startCase(_.toLower(subject))}`,
                 description:
                     "Embark on a tech-centric academic voyage with SyllabusX's B.Tech page. Uncover a treasure trove of syllabi and study materials meticulously curated for Guru Gobind Singh Indraprastha University (GGSIPU) B.Tech programs.",
-                url: 'https://syllabusx.live',
-                siteName: 'SyllabusX',
-                locale: 'en_US',
-                type: 'website',
+                url: "https://syllabusx.live",
+                siteName: "SyllabusX",
+                locale: "en_US",
+                type: "website",
             },
             twitter: {
                 title: `B.Tech | ${_.startCase(_.toLower(subject))}`,
                 description:
                     "Embark on a tech-centric academic voyage with SyllabusX's B.Tech page. Uncover a treasure trove of syllabi and study materials meticulously curated for Guru Gobind Singh Indraprastha University (GGSIPU) B.Tech programs.",
-                card: 'summary_large_image',
-                site: 'https://syllabusx.live',
+                card: "summary_large_image",
+                site: "https://syllabusx.live",
             },
         };
     }
@@ -140,17 +140,17 @@ export async function generateMetadata({
                 title: `B.Tech`,
                 description:
                     "Embark on a tech-centric academic voyage with SyllabusX's B.Tech page. Uncover a treasure trove of syllabi and study materials meticulously curated for Guru Gobind Singh Indraprastha University (GGSIPU) B.Tech programs.",
-                url: 'https://syllabusx.live',
-                siteName: 'SyllabusX',
-                locale: 'en_US',
-                type: 'website',
+                url: "https://syllabusx.live",
+                siteName: "SyllabusX",
+                locale: "en_US",
+                type: "website",
             },
             twitter: {
                 title: `B.Tech`,
                 description:
                     "Embark on a tech-centric academic voyage with SyllabusX's B.Tech page. Uncover a treasure trove of syllabi and study materials meticulously curated for Guru Gobind Singh Indraprastha University (GGSIPU) B.Tech programs.",
-                card: 'summary_large_image',
-                site: 'https://syllabusx.live',
+                card: "summary_large_image",
+                site: "https://syllabusx.live",
             },
         };
     }
@@ -170,17 +170,17 @@ export async function generateMetadata({
             )}`,
             description:
                 "Embark on a tech-centric academic voyage with SyllabusX's B.Tech page. Uncover a treasure trove of syllabi and study materials meticulously curated for Guru Gobind Singh Indraprastha University (GGSIPU) B.Tech programs.",
-            url: 'https://syllabusx.live',
-            siteName: 'SyllabusX',
-            locale: 'en_US',
-            type: 'website',
+            url: "https://syllabusx.live",
+            siteName: "SyllabusX",
+            locale: "en_US",
+            type: "website",
         },
         twitter: {
             title: `B.Tech`,
             description:
                 "Embark on a tech-centric academic voyage with SyllabusX's B.Tech page. Uncover a treasure trove of syllabi and study materials meticulously curated for Guru Gobind Singh Indraprastha University (GGSIPU) B.Tech programs.",
-            card: 'summary_large_image',
-            site: 'https://syllabusx.live',
+            card: "summary_large_image",
+            site: "https://syllabusx.live",
         },
     };
 }
@@ -206,12 +206,25 @@ const page: FC<pageProps> = ({ searchParams }) => {
         notFound();
 
     return (
-        <LayoutWrapper className="py-20 min-h-[calc(100vh-7rem)]">
+        <LayoutWrapper className="min-h-[calc(100vh-7rem)] py-20">
             <div className="grid grid-cols-3 gap-10">
-                <BtechCard />
-                <BtechSearchStepCard />
+                <SearchCard
+                    title="B.Tech"
+                    description="Who needs sleep when you can engineer dreams?"
+                >
+                    <SearchInput
+                        label="semester"
+                        searchList={semesterList}
+                        search={false}
+                    />
+                    <SearchInput
+                        label="branch"
+                        searchList={branchList}
+                        search={false}
+                    />
+                </SearchCard>
                 {searchParams.semester && searchParams.branch ? (
-                    <BtechSubjectList />
+                    <SubjectList course={Courses.BTECH} />
                 ) : null}
                 {searchParams.semester &&
                 searchParams.branch &&

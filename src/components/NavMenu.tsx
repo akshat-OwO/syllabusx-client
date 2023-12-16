@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { cn } from '@/lib/utils';
-import Link from 'next/link';
-import { FC } from 'react';
-import { buttonVariants } from './ui/button';
+import { cn } from "@/lib/utils";
+import Link from "next/link";
+import { FC } from "react";
+import { buttonVariants } from "./ui/button";
 import {
     ListItem,
     NavigationMenu,
@@ -13,7 +13,7 @@ import {
     NavigationMenuList,
     NavigationMenuTrigger,
     navigationMenuTriggerStyle,
-} from './ui/navigation-menu';
+} from "./ui/navigation-menu";
 
 interface NavMenuProps {}
 

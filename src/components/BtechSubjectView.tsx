@@ -1,37 +1,37 @@
-'use client';
+"use client";
 
-import { Tab } from '@/config';
-import { getBtechSubjectDetails } from '@/lib/server';
-import { useQuery } from '@tanstack/react-query';
-import { useSearchParams } from 'next/navigation';
-import { FC, useState } from 'react';
-import StudyMaterial from './StudyMaterial';
-import Syllabus from './Syllabus';
+import { Tab } from "@/config";
+import { getBtechSubjectDetails } from "@/lib/server";
+import { useQuery } from "@tanstack/react-query";
+import { useSearchParams } from "next/navigation";
+import { FC, useState } from "react";
+import StudyMaterial from "./StudyMaterial";
+import Syllabus from "./Syllabus";
 import {
     Card,
     CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
-} from './ui/card';
-import { Skeleton } from './ui/skeleton';
-import { Tabs, TabsList, TabsTrigger } from './ui/tabs';
+} from "./ui/card";
+import { Skeleton } from "./ui/skeleton";
+import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 
 interface BtechSubjectViewProps {}
 
 const BtechSubjectView: FC<BtechSubjectViewProps> = ({}) => {
     const searchParams = useSearchParams();
     const [tab, setTab] = useState<Tab>(Tab.THEORY);
-    const [embed, setEmbed] = useState<Embed>({ embedLink: '', name: '' });
+    const [embed, setEmbed] = useState<Embed>({ embedLink: "", name: "" });
     const [showEmbed, setShowEmbed] = useState<boolean>(false);
 
-    const semester = searchParams.get('semester');
-    const branch = searchParams.get('branch');
-    const subject = searchParams.get('subject');
+    const semester = searchParams.get("semester");
+    const branch = searchParams.get("branch");
+    const subject = searchParams.get("subject");
 
     const switchTab = (value: Tab) => {
         setShowEmbed(false);
-        setEmbed({ embedLink: '', name: '' });
+        setEmbed({ embedLink: "", name: "" });
         setTab(value);
     };
 
@@ -41,8 +41,8 @@ const BtechSubjectView: FC<BtechSubjectViewProps> = ({}) => {
         error,
     } = useQuery({
         queryKey: [
-            'btech',
-            'subject',
+            "btech",
+            "subject",
             `${semester}`,
             `${branch}`,
             `${subject}`,
@@ -56,7 +56,7 @@ const BtechSubjectView: FC<BtechSubjectViewProps> = ({}) => {
 
     if (error) {
         return (
-            <Card className="col-span-3 shadow-2xl h-fit">
+            <Card className="col-span-3 h-fit shadow-2xl">
                 <CardHeader>
                     <CardTitle>Temporary Glitch in the Matrix</CardTitle>
                     <CardDescription>
@@ -64,7 +64,7 @@ const BtechSubjectView: FC<BtechSubjectViewProps> = ({}) => {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="bg-accent rounded-md h-[7.5rem] w-full" />
+                    <div className="h-[7.5rem] w-full rounded-md bg-accent" />
                 </CardContent>
             </Card>
         );
@@ -73,7 +73,7 @@ const BtechSubjectView: FC<BtechSubjectViewProps> = ({}) => {
     if (isLoading) {
         return (
             <>
-                <Card className="col-span-3 lg:col-span-2 shadow-2xl h-fit">
+                <Card className="col-span-3 h-fit shadow-2xl lg:col-span-2">
                     <CardHeader>
                         <CardTitle>
                             <Skeleton className="h-8 w-48" />
@@ -84,7 +84,7 @@ const BtechSubjectView: FC<BtechSubjectViewProps> = ({}) => {
                         <Skeleton className="h-[7.5rem] w-full" />
                     </CardContent>
                 </Card>
-                <Card className="row-start-3 lg:row-start-auto col-span-3 lg:col-span-1 shadow-2xl h-fit">
+                <Card className="col-span-3 row-start-3 h-fit shadow-2xl lg:col-span-1 lg:row-start-auto">
                     <CardHeader>
                         <CardTitle>
                             <Skeleton className="h-8 w-48" />
@@ -103,7 +103,7 @@ const BtechSubjectView: FC<BtechSubjectViewProps> = ({}) => {
         <>
             {sub && (
                 <>
-                    <Card className="col-span-3 lg:col-span-2 shadow-2xl h-fit">
+                    <Card className="col-span-3 h-fit shadow-2xl lg:col-span-2">
                         <CardHeader>
                             <CardTitle>{sub[0].subject}</CardTitle>
                         </CardHeader>
@@ -115,7 +115,7 @@ const BtechSubjectView: FC<BtechSubjectViewProps> = ({}) => {
                                     switchTab(Tab[value as keyof typeof Tab])
                                 }
                             >
-                                <TabsList className="grid w-full h-fit grid-cols-3 sm:grid-cols-6">
+                                <TabsList className="grid h-fit w-full grid-cols-3 sm:grid-cols-6">
                                     <TabsTrigger value={Tab.THEORY}>
                                         Theory
                                     </TabsTrigger>
@@ -161,14 +161,14 @@ const BtechSubjectView: FC<BtechSubjectViewProps> = ({}) => {
                             </Tabs>
                         </CardContent>
                     </Card>
-                    <Card className="row-start-3 lg:row-start-auto col-span-3 lg:col-span-1 shadow-2xl h-fit">
+                    <Card className="col-span-3 row-start-3 h-fit shadow-2xl lg:col-span-1 lg:row-start-auto">
                         <CardHeader>
                             <CardTitle>Subject Details</CardTitle>
                         </CardHeader>
                         <CardContent className="">
-                            <div className="p-2 bg-accent rounded-md shadow-md flex flex-col gap-2">
+                            <div className="flex flex-col gap-2 rounded-md bg-accent p-2 shadow-md">
                                 {sub[0].theorypapercode ? (
-                                    <div className="flex justify-between items-center">
+                                    <div className="flex items-center justify-between">
                                         <p className="font-semibold">
                                             Theory Code
                                         </p>
@@ -176,7 +176,7 @@ const BtechSubjectView: FC<BtechSubjectViewProps> = ({}) => {
                                     </div>
                                 ) : null}
                                 {sub[0].theorycredits ? (
-                                    <div className="flex justify-between items-center">
+                                    <div className="flex items-center justify-between">
                                         <p className="font-semibold">
                                             Theory Credits
                                         </p>
@@ -184,7 +184,7 @@ const BtechSubjectView: FC<BtechSubjectViewProps> = ({}) => {
                                     </div>
                                 ) : null}
                                 {sub[0].labpapercode ? (
-                                    <div className="flex justify-between items-center">
+                                    <div className="flex items-center justify-between">
                                         <p className="font-semibold">
                                             Lab Code
                                         </p>
@@ -192,7 +192,7 @@ const BtechSubjectView: FC<BtechSubjectViewProps> = ({}) => {
                                     </div>
                                 ) : null}
                                 {sub[0].labcredits ? (
-                                    <div className="flex justify-between items-center">
+                                    <div className="flex items-center justify-between">
                                         <p className="font-semibold">
                                             Lab Credits
                                         </p>

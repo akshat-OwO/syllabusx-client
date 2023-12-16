@@ -52,7 +52,7 @@ const BcaSubjectView: FC<BcaSubjectViewProps> = ({}) => {
 
     if (error) {
         return (
-            <Card className="col-span-3 shadow-2xl h-fit">
+            <Card className="col-span-3 h-fit shadow-2xl">
                 <CardHeader>
                     <CardTitle>Temporary Glitch in the Matrix</CardTitle>
                     <CardDescription>
@@ -60,7 +60,7 @@ const BcaSubjectView: FC<BcaSubjectViewProps> = ({}) => {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="bg-accent rounded-md h-[7.5rem] w-full" />
+                    <div className="h-[7.5rem] w-full rounded-md bg-accent" />
                 </CardContent>
             </Card>
         );
@@ -69,7 +69,7 @@ const BcaSubjectView: FC<BcaSubjectViewProps> = ({}) => {
     if (isLoading) {
         return (
             <>
-                <Card className="col-span-3 lg:col-span-2 shadow-2xl h-fit">
+                <Card className="col-span-3 h-fit shadow-2xl lg:col-span-2">
                     <CardHeader>
                         <CardTitle>
                             <Skeleton className="h-8 w-48" />
@@ -80,7 +80,7 @@ const BcaSubjectView: FC<BcaSubjectViewProps> = ({}) => {
                         <Skeleton className="h-[7.5rem] w-full" />
                     </CardContent>
                 </Card>
-                <Card className="row-start-3 lg:row-start-auto col-span-3 lg:col-span-1 shadow-2xl h-fit">
+                <Card className="col-span-3 row-start-3 h-fit shadow-2xl lg:col-span-1 lg:row-start-auto">
                     <CardHeader>
                         <CardTitle>
                             <Skeleton className="h-8 w-48" />
@@ -99,7 +99,7 @@ const BcaSubjectView: FC<BcaSubjectViewProps> = ({}) => {
         <>
             {sub && (
                 <>
-                    <Card className="col-span-3 lg:col-span-2 shadow-2xl h-fit">
+                    <Card className="col-span-3 h-fit shadow-2xl lg:col-span-2">
                         <CardHeader>
                             <CardTitle>{sub[0].subject}</CardTitle>
                         </CardHeader>
@@ -111,7 +111,7 @@ const BcaSubjectView: FC<BcaSubjectViewProps> = ({}) => {
                                     switchTab(Tab[value as keyof typeof Tab])
                                 }
                             >
-                                <TabsList className="grid w-full h-fit grid-cols-3 sm:grid-cols-6">
+                                <TabsList className="grid h-fit w-full grid-cols-3 sm:grid-cols-6">
                                     <TabsTrigger value={Tab.THEORY}>
                                         Theory
                                     </TabsTrigger>
@@ -156,14 +156,14 @@ const BcaSubjectView: FC<BcaSubjectViewProps> = ({}) => {
                             </Tabs>
                         </CardContent>
                     </Card>
-                    <Card className="row-start-3 lg:row-start-auto col-span-3 lg:col-span-1 shadow-2xl h-fit">
+                    <Card className="col-span-3 row-start-3 h-fit shadow-2xl lg:col-span-1 lg:row-start-auto">
                         <CardHeader>
                             <CardTitle>Subject Details</CardTitle>
                         </CardHeader>
                         <CardContent className="">
-                            <div className="p-2 bg-accent rounded-md shadow-md flex flex-col gap-2">
+                            <div className="flex flex-col gap-2 rounded-md bg-accent p-2 shadow-md">
                                 {sub[0].theorypapercode ? (
-                                    <div className="flex justify-between items-center">
+                                    <div className="flex items-center justify-between">
                                         <p className="font-semibold">
                                             Theory Code
                                         </p>
@@ -171,7 +171,7 @@ const BcaSubjectView: FC<BcaSubjectViewProps> = ({}) => {
                                     </div>
                                 ) : null}
                                 {sub[0].theorycredits ? (
-                                    <div className="flex justify-between items-center">
+                                    <div className="flex items-center justify-between">
                                         <p className="font-semibold">
                                             Theory Credits
                                         </p>
@@ -179,7 +179,7 @@ const BcaSubjectView: FC<BcaSubjectViewProps> = ({}) => {
                                     </div>
                                 ) : null}
                                 {sub[0].labpapercode ? (
-                                    <div className="flex justify-between items-center">
+                                    <div className="flex items-center justify-between">
                                         <p className="font-semibold">
                                             Lab Code
                                         </p>
@@ -187,14 +187,14 @@ const BcaSubjectView: FC<BcaSubjectViewProps> = ({}) => {
                                     </div>
                                 ) : null}
                                 {sub[0].labcredits ? (
-                                    <div className="flex justify-between items-center">
+                                    <div className="flex items-center justify-between">
                                         <p className="font-semibold">
                                             Lab Credits
                                         </p>
                                         <p>{sub[0].labcredits}</p>
                                     </div>
                                 ) : null}
-                                <div className="flex justify-between items-center">
+                                <div className="flex items-center justify-between">
                                     <p className="font-semibold">
                                         Course Category
                                     </p>
@@ -203,7 +203,7 @@ const BcaSubjectView: FC<BcaSubjectViewProps> = ({}) => {
                                             <Button
                                                 variant={"secondary"}
                                                 size={"icon"}
-                                                className="p-0 h-4 w-4"
+                                                className="h-4 w-4 p-0"
                                             >
                                                 <Info className="h-4 w-4" />
                                             </Button>

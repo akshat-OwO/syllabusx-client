@@ -1,6 +1,6 @@
-import { cn } from '@/lib/utils';
-import { FC } from 'react';
-import { buttonVariants } from './button';
+import { cn } from "@/lib/utils";
+import { FC } from "react";
+import { buttonVariants } from "./button";
 
 interface ShowCardProps {
     title: string;
@@ -20,7 +20,7 @@ const ShowCard: FC<ShowCardProps> = ({
     return (
         <div
             className={cn(
-                'flex items-center justify-between gap-x-5 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors bg-accent text-accent-foreground shadow-md',
+                "flex select-none items-center justify-between gap-x-5 space-y-1 rounded-md bg-accent p-3 leading-none text-accent-foreground no-underline shadow-md outline-none transition-colors",
                 className
             )}
         >
@@ -28,21 +28,21 @@ const ShowCard: FC<ShowCardProps> = ({
                 <div
                     className={cn(
                         buttonVariants({
-                            variant: 'outline',
-                            size: 'icon',
+                            variant: "outline",
+                            size: "icon",
                             className:
-                                'hover:bg-background hover:text-foreground',
+                                "hover:bg-background hover:text-foreground",
                         })
                     )}
                 >
                     {iconLeft}
                 </div>
             ) : null}
-            <div className="flex flex-col gap-2 justify-center">
+            <div className="flex flex-col justify-center gap-2">
                 <div
                     className={cn(
-                        'text-sm font-medium leading-none',
-                        iconRight ? 'text-start' : 'text-end'
+                        "text-sm font-medium leading-none",
+                        iconRight ? "text-start" : "text-end"
                     )}
                 >
                     {title}
@@ -50,8 +50,8 @@ const ShowCard: FC<ShowCardProps> = ({
                 {children ? (
                     <p
                         className={cn(
-                            'line-clamp-2 text-sm leading-snug text-muted-foreground',
-                            iconRight ? 'text-start' : 'text-end'
+                            "line-clamp-2 text-sm leading-snug text-muted-foreground",
+                            iconRight ? "text-start" : "text-end"
                         )}
                     >
                         {children}
@@ -62,10 +62,10 @@ const ShowCard: FC<ShowCardProps> = ({
                 <div
                     className={cn(
                         buttonVariants({
-                            variant: 'outline',
-                            size: 'icon',
+                            variant: "outline",
+                            size: "icon",
                             className:
-                                'hover:bg-background hover:text-foreground',
+                                "hover:bg-background hover:text-foreground",
                         })
                     )}
                 >

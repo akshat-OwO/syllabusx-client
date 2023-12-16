@@ -90,7 +90,7 @@ const BcaStudyMaterial: FC<BcaStudyMaterialProps> = ({
         <TabsContent value={tab}>
             {error ? (
                 <>
-                    <div className="flex items-center justify-end mb-2">
+                    <div className="mb-2 flex items-center justify-end">
                         <Button
                             size={"icon"}
                             disabled={isFetching}
@@ -104,9 +104,9 @@ const BcaStudyMaterial: FC<BcaStudyMaterialProps> = ({
                             />
                         </Button>
                     </div>
-                    <div className="bg-accent p-5 rounded-md flex flex-col justify-center items-center gap-2">
+                    <div className="flex flex-col items-center justify-center gap-2 rounded-md bg-accent p-5">
                         <div className="flex items-center gap-2">
-                            <div className="prose dark:prose-invert prose-neutral">
+                            <div className="prose prose-neutral dark:prose-invert">
                                 <h6>No Notes Found!</h6>
                             </div>
                             <Frown className="h-4 w-4" />
@@ -126,18 +126,18 @@ const BcaStudyMaterial: FC<BcaStudyMaterialProps> = ({
             ) : null}
 
             {isLoading ? (
-                <div className="bg-accent rounded-md p-5 grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
-                    <Skeleton className="bg-background w-full h-10" />
-                    <Skeleton className="bg-background w-full h-10" />
-                    <Skeleton className="bg-background w-full h-10" />
-                    <Skeleton className="bg-background w-full h-10" />
+                <div className="grid gap-5 rounded-md bg-accent p-5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+                    <Skeleton className="h-10 w-full bg-background" />
+                    <Skeleton className="h-10 w-full bg-background" />
+                    <Skeleton className="h-10 w-full bg-background" />
+                    <Skeleton className="h-10 w-full bg-background" />
                 </div>
             ) : null}
 
             {showEmbed ? (
-                <div className="flex flex-col gap-2 bg-accent rounded-md p-2 mb-2">
-                    <div className="flex justify-between items-center">
-                        <div className="prose dark:prose-invert prose-neutral">
+                <div className="mb-2 flex flex-col gap-2 rounded-md bg-accent p-2">
+                    <div className="flex items-center justify-between">
+                        <div className="prose prose-neutral dark:prose-invert">
                             <h4>{embed.name}</h4>
                         </div>
                         <Button size={"icon"} onClick={exitEmbed}>
@@ -150,7 +150,7 @@ const BcaStudyMaterial: FC<BcaStudyMaterialProps> = ({
 
             {data && !error ? (
                 <>
-                    <div className="flex items-center justify-end gap-2 mb-2">
+                    <div className="mb-2 flex items-center justify-end gap-2">
                         {createFav ? (
                             <Button
                                 size={"icon"}
@@ -182,7 +182,7 @@ const BcaStudyMaterial: FC<BcaStudyMaterialProps> = ({
                             />
                         </Button>
                     </div>
-                    <div className="bg-accent rounded-md p-5 grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
+                    <div className="grid gap-5 rounded-md bg-accent p-5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
                         {data.map((d) => (
                             <div
                                 key={d.id}
@@ -194,10 +194,10 @@ const BcaStudyMaterial: FC<BcaStudyMaterialProps> = ({
                                                 "preview"
                                                 ? "ghost"
                                                 : favorites.includes(d.id)
-                                                ? "default"
-                                                : "tertiary",
+                                                  ? "default"
+                                                  : "tertiary",
                                         className:
-                                            "relative group cursor-pointer whitespace-normal text-center h-full shadow-sm",
+                                            "group relative h-full cursor-pointer whitespace-normal text-center shadow-sm",
                                     })
                                 )}
                             >
@@ -211,13 +211,13 @@ const BcaStudyMaterial: FC<BcaStudyMaterialProps> = ({
                                 ) ? (
                                     <Badge
                                         variant={"secondary"}
-                                        className="absolute z-10 -top-2 -left-2 hover:bg-teal-600 group-hover:animate-pulse rounded-sm bg-teal-600"
+                                        className="absolute -left-2 -top-2 z-10 rounded-sm bg-teal-600 hover:bg-teal-600 group-hover:animate-pulse"
                                     >
                                         New
                                     </Badge>
                                 ) : null}
                                 {createFav ? (
-                                    <div className="flex justify-center items-center absolute top-0 h-full w-full bg-background/90">
+                                    <div className="absolute top-0 flex h-full w-full items-center justify-center bg-background/90">
                                         {favorites.includes(d.id) ? (
                                             <div
                                                 className={cn(

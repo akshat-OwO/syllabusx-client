@@ -1,29 +1,29 @@
-import LayoutWrapper from '@/layouts/LayoutWrapper';
-import { cn } from '@/lib/utils';
-import { Gift, Heart, MessageSquarePlus, Star } from 'lucide-react';
-import { FC } from 'react';
-import { buttonVariants } from './ui/button';
+import LayoutWrapper from "@/layouts/LayoutWrapper";
+import { cn } from "@/lib/utils";
+import { Gift, Heart, MessageSquarePlus, Star } from "lucide-react";
+import { FC } from "react";
+import { buttonVariants } from "./ui/button";
 
 interface PricingProps {}
 
 const Pricing: FC<PricingProps> = ({}) => {
     return (
         <LayoutWrapper className="py-20">
-            <div className="flex flex-col gap-10 justify-center">
-                <div className="prose dark:prose-invert prose-neutral text-center self-center">
+            <div className="flex flex-col justify-center gap-10">
+                <div className="prose prose-neutral self-center text-center dark:prose-invert">
                     <h2>Pricing</h2>
                     <p>No wallet required! SyllabusX is free and open-source</p>
                 </div>
-                <div className="flex flex-col md:flex-row md:items-end justify-center gap-2 md:gap-0">
-                    <div className="flex flex-col gap-2 justify-center items-center md:items-start md:pr-10 md:border-r border-border">
+                <div className="flex flex-col justify-center gap-2 md:flex-row md:items-end md:gap-0">
+                    <div className="flex flex-col items-center justify-center gap-2 border-border md:items-start md:border-r md:pr-10">
                         <a
                             href="https://github.com/akshat-OwO/syllabusx-client"
                             target="_blank"
                             rel="noopener noreferrer"
                             className={cn(
                                 buttonVariants({
-                                    variant: 'outline',
-                                    className: 'w-full gap-2 items-center',
+                                    variant: "outline",
+                                    className: "w-full items-center gap-2",
                                 })
                             )}
                         >
@@ -36,8 +36,8 @@ const Pricing: FC<PricingProps> = ({}) => {
                             rel="noopener noreferrer"
                             className={cn(
                                 buttonVariants({
-                                    variant: 'outline',
-                                    className: 'w-full gap-2 items-center',
+                                    variant: "outline",
+                                    className: "w-full items-center gap-2",
                                 })
                             )}
                         >
@@ -50,8 +50,8 @@ const Pricing: FC<PricingProps> = ({}) => {
                             rel="noopener noreferrer"
                             className={cn(
                                 buttonVariants({
-                                    variant: 'outline',
-                                    className: 'w-full gap-2 items-center',
+                                    variant: "outline",
+                                    className: "w-full items-center gap-2",
                                 })
                             )}
                         >
@@ -59,16 +59,16 @@ const Pricing: FC<PricingProps> = ({}) => {
                             Give us feedback
                         </a>
                     </div>
-                    <div className="md:pl-10 flex flex-col items-center md:items-start gap-2">
+                    <div className="flex flex-col items-center gap-2 md:items-start md:pl-10">
                         <a
                             href="https://github.com/sponsors/akshat-OwO"
                             target="_blank"
                             rel="noopener noreferrer"
                             className={cn(
                                 buttonVariants({
-                                    variant: 'outline',
+                                    variant: "outline",
                                     className:
-                                        'w-full gap-2 md:justify-self-end md:items-center',
+                                        "w-full gap-2 md:items-center md:justify-self-end",
                                 })
                             )}
                         >

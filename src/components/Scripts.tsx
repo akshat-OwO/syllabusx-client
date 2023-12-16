@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import Script from 'next/script';
-import { FC } from 'react';
+import Script from "next/script";
+import { FC } from "react";
 
 interface ScriptsProps {}
 

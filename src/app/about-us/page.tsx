@@ -1,33 +1,33 @@
-import { buttonVariants } from '@/components/ui/button';
-import LayoutWrapper from '@/layouts/LayoutWrapper';
-import { getAboutUs, getSyllabusxTeam } from '@/lib/contentful';
-import { cn } from '@/lib/utils';
-import { Github, Instagram, Link2 } from 'lucide-react';
-import { Metadata } from 'next';
-import Image from 'next/image';
-import { FC } from 'react';
+import { buttonVariants } from "@/components/ui/button";
+import LayoutWrapper from "@/layouts/LayoutWrapper";
+import { getAboutUs, getSyllabusxTeam } from "@/lib/contentful";
+import { cn } from "@/lib/utils";
+import { Github, Instagram, Link2 } from "lucide-react";
+import { Metadata } from "next";
+import Image from "next/image";
+import { FC } from "react";
 
 export const revalidate = 43200;
 
 export const metadata: Metadata = {
-    title: 'About Us',
+    title: "About Us",
     description:
         "Discover the faces behind SyllabusX – where it's not just about the code, but the passion and dedication of individuals. Meet Akshat, Shourya, and Sparsh, the dynamic team propelling SyllabusX towards a future of simplified academic exploration.",
     openGraph: {
-        title: 'SyllabusX | About Us',
+        title: "SyllabusX | About Us",
         description:
             "Discover the faces behind SyllabusX – where it's not just about the code, but the passion and dedication of individuals. Meet Akshat, Shourya, and Sparsh, the dynamic team propelling SyllabusX towards a future of simplified academic exploration.",
-        url: 'https://syllabusx.live',
-        siteName: 'SyllabusX',
-        locale: 'en_US',
-        type: 'website',
+        url: "https://syllabusx.live",
+        siteName: "SyllabusX",
+        locale: "en_US",
+        type: "website",
     },
     twitter: {
-        title: 'SyllabusX | About Us',
+        title: "SyllabusX | About Us",
         description:
             "Discover the faces behind SyllabusX – where it's not just about the code, but the passion and dedication of individuals. Meet Akshat, Shourya, and Sparsh, the dynamic team propelling SyllabusX towards a future of simplified academic exploration.",
-        card: 'summary_large_image',
-        site: 'https://syllabusx.live',
+        card: "summary_large_image",
+        site: "https://syllabusx.live",
     },
 };
 
@@ -38,12 +38,12 @@ const page: FC<pageProps> = async ({}) => {
     const aboutContent: any = await getAboutUs();
 
     return (
-        <LayoutWrapper className="py-20 min-h-[calc(100vh-7rem)]">
-            <div className="flex flex-col gap-y-2 items-center">
+        <LayoutWrapper className="min-h-[calc(100vh-7rem)] py-20">
+            <div className="flex flex-col items-center gap-y-2">
                 <div className="prose prose-sm prose-neutral dark:prose-invert md:prose-base">
                     <h1 className="text-center">
-                        Unveiling the Minds Behind{' '}
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-500 via-teal-600 to-teal-500">
+                        Unveiling the Minds Behind{" "}
+                        <span className="bg-gradient-to-r from-teal-500 via-teal-600 to-teal-500 bg-clip-text text-transparent">
                             SyllabusX
                         </span>
                     </h1>
@@ -55,14 +55,14 @@ const page: FC<pageProps> = async ({}) => {
                     </p>
                 </div>
             </div>
-            <div className="py-10 w-full">
+            <div className="w-full py-10">
                 <div className="relative aspect-video rounded-md">
                     <Image
                         src={
                             aboutContent
-                                ? 'https:' +
+                                ? "https:" +
                                   aboutContent.teamImage.fields.file.url
-                                : '/placeholder.png'
+                                : "/placeholder.png"
                         }
                         alt="Team Image"
                         fill
@@ -71,23 +71,23 @@ const page: FC<pageProps> = async ({}) => {
                 </div>
             </div>
             {team ? (
-                <div className="py-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                <div className="grid gap-10 py-10 sm:grid-cols-2 lg:grid-cols-3">
                     {team.map((member: any) => (
                         <div
                             key={member.sys.id}
-                            className="w-full bg-accent shadow-2xl rounded-md p-5"
+                            className="w-full rounded-md bg-accent p-5 shadow-2xl"
                         >
-                            <div className="flex justify-between items-center">
-                                <div className="prose dark:prose-invert prose-neutral">
+                            <div className="flex items-center justify-between">
+                                <div className="prose prose-neutral dark:prose-invert">
                                     <h2>{member.fields.memberName}</h2>
                                 </div>
-                                <div className="flex gap-2 items-center">
+                                <div className="flex items-center gap-2">
                                     <a
                                         href={member.fields.websiteLink}
                                         className={cn(
                                             buttonVariants({
-                                                variant: 'outline',
-                                                size: 'icon',
+                                                variant: "outline",
+                                                size: "icon",
                                             })
                                         )}
                                         target="_blank"
@@ -99,8 +99,8 @@ const page: FC<pageProps> = async ({}) => {
                                         href={member.fields.githubLink}
                                         className={cn(
                                             buttonVariants({
-                                                variant: 'outline',
-                                                size: 'icon',
+                                                variant: "outline",
+                                                size: "icon",
                                             })
                                         )}
                                         target="_blank"
@@ -112,8 +112,8 @@ const page: FC<pageProps> = async ({}) => {
                                         href={member.fields.instaLink}
                                         className={cn(
                                             buttonVariants({
-                                                variant: 'outline',
-                                                size: 'icon',
+                                                variant: "outline",
+                                                size: "icon",
                                             })
                                         )}
                                         target="_blank"

@@ -2,15 +2,15 @@
 
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import LayoutWrapper from '@/layouts/LayoutWrapper';
+import LayoutWrapper from "@/layouts/LayoutWrapper";
 import { useQueryClient } from "@tanstack/react-query";
-import { Metadata } from 'next';
-import Link from 'next/link';
+import { Metadata } from "next";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FC } from 'react';
+import { FC } from "react";
 
 export const metadata: Metadata = {
-    title: 'Oops! Page Not Found',
+    title: "Oops! Page Not Found",
     description:
         "Oops! It seems like you've wandered into uncharted territory. Our SyllabusX compass couldn't locate the page you're looking for. Don't worry, let's guide you back to the main path of academic resources",
 };
@@ -33,12 +33,12 @@ const NotFound: FC<NotFoundProps> = ({}) => {
     };
 
     return (
-        <LayoutWrapper className="py-20 min-h-[calc(100vh-7rem)]">
-            <div className="flex flex-col gap-y-2 items-center">
+        <LayoutWrapper className="min-h-[calc(100vh-7rem)] py-20">
+            <div className="flex flex-col items-center gap-y-2">
                 <div className="prose prose-sm prose-neutral dark:prose-invert md:prose-base">
                     <h1 className="text-center">
-                        Oops! Page Not{' '}
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-500 via-teal-600 to-teal-500">
+                        Oops! Page Not{" "}
+                        <span className="bg-gradient-to-r from-teal-500 via-teal-600 to-teal-500 bg-clip-text text-transparent">
                             Found
                         </span>
                     </h1>
@@ -53,12 +53,12 @@ const NotFound: FC<NotFoundProps> = ({}) => {
                         You can return to the <Link href="/">Homepage</Link> or
                         try searching for what you&apos;re looking for.
                     </p>
-                    <p className="text-xs text-center">
+                    <p className="text-center text-xs">
                         P.S. You can clear cache using this{" "}
                         <Button
                             variant={"destructive"}
                             size={"sm"}
-                            className="text-xs p-2 h-fit"
+                            className="h-fit p-2 text-xs"
                             onClick={clearCache}
                         >
                             scary button
