@@ -1,4 +1,3 @@
-import BcaSearchStepCard from "@/components/BcaSearchStepCard";
 import BcaSubjectView from "@/components/BcaSubjectView";
 import SearchCard from "@/components/SearchCard";
 import SearchInput from "@/components/SearchInput";
@@ -151,9 +150,9 @@ const page: FC<pageProps> = ({ searchParams }) => {
                     <SearchInput
                         label="semester"
                         searchList={bcaSemesterList}
+                        search={false}
                     />
                 </SearchCard>
-                <BcaSearchStepCard />
                 {searchParams.semester ? (
                     <SubjectList course={Courses.BCA} />
                 ) : null}

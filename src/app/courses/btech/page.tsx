@@ -1,4 +1,3 @@
-import BtechSearchStepCard from "@/components/BtechSearchStepCard";
 import BtechSubjectView from "@/components/BtechSubjectView";
 import SearchCard from "@/components/SearchCard";
 import SearchInput from "@/components/SearchInput";
@@ -213,10 +212,9 @@ const page: FC<pageProps> = ({ searchParams }) => {
                     title="B.Tech"
                     description="Who needs sleep when you can engineer dreams?"
                 >
-                    <SearchInput label="semester" searchList={semesterList} />
-                    <SearchInput label="branch" searchList={branchList} />
+                    <SearchInput label="semester" searchList={semesterList} search={false} />
+                    <SearchInput label="branch" searchList={branchList} search={false} />
                 </SearchCard>
-                <BtechSearchStepCard />
                 {searchParams.semester && searchParams.branch ? (
                     <SubjectList course={Courses.BTECH} />
                 ) : null}

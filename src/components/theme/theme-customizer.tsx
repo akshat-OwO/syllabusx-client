@@ -35,21 +35,19 @@ const ThemeCustomizer: FC<ThemeCustomizerProps> = ({}) => {
                 </DrawerContent>
             </Drawer.Root>
             <div className="hidden md:flex">
-                {mounted ? (
-                    <Popover>
-                        <PopoverTrigger asChild>
-                            <Button variant="ghost" size="icon">
-                                <Palette className="h-4 w-4" />
-                            </Button>
-                        </PopoverTrigger>
-                        <PopoverContent
-                            align="end"
-                            className="z-50 w-[340px] rounded-[0.5rem] p-6"
-                        >
-                            <Customizer />
-                        </PopoverContent>
-                    </Popover>
-                ) : null}
+                <Popover>
+                    <PopoverTrigger asChild>
+                        <Button variant="ghost" disabled={!mounted} size="icon">
+                            <Palette className="h-4 w-4" />
+                        </Button>
+                    </PopoverTrigger>
+                    <PopoverContent
+                        align="end"
+                        className="z-50 w-[340px] rounded-[0.5rem] p-6"
+                    >
+                        {mounted ? <Customizer /> : null}
+                    </PopoverContent>
+                </Popover>
             </div>
         </div>
     );
