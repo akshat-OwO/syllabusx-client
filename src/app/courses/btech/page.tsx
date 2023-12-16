@@ -212,8 +212,16 @@ const page: FC<pageProps> = ({ searchParams }) => {
                     title="B.Tech"
                     description="Who needs sleep when you can engineer dreams?"
                 >
-                    <SearchInput label="semester" searchList={semesterList} search={false} />
-                    <SearchInput label="branch" searchList={branchList} search={false} />
+                    <SearchInput
+                        label="semester"
+                        searchList={semesterList}
+                        search={false}
+                    />
+                    <SearchInput
+                        label="branch"
+                        searchList={branchList}
+                        search={false}
+                    />
                 </SearchCard>
                 {searchParams.semester && searchParams.branch ? (
                     <SubjectList course={Courses.BTECH} />
