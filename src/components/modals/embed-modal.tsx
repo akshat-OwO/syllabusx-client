@@ -4,7 +4,6 @@ import { useEmbed } from "@/hooks/use-embed";
 import { useMediaQuery } from "@mantine/hooks";
 import { FC } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "../ui/drawer";
 
 interface EmbedModalProps {}
 
@@ -12,35 +11,19 @@ const EmbedModal: FC<EmbedModalProps> = ({}) => {
     const [embed, setEmbed] = useEmbed();
     const isDesktop = useMediaQuery("(min-width: 768px)");
 
-    const closeEmbed = (change: boolean) => {
-        setEmbed({ embedLink: "", name: "", isOpen: change });
+    const closeEmbed = () => {
+        setEmbed({ embedLink: "", name: "", isOpen: false });
     };
 
-    if (isDesktop) {
-        return (
-            <Dialog
-                open={embed.isOpen}
-                onOpenChange={() => closeEmbed(!embed.isOpen)}
-            >
-                <DialogContent className="max-w-4xl">
-                    <DialogHeader>
-                        <DialogTitle>{embed.name}</DialogTitle>
-                    </DialogHeader>
-                    <Viewer />
-                </DialogContent>
-            </Dialog>
-        );
-    }
-
     return (
-        <Drawer open={embed.isOpen} onOpenChange={closeEmbed}>
-            <DrawerContent>
-                <DrawerHeader>
-                    <DrawerTitle>{embed.name}</DrawerTitle>
-                </DrawerHeader>
+        <Dialog open={embed.isOpen} onOpenChange={closeEmbed}>
+            <DialogContent className="max-w-4xl">
+                <DialogHeader>
+                    <DialogTitle>{embed.name}</DialogTitle>
+                </DialogHeader>
                 <Viewer />
-            </DrawerContent>
-        </Drawer>
+            </DialogContent>
+        </Dialog>
     );
 };
 
