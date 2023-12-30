@@ -6,9 +6,8 @@ import { cn } from "@/lib/utils";
 import { CheckIcon, MoonIcon, Palette, SunIcon, Undo } from "lucide-react";
 import { useTheme } from "next-themes";
 import { FC, useEffect, useState } from "react";
-import { Drawer } from "vaul";
 import { Button } from "../ui/button";
-import { DrawerContent, DrawerTrigger } from "../ui/drawer";
+import { Drawer, DrawerContent, DrawerTrigger } from "../ui/drawer";
 import { Label } from "../ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Skeleton } from "../ui/skeleton";
@@ -24,16 +23,16 @@ const ThemeCustomizer: FC<ThemeCustomizerProps> = ({}) => {
     }, []);
     return (
         <div className="flex items-center space-x-2">
-            <Drawer.Root>
+            <Drawer>
                 <DrawerTrigger asChild>
                     <Button variant="ghost" size="icon" className="md:hidden">
                         <Palette className="h-4 w-4" />
                     </Button>
                 </DrawerTrigger>
-                <DrawerContent className="h-[85%] p-6 pt-10">
+                <DrawerContent className="h-[85%] px-6">
                     <Customizer />
                 </DrawerContent>
-            </Drawer.Root>
+            </Drawer>
             <div className="hidden md:flex">
                 <Popover>
                     <PopoverTrigger asChild>
@@ -64,7 +63,7 @@ function Customizer() {
 
     return (
         <div className="flex flex-col space-y-4 md:space-y-6">
-            <div className="flex items-start">
+            <div className="flex items-start pt-6 md:pt-0">
                 <div className="space-y-1 pr-2">
                     <div className="font-semibold leading-none tracking-tight">
                         Customize (Beta)

@@ -22,16 +22,12 @@ interface BtechSubjectViewProps {}
 const BtechSubjectView: FC<BtechSubjectViewProps> = ({}) => {
     const searchParams = useSearchParams();
     const [tab, setTab] = useState<Tab>(Tab.THEORY);
-    const [embed, setEmbed] = useState<Embed>({ embedLink: "", name: "" });
-    const [showEmbed, setShowEmbed] = useState<boolean>(false);
 
     const semester = searchParams.get("semester");
     const branch = searchParams.get("branch");
     const subject = searchParams.get("subject");
 
     const switchTab = (value: Tab) => {
-        setShowEmbed(false);
-        setEmbed({ embedLink: "", name: "" });
         setTab(value);
     };
 
@@ -152,10 +148,6 @@ const BtechSubjectView: FC<BtechSubjectViewProps> = ({}) => {
                                         semester={semester}
                                         branch={branch}
                                         subject={subject}
-                                        embed={embed}
-                                        setEmbed={setEmbed}
-                                        showEmbed={showEmbed}
-                                        setShowEmbed={setShowEmbed}
                                     />
                                 ) : null}
                             </Tabs>
