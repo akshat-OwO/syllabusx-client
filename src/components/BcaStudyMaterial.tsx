@@ -1,6 +1,7 @@
 "use client";
 
 import { Tab } from "@/config";
+import { useEmbed } from "@/hooks/use-embed";
 import { getBcaStudyMaterial } from "@/lib/server";
 import { cn } from "@/lib/utils";
 import { useLocalStorage } from "@mantine/hooks";
@@ -20,10 +21,6 @@ interface BcaStudyMaterialProps {
     pyq?: string;
     book?: string;
     practical?: string;
-    embed: Embed;
-    showEmbed: boolean;
-    setShowEmbed: React.Dispatch<React.SetStateAction<boolean>>;
-    setEmbed: React.Dispatch<React.SetStateAction<Embed>>;
 }
 
 const BcaStudyMaterial: FC<BcaStudyMaterialProps> = ({
@@ -34,10 +31,6 @@ const BcaStudyMaterial: FC<BcaStudyMaterialProps> = ({
     pyq,
     semester,
     subject,
-    embed,
-    showEmbed,
-    setShowEmbed,
-    setEmbed,
 }) => {
     const [createFav, setCreateFav] = useState<boolean>(false);
     const [favorites, setFavorites] = useLocalStorage<string[]>({
@@ -45,19 +38,16 @@ const BcaStudyMaterial: FC<BcaStudyMaterialProps> = ({
         defaultValue: [],
     });
 
+    const [embed, setEmbed] = useEmbed();
+
     const handleEmbed = (d: Drive) => {
         if (!createFav) {
             setEmbed({
                 embedLink: d.webViewLink.slice(0, -17) + "preview",
                 name: d.name.slice(0, -4),
+                isOpen: true,
             });
-            setShowEmbed(true);
         }
-    };
-
-    const exitEmbed = () => {
-        setShowEmbed(false);
-        setEmbed({ embedLink: "", name: "" });
     };
 
     const addFavorite = (materialId: string) => {
@@ -136,20 +126,6 @@ const BcaStudyMaterial: FC<BcaStudyMaterialProps> = ({
                 </div>
             ) : null}
 
-            {showEmbed ? (
-                <div className="mb-2 flex flex-col gap-2 rounded-md bg-accent p-2">
-                    <div className="flex items-center justify-between">
-                        <div className="prose prose-neutral dark:prose-invert">
-                            <h4>{embed.name}</h4>
-                        </div>
-                        <Button size={"icon"} onClick={exitEmbed}>
-                            <X className="h-4 w-4" />
-                        </Button>
-                    </div>
-                    <iframe src={embed.embedLink} className="h-[75vh]"></iframe>
-                </div>
-            ) : null}
-
             {data && !error ? (
                 <>
                     <div className="mb-2 flex items-center justify-end gap-2">
@@ -202,6 +178,7 @@ const BcaStudyMaterial: FC<BcaStudyMaterialProps> = ({
                                             "group relative h-full cursor-pointer whitespace-normal text-center shadow-sm",
                                     })
                                 )}
+                                onClick={() => handleEmbed(d)}
                             >
                                 {!(
                                     new Date(

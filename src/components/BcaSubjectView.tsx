@@ -25,15 +25,11 @@ interface BcaSubjectViewProps {}
 const BcaSubjectView: FC<BcaSubjectViewProps> = ({}) => {
     const searchParams = useSearchParams();
     const [tab, setTab] = useState<Tab>(Tab.THEORY);
-    const [embed, setEmbed] = useState<Embed>({ embedLink: "", name: "" });
-    const [showEmbed, setShowEmbed] = useState<boolean>(false);
 
     const semester = searchParams.get("semester");
     const subject = searchParams.get("subject");
 
     const switchTab = (value: Tab) => {
-        setShowEmbed(false);
-        setEmbed({ embedLink: "", name: "" });
         setTab(value);
     };
 
@@ -147,10 +143,6 @@ const BcaSubjectView: FC<BcaSubjectViewProps> = ({}) => {
                                         practical={sub[0].practical}
                                         semester={semester}
                                         subject={subject}
-                                        embed={embed}
-                                        setEmbed={setEmbed}
-                                        showEmbed={showEmbed}
-                                        setShowEmbed={setShowEmbed}
                                     />
                                 ) : null}
                             </Tabs>
