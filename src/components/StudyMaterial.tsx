@@ -48,11 +48,13 @@ const StudyMaterial: FC<StudyMaterialProps> = ({
     });
 
     const handleEmbed = (d: Drive) => {
-        setEmbed({
-            embedLink: d.webViewLink.slice(0, -17) + "preview",
-            name: d.name.slice(0, -4),
-        });
-        setShowEmbed(true);
+        if (!createFav) {
+            setEmbed({
+                embedLink: d.webViewLink.slice(0, -17) + "preview",
+                name: d.name.slice(0, -4),
+            });
+            setShowEmbed(true);
+        }
     };
 
     const exitEmbed = () => {
@@ -203,6 +205,7 @@ const StudyMaterial: FC<StudyMaterialProps> = ({
                                             "group relative h-full cursor-pointer whitespace-normal text-center shadow-sm",
                                     })
                                 )}
+                                onClick={() => handleEmbed(d)}
                             >
                                 {!(
                                     new Date(
@@ -252,9 +255,7 @@ const StudyMaterial: FC<StudyMaterialProps> = ({
                                         )}
                                     </div>
                                 ) : null}
-                                <div onClick={() => handleEmbed(d)}>
-                                    {d.name.slice(0, -4)}
-                                </div>
+                                <div>{d.name.slice(0, -4)}</div>
                             </div>
                         ))}
                     </div>

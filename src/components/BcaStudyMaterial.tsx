@@ -46,11 +46,13 @@ const BcaStudyMaterial: FC<BcaStudyMaterialProps> = ({
     });
 
     const handleEmbed = (d: Drive) => {
-        setEmbed({
-            embedLink: d.webViewLink.slice(0, -17) + "preview",
-            name: d.name.slice(0, -4),
-        });
-        setShowEmbed(true);
+        if (!createFav) {
+            setEmbed({
+                embedLink: d.webViewLink.slice(0, -17) + "preview",
+                name: d.name.slice(0, -4),
+            });
+            setShowEmbed(true);
+        }
     };
 
     const exitEmbed = () => {
@@ -249,9 +251,7 @@ const BcaStudyMaterial: FC<BcaStudyMaterialProps> = ({
                                         )}
                                     </div>
                                 ) : null}
-                                <div onClick={() => handleEmbed(d)}>
-                                    {d.name.slice(0, -4)}
-                                </div>
+                                <div>{d.name.slice(0, -4)}</div>
                             </div>
                         ))}
                     </div>
