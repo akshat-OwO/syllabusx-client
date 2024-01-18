@@ -1,0 +1,5 @@
+**/.github
+**/.changeset
+CHANGELOG.md
+*.yaml
+tsconfig.json

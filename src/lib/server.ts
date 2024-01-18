@@ -26,8 +26,9 @@ export const getSubjectList = async ({
             throw new AxiosError("Please check semester and branch.");
         }
         const response = (await axios.get(
-            `${server}btech/${semesterList.find((s) => semester === s.label)
-                ?.value}/${branchList.find((b) => branch === b.label)?.value}`
+            `${server}btech/${
+                semesterList.find((s) => semester === s.label)?.value
+            }/${branchList.find((b) => branch === b.label)?.value}`
         )) as AxiosResponse;
         return response.data;
     }
@@ -37,8 +38,9 @@ export const getSubjectList = async ({
             throw new AxiosError("Please check semester and branch.");
         }
         const response = (await axios.get(
-            `${server}bca/${bcaSemesterList.find((s) => semester === s.label)
-                ?.value}`
+            `${server}bca/${
+                bcaSemesterList.find((s) => semester === s.label)?.value
+            }`
         )) as AxiosResponse;
         return response.data;
     }
@@ -61,9 +63,11 @@ export const getBtechSubjectDetails = async ({
         throw new AxiosError("Please check again what you searched.");
     } else if (!subject) return null;
     const response = (await axios.get(
-        `${server}btech/${semesterList.find((s) => semester === s.label)
-            ?.value}/${branchList.find((b) => branch === b.label)
-            ?.value}/${_.startCase(_.toLower(subject))}`
+        `${server}btech/${
+            semesterList.find((s) => semester === s.label)?.value
+        }/${
+            branchList.find((b) => branch === b.label)?.value
+        }/${_.startCase(_.toLower(subject))}`
     )) as AxiosResponse;
     return response.data;
 };
@@ -129,8 +133,9 @@ export const getBcaSubjectDetails = async ({
         throw new AxiosError("Please check again what you searched.");
     } else if (!subject) return null;
     const response = (await axios.get(
-        `${server}bca/${bcaSemesterList.find((s) => semester === s.label)
-            ?.value}/${_.startCase(_.toLower(subject))}`
+        `${server}bca/${
+            bcaSemesterList.find((s) => semester === s.label)?.value
+        }/${_.startCase(_.toLower(subject))}`
     )) as AxiosResponse;
     return response.data;
 };

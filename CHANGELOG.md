@@ -1,5 +1,11 @@
 # syllabusx-client
 
+## 4.1.2
+
+### Patch Changes
+
+- prettier formatting fix
+
 ## 4.1.1
 
 ### Patch Changes
