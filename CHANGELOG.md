@@ -1,5 +1,11 @@
 # syllabusx-client
 
+## 4.1.5
+
+### Patch Changes
+
+- changeset access fix
+
 ## 4.1.4
 
 ### Patch Changes
