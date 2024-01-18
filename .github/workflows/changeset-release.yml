@@ -1,0 +1,42 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  release:
+    name: Release
+    if: github.repository == 'changesets/changesets'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        # https://github.com/actions/checkout
+        uses: actions/checkout@v2
+        
+        # https://github.com/pnpm/action-setup
+      - uses: pnpm/action-setup@v2
+        with:
+            version: latest
+
+      - name: Setup Node.js LTS
+        # https://github.com/actions/setup-node
+        uses: actions/setup-node@v2
+        with:
+          node-version: latest
+          cache: 'pnpm'
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Create Release Pull Request or Publish to npm
+        # https://github.com/changesets/action
+        uses: changesets/action@v1
+        with:
+          # this expects you to have a script called release which does a build for your packages and calls changeset publish
+          publish: pnpm release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
