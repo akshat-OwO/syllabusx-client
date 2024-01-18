@@ -1,6 +1,6 @@
 {
     "name": "syllabusx-client",
-    "version": "4.1.1",
+    "version": "4.1.2",
     "repository": {
         "type": "git",
         "url": "https://github.com/akshat-OwO/syllabusx-client.git"
@@ -12,8 +12,8 @@
         "start": "next start",
         "lint": "next lint",
         "release": "changeset publish",
-        "format": "prettier --check --ignore-path .gitignore .",
-        "format:fix": "prettier --write --ignore-path .gitignore ."
+        "format": "prettier --check .",
+        "format:fix": "prettier --write ."
     },
     "dependencies": {
         "@contentful/rich-text-react-renderer": "^15.19.0",
