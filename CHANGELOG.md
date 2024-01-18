@@ -1,5 +1,11 @@
 # syllabusx-client
 
+## 4.1.4
+
+### Patch Changes
+
+- ci action fix
+
 ## 4.1.3
 
 ### Patch Changes
