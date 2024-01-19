@@ -65,9 +65,12 @@
     },
     "devDependencies": {
         "@changesets/cli": "^2.27.1",
+        "@commitlint/cli": "^18.4.4",
+        "@commitlint/config-conventional": "^18.4.4",
         "@swc-jotai/react-refresh": "^0.1.0",
         "@types/lodash": "^4.14.201",
         "eslint-config-prettier": "^9.1.0",
+        "husky": "^8.0.3",
         "prettier": "^3.1.1",
         "prettier-plugin-tailwindcss": "^0.5.9"
     }
