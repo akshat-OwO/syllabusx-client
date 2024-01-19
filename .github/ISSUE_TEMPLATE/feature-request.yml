@@ -15,4 +15,3 @@ body:
           value: "A feature request!"
       validations:
           required: true
-```
