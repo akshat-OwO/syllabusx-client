@@ -1,19 +1,18 @@
 <div align="center"> 
-    
-# SyllabusX 
-[![Site -  up](https://img.shields.io/badge/site-_up-blue?)](https://syllabusx.live/)
-[![issues open -  1](https://img.shields.io/badge/issues_open-_1-green?)](https://github.com/akshat-OwO/syllabusx-client/issues)
-[![License - GPL](https://img.shields.io/badge/License-GPL-green?)](https://github.com/akshat-OwO/syllabusx-client/blob/main/LICENSE.md)
-
-<br/>
-
-![undefined - Imgur (1)](https://github.com/vaibhavx42/syllabusx-client/assets/110530263/29f3cd7a-7fb5-4297-85b6-5242d337a1b9)
-
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=22&pause=1000&color=008080&width=435&lines=Simplifying+your+Academic+hustle)](https://git.io/typing-svg)
-
+    <a href="https://github.com/akshat-OwO/syllabusx-client">
+        <img src="https://github.com/akshat-OwO/syllabusx-client/blob/dev/.github/assets/banner.png?raw=true" alt="SyllabusX Banner">
+    </a>
+    <br />
+    <p align="center">
+    The open-source, IPU's ultimate academic GPS.
+    <br />
+    <a href="https://syllabusx.live">Website</a>
+    ·
+    <a href="https://github.com/akshat-OwO/syllabusx-client/issues">Feedback</a>
+  </p>
 </div>
 
-# 🧭 `Table of contents`
+# 🧭 Table of contents
 
 -   [Introduction🚀](#Introduction)
 -   [Usage](#Usage)
@@ -102,7 +101,11 @@ SyllabusX is Licensed under the <a href="./LICENSE.md">GPL License</a>. Please g
 
 # Contributors
 
-[![Vaibhav Bhardwaj](https://avatars.githubusercontent.com/u/110530263?s=64)](https://github.com/vaibhavx42)
+<a href="https://github.com/akshat-OwO/syllabusx-client/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=akshat-OwO/syllabusx-client" />
+</a>
+
+Made with [contrib.rocks](https://contrib.rocks).
 
 # Support 🙏
 
