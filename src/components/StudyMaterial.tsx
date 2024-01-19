@@ -103,7 +103,6 @@ const StudyMaterial = ({
                 pyq,
             });
         },
-        staleTime: 1000 * 60 * 60 * 2,
     });
 
     return (
