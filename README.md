@@ -1,6 +1,6 @@
 <div align="center"> 
     <a href="https://github.com/akshat-OwO/syllabusx-client">
-        <img src="https://github.com/syllabusx-client/.github/assets/banner.png" alt="SyllabusX Banner">
+        <img src="https://github.com/akshat-OwO/syllabusx-client/blob/dev/.github/assets/banner.png?raw=true" alt="SyllabusX Banner">
     </a>
     <br />
     <p align="center">
