@@ -1,5 +1,11 @@
 # syllabusx-client
 
+## 4.1.6
+
+### Patch Changes
+
+- [`83b29dc`](https://github.com/akshat-OwO/syllabusx-client/pull/82/commits/83b29dcc00ead068239785f93b3ecc7f6da3253b) refactor: changelog pages now use octokitjs
+
 ## 4.1.5
 
 ### Patch Changes

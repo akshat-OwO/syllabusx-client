@@ -1,7 +1,7 @@
 import LayoutWrapper from "@/layouts/LayoutWrapper";
-import { getChanges } from "@/lib/contentful";
+import { octokit } from "@/lib/octokit";
+import { format } from "date-fns";
 import { Metadata } from "next";
-import Link from "next/link";
 import { FC } from "react";
 
 export const revalidate = 43200;
@@ -30,8 +30,20 @@ export const metadata: Metadata = {
 
 interface pageProps {}
 
+async function getReleases() {
+    const response = await octokit.request(
+        "GET /repos/{owner}/{repo}/releases",
+        {
+            owner: "akshat-OwO",
+            repo: "syllabusx-client",
+        }
+    );
+
+    return response.data;
+}
+
 const page: FC<pageProps> = async ({}) => {
-    const logs: any = await getChanges();
+    const releases = await getReleases();
 
     return (
         <LayoutWrapper className="min-h-[calc(100vh-7rem)] py-20">
@@ -51,32 +63,33 @@ const page: FC<pageProps> = async ({}) => {
                     </p>
                 </div>
             </div>
-            {logs ? (
-                <div className="grid gap-10 py-20 md:grid-cols-3">
-                    {logs.map((log: any) => (
-                        <ChangeLogCard
-                            key={log.fields.version}
-                            href={`/changelog/${log.sys.id}`}
-                            title={`Version ${log.fields.version}`}
-                        >
-                            Release Date: {log.fields.releaseDate}
-                        </ChangeLogCard>
-                    ))}
-                </div>
-            ) : null}
+
+            <div className="grid gap-10 py-20 md:grid-cols-3">
+                {releases.map((release) => (
+                    <ChangeLogCard
+                        key={release.id}
+                        title={release.name}
+                        href={release.html_url}
+                    >
+                        Release Date:{" "}
+                        {format(release.published_at!, "dd/MM/yyyy")}
+                    </ChangeLogCard>
+                ))}
+            </div>
         </LayoutWrapper>
     );
 };
 
 interface ChangeLogCardProps {
     href: string;
-    title: string;
+    title: string | null;
     children: React.ReactNode;
 }
 
 const ChangeLogCard: FC<ChangeLogCardProps> = ({ children, href, title }) => {
     return (
-        <Link
+        <a
+            target="_blank"
             className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
             href={href}
         >
@@ -84,7 +97,7 @@ const ChangeLogCard: FC<ChangeLogCardProps> = ({ children, href, title }) => {
             <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                 {children}
             </p>
-        </Link>
+        </a>
     );
 };
 

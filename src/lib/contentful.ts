@@ -26,47 +26,6 @@ export const getHomePageData = async () => {
     }
 };
 
-export const getChanges = async () => {
-    try {
-        const content = await contentful.getEntries({
-            content_type: "changeLogPage",
-        });
-        const items = content.items;
-        const sortedItems = items.sort((a, b) => {
-            return (
-                // @ts-expect-error
-                new Date(b.fields.releaseDate) - new Date(a.fields.releaseDate)
-            );
-        });
-        return sortedItems;
-    } catch (error) {
-        return null;
-    }
-};
-
-export const generateChangesPages = async () => {
-    try {
-        const content = await contentful.getEntries({
-            content_type: "changeLogPage",
-        });
-        const paths = content.items.map((item) => {
-            return { id: item.sys.id };
-        });
-        return paths;
-    } catch (error) {
-        return null;
-    }
-};
-
-export const getChange = async (version: string) => {
-    try {
-        const content = await contentful.getEntry(version);
-        return content;
-    } catch (error) {
-        return null;
-    }
-};
-
 export const getSyllabusxTeam = async () => {
     try {
         const content = await contentful.getEntries({
