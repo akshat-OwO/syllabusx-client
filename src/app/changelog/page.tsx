@@ -31,10 +31,13 @@ export const metadata: Metadata = {
 interface pageProps {}
 
 async function getReleases() {
-    const response = await octokit.request("GET /repos/{owner}/{repo}/releases", {
-        owner: "akshat-OwO",
-        repo: "syllabusx-client",
-    })
+    const response = await octokit.request(
+        "GET /repos/{owner}/{repo}/releases",
+        {
+            owner: "akshat-OwO",
+            repo: "syllabusx-client",
+        }
+    );
 
     return response.data;
 }
@@ -68,7 +71,8 @@ const page: FC<pageProps> = async ({}) => {
                         title={release.name}
                         href={release.html_url}
                     >
-                        Release Date: {format(release.published_at!, "dd/MM/yyyy")}
+                        Release Date:{" "}
+                        {format(release.published_at!, "dd/MM/yyyy")}
                     </ChangeLogCard>
                 ))}
             </div>
