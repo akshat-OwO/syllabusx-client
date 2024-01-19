@@ -2,12 +2,17 @@
 
 import { Tab } from "@/config";
 import { useEmbed } from "@/hooks/use-embed";
-import { getBtechStudyMaterial } from "@/lib/server";
+import { getBcaStudyMaterial, getBtechStudyMaterial } from "@/lib/server";
 import { cn } from "@/lib/utils";
 import { useLocalStorage } from "@mantine/hooks";
-import { useQuery } from "@tanstack/react-query";
-import { Check, Frown, Heart, RotateCw, Upload, X } from "lucide-react";
-import React, { FC, useState } from "react";
+import {
+    QueryKey,
+    QueryObserverResult,
+    RefetchOptions,
+    useQuery,
+} from "@tanstack/react-query";
+import { Check, Frown, Heart, RotateCw } from "lucide-react";
+import { useState } from "react";
 import { Badge } from "./ui/badge";
 import { Button, buttonVariants } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
@@ -15,6 +20,7 @@ import { TabsContent } from "./ui/tabs";
 
 interface StudyMaterialProps {
     tab: Tab;
+    course: string;
     semester: string | null;
     branch: string | null;
     subject: string | null;
@@ -24,16 +30,17 @@ interface StudyMaterialProps {
     practical?: string;
 }
 
-const StudyMaterial: FC<StudyMaterialProps> = ({
+const StudyMaterial = ({
     tab,
     book,
     note,
     practical,
     pyq,
+    course,
     semester,
     branch,
     subject,
-}) => {
+}: StudyMaterialProps) => {
     const [createFav, setCreateFav] = useState<boolean>(false);
     const [favorites, setFavorites] = useLocalStorage<string[]>({
         key: "favorites",
@@ -64,12 +71,30 @@ const StudyMaterial: FC<StudyMaterialProps> = ({
         });
     };
 
+    const generateQueryKey = (): QueryKey => {
+        if (course == "btech") {
+            return [course, tab, semester, branch, subject];
+        }
+        return [course, tab, semester, subject];
+    };
+
     const { data, isLoading, error, refetch, isFetching } = useQuery({
-        queryKey: ["btech", tab, semester, branch, subject],
+        queryKey: generateQueryKey(),
         queryFn: async () => {
-            return await getBtechStudyMaterial({
+            if (course == "btech") {
+                return await getBtechStudyMaterial({
+                    semester,
+                    branch,
+                    subject,
+                    tab,
+                    book,
+                    note,
+                    practical,
+                    pyq,
+                });
+            }
+            return await getBcaStudyMaterial({
                 semester,
-                branch,
                 subject,
                 tab,
                 book,
@@ -83,86 +108,20 @@ const StudyMaterial: FC<StudyMaterialProps> = ({
 
     return (
         <TabsContent value={tab}>
-            {error ? (
-                <>
-                    <div className="mb-2 flex items-center justify-end">
-                        <Button
-                            size={"icon"}
-                            disabled={isFetching}
-                            onClick={() => refetch()}
-                        >
-                            <RotateCw
-                                className={cn(
-                                    "h-4 w-4",
-                                    isFetching ? "animate-spin" : ""
-                                )}
-                            />
-                        </Button>
-                    </div>
-                    <div className="flex flex-col items-center justify-center gap-2 rounded-md bg-accent p-5">
-                        <div className="flex items-center gap-2">
-                            <div className="prose prose-neutral dark:prose-invert">
-                                <h6>No Notes Found!</h6>
-                            </div>
-                            <Frown className="h-4 w-4" />
-                        </div>
-                        <a
-                            href="https://forms.gle/BFTv1uy8L33ptic6A"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={cn(
-                                buttonVariants({ variant: "tertiary" })
-                            )}
-                        >
-                            Fix This!
-                        </a>
-                    </div>
-                </>
-            ) : null}
+            <StudyMaterial.Header
+                createFav={createFav}
+                error={error}
+                isFetching={isFetching}
+                isLoading={isLoading}
+                refetch={refetch}
+                setCreateFav={setCreateFav}
+            />
+            {error ? <StudyMaterial.Error /> : null}
 
-            {isLoading ? (
-                <div className="grid gap-5 rounded-md bg-accent p-5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-                    <Skeleton className="h-10 w-full bg-background" />
-                    <Skeleton className="h-10 w-full bg-background" />
-                    <Skeleton className="h-10 w-full bg-background" />
-                    <Skeleton className="h-10 w-full bg-background" />
-                </div>
-            ) : null}
+            {isLoading ? <StudyMaterial.Skeleton /> : null}
 
             {data && !error ? (
                 <>
-                    <div className="mb-2 flex items-center justify-end gap-2">
-                        {createFav ? (
-                            <Button
-                                size={"icon"}
-                                onClick={() => setCreateFav(false)}
-                            >
-                                <Check className="h-4 w-4" />
-                            </Button>
-                        ) : (
-                            <Button
-                                variant={"secondary"}
-                                size={"icon"}
-                                onClick={() => setCreateFav(true)}
-                            >
-                                <Heart className="h-4 w-4" />
-                            </Button>
-                        )}
-
-                        <Button
-                            variant={"secondary"}
-                            size={"icon"}
-                            disabled={isFetching}
-                            onClick={() => refetch()}
-                        >
-                            <RotateCw
-                                className={cn(
-                                    "h-4 w-4",
-                                    isFetching ? "animate-spin" : ""
-                                )}
-                            />
-                        </Button>
-                    </div>
                     <div className="grid gap-5 rounded-md bg-accent p-5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
                         {data.map((d) => (
                             <div
@@ -238,6 +197,90 @@ const StudyMaterial: FC<StudyMaterialProps> = ({
                 </>
             ) : null}
         </TabsContent>
+    );
+};
+
+StudyMaterial.Skeleton = function StudyMaterialSkeleton() {
+    return (
+        <div className="grid gap-5 rounded-md bg-accent p-5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+            <Skeleton className="h-10 w-full bg-background" />
+            <Skeleton className="h-10 w-full bg-background" />
+            <Skeleton className="h-10 w-full bg-background" />
+            <Skeleton className="h-10 w-full bg-background" />
+        </div>
+    );
+};
+
+StudyMaterial.Error = function StudyMaterialError() {
+    return (
+        <>
+            <div className="flex flex-col items-center justify-center gap-2 rounded-md bg-accent p-5">
+                <div className="flex items-center gap-2">
+                    <div className="prose prose-neutral dark:prose-invert">
+                        <h6>No Notes Found!</h6>
+                    </div>
+                    <Frown className="h-4 w-4" />
+                </div>
+                <a
+                    href="https://forms.gle/BFTv1uy8L33ptic6A"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cn(buttonVariants({ variant: "tertiary" }))}
+                >
+                    Fix This!
+                </a>
+            </div>
+        </>
+    );
+};
+
+StudyMaterial.Header = function StudyMaterialHeader({
+    createFav,
+    error,
+    isLoading,
+    isFetching,
+    refetch,
+    setCreateFav,
+}: {
+    createFav: boolean;
+    error: Error | null;
+    isLoading: boolean;
+    isFetching: boolean;
+    refetch: (
+        options?: RefetchOptions | undefined
+    ) => Promise<QueryObserverResult<Drive[] | null, Error>>;
+    setCreateFav: (value: React.SetStateAction<boolean>) => void;
+}) {
+    return (
+        <div className="mb-2 flex items-center justify-end gap-2">
+            {createFav && !error && !isLoading ? (
+                <Button size={"icon"} onClick={() => setCreateFav(false)}>
+                    <Check className="h-4 w-4" />
+                </Button>
+            ) : (
+                !error &&
+                !isLoading && (
+                    <Button
+                        variant={"secondary"}
+                        size={"icon"}
+                        onClick={() => setCreateFav(true)}
+                    >
+                        <Heart className="h-4 w-4" />
+                    </Button>
+                )
+            )}
+
+            <Button
+                variant={"secondary"}
+                size={"icon"}
+                disabled={isFetching}
+                onClick={() => refetch()}
+            >
+                <RotateCw
+                    className={cn("h-4 w-4", isFetching ? "animate-spin" : "")}
+                />
+            </Button>
+        </div>
     );
 };
 
