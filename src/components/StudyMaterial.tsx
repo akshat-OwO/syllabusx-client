@@ -137,7 +137,7 @@ const StudyMaterial = ({
             {isLoading ? <StudyMaterial.Skeleton /> : null}
 
             {data && !error && (
-                <div className="grid gap-4 rounded-md bg-accent p-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+                <div className="grid grid-cols-2 gap-4 rounded-md bg-accent p-2 md:grid-cols-3 xl:grid-cols-4">
                     {data.map((d) => (
                         <Button
                             key={d.id}
@@ -149,7 +149,7 @@ const StudyMaterial = ({
                                       ? "default"
                                       : "tertiary"
                             }
-                            className="group relative h-full cursor-pointer whitespace-normal text-center font-semibold shadow-sm"
+                            className="group relative h-full min-h-[3rem] cursor-pointer whitespace-normal text-center font-semibold shadow-sm"
                             onClick={() => onClick(d)}
                         >
                             {!(
