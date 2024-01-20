@@ -48,7 +48,7 @@ const StudyMaterial = ({
         defaultValue: [],
     });
 
-    const [embed, setEmbed] = useEmbed();
+    const embed = useEmbed();
 
     const addFavorite = (materialId: string) => {
         setFavorites((current) => {
@@ -79,10 +79,10 @@ const StudyMaterial = ({
         if (download) {
             return DownloadFile(d.id);
         }
-        return setEmbed({
+        return embed.onOpen({
             embedLink: d.webViewLink.slice(0, -17) + "preview",
             name: d.name.slice(0, -4),
-            isOpen: true,
+            embedId: d.id,
         });
     };
 
