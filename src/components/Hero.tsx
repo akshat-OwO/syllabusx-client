@@ -9,20 +9,23 @@ import { buttonVariants } from "./ui/button";
 
 interface HeroProps {
     content: any;
+    releaseTag: string;
+    releaseUrl: string;
 }
 
-const Hero: FC<HeroProps> = ({ content }) => {
+const Hero: FC<HeroProps> = ({ content, releaseTag, releaseUrl }) => {
     return (
         <div className="radial-top w-full">
             <LayoutWrapper className="flex flex-col items-center justify-center gap-10 p-10">
                 <div className="flex flex-col gap-5">
                     <Icons.x className="h-20" />
-                    <Link
-                        href="/changelog"
+                    <a
+                        target="_blank"
+                        href={releaseUrl}
                         className={cn(badgeVariants({ variant: "default" }))}
                     >
-                        Version {content ? content.version : "X"}
-                    </Link>
+                        Version {releaseTag.slice(1)}
+                    </a>
                 </div>
                 <div className="flex flex-col items-center gap-y-2">
                     <div className="prose prose-sm prose-neutral dark:prose-invert md:prose-base">
