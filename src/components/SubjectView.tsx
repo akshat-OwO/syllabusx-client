@@ -1,12 +1,16 @@
 "use client";
 
 import { Tab } from "@/config";
+import { useSubjectView } from "@/hooks/use-subject-view";
 import { getBcaSubjectDetails, getBtechSubjectDetails } from "@/lib/server";
+import { cn } from "@/lib/utils";
 import { QueryKey, useQuery } from "@tanstack/react-query";
+import { Expand } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import StudyMaterial from "./StudyMaterial";
 import Syllabus from "./Syllabus";
+import { Button } from "./ui/button";
 import {
     Card,
     CardContent,
@@ -19,11 +23,14 @@ import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 
 interface SubjectViewProps {
     course: string;
+    isModal?: boolean;
 }
 
-const SubjectView = ({ course }: SubjectViewProps) => {
+const SubjectView = ({ course, isModal }: SubjectViewProps) => {
     const searchParams = useSearchParams();
     const [tab, setTab] = useState<Tab>(Tab.THEORY);
+
+    const subjectViewModal = useSubjectView();
 
     const semester = searchParams.get("semester");
     const branch = searchParams.get("branch");
@@ -68,7 +75,7 @@ const SubjectView = ({ course }: SubjectViewProps) => {
     }
 
     if (isLoading) {
-        return <SubjectView.Skeleton />;
+        return <SubjectView.Skeleton isModal={isModal} />;
     }
 
     return (
@@ -76,8 +83,27 @@ const SubjectView = ({ course }: SubjectViewProps) => {
             {sub && (
                 <>
                     <Card className="col-span-3 h-fit shadow-2xl lg:col-span-2">
-                        <CardHeader>
+                        <CardHeader
+                            className={cn(
+                                "flex-row items-center justify-between",
+                                {
+                                    "md:py-3": !subjectViewModal.isOpen,
+                                }
+                            )}
+                        >
                             <CardTitle>{sub[0].subject}</CardTitle>
+                            {!subjectViewModal.isOpen && (
+                                <Button
+                                    onClick={() =>
+                                        subjectViewModal.onOpen(course)
+                                    }
+                                    size={"icon"}
+                                    variant={"ghost"}
+                                    className="hidden md:inline-flex"
+                                >
+                                    <Expand className="h-4 w-4" />
+                                </Button>
+                            )}
                         </CardHeader>
                         <CardContent>
                             <Tabs
@@ -111,12 +137,14 @@ const SubjectView = ({ course }: SubjectViewProps) => {
                             </Tabs>
                         </CardContent>
                     </Card>
-                    <Card className="col-span-3 row-start-3 h-fit shadow-2xl lg:col-span-1 lg:row-start-auto">
-                        <CardHeader>
-                            <CardTitle>Subject Details</CardTitle>
-                        </CardHeader>
-                        <SubjectView.Details sub={sub} />
-                    </Card>
+                    {!isModal && (
+                        <Card className="col-span-3 row-start-3 h-fit shadow-2xl lg:col-span-1 lg:row-start-auto">
+                            <CardHeader>
+                                <CardTitle>Subject Details</CardTitle>
+                            </CardHeader>
+                            <SubjectView.Details sub={sub} />
+                        </Card>
+                    )}
                 </>
             )}
         </>
@@ -169,7 +197,11 @@ SubjectView.Details = function SubjectViewDetails({ sub }: { sub: any }) {
     );
 };
 
-SubjectView.Skeleton = function SubjectViewSkeleton() {
+SubjectView.Skeleton = function SubjectViewSkeleton({
+    isModal,
+}: {
+    isModal?: boolean;
+}) {
     return (
         <>
             <Card className="col-span-3 h-fit shadow-2xl lg:col-span-2">
@@ -183,17 +215,19 @@ SubjectView.Skeleton = function SubjectViewSkeleton() {
                     <Skeleton className="h-[7.5rem] w-full" />
                 </CardContent>
             </Card>
-            <Card className="col-span-3 row-start-3 h-fit shadow-2xl lg:col-span-1 lg:row-start-auto">
-                <CardHeader>
-                    <CardTitle>
-                        <Skeleton className="h-8 w-48" />
-                    </CardTitle>
-                </CardHeader>
-                <CardContent className="flex flex-col gap-2">
-                    <Skeleton className="h-8 w-full" />
-                    <Skeleton className="h-[7.5rem] w-full" />
-                </CardContent>
-            </Card>
+            {!isModal && (
+                <Card className="col-span-3 row-start-3 h-fit shadow-2xl lg:col-span-1 lg:row-start-auto">
+                    <CardHeader>
+                        <CardTitle>
+                            <Skeleton className="h-8 w-48" />
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex flex-col gap-2">
+                        <Skeleton className="h-8 w-full" />
+                        <Skeleton className="h-[7.5rem] w-full" />
+                    </CardContent>
+                </Card>
+            )}
         </>
     );
 };
