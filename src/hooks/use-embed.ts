@@ -1,13 +1,28 @@
-import { atom, useAtom } from "jotai";
+import { create } from "zustand";
 
 type Embed = {
-    embedLink: string;
+    embedId: string;
     name: string;
-    isOpen: boolean;
+    embedLink: string;
 };
 
-const embedAtom = atom<Embed>({ name: "", embedLink: "", isOpen: false });
+type EmbedStore = Embed & {
+    isOpen: boolean;
+    onOpen: (value: Embed) => void;
+    onClose: () => void;
+};
 
-export function useEmbed() {
-    return useAtom(embedAtom);
-}
+export const useEmbed = create<EmbedStore>((set, get) => ({
+    embedId: "",
+    embedLink: "",
+    name: "",
+    isOpen: false,
+    onOpen: (value) =>
+        set({
+            isOpen: true,
+            embedId: value.embedId,
+            embedLink: value.embedLink,
+            name: value.name,
+        }),
+    onClose: () => set({ embedId: "", embedLink: "", name: "", isOpen: false }),
+}));

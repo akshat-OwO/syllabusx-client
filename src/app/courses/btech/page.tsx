@@ -1,7 +1,7 @@
-import BtechSubjectView from "@/components/BtechSubjectView";
 import SearchCard from "@/components/SearchCard";
 import SearchInput from "@/components/SearchInput";
 import SubjectList from "@/components/SubjectList";
+import SubjectView from "@/components/SubjectView";
 import { Courses, branchList, semesterList } from "@/config";
 import LayoutWrapper from "@/layouts/LayoutWrapper";
 import _ from "lodash";
@@ -229,7 +229,7 @@ const page: FC<pageProps> = ({ searchParams }) => {
                 {searchParams.semester &&
                 searchParams.branch &&
                 searchParams.subject ? (
-                    <BtechSubjectView />
+                    <SubjectView course="btech" />
                 ) : null}
             </div>
         </LayoutWrapper>

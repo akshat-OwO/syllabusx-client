@@ -4,19 +4,29 @@ import { useEmbed } from "@/hooks/use-embed";
 import { useMediaQuery } from "@mantine/hooks";
 import { FC } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "../ui/drawer";
 
 interface EmbedModalProps {}
 
 const EmbedModal: FC<EmbedModalProps> = ({}) => {
-    const [embed, setEmbed] = useEmbed();
+    const embed = useEmbed();
     const isDesktop = useMediaQuery("(min-width: 768px)");
 
-    const closeEmbed = () => {
-        setEmbed({ embedLink: "", name: "", isOpen: false });
-    };
+    if (!isDesktop) {
+        return (
+            <Drawer open={embed.isOpen} onClose={embed.onClose}>
+                <DrawerContent>
+                    <DrawerHeader>
+                        <DrawerTitle>{embed.name}</DrawerTitle>
+                    </DrawerHeader>
+                    <Viewer />
+                </DrawerContent>
+            </Drawer>
+        );
+    }
 
     return (
-        <Dialog open={embed.isOpen} onOpenChange={closeEmbed}>
+        <Dialog open={embed.isOpen} onOpenChange={embed.onClose}>
             <DialogContent className="max-w-4xl">
                 <DialogHeader>
                     <DialogTitle>{embed.name}</DialogTitle>
@@ -28,7 +38,7 @@ const EmbedModal: FC<EmbedModalProps> = ({}) => {
 };
 
 function Viewer() {
-    const [embed] = useEmbed();
+    const embed = useEmbed();
 
     return (
         <div className="rounded-md bg-accent p-2">

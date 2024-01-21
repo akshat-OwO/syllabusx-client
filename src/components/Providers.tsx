@@ -19,10 +19,10 @@ const Providers: FC<ProvidersProps> = ({ children }) => {
     const queryClient = new QueryClient({
         defaultOptions: {
             queries: {
-                staleTime: 1000 * 60 * 60 * 8,
-                gcTime: 1000 * 60 * 60 * 8,
+                staleTime: 1000 * 60 * 60 * 24 * 15,
+                gcTime: 1000 * 60 * 60 * 24 * 15,
             },
-        }, // 8 hours
+        }, // 15 days
     });
 
     const persister = createSyncStoragePersister({

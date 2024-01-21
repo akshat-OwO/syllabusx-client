@@ -2,6 +2,8 @@
 
 import { FC, useEffect, useState } from "react";
 import EmbedModal from "./embed-modal";
+import SubjectListModal from "./subject-list-modal";
+import SubjectViewModal from "./subject-view-modal";
 
 interface ModalProviderProps {}
 
@@ -17,6 +19,8 @@ const ModalProvider: FC<ModalProviderProps> = ({}) => {
     return (
         <>
             <EmbedModal />
+            <SubjectListModal />
+            <SubjectViewModal />
         </>
     );
 };
