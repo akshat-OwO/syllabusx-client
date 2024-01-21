@@ -18,6 +18,7 @@ import {
     CardHeader,
     CardTitle,
 } from "./ui/card";
+import { ScrollArea } from "./ui/scroll-area";
 import { Skeleton } from "./ui/skeleton";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 
@@ -82,7 +83,14 @@ const SubjectView = ({ course, isModal }: SubjectViewProps) => {
         <>
             {sub && (
                 <>
-                    <Card className="col-span-3 h-fit shadow-2xl lg:col-span-2">
+                    <Card
+                        className={cn(
+                            "col-span-3 h-fit shadow-2xl lg:col-span-2",
+                            {
+                                "border-0": subjectViewModal.isOpen,
+                            }
+                        )}
+                    >
                         <CardHeader
                             className={cn(
                                 "flex-row items-center justify-between",
@@ -114,26 +122,27 @@ const SubjectView = ({ course, isModal }: SubjectViewProps) => {
                                 }
                             >
                                 <SubjectView.Tabs />
-                                <Syllabus
-                                    theory={sub[0].theory || sub[0].units}
-                                    lab={sub[0].lab}
-                                />
-                                {tab === Tab.NOTES ||
-                                tab === Tab.BOOKS ||
-                                tab === Tab.PYQ ||
-                                tab === Tab.FILES ? (
-                                    <StudyMaterial
+                                {subjectViewModal.isOpen ? (
+                                    <ScrollArea type="scroll" tw="max-h-[75vh]">
+                                        <SubjectView.Box
+                                            sub={sub}
+                                            tab={tab}
+                                            branch={branch}
+                                            course={course}
+                                            semester={semester}
+                                            subject={subject}
+                                        />
+                                    </ScrollArea>
+                                ) : (
+                                    <SubjectView.Box
+                                        sub={sub}
                                         tab={tab}
-                                        note={sub[0].camel}
-                                        pyq={sub[0].pYq}
-                                        book={sub[0].book}
-                                        practical={sub[0].practical}
+                                        branch={branch}
                                         course={course}
                                         semester={semester}
-                                        branch={branch}
                                         subject={subject}
                                     />
-                                ) : null}
+                                )}
                             </Tabs>
                         </CardContent>
                     </Card>
@@ -161,6 +170,44 @@ SubjectView.Tabs = function SubjectViewTabs() {
             <TabsTrigger value={Tab.BOOKS}>Books</TabsTrigger>
             <TabsTrigger value={Tab.FILES}>Practicals</TabsTrigger>
         </TabsList>
+    );
+};
+
+SubjectView.Box = function SubjectViewBox({
+    sub,
+    tab,
+    branch,
+    course,
+    semester,
+    subject,
+}: {
+    sub: any;
+    tab: Tab;
+    course: string;
+    semester: string | null;
+    branch: string | null;
+    subject: string | null;
+}) {
+    return (
+        <>
+            <Syllabus theory={sub[0].theory || sub[0].units} lab={sub[0].lab} />
+            {tab === Tab.NOTES ||
+            tab === Tab.BOOKS ||
+            tab === Tab.PYQ ||
+            tab === Tab.FILES ? (
+                <StudyMaterial
+                    tab={tab}
+                    note={sub[0].camel}
+                    pyq={sub[0].pYq}
+                    book={sub[0].book}
+                    practical={sub[0].practical}
+                    course={course}
+                    semester={semester}
+                    branch={branch}
+                    subject={subject}
+                />
+            ) : null}
+        </>
     );
 };
 
