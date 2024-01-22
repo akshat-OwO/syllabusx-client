@@ -94,6 +94,7 @@ const StudyMaterial = ({
     };
 
     const { data, isLoading, error, refetch, isFetching } = useQuery({
+        // eslint-disable-next-line @tanstack/query/exhaustive-deps
         queryKey: generateQueryKey(),
         queryFn: async () => {
             if (course == "btech") {

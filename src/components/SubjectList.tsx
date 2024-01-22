@@ -44,6 +44,7 @@ const SubjectList = ({ course }: SubjectListProps) => {
         isLoading,
         error,
     } = useQuery({
+        // eslint-disable-next-line @tanstack/query/exhaustive-deps
         queryKey: generateQueryKey(),
         queryFn: async () => await getSubjectList({ course, branch, semester }),
     });
