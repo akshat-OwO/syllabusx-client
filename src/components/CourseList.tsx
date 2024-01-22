@@ -1,7 +1,6 @@
 import LayoutWrapper from "@/layouts/LayoutWrapper";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import Link from "next/link";
 import { FC } from "react";
 import { buttonVariants } from "./ui/button";
 
@@ -46,7 +45,7 @@ const CourseList: FC<CourseListProps> = ({ content }) => {
                     </div>
                 </div>
                 <div className="grid h-48 w-full grid-cols-2 gap-2 lg:h-auto lg:w-1/2">
-                    <Link
+                    <a
                         href="/courses/btech"
                         className={cn(
                             buttonVariants({
@@ -56,8 +55,8 @@ const CourseList: FC<CourseListProps> = ({ content }) => {
                         )}
                     >
                         B.Tech
-                    </Link>
-                    <Link
+                    </a>
+                    <a
                         href="/courses/bca"
                         className={cn(
                             buttonVariants({
@@ -68,7 +67,7 @@ const CourseList: FC<CourseListProps> = ({ content }) => {
                         )}
                     >
                         BCA
-                    </Link>
+                    </a>
                     <div
                         className={cn(
                             buttonVariants({

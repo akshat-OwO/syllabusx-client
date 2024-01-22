@@ -2,7 +2,6 @@ import { buttonVariants } from "@/components/ui/button";
 import LayoutWrapper from "@/layouts/LayoutWrapper";
 import { cn } from "@/lib/utils";
 import { Metadata } from "next";
-import Link from "next/link";
 import { FC } from "react";
 
 export const metadata: Metadata = {
@@ -48,7 +47,7 @@ const page: FC<pageProps> = async ({}) => {
                 </div>
             </div>
             <div className="mx-auto grid aspect-video w-full grid-cols-2 gap-2 py-20 lg:w-3/5">
-                <Link
+                <a
                     href="/courses/btech"
                     className={cn(
                         buttonVariants({
@@ -58,8 +57,8 @@ const page: FC<pageProps> = async ({}) => {
                     )}
                 >
                     B.Tech
-                </Link>
-                <Link
+                </a>
+                <a
                     href="/courses/bca"
                     className={cn(
                         buttonVariants({
@@ -69,7 +68,7 @@ const page: FC<pageProps> = async ({}) => {
                     )}
                 >
                     BCA
-                </Link>
+                </a>
                 <div
                     className={cn(
                         buttonVariants({
