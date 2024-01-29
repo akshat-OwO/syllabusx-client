@@ -72,13 +72,16 @@ const SubjectView = ({ course, isModal }: SubjectViewProps) => {
 
     if (!semester || !branch || !subject) <></>;
 
-    if (error) {
+    if (error || (sub && !(sub.length > 0))) {
         return <SubjectView.Error error={error} />;
     }
 
     if (isLoading) {
         return <SubjectView.Skeleton isModal={isModal} />;
     }
+
+    console.log(sub, "sub");
+    console.log(error, "error");
 
     return (
         <>
@@ -280,13 +283,19 @@ SubjectView.Skeleton = function SubjectViewSkeleton({
     );
 };
 
-SubjectView.Error = function SubjectViewError({ error }: { error: Error }) {
+SubjectView.Error = function SubjectViewError({
+    error,
+}: {
+    error: Error | null;
+}) {
     return (
         <Card className="col-span-3 h-fit shadow-2xl">
             <CardHeader>
                 <CardTitle>Temporary Glitch in the Matrix</CardTitle>
                 <CardDescription>
-                    Something went wrong! {error.message}
+                    {error?.message
+                        ? error.message
+                        : "Something went wrong! Please try again later."}
                 </CardDescription>
             </CardHeader>
             <CardContent>

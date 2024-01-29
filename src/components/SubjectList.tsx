@@ -121,7 +121,9 @@ SubjectList.Error = function SubjectListError({ error }: { error: Error }) {
             <CardHeader>
                 <CardTitle>Temporary Glitch in the Matrix</CardTitle>
                 <CardDescription>
-                    Something went wrong! {error.message}
+                    {error.message
+                        ? error.message
+                        : "Something went wrong! Please try again later."}
                 </CardDescription>
             </CardHeader>
             <CardContent>

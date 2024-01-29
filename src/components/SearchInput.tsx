@@ -41,6 +41,12 @@ const SearchInput: FC<SearchInputProps> = ({
 
     const param = searchParams.get(label);
 
+    const validateQuery = useCallback(() => {
+        const params = new URLSearchParams(searchParams);
+        params.delete(label);
+        return params.toString();
+    }, [searchParams, label]);
+
     const createQueryString = useCallback(
         (name: string, value: string) => {
             const params = new URLSearchParams(searchParams);
@@ -50,6 +56,11 @@ const SearchInput: FC<SearchInputProps> = ({
         },
         [searchParams]
     );
+
+    if (param && !searchList.some((value) => param === value.label)) {
+        const validQuery = validateQuery();
+        router.push(pathname + "?" + validQuery, { scroll: false });
+    }
 
     useEffect(() => {
         setMounted(true);

@@ -6,7 +6,6 @@ import { Courses, bcaSemesterList } from "@/config";
 import LayoutWrapper from "@/layouts/LayoutWrapper";
 import _ from "lodash";
 import { Metadata } from "next";
-import { notFound } from "next/navigation";
 import { FC } from "react";
 
 type Props = {
@@ -134,12 +133,6 @@ interface pageProps {
 }
 
 const page: FC<pageProps> = ({ searchParams }) => {
-    if (
-        searchParams.semester &&
-        !bcaSemesterList.some((s) => searchParams.semester === s.label)
-    )
-        notFound();
-
     return (
         <LayoutWrapper className="min-h-[calc(100vh-7rem)] py-20">
             <div className="grid grid-cols-3 gap-10">
