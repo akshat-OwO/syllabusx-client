@@ -1,7 +1,7 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import Providers from "@/components/Providers";
 import Scripts from "@/components/Scripts";
+import Providers from "@/components/providers/providers";
 import { constructMetadata } from "@/lib/utils";
 import { GeistSans } from "geist/font/sans";
 import Script from "next/script";

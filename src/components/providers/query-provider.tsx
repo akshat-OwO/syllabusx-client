@@ -1,26 +1,22 @@
-"use client";
-
 import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
 import { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
     PersistQueryClientProvider,
-    persistQueryClient,
     removeOldestQuery,
 } from "@tanstack/react-query-persist-client";
-import { Analytics } from "@vercel/analytics/react";
 import { compress, decompress } from "lz-string";
-import { FC, ReactNode } from "react";
-import ModalProvider from "./modals/modal-provider";
-import { ThemeProvider } from "./theme/theme-provider";
-import { ThemeSwitcher } from "./theme/theme-switcher";
-import { Toaster } from "./ui/toaster";
+import { FC, ReactNode, useEffect, useState } from "react";
+import { Icons } from "../Icons";
+import { ThemeProvider } from "./theme-provider";
 
-interface ProvidersProps {
+interface QueryProviderProps {
     children: ReactNode;
 }
 
-const Providers: FC<ProvidersProps> = ({ children }) => {
+const QueryProvider: FC<QueryProviderProps> = ({ children }) => {
+    const [isMounted, setIsMounted] = useState<boolean>(false);
+
     const queryClient = new QueryClient({
         defaultOptions: {
             queries: {
@@ -37,27 +33,30 @@ const Providers: FC<ProvidersProps> = ({ children }) => {
         deserialize: (data) => JSON.parse(decompress(data)),
     });
 
-    persistQueryClient({
-        queryClient,
-        persister,
-        maxAge: 1000 * 60 * 60 * 24 * 15,
-    });
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    if (!isMounted)
+        return (
+            <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+                <div className="flex h-screen items-center justify-center bg-background">
+                    <div className="flex items-center gap-10">
+                        <Icons.x className="h-36 w-36" />
+                    </div>
+                </div>
+            </ThemeProvider>
+        );
 
     return (
         <PersistQueryClientProvider
             client={queryClient}
             persistOptions={{ persister }}
         >
-            <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-                {children}
-                <ModalProvider />
-                <Toaster />
-            </ThemeProvider>
-            <ThemeSwitcher />
-            <Analytics />
+            {children}
             <ReactQueryDevtools />
         </PersistQueryClientProvider>
     );
 };
 
-export default Providers;
+export default QueryProvider;
