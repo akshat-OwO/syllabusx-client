@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for your interest in contributing to ui.shadcn.com. We're happy to have you here.
+Thanks for your interest in contributing to syllabusx.live. We're happy to have you here.
 
 Please take a moment to review this document before submitting your first pull request. We also strongly recommend that you check for [open issues](https://github.com/akshat-OwO/syllabusx-client) and pull requests to see if someone else is working on something similar.
 
