@@ -1,3 +1,4 @@
+import FeedbackForm from "@/components/FeedbackForm";
 import { buttonVariants } from "@/components/ui/button";
 import LayoutWrapper from "@/layouts/LayoutWrapper";
 import { cn } from "@/lib/utils";
@@ -49,31 +50,39 @@ const page: FC<pageProps> = ({}) => {
                     </p>
                 </div>
             </div>
-            <div className="grid gap-5 py-10 md:grid-cols-3 md:justify-center">
-                <a
-                    href="https://forms.gle/BFTv1uy8L33ptic6A"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={cn(buttonVariants({ className: "gap-2" }))}
-                >
-                    Give Us Feedback
-                    <MessageSquare className="h-4 w-4" />
-                </a>
-                <a
-                    href="https://www.instagram.com/syllabusx_.live/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={cn(buttonVariants({ className: "gap-2" }))}
-                >
-                    DM on Instagram <Instagram className="h-4 w-4" />
-                </a>
-                <a
-                    href="mailto:iboard990@gmail.com"
-                    target="_blank"
-                    className={cn(buttonVariants({ className: "gap-2" }))}
-                >
-                    Mail us <Mail className="h-4 w-4" />
-                </a>
+            <div className="mx-auto grid max-w-lg gap-5 py-10 md:max-w-none md:grid-cols-2">
+                <div className="flex h-fit flex-col justify-center gap-5">
+                    <a
+                        href="https://forms.gle/BFTv1uy8L33ptic6A"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={cn(buttonVariants({ className: "gap-2" }))}
+                    >
+                        Give Us Feedback
+                        <MessageSquare className="h-4 w-4" />
+                    </a>
+                    <a
+                        href="https://www.instagram.com/syllabusx_.live/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={cn(buttonVariants({ className: "gap-2" }))}
+                    >
+                        DM on Instagram <Instagram className="h-4 w-4" />
+                    </a>
+                    <a
+                        href="mailto:iboard990@gmail.com"
+                        target="_blank"
+                        className={cn(buttonVariants({ className: "gap-2" }))}
+                    >
+                        Mail us <Mail className="h-4 w-4" />
+                    </a>
+                </div>
+                <div className="max-w-lg rounded-md bg-accent/30 p-5">
+                    <h3 className="text-center text-xl font-semibold">
+                        Feedback Form
+                    </h3>
+                    <FeedbackForm />
+                </div>
             </div>
         </LayoutWrapper>
     );

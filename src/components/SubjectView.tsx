@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { QueryKey, useQuery } from "@tanstack/react-query";
 import { Expand } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import StudyMaterial from "./StudyMaterial";
 import Syllabus from "./Syllabus";
 import { Button } from "./ui/button";
@@ -79,9 +79,6 @@ const SubjectView = ({ course, isModal }: SubjectViewProps) => {
     if (isLoading) {
         return <SubjectView.Skeleton isModal={isModal} />;
     }
-
-    console.log(sub, "sub");
-    console.log(error, "error");
 
     return (
         <>
