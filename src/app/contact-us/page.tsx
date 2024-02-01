@@ -1,8 +1,8 @@
-import FeedbackForm from "@/components/FeedbackForm";
+import { FeedbackFormTrigger } from "@/components/FeedbackForm";
 import { buttonVariants } from "@/components/ui/button";
 import LayoutWrapper from "@/layouts/LayoutWrapper";
 import { cn } from "@/lib/utils";
-import { Instagram, Mail, MessageSquare } from "lucide-react";
+import { Instagram, Mail } from "lucide-react";
 import { Metadata } from "next";
 import { FC } from "react";
 
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 
 interface pageProps {}
 
-const page: FC<pageProps> = ({}) => {
+const Page: FC<pageProps> = ({}) => {
     return (
         <LayoutWrapper className="min-h-[calc(100vh-7rem)] py-20">
             <div className="flex flex-col items-center gap-y-2">
@@ -50,17 +50,8 @@ const page: FC<pageProps> = ({}) => {
                     </p>
                 </div>
             </div>
-            <div className="mx-auto grid max-w-lg gap-5 py-10 md:max-w-none md:grid-cols-2">
-                <div className="flex h-fit flex-col justify-center gap-5">
-                    <a
-                        href="https://forms.gle/BFTv1uy8L33ptic6A"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={cn(buttonVariants({ className: "gap-2" }))}
-                    >
-                        Give Us Feedback
-                        <MessageSquare className="h-4 w-4" />
-                    </a>
+            <div className="grid items-center gap-5 py-10 md:grid-cols-2 md:justify-center">
+                <div className="flex flex-col gap-5">
                     <a
                         href="https://www.instagram.com/syllabusx_.live/"
                         target="_blank"
@@ -77,15 +68,10 @@ const page: FC<pageProps> = ({}) => {
                         Mail us <Mail className="h-4 w-4" />
                     </a>
                 </div>
-                <div className="max-w-lg rounded-md bg-accent/30 p-5">
-                    <h3 className="text-center text-xl font-semibold">
-                        Feedback Form
-                    </h3>
-                    <FeedbackForm />
-                </div>
+                <FeedbackFormTrigger />
             </div>
         </LayoutWrapper>
     );
 };
 
-export default page;
+export default Page;

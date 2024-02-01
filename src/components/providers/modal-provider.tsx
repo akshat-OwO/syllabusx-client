@@ -2,6 +2,7 @@
 
 import { FC, useEffect, useState } from "react";
 import EmbedModal from "../modals/embed-modal";
+import FeedbackModal from "../modals/feedback-modal";
 import SubjectListModal from "../modals/subject-list-modal";
 import SubjectViewModal from "../modals/subject-view-modal";
 
@@ -21,6 +22,7 @@ const ModalProvider: FC<ModalProviderProps> = ({}) => {
             <EmbedModal />
             <SubjectListModal />
             <SubjectViewModal />
+            <FeedbackModal />
         </>
     );
 };
