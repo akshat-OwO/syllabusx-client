@@ -15,16 +15,18 @@ interface QueryProviderProps {
 }
 
 const QueryProvider: FC<QueryProviderProps> = ({ children }) => {
-    const [isMounted, setIsMounted] = useState<boolean>(false);
-
-    const queryClient = new QueryClient({
-        defaultOptions: {
-            queries: {
-                staleTime: 1000 * 60 * 60 * 24 * 15,
-                gcTime: 1000 * 60 * 60 * 24 * 15,
-            },
-        }, // 15 days
-    });
+    // const [isMounted, setIsMounted] = useState<boolean>(false);
+    const [queryClient] = useState(
+        () =>
+            new QueryClient({
+                defaultOptions: {
+                    queries: {
+                        staleTime: 1000 * 60 * 60 * 24 * 15,
+                        gcTime: 1000 * 60 * 60 * 24 * 15,
+                    },
+                }, // 15 days
+            })
+    );
 
     const persister = createSyncStoragePersister({
         storage: typeof window !== "undefined" ? window.localStorage : null,
@@ -33,20 +35,20 @@ const QueryProvider: FC<QueryProviderProps> = ({ children }) => {
         deserialize: (data) => JSON.parse(decompress(data)),
     });
 
-    useEffect(() => {
-        setIsMounted(true);
-    }, []);
+    // useEffect(() => {
+    //     setIsMounted(true);
+    // }, []);
 
-    if (!isMounted)
-        return (
-            <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-                <div className="flex h-screen items-center justify-center bg-background">
-                    <div className="flex items-center gap-10">
-                        <Icons.x className="h-36 w-36" />
-                    </div>
-                </div>
-            </ThemeProvider>
-        );
+    // if (!isMounted)
+    //     return (
+    //         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+    //             <div className="flex h-screen items-center justify-center bg-background">
+    //                 <div className="flex items-center gap-10">
+    //                     <Icons.x className="h-36 w-36" />
+    //                 </div>
+    //             </div>
+    //         </ThemeProvider>
+    //     );
 
     return (
         <PersistQueryClientProvider
