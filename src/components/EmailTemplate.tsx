@@ -44,7 +44,7 @@ const EmailTemplate: FC<EmailTemplateProps> = ({ name }) => {
                     <Container className="mx-auto my-[40px] max-w-[465px] rounded border border-solid border-[#eaeaea] p-[20px]">
                         <Section className="mt-[32px]">
                             <Img
-                                src={`${baseUrl}/static/email-x.png`}
+                                src={`${baseUrl}/email-x.png`}
                                 width={"40"}
                                 height={"37"}
                                 alt="SyllabusX"
@@ -121,7 +121,7 @@ export function EmailAdminTemplate({
                     <Container className="mx-auto my-[40px] max-w-[465px] rounded border border-solid border-[#eaeaea] p-[20px]">
                         <Section className="mt-[32px]">
                             <Img
-                                src={`${baseUrl}/static/email-x.png`}
+                                src={`${baseUrl}/email-x.png`}
                                 width={"40"}
                                 height={"37"}
                                 alt="SyllabusX"
