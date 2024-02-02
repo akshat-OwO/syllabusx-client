@@ -5,7 +5,10 @@ export const FeedbackSchema = z.object({
     name: z.string().min(5),
     course: z.string().min(2),
     college: z.string().min(5),
-    semester: z.number().min(1),
+    semester: z
+        .string()
+        .min(1)
+        .refine((num) => typeof Number(num) === "number"),
     branch: z.string().min(2),
     query: z.string(),
 });

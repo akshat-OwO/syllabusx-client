@@ -4,8 +4,10 @@ import { useFeedback } from "@/hooks/use-feedback";
 import { FeedbackSchema, TFeedbackSchema } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CornerRightUp, UploadCloud } from "lucide-react";
+import axios from "axios";
+import { CornerRightUp, MessageSquare, UploadCloud } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { Button, buttonVariants } from "./ui/button";
 import {
@@ -27,24 +29,26 @@ const FeedbackForm = ({}) => {
 
     const form = useForm<TFeedbackSchema>({
         resolver: zodResolver(FeedbackSchema),
-        defaultValues: {
-            name: "",
-            email: "",
-            branch: "",
-            semester: 1,
-            college: "",
-            course: "",
-            query: feedback.query,
-        },
     });
 
-    const onSubmit = (values: TFeedbackSchema) => {};
+    const onSubmit = async (values: TFeedbackSchema) => {
+        toast.promise(axios.post("/api/send", { values }), {
+            loading: "Submitting...",
+            success: () => {
+                return "Form submitted!";
+            },
+            error: "Something went wrong! Try again later",
+        });
+    };
 
     return (
-        <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-                <ScrollArea className="h-[70vh] pb-2 md:h-fit">
-                    <div className="grid grid-cols-1 gap-2 px-2 md:grid-cols-3">
+        <>
+            <Form {...form}>
+                <ScrollArea className="h-[70vh] pb-2 md:h-fit md:pb-0">
+                    <form
+                        onSubmit={form.handleSubmit(onSubmit)}
+                        className="grid grid-cols-1 gap-5 px-1 md:grid-cols-3"
+                    >
                         <FormField
                             control={form.control}
                             name="name"
@@ -52,10 +56,13 @@ const FeedbackForm = ({}) => {
                                 <FormItem>
                                     <FormLabel>Name</FormLabel>
                                     <FormControl>
-                                        <Input {...field} />
+                                        <Input
+                                            {...field}
+                                            placeholder="Shourya"
+                                        />
                                     </FormControl>
                                     <FormDescription>
-                                        Your good name.
+                                        The title of your autobiography.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -65,13 +72,16 @@ const FeedbackForm = ({}) => {
                             control={form.control}
                             name="email"
                             render={({ field }) => (
-                                <FormItem className="md:col-start-1">
+                                <FormItem>
                                     <FormLabel>Email</FormLabel>
                                     <FormControl>
-                                        <Input {...field} />
+                                        <Input
+                                            {...field}
+                                            placeholder="mail@example.com"
+                                        />
                                     </FormControl>
                                     <FormDescription>
-                                        Your email so we can spam you.
+                                        Your mail so we can spam.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -81,13 +91,13 @@ const FeedbackForm = ({}) => {
                             control={form.control}
                             name="college"
                             render={({ field }) => (
-                                <FormItem className="md:col-start-2 md:row-start-1">
+                                <FormItem>
                                     <FormLabel>College / Institution</FormLabel>
                                     <FormControl>
-                                        <Input {...field} />
+                                        <Input {...field} placeholder="BVCOE" />
                                     </FormControl>
                                     <FormDescription>
-                                        Your college / institution name.
+                                        The academic HQ you call home.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -97,13 +107,17 @@ const FeedbackForm = ({}) => {
                             control={form.control}
                             name="course"
                             render={({ field }) => (
-                                <FormItem className="md:col-start-3 md:row-start-1">
+                                <FormItem>
                                     <FormLabel>Course</FormLabel>
                                     <FormControl>
-                                        <Input {...field} />
+                                        <Input
+                                            {...field}
+                                            placeholder="B.Tech"
+                                        />
                                     </FormControl>
                                     <FormDescription>
-                                        Really? You chose this?
+                                        Your academic journey&apos;s chosen
+                                        path.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -114,12 +128,12 @@ const FeedbackForm = ({}) => {
                             name="semester"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Semester</FormLabel>
+                                    <FormLabel>Course</FormLabel>
                                     <FormControl>
-                                        <Input {...field} />
+                                        <Input {...field} placeholder="3" />
                                     </FormControl>
                                     <FormDescription>
-                                        Your current semester.
+                                        Your academic chapter number.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -132,10 +146,10 @@ const FeedbackForm = ({}) => {
                                 <FormItem>
                                     <FormLabel>Branch</FormLabel>
                                     <FormControl>
-                                        <Input {...field} />
+                                        <Input {...field} placeholder="ECE" />
                                     </FormControl>
                                     <FormDescription>
-                                        Your current branch.
+                                        Your academic superhero identity.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -145,20 +159,25 @@ const FeedbackForm = ({}) => {
                             control={form.control}
                             name="query"
                             render={({ field }) => (
-                                <FormItem className="md:col-span-3">
-                                    <FormLabel>Query</FormLabel>
+                                <FormItem className="col-span-full">
+                                    <FormLabel>Branch</FormLabel>
                                     <FormControl>
-                                        <Textarea {...field} />
+                                        <Textarea
+                                            minRows={2}
+                                            maxRows={5}
+                                            {...field}
+                                            placeholder="Very bad project 2/10 should not exist"
+                                        />
                                     </FormControl>
                                     <FormDescription>
-                                        Your queries / problems which we&apos;ll
-                                        try to solve.
+                                        Spill the academic tea or drop some
+                                        wisdom!
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
-                        <Alert className="md:col-span-3">
+                        <Alert className="col-span-full">
                             <UploadCloud className="h-4 w-4" />
                             <AlertTitle>
                                 Don&apos;t see file uploader?
@@ -174,7 +193,7 @@ const FeedbackForm = ({}) => {
                                         buttonVariants({
                                             variant: "link",
                                             className:
-                                                "h-fit py-0 pl-0 underline",
+                                                "h-fit px-0 py-0 underline",
                                         })
                                     )}
                                 >
@@ -182,15 +201,16 @@ const FeedbackForm = ({}) => {
                                 </a>
                             </AlertDescription>
                         </Alert>
-                    </div>
+                    </form>
                 </ScrollArea>
-                <div className="px-2">
-                    <Button type="submit" className="w-full">
-                        Submit
-                    </Button>
-                </div>
-            </form>
-        </Form>
+            </Form>
+            <Button
+                className="w-full"
+                onClick={() => form.handleSubmit(onSubmit)()}
+            >
+                Submit
+            </Button>
+        </>
     );
 };
 
@@ -198,24 +218,9 @@ export function FeedbackFormTrigger() {
     const feedback = useFeedback();
 
     return (
-        <div className="flex flex-col gap-2">
-            <Label htmlFor="query">Any queries or feedback?</Label>
-            <Textarea
-                minRows={3}
-                maxRows={5}
-                id="query"
-                placeholder="Very bad project will give 2/10..."
-                value={feedback.query}
-                onChange={(e) => feedback.setQuery(e.target.value)}
-            />
-            <Button
-                variant="secondary"
-                className="gap-2 self-end"
-                onClick={feedback.onOpen}
-            >
-                Open form <CornerRightUp className="h-4 w-4" />
-            </Button>
-        </div>
+        <Button className="gap-2" onClick={feedback.onOpen}>
+            Give us feedback <MessageSquare className="h-4 w-4" />
+        </Button>
     );
 }
 

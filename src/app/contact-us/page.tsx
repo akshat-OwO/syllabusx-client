@@ -50,25 +50,23 @@ const Page: FC<pageProps> = ({}) => {
                     </p>
                 </div>
             </div>
-            <div className="grid items-center gap-5 py-10 md:grid-cols-2 md:justify-center">
-                <div className="flex flex-col gap-5">
-                    <a
-                        href="https://www.instagram.com/syllabusx_.live/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={cn(buttonVariants({ className: "gap-2" }))}
-                    >
-                        DM on Instagram <Instagram className="h-4 w-4" />
-                    </a>
-                    <a
-                        href="mailto:iboard990@gmail.com"
-                        target="_blank"
-                        className={cn(buttonVariants({ className: "gap-2" }))}
-                    >
-                        Mail us <Mail className="h-4 w-4" />
-                    </a>
-                </div>
+            <div className="grid items-center gap-5 py-10 md:grid-cols-3 md:justify-center">
                 <FeedbackFormTrigger />
+                <a
+                    href="https://www.instagram.com/syllabusx_.live/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cn(buttonVariants({ className: "gap-2" }))}
+                >
+                    DM on Instagram <Instagram className="h-4 w-4" />
+                </a>
+                <a
+                    href="mailto:iboard990@gmail.com"
+                    target="_blank"
+                    className={cn(buttonVariants({ className: "gap-2" }))}
+                >
+                    Mail us <Mail className="h-4 w-4" />
+                </a>
             </div>
         </LayoutWrapper>
     );

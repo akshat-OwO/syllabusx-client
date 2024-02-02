@@ -2,6 +2,7 @@
 
 import { Tab } from "@/config";
 import { useEmbed } from "@/hooks/use-embed";
+import { useFeedback } from "@/hooks/use-feedback";
 import { getBcaStudyMaterial, getBtechStudyMaterial } from "@/lib/server";
 import { cn } from "@/lib/utils";
 import { useLocalStorage } from "@mantine/hooks";
@@ -11,8 +12,9 @@ import {
     RefetchOptions,
     useQuery,
 } from "@tanstack/react-query";
-import { Check, Download, Frown, Heart, RotateCw } from "lucide-react";
+import { AlertCircle, Check, Download, Heart, RotateCw } from "lucide-react";
 import React, { useState } from "react";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { Badge } from "./ui/badge";
 import { Button, buttonVariants } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
@@ -225,24 +227,26 @@ StudyMaterial.Skeleton = function StudyMaterialSkeleton() {
 };
 
 StudyMaterial.Error = function StudyMaterialError() {
+    const feedback = useFeedback();
+
     return (
         <>
-            <div className="flex flex-col items-center justify-center gap-2 rounded-md bg-accent p-5">
-                <div className="flex items-center gap-2">
-                    <div className="prose prose-neutral dark:prose-invert">
-                        <h6>No Notes Found!</h6>
-                    </div>
-                    <Frown className="h-4 w-4" />
-                </div>
-                <a
-                    href="https://forms.gle/BFTv1uy8L33ptic6A"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={cn(buttonVariants({ variant: "tertiary" }))}
-                >
-                    Fix This!
-                </a>
-            </div>
+            <Alert variant="secondary" className="border-0">
+                <AlertCircle className="h-5 w-5" />
+                <AlertTitle>No notes found!</AlertTitle>
+                <AlertDescription>
+                    Looks like this subject is feeling a bit lonely without
+                    notes! Be the hero, upload some using our{" "}
+                    <Button
+                        variant="link"
+                        className="h-fit px-0 py-0 underline"
+                        onClick={feedback.onOpen}
+                    >
+                        feedback form
+                    </Button>
+                    !
+                </AlertDescription>
+            </Alert>
         </>
     );
 };
