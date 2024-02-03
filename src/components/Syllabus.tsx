@@ -2,7 +2,7 @@
 
 import { Tab } from "@/config";
 import { cn } from "@/lib/utils";
-import { useLocalStorage } from "@mantine/hooks";
+import { useLocalStorage, useTextSelection } from "@mantine/hooks";
 import { ExternalLink } from "lucide-react";
 import { FC } from "react";
 import {
@@ -12,7 +12,9 @@ import {
     AccordionTrigger,
 } from "./ui/accordion";
 import { buttonVariants } from "./ui/button";
+import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Checkbox } from "./ui/checkbox";
+import { Selection } from "./ui/selection-popover";
 import { TabsContent } from "./ui/tabs";
 
 interface SyllabusProps {
@@ -25,6 +27,8 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab }) => {
         key: "completed",
         defaultValue: [],
     });
+
+    const selection = useTextSelection();
 
     const handleComplete = (topic: string) => {
         if (!completed.includes(topic)) {
@@ -69,14 +73,27 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab }) => {
                                                     handleComplete(topic)
                                                 }
                                             />
-                                            <p
-                                                className={cn(
-                                                    completed.includes(topic) &&
-                                                        "line-through"
-                                                )}
+                                            <Selection
+                                                actionElement={
+                                                    <Card className="p-0">
+                                                        <CardHeader>
+                                                            <CardDescription className="max-w-xs">
+                                                                {selection?.toString()}
+                                                            </CardDescription>
+                                                        </CardHeader>
+                                                    </Card>
+                                                }
                                             >
-                                                {topic}
-                                            </p>
+                                                <p
+                                                    className={cn(
+                                                        completed.includes(
+                                                            topic
+                                                        ) && "line-through"
+                                                    )}
+                                                >
+                                                    {topic}
+                                                </p>
+                                            </Selection>
                                         </div>
                                     ))}
                                 </div>
