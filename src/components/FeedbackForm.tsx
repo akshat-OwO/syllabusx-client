@@ -5,7 +5,7 @@ import { FeedbackSchema, TFeedbackSchema } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { CornerRightUp, MessageSquare, UploadCloud } from "lucide-react";
+import { MessageSquare, UploadCloud } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
@@ -20,7 +20,6 @@ import {
     FormMessage,
 } from "./ui/form";
 import { Input } from "./ui/input";
-import { Label } from "./ui/label";
 import { ScrollArea } from "./ui/scroll-area";
 import { Textarea } from "./ui/textarea";
 
@@ -35,6 +34,8 @@ const FeedbackForm = ({}) => {
         toast.promise(axios.post("/api/send", { values }), {
             loading: "Submitting...",
             success: () => {
+                form.reset();
+                feedback.onClose();
                 return "Form submitted!";
             },
             error: "Something went wrong! Try again later",
@@ -128,7 +129,7 @@ const FeedbackForm = ({}) => {
                             name="semester"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Course</FormLabel>
+                                    <FormLabel>Semester</FormLabel>
                                     <FormControl>
                                         <Input {...field} placeholder="3" />
                                     </FormControl>
@@ -160,7 +161,7 @@ const FeedbackForm = ({}) => {
                             name="query"
                             render={({ field }) => (
                                 <FormItem className="col-span-full">
-                                    <FormLabel>Branch</FormLabel>
+                                    <FormLabel>Query</FormLabel>
                                     <FormControl>
                                         <Textarea
                                             minRows={2}
