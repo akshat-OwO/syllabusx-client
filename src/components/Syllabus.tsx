@@ -2,9 +2,10 @@
 
 import { Tab } from "@/config";
 import { cn } from "@/lib/utils";
-import { useLocalStorage, useTextSelection } from "@mantine/hooks";
+import { useLocalStorage, usePrevious, useTextSelection } from "@mantine/hooks";
 import { ExternalLink } from "lucide-react";
 import { FC } from "react";
+import SearchAI from "./ai/SearchAI";
 import {
     Accordion,
     AccordionContent,
@@ -12,7 +13,6 @@ import {
     AccordionTrigger,
 } from "./ui/accordion";
 import { buttonVariants } from "./ui/button";
-import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Checkbox } from "./ui/checkbox";
 import { Selection } from "./ui/selection-popover";
 import { TabsContent } from "./ui/tabs";
@@ -29,6 +29,7 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab }) => {
     });
 
     const selection = useTextSelection();
+    const previousSelection = usePrevious(selection);
 
     const handleComplete = (topic: string) => {
         if (!completed.includes(topic)) {
@@ -75,13 +76,9 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab }) => {
                                             />
                                             <Selection
                                                 actionElement={
-                                                    <Card className="p-0">
-                                                        <CardHeader>
-                                                            <CardDescription className="max-w-xs">
-                                                                {selection?.toString()}
-                                                            </CardDescription>
-                                                        </CardHeader>
-                                                    </Card>
+                                                    <SearchAI
+                                                        selection={selection}
+                                                    />
                                                 }
                                             >
                                                 <p
