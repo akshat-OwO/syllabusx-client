@@ -1,8 +1,10 @@
 "use client";
 
 import { Tab } from "@/config";
+import { useAi } from "@/hooks/use-ai";
+import useStore from "@/hooks/use-store";
 import { cn } from "@/lib/utils";
-import { useLocalStorage, usePrevious, useTextSelection } from "@mantine/hooks";
+import { useLocalStorage, useTextSelection } from "@mantine/hooks";
 import { ExternalLink } from "lucide-react";
 import { FC } from "react";
 import SearchAI from "./ai/SearchAI";
@@ -27,9 +29,6 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab }) => {
         key: "completed",
         defaultValue: [],
     });
-
-    const selection = useTextSelection();
-    const previousSelection = usePrevious(selection);
 
     const handleComplete = (topic: string) => {
         if (!completed.includes(topic)) {
@@ -74,23 +73,10 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab }) => {
                                                     handleComplete(topic)
                                                 }
                                             />
-                                            <Selection
-                                                actionElement={
-                                                    <SearchAI
-                                                        selection={selection}
-                                                    />
-                                                }
-                                            >
-                                                <p
-                                                    className={cn(
-                                                        completed.includes(
-                                                            topic
-                                                        ) && "line-through"
-                                                    )}
-                                                >
-                                                    {topic}
-                                                </p>
-                                            </Selection>
+                                            <Topic
+                                                completed={completed}
+                                                topic={topic}
+                                            />
                                         </div>
                                     ))}
                                 </div>
@@ -226,5 +212,30 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab }) => {
         </>
     );
 };
+
+function Topic({ completed, topic }: { completed: string[]; topic: string }) {
+    const ai = useStore(useAi, (state) => state);
+    const selection = useTextSelection();
+
+    return (
+        <>
+            {ai?.toggle ? (
+                <Selection actionElement={<SearchAI selection={selection} />}>
+                    <p
+                        className={cn(
+                            completed.includes(topic) && "line-through"
+                        )}
+                    >
+                        {topic}
+                    </p>
+                </Selection>
+            ) : (
+                <p className={cn(completed.includes(topic) && "line-through")}>
+                    {topic}
+                </p>
+            )}
+        </>
+    );
+}
 
 export default Syllabus;

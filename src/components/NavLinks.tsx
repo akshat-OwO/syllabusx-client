@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils";
 import { Github, Instagram, Menu, Star } from "lucide-react";
 import { FC } from "react";
+import ConfigureAI from "./ai/ConfigureAI";
 import ThemeCustomizer from "./theme/theme-customizer";
 import { Button, buttonVariants } from "./ui/button";
 import { ScrollArea } from "./ui/scroll-area";
@@ -41,9 +42,11 @@ const NavLinks: FC<NavLinksProps> = ({}) => {
                 >
                     <Instagram className="h-4 w-4" />
                 </a>
+                <ConfigureAI />
                 <ThemeCustomizer />
             </div>
             <div className="flex gap-2 md:hidden">
+                <ConfigureAI />
                 <ThemeCustomizer />
                 <Sheet>
                     <SheetTrigger asChild>

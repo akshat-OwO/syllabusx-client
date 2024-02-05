@@ -14,3 +14,9 @@ export const FeedbackSchema = z.object({
 });
 
 export type TFeedbackSchema = z.infer<typeof FeedbackSchema>;
+
+export const AiSchema = z.object({
+    key: z.string(),
+});
+
+export type TAiSchema = z.infer<typeof AiSchema>;
