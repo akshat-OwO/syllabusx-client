@@ -21,6 +21,7 @@
 
 #pwa
 sw.*
+/public/sw.*
 workbox-*
 swe-worker-
 
