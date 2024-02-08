@@ -7,7 +7,7 @@ declare global {
 }
 
 if (process.env.RESEND_API_KEY) {
-    resend = new Resend(process.env.RESEND_API_KEY);
+    global.resend = new Resend(process.env.RESEND_API_KEY);
 } else {
     console.log("Missing Resend API Key");
 }
