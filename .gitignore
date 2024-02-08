@@ -20,10 +20,9 @@
 *.pem
 
 #pwa
-sw.*
-/public/sw.*
+sw.js
 workbox-*
-swe-worker-
+swe-worker-*
 
 # debug
 npm-debug.log*
