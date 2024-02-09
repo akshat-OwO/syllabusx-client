@@ -20,3 +20,9 @@ export const AiSchema = z.object({
 });
 
 export type TAiSchema = z.infer<typeof AiSchema>;
+
+export const AiCompletionSchema = z.object({
+    text: z.string().min(10),
+});
+
+export type TAiCompletionSchema = z.infer<typeof AiCompletionSchema>;
