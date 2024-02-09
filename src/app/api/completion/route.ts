@@ -7,7 +7,7 @@ export const runtime = "edge";
 export async function POST(req: Request) {
     const { prompt, key } = await req.json();
 
-    const validatedPrompt = AiCompletionSchema.safeParse({ text: prompt });
+    const validatedPrompt = AiCompletionSchema.safeParse({ prompt });
     const validatedKey = AiSchema.safeParse({ key });
 
     if (!validatedPrompt.success)
@@ -21,7 +21,10 @@ export async function POST(req: Request) {
         .getGenerativeModel({ model: "gemini-pro" })
         .generateContentStream({
             contents: [
-                { role: "user", parts: [{ text: validatedPrompt.data.text }] },
+                {
+                    role: "user",
+                    parts: [{ text: validatedPrompt.data.prompt }],
+                },
             ],
         });
 

@@ -1,7 +1,6 @@
 "use client";
 
 import { useAi } from "@/hooks/use-ai";
-import { useSelectionAI } from "@/hooks/use-selection-ai";
 import useStore from "@/hooks/use-store";
 import { AiCompletionSchema, TAiCompletionSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -32,7 +31,6 @@ interface AiCompletionModalProps {}
 
 const AiCompletionModal: FC<AiCompletionModalProps> = ({}) => {
     const ai = useStore(useAi, (state) => state);
-    const selectionAI = useSelectionAI();
 
     const form = useForm<TAiCompletionSchema>({
         resolver: zodResolver(AiCompletionSchema),
@@ -43,10 +41,11 @@ const AiCompletionModal: FC<AiCompletionModalProps> = ({}) => {
 
     /* eslint-disable react-hooks/exhaustive-deps */
     useEffect(() => {
+        if (!ai) return;
         form.reset({
-            text: selectionAI.searchedText,
+            prompt: ai.completion.prompt,
         });
-    }, [selectionAI]);
+    }, [ai?.completion.prompt]);
 
     const onSubmit = async (values: TAiCompletionSchema) => {
         if (!ai?.key)
@@ -54,7 +53,7 @@ const AiCompletionModal: FC<AiCompletionModalProps> = ({}) => {
 
         if (isLoading) return stop();
 
-        const completion = await complete(values.text, {
+        const completion = await complete(values.prompt, {
             body: { key: ai.key },
         });
 
@@ -64,7 +63,10 @@ const AiCompletionModal: FC<AiCompletionModalProps> = ({}) => {
     };
 
     return (
-        <Dialog open={selectionAI.isOpen} onOpenChange={selectionAI.onClose}>
+        <Dialog
+            open={ai?.completion.isOpen}
+            onOpenChange={ai?.completion.onClose}
+        >
             <DialogContent className="max-w-2xl">
                 <DialogHeader>
                     <DialogTitle>Search with AI</DialogTitle>
@@ -93,7 +95,7 @@ const AiCompletionModal: FC<AiCompletionModalProps> = ({}) => {
                         </div>
                         <FormField
                             control={form.control}
-                            name="text"
+                            name="prompt"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Enter your prompt</FormLabel>

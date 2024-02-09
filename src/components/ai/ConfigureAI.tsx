@@ -4,8 +4,8 @@ import { useAi } from "@/hooks/use-ai";
 import useStore from "@/hooks/use-store";
 import { AiSchema, TAiSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Sparkles, Undo } from "lucide-react";
-import { FC, useEffect, useState } from "react";
+import { NotebookPen, Search, Sparkles, Undo } from "lucide-react";
+import React, { FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
@@ -21,6 +21,7 @@ import {
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Separator } from "../ui/separator";
 import { Switch } from "../ui/switch";
 
 interface ConfigureAIProps {}
@@ -148,8 +149,54 @@ function AiForm() {
                         </Button>
                     </form>
                 </Form>
+                <Separator />
+                <Label>AI Features</Label>
+                <AIFeature
+                    title="Search with AI"
+                    description="Ask literally anything"
+                    onClick={ai.completion.onOpen}
+                    icon={<Search className="h-5 w-5" />}
+                />
+                <AIFeature
+                    title="AI note builder"
+                    description=""
+                    onClick={() => {}}
+                    preview
+                    icon={<NotebookPen className="h-5 w-5" />}
+                />
             </div>
         </div>
+    );
+}
+
+function AIFeature({
+    title,
+    description,
+    icon,
+    preview,
+    onClick,
+}: {
+    title: string;
+    description: string;
+    icon: React.ReactNode;
+    preview?: boolean;
+    onClick: React.MouseEventHandler<HTMLButtonElement>;
+}) {
+    return (
+        <Button
+            variant="ghost"
+            onClick={onClick}
+            disabled={preview}
+            className="h-fit justify-start gap-2 border border-border/75 p-2 text-start hover:border-border hover:bg-transparent"
+        >
+            <div className="rounded-md border border-border p-2">{icon}</div>
+            <div className="flex flex-col justify-center gap-0.5">
+                <p className="text-sm font-medium leading-none">{title}</p>
+                <span className="text-sm text-muted-foreground">
+                    {preview ? "Coming soon..." : description}
+                </span>
+            </div>
+        </Button>
     );
 }
 

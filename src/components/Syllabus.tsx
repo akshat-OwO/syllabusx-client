@@ -1,13 +1,10 @@
 "use client";
 
 import { Tab } from "@/config";
-import { useAi } from "@/hooks/use-ai";
-import useStore from "@/hooks/use-store";
 import { cn } from "@/lib/utils";
-import { useLocalStorage, useTextSelection } from "@mantine/hooks";
+import { useLocalStorage } from "@mantine/hooks";
 import { ExternalLink } from "lucide-react";
 import { FC } from "react";
-import SearchAI from "./ai/SearchAI";
 import {
     Accordion,
     AccordionContent,
@@ -16,7 +13,6 @@ import {
 } from "./ui/accordion";
 import { buttonVariants } from "./ui/button";
 import { Checkbox } from "./ui/checkbox";
-import { Selection } from "./ui/selection-popover";
 import { TabsContent } from "./ui/tabs";
 
 interface SyllabusProps {
@@ -73,10 +69,14 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab }) => {
                                                     handleComplete(topic)
                                                 }
                                             />
-                                            <Topic
-                                                completed={completed}
-                                                topic={topic}
-                                            />
+                                            <p
+                                                className={cn(
+                                                    completed.includes(topic) &&
+                                                        "line-through"
+                                                )}
+                                            >
+                                                {topic}
+                                            </p>
                                         </div>
                                     ))}
                                 </div>
@@ -212,30 +212,5 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab }) => {
         </>
     );
 };
-
-function Topic({ completed, topic }: { completed: string[]; topic: string }) {
-    const ai = useStore(useAi, (state) => state);
-    const selection = useTextSelection();
-
-    return (
-        <>
-            {ai?.toggle ? (
-                <Selection actionElement={<SearchAI selection={selection} />}>
-                    <p
-                        className={cn(
-                            completed.includes(topic) && "line-through"
-                        )}
-                    >
-                        {topic}
-                    </p>
-                </Selection>
-            ) : (
-                <p className={cn(completed.includes(topic) && "line-through")}>
-                    {topic}
-                </p>
-            )}
-        </>
-    );
-}
 
 export default Syllabus;
