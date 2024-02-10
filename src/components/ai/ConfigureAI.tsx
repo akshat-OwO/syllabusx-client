@@ -166,7 +166,13 @@ function AiForm() {
                                                 <SelectValue placeholder="Choose your preferred AI model..." />
                                             </SelectTrigger>
                                         </FormControl>
-                                        <SelectContent>
+                                        <SelectContent
+                                            ref={(ref) => {
+                                                if (!ref) return;
+                                                ref.ontouchstart = (e) =>
+                                                    e.preventDefault();
+                                            }}
+                                        >
                                             <SelectGroup>
                                                 <SelectLabel>
                                                     Google
