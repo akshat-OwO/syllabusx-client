@@ -13,8 +13,11 @@ type Completion = {
 type AiStore = {
     toggle: boolean;
     key: string;
+    isConfiguring: boolean;
     setToggle: (toggle: boolean) => void;
     setKey: (key: string) => void;
+    onConfiguring: () => void;
+    offConfiguring: () => void;
     setClear: () => void;
     completion: Completion;
 };
@@ -24,8 +27,11 @@ export const useAi = create<AiStore>()(
         (set, get) => ({
             toggle: false,
             key: "",
+            isConfiguring: false,
             setToggle: (toggle) => set({ toggle }),
             setKey: (key) => set({ key }),
+            onConfiguring: () => set({ isConfiguring: true }),
+            offConfiguring: () => set({ isConfiguring: false }),
             setClear: () => set({ key: "", toggle: false }),
             completion: {
                 prompt: "",

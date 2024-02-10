@@ -28,19 +28,20 @@ interface ConfigureAIProps {}
 
 const ConfigureAI: FC<ConfigureAIProps> = ({}) => {
     const [mounted, setMounted] = useState<boolean>(false);
-
+    const ai = useStore(useAi, (state) => state);
     useEffect(() => {
         setMounted(true);
     }, []);
 
     return (
         <div className="flex items-center space-x-2">
-            <Drawer>
+            <Drawer open={ai?.isConfiguring} onClose={ai?.offConfiguring}>
                 <DrawerTrigger asChild>
                     <Button
                         variant="ghost"
                         size="icon"
                         disabled={!mounted}
+                        onClick={ai?.onConfiguring}
                         className="md:hidden"
                     >
                         <Sparkles className="h-4 w-4" />
@@ -74,12 +75,16 @@ function AiForm() {
 
     const form = useForm<TAiSchema>({
         resolver: zodResolver(AiSchema),
+        defaultValues: {
+            key: "",
+        },
     });
 
     /* eslint-disable react-hooks/exhaustive-deps */
     useEffect(() => {
+        if (!ai) return;
         form.reset({
-            key: ai?.key,
+            key: ai.key,
         });
     }, [ai?.key]);
 
@@ -120,7 +125,7 @@ function AiForm() {
                     <Switch
                         id="toggle-ai"
                         checked={ai.toggle}
-                        onCheckedChange={(e) => ai.setToggle(e)}
+                        onCheckedChange={ai.setToggle}
                     />
                 </Label>
                 <Form {...form}>
