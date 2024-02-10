@@ -15,14 +15,18 @@ export const FeedbackSchema = z.object({
 
 export type TFeedbackSchema = z.infer<typeof FeedbackSchema>;
 
+const aiModels = z.enum(["gemini-pro", "gpt-3.5-turbo", "gpt-3.5-turbo-16k"]);
+export type TaiModels = z.infer<typeof aiModels>;
+
 export const AiSchema = z.object({
     key: z.string(),
+    model: aiModels,
 });
 
 export type TAiSchema = z.infer<typeof AiSchema>;
 
-export const AiCompletionSchema = z.object({
+export const AiSearchSchema = z.object({
     prompt: z.string().min(10),
 });
 
-export type TAiCompletionSchema = z.infer<typeof AiCompletionSchema>;
+export type TAiSearchSchema = z.infer<typeof AiSearchSchema>;

@@ -13,6 +13,7 @@ import { Drawer, DrawerContent, DrawerTrigger } from "../ui/drawer";
 import {
     Form,
     FormControl,
+    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -21,6 +22,15 @@ import {
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "../ui/select";
 import { Separator } from "../ui/separator";
 import { Switch } from "../ui/switch";
 
@@ -29,6 +39,7 @@ interface ConfigureAIProps {}
 const ConfigureAI: FC<ConfigureAIProps> = ({}) => {
     const [mounted, setMounted] = useState<boolean>(false);
     const ai = useStore(useAi, (state) => state);
+
     useEffect(() => {
         setMounted(true);
     }, []);
@@ -85,18 +96,20 @@ function AiForm() {
         if (!ai) return;
         form.reset({
             key: ai.key,
+            model: ai.model,
         });
-    }, [ai?.key]);
+    }, [ai?.key, ai?.model]);
 
     const onSubmit = (values: TAiSchema) => {
         ai?.setKey(values.key);
+        ai?.setModel(values.model);
         toast.success("AI configured!");
     };
 
     if (!ai) return <></>;
 
     return (
-        <div className="flex flex-col space-y-4 md:space-y-6">
+        <div className="flex flex-col space-y-4">
             <div className="flex items-start pt-6 md:pt-0">
                 <div className="space-y-1 pr-2">
                     <div className="font-semibold leading-none tracking-tight">
@@ -117,22 +130,24 @@ function AiForm() {
                 </Button>
             </div>
             <div className="flex flex-1 flex-col space-y-4">
-                <Label
-                    htmlFor="toggle-ai"
-                    className="flex items-center justify-between"
-                >
-                    <span>Toggle AI</span>
-                    <Switch
-                        id="toggle-ai"
-                        checked={ai.toggle}
-                        onCheckedChange={ai.setToggle}
-                    />
-                </Label>
                 <Form {...form}>
                     <form
                         onSubmit={form.handleSubmit(onSubmit)}
                         className="space-y-2"
                     >
+                        <div className="flex items-center justify-between space-y-0.5">
+                            <Label htmlFor="toggle-ai" className="space-y-1">
+                                <span>Toggle AI</span>
+                                <p className="text-sm text-muted-foreground">
+                                    You hate it, you turn it off.
+                                </p>
+                            </Label>
+                            <Switch
+                                id="toggle-ai"
+                                checked={ai.toggle}
+                                onCheckedChange={ai.setToggle}
+                            />
+                        </div>
                         <FormField
                             control={form.control}
                             name="key"
@@ -142,10 +157,57 @@ function AiForm() {
                                     <FormControl>
                                         <Input
                                             {...field}
-                                            placeholder="GEMINI_API_KEY"
+                                            placeholder="xxxxxxxxxxxxxxx"
                                         />
                                     </FormControl>
+                                    <FormDescription>
+                                        API key provided by model.
+                                    </FormDescription>
                                     <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="model"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Model</FormLabel>
+                                    <Select
+                                        onValueChange={field.onChange}
+                                        defaultValue={ai.model}
+                                    >
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Choose your preferred AI model..." />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                <SelectLabel>
+                                                    Google
+                                                </SelectLabel>
+                                                <SelectItem value="gemini-pro">
+                                                    gemini-pro
+                                                </SelectItem>
+                                            </SelectGroup>
+                                            <SelectGroup>
+                                                <SelectLabel>
+                                                    OpenAI
+                                                </SelectLabel>
+                                                <SelectItem value="gpt-3.5-turbo">
+                                                    gpt-3.5-turbo
+                                                </SelectItem>
+                                                <SelectItem value="gpt-3.5-turbo-16k">
+                                                    gpt-3.5-turbo-16k
+                                                </SelectItem>
+                                            </SelectGroup>
+                                        </SelectContent>
+                                        <FormDescription>
+                                            Check pricing before using.
+                                        </FormDescription>
+                                        <FormMessage />
+                                    </Select>
                                 </FormItem>
                             )}
                         />

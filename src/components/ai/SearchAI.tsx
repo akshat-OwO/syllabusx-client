@@ -2,14 +2,16 @@
 
 import { useAi } from "@/hooks/use-ai";
 import useStore from "@/hooks/use-store";
-import { AiCompletionSchema, TAiCompletionSchema } from "@/lib/schemas";
+import { AiSearchSchema, TAiSearchSchema } from "@/lib/schemas";
+import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMediaQuery } from "@mantine/hooks";
-import { useCompletion } from "ai/react";
-import { StopCircle } from "lucide-react";
-import { FC, useEffect } from "react";
+import { useChat } from "ai/react";
+import { Sparkles, StopCircle, User } from "lucide-react";
+import { FC, useRef } from "react";
 import { useForm } from "react-hook-form";
 import Markdown from "react-markdown";
+import { toast } from "sonner";
 import { Button } from "../ui/button";
 import {
     Dialog,
@@ -27,13 +29,12 @@ import {
     FormLabel,
     FormMessage,
 } from "../ui/form";
-import { Label } from "../ui/label";
 import { ScrollArea } from "../ui/scroll-area";
 import { Textarea } from "../ui/textarea";
 
-interface AiCompletionModalProps {}
+interface SearchAIProps {}
 
-const AiCompletionModal: FC<AiCompletionModalProps> = ({}) => {
+const SearchAI: FC<SearchAIProps> = ({}) => {
     const ai = useStore(useAi, (state) => state);
     const isDesktop = useMediaQuery("(min-width: 768px)");
 
@@ -59,7 +60,7 @@ const AiCompletionModal: FC<AiCompletionModalProps> = ({}) => {
             open={ai?.completion.isOpen}
             onOpenChange={ai?.completion.onClose}
         >
-            <DialogContent className="max-w-2xl">
+            <DialogContent className="max-w-3xl">
                 <DialogHeader>
                     <DialogTitle>Search with AI</DialogTitle>
                     <DialogDescription>
@@ -76,34 +77,52 @@ const AiCompletionModal: FC<AiCompletionModalProps> = ({}) => {
 function AiCompletionForm() {
     const ai = useStore(useAi, (state) => state);
 
-    const form = useForm<TAiCompletionSchema>({
-        resolver: zodResolver(AiCompletionSchema),
+    const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
+    const form = useForm<TAiSearchSchema>({
+        resolver: zodResolver(AiSearchSchema),
+        defaultValues: {
+            prompt: "",
+        },
     });
 
-    const { complete, completion, setCompletion, stop, isLoading, error } =
-        useCompletion();
+    const { messages, append, isLoading, stop } = useChat({
+        api: ai?.model.includes("gemini-pro")
+            ? "/api/google-search"
+            : "/api/openai-search",
+        body: {
+            key: ai?.key,
+            model: ai?.model,
+        },
+    });
 
-    /* eslint-disable react-hooks/exhaustive-deps */
-    useEffect(() => {
-        if (!ai) return;
-        form.reset({
-            prompt: ai.completion.prompt,
-        });
-    }, [ai?.completion.prompt]);
+    const onSubmit = async (values: TAiSearchSchema) => {
+        if (!ai?.toggle) {
+            toast.error("Toggle AI first!");
+            return form.setError("prompt", { message: "Toggle AI first!" });
+        }
 
-    const onSubmit = async (values: TAiCompletionSchema) => {
-        if (!ai?.key)
-            return form.setError("root", { message: "Missing API key!" });
+        if (!ai?.key) {
+            toast.error("Missing API key!");
+            return form.setError("prompt", { message: "Missing API key!" });
+        }
+
+        if (!ai.model) {
+            toast.error("Select model first!");
+            return form.setError("prompt", { message: "Select model first!" });
+        }
 
         if (isLoading) return stop();
 
-        const completion = await complete(values.prompt, {
-            body: { key: ai.key },
-        });
-
-        if (!completion && error) {
-            return form.setError("root", { message: "Something went wrong!" });
-        }
+        await append({ content: values.prompt, role: "user" })
+            .catch((error) => {
+                toast.error("Something went wrong!");
+                form.setError("prompt", { message: "Something went wrong!" });
+            })
+            .finally(() => {
+                form.reset();
+                textAreaRef.current?.focus();
+            });
     };
 
     return (
@@ -112,16 +131,39 @@ function AiCompletionForm() {
                 className="space-y-1.5"
                 onSubmit={form.handleSubmit(onSubmit)}
             >
-                {completion && (
-                    <div className="">
-                        <Label>Generated Content</Label>
-                        <ScrollArea tw="max-h-[50vh] md:max-h-[70vh]">
-                            <Markdown className="prose h-full dark:prose-invert">
-                                {completion}
-                            </Markdown>
-                        </ScrollArea>
+                <ScrollArea
+                    type="hover"
+                    className="py-2"
+                    tw="max-h-[50vh] md:max-h-[70vh]"
+                >
+                    <div className="flex w-full flex-col gap-5">
+                        {messages.map((m) => (
+                            <div
+                                className={cn(
+                                    "flex items-end gap-2 self-start",
+                                    {
+                                        "self-end": m.role === "user",
+                                    }
+                                )}
+                                key={m.id}
+                            >
+                                {m.role !== "user" && (
+                                    <div className="rounded-md border border-border bg-accent p-1.5">
+                                        <Sparkles className="h-4 w-4" />
+                                    </div>
+                                )}
+                                <Markdown className="prose rounded-md border border-border bg-secondary p-2 dark:prose-invert">
+                                    {m.content}
+                                </Markdown>
+                                {m.role === "user" && (
+                                    <div className="rounded-md border border-border bg-accent p-1.5">
+                                        <User className="h-4 w-4" />
+                                    </div>
+                                )}
+                            </div>
+                        ))}
                     </div>
-                )}
+                </ScrollArea>
                 <FormField
                     control={form.control}
                     name="prompt"
@@ -143,6 +185,7 @@ function AiCompletionForm() {
                                             ) {
                                                 e.preventDefault();
                                                 form.handleSubmit(onSubmit)();
+                                                textAreaRef.current?.focus();
                                             }
                                         }}
                                     />
@@ -171,4 +214,4 @@ function AiCompletionForm() {
     );
 }
 
-export default AiCompletionModal;
+export default SearchAI;

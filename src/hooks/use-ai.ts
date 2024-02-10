@@ -1,3 +1,4 @@
+import { TaiModels } from "@/lib/schemas";
 import _ from "lodash";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
@@ -13,9 +14,11 @@ type Completion = {
 type AiStore = {
     toggle: boolean;
     key: string;
+    model: TaiModels;
     isConfiguring: boolean;
     setToggle: (toggle: boolean) => void;
     setKey: (key: string) => void;
+    setModel: (model: TaiModels) => void;
     onConfiguring: () => void;
     offConfiguring: () => void;
     setClear: () => void;
@@ -27,9 +30,11 @@ export const useAi = create<AiStore>()(
         (set, get) => ({
             toggle: false,
             key: "",
+            model: "gemini-pro",
             isConfiguring: false,
             setToggle: (toggle) => set({ toggle }),
             setKey: (key) => set({ key }),
+            setModel: (model) => set({ model }),
             onConfiguring: () => set({ isConfiguring: true }),
             offConfiguring: () => set({ isConfiguring: false }),
             setClear: () => set({ key: "", toggle: false }),
@@ -59,6 +64,7 @@ export const useAi = create<AiStore>()(
             partialize: (state) => ({
                 key: state.key,
                 toggle: state.toggle,
+                model: state.model,
             }),
         }
     )
