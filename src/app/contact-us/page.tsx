@@ -1,7 +1,8 @@
+import { FeedbackFormTrigger } from "@/components/FeedbackForm";
 import { buttonVariants } from "@/components/ui/button";
 import LayoutWrapper from "@/layouts/LayoutWrapper";
 import { cn } from "@/lib/utils";
-import { Instagram, Mail, MessageSquare } from "lucide-react";
+import { Instagram, Mail } from "lucide-react";
 import { Metadata } from "next";
 import { FC } from "react";
 
@@ -29,7 +30,7 @@ export const metadata: Metadata = {
 
 interface pageProps {}
 
-const page: FC<pageProps> = ({}) => {
+const Page: FC<pageProps> = ({}) => {
     return (
         <LayoutWrapper className="min-h-[calc(100vh-7rem)] py-20">
             <div className="flex flex-col items-center gap-y-2">
@@ -49,16 +50,8 @@ const page: FC<pageProps> = ({}) => {
                     </p>
                 </div>
             </div>
-            <div className="grid gap-5 py-10 md:grid-cols-3 md:justify-center">
-                <a
-                    href="https://forms.gle/BFTv1uy8L33ptic6A"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={cn(buttonVariants({ className: "gap-2" }))}
-                >
-                    Give Us Feedback
-                    <MessageSquare className="h-4 w-4" />
-                </a>
+            <div className="grid items-center gap-5 py-10 md:grid-cols-3 md:justify-center">
+                <FeedbackFormTrigger />
                 <a
                     href="https://www.instagram.com/syllabusx_.live/"
                     target="_blank"
@@ -79,4 +72,4 @@ const page: FC<pageProps> = ({}) => {
     );
 };
 
-export default page;
+export default Page;

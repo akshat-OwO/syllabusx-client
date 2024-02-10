@@ -1,9 +1,10 @@
 "use client";
 
 import { FC, useEffect, useState } from "react";
-import EmbedModal from "./embed-modal";
-import SubjectListModal from "./subject-list-modal";
-import SubjectViewModal from "./subject-view-modal";
+import EmbedModal from "../modals/embed-modal";
+import FeedbackModal from "../modals/feedback-modal";
+import SubjectListModal from "../modals/subject-list-modal";
+import SubjectViewModal from "../modals/subject-view-modal";
 
 interface ModalProviderProps {}
 
@@ -21,6 +22,7 @@ const ModalProvider: FC<ModalProviderProps> = ({}) => {
             <EmbedModal />
             <SubjectListModal />
             <SubjectViewModal />
+            <FeedbackModal />
         </>
     );
 };

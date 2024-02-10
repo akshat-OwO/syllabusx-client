@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { QueryKey, useQuery } from "@tanstack/react-query";
 import { Expand } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import StudyMaterial from "./StudyMaterial";
 import Syllabus from "./Syllabus";
 import { Button } from "./ui/button";
@@ -72,7 +72,7 @@ const SubjectView = ({ course, isModal }: SubjectViewProps) => {
 
     if (!semester || !branch || !subject) <></>;
 
-    if (error) {
+    if (error || (sub && !(sub.length > 0))) {
         return <SubjectView.Error error={error} />;
     }
 
@@ -280,13 +280,19 @@ SubjectView.Skeleton = function SubjectViewSkeleton({
     );
 };
 
-SubjectView.Error = function SubjectViewError({ error }: { error: Error }) {
+SubjectView.Error = function SubjectViewError({
+    error,
+}: {
+    error: Error | null;
+}) {
     return (
         <Card className="col-span-3 h-fit shadow-2xl">
             <CardHeader>
                 <CardTitle>Temporary Glitch in the Matrix</CardTitle>
                 <CardDescription>
-                    Something went wrong! {error.message}
+                    {error?.message
+                        ? error.message
+                        : "Something went wrong! Please try again later."}
                 </CardDescription>
             </CardHeader>
             <CardContent>

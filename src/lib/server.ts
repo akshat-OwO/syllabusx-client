@@ -25,24 +25,32 @@ export const getSubjectList = async ({
         ) {
             throw new AxiosError("Please check semester and branch.");
         }
-        const response = (await axios.get(
-            `${server}btech/${
-                semesterList.find((s) => semester === s.label)?.value
-            }/${branchList.find((b) => branch === b.label)?.value}`
-        )) as AxiosResponse;
-        return response.data;
+        try {
+            const response = (await axios.get(
+                `${server}btech/${
+                    semesterList.find((s) => semester === s.label)?.value
+                }/${branchList.find((b) => branch === b.label)?.value}`
+            )) as AxiosResponse;
+            return response.data;
+        } catch (error) {
+            throw new Error("Something went wrong! Please try again later.");
+        }
     }
 
     if (course === Courses.BCA) {
         if (!bcaSemesterList.some((s) => semester === s.label)) {
             throw new AxiosError("Please check semester and branch.");
         }
-        const response = (await axios.get(
-            `${server}bca/${
-                bcaSemesterList.find((s) => semester === s.label)?.value
-            }`
-        )) as AxiosResponse;
-        return response.data;
+        try {
+            const response = (await axios.get(
+                `${server}bca/${
+                    bcaSemesterList.find((s) => semester === s.label)?.value
+                }`
+            )) as AxiosResponse;
+            return response.data;
+        } catch (error) {
+            throw new Error("Something went wrong! Please try again later.");
+        }
     }
 };
 
@@ -62,14 +70,18 @@ export const getBtechSubjectDetails = async ({
     ) {
         throw new AxiosError("Please check again what you searched.");
     } else if (!subject) return null;
-    const response = (await axios.get(
-        `${server}btech/${
-            semesterList.find((s) => semester === s.label)?.value
-        }/${
-            branchList.find((b) => branch === b.label)?.value
-        }/${_.startCase(_.toLower(subject))}`
-    )) as AxiosResponse;
-    return response.data;
+    try {
+        const response = (await axios.get(
+            `${server}btech/${
+                semesterList.find((s) => semester === s.label)?.value
+            }/${
+                branchList.find((b) => branch === b.label)?.value
+            }/${_.startCase(_.toLower(subject))}`
+        )) as AxiosResponse;
+        return response.data;
+    } catch (error) {
+        throw new Error("Something went wrong! Please try again later.");
+    }
 };
 
 export const getBtechStudyMaterial = async ({
@@ -98,25 +110,41 @@ export const getBtechStudyMaterial = async ({
     ) {
         throw new AxiosError("Please check again what you searched.");
     } else if (tab === Tab.NOTES) {
-        const response = (await axios.get(
-            `${server}drive/notes/${note}`
-        )) as AxiosResponse;
-        return response.data as Drive[];
+        try {
+            const response = (await axios.get(
+                `${server}drive/notes/${note}`
+            )) as AxiosResponse;
+            return response.data as Drive[];
+        } catch (error) {
+            throw new Error("Something went wrong! Please try again later.");
+        }
     } else if (tab === Tab.PYQ) {
-        const response = (await axios.get(
-            `${server}drive/pyq/${pyq}`
-        )) as AxiosResponse;
-        return response.data as Drive[];
+        try {
+            const response = (await axios.get(
+                `${server}drive/pyq/${pyq}`
+            )) as AxiosResponse;
+            return response.data as Drive[];
+        } catch (error) {
+            throw new Error("Something went wrong! Please try again later.");
+        }
     } else if (tab === Tab.BOOKS) {
-        const response = (await axios.get(
-            `${server}drive/books/${book}`
-        )) as AxiosResponse;
-        return response.data as Drive[];
+        try {
+            const response = (await axios.get(
+                `${server}drive/books/${book}`
+            )) as AxiosResponse;
+            return response.data as Drive[];
+        } catch (error) {
+            throw new Error("Something went wrong! Please try again later.");
+        }
     } else if (tab === Tab.FILES) {
-        const response = (await axios.get(
-            `${server}drive/practicalfile/${practical}`
-        )) as AxiosResponse;
-        return response.data as Drive[];
+        try {
+            const response = (await axios.get(
+                `${server}drive/practicalfile/${practical}`
+            )) as AxiosResponse;
+            return response.data as Drive[];
+        } catch (error) {
+            throw new Error("Something went wrong! Please try again later.");
+        }
     }
 
     return null;
@@ -132,12 +160,16 @@ export const getBcaSubjectDetails = async ({
     if (!bcaSemesterList.some((s) => semester === s.label) || !subject) {
         throw new AxiosError("Please check again what you searched.");
     } else if (!subject) return null;
-    const response = (await axios.get(
-        `${server}bca/${
-            bcaSemesterList.find((s) => semester === s.label)?.value
-        }/${_.startCase(_.toLower(subject))}`
-    )) as AxiosResponse;
-    return response.data;
+    try {
+        const response = (await axios.get(
+            `${server}bca/${
+                bcaSemesterList.find((s) => semester === s.label)?.value
+            }/${_.startCase(_.toLower(subject))}`
+        )) as AxiosResponse;
+        return response.data;
+    } catch (error) {
+        throw new Error("Something went wrong! Please try again later.");
+    }
 };
 
 export const getBcaStudyMaterial = async ({
@@ -160,25 +192,41 @@ export const getBcaStudyMaterial = async ({
     if (!bcaSemesterList.some((s) => semester === s.label) || !subject) {
         throw new AxiosError("Please check again what you searched.");
     } else if (tab === Tab.NOTES) {
-        const response = (await axios.get(
-            `${server}drive/notes/${note}`
-        )) as AxiosResponse;
-        return response.data as Drive[];
+        try {
+            const response = (await axios.get(
+                `${server}drive/notes/${note}`
+            )) as AxiosResponse;
+            return response.data as Drive[];
+        } catch (error) {
+            throw new Error("Something went wrong! Please try again later.");
+        }
     } else if (tab === Tab.PYQ) {
-        const response = (await axios.get(
-            `${server}drive/pyq/${pyq}`
-        )) as AxiosResponse;
-        return response.data as Drive[];
+        try {
+            const response = (await axios.get(
+                `${server}drive/pyq/${pyq}`
+            )) as AxiosResponse;
+            return response.data as Drive[];
+        } catch (error) {
+            throw new Error("Something went wrong! Please try again later.");
+        }
     } else if (tab === Tab.BOOKS) {
-        const response = (await axios.get(
-            `${server}drive/books/${book}`
-        )) as AxiosResponse;
-        return response.data as Drive[];
+        try {
+            const response = (await axios.get(
+                `${server}drive/books/${book}`
+            )) as AxiosResponse;
+            return response.data as Drive[];
+        } catch (error) {
+            throw new Error("Something went wrong! Please try again later.");
+        }
     } else if (tab === Tab.FILES) {
-        const response = (await axios.get(
-            `${server}drive/practicalfile/${practical}`
-        )) as AxiosResponse;
-        return response.data as Drive[];
+        try {
+            const response = (await axios.get(
+                `${server}drive/practicalfile/${practical}`
+            )) as AxiosResponse;
+            return response.data as Drive[];
+        } catch (error) {
+            throw new Error("Something went wrong! Please try again later.");
+        }
     }
 
     return null;
