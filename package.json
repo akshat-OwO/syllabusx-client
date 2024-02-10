@@ -21,6 +21,7 @@
         "@floating-ui/react": "^0.26.9",
         "@google/generative-ai": "^0.2.0",
         "@hookform/resolvers": "^3.3.4",
+        "@ducanh2912/next-pwa": "^10.2.5",
         "@mantine/hooks": "^7.2.2",
         "@radix-ui/react-accordion": "^1.1.2",
         "@radix-ui/react-checkbox": "^1.0.4",
@@ -94,6 +95,7 @@
         "eslint-config-prettier": "^9.1.0",
         "husky": "^8.0.3",
         "prettier": "^3.1.1",
-        "prettier-plugin-tailwindcss": "^0.5.9"
+        "prettier-plugin-tailwindcss": "^0.5.9",
+        "webpack": "^5.90.1"
     }
 }

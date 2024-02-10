@@ -9,6 +9,8 @@ export function cn(...inputs: ClassValue[]) {
 export function constructMetadata(): Metadata {
     return {
         metadataBase: new URL("https://syllabusx.live"),
+        manifest: "../manifest.json",
+
         title: {
             default: "SyllabusX",
             template: "SyllabusX | %s",
