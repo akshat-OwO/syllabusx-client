@@ -10,6 +10,7 @@ import {
     removeOldestQuery,
 } from "@tanstack/react-query-persist-client";
 import { FC, ReactNode, useState } from "react";
+import { compress, decompress } from "lz-string";
 
 interface QueryProviderProps {
     children: ReactNode;
@@ -24,13 +25,15 @@ const QueryProvider: FC<QueryProviderProps> = ({ children }) => {
                         staleTime: STALE_TIME,
                         gcTime: CACHE_TIME,
                     },
-                }, // 15 days
+                },
             })
     );
 
     const persister = createSyncStoragePersister({
         storage: typeof window !== "undefined" ? window.localStorage : null,
         retry: removeOldestQuery,
+        serialize: (data) => compress(JSON.stringify(data)),
+        deserialize: (data) => JSON.parse(decompress(data)),
     });
 
     return (
