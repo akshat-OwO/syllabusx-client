@@ -1,5 +1,18 @@
 # syllabusx-client
 
+## 4.3.0
+
+### Minor Changes
+
+- [`39dd2b`](https://github.com/akshat-OwO/syllabusx-client/commit/39dd2bd390165477f8ceed2fe6b5828305e51850) added PWA support - Thanks [@BeNikk](https://github.com/BeNikk)!
+- [`0db907`](https://github.com/akshat-OwO/syllabusx-client/commit/1e4bb835f597f57e5cc28c725b7047f24153f1f4), [`0db907`](https://github.com/akshat-OwO/syllabusx-client/commit/0db90758f33c6dc224b1a73d261f5a06aa382013), [`cf23f1`](https://github.com/akshat-OwO/syllabusx-client/commit/cf23f12075212a9f405525c449678036ac20b903), [`062584`](https://github.com/akshat-OwO/syllabusx-client/commit/0625840860f1d82c09c28840f5225bac48f341e6), [`0c8e24`](https://github.com/akshat-OwO/syllabusx-client/commit/0c8e24b6ba4e8d36933cd239b562b65590df59cf) added new feedback form with [resend](https://resend.com/) integration
+- #89 [`781886`](https://github.com/akshat-OwO/syllabusx-client/commit/7818860d3496c6142bbb138212ca6d43dfe846cf), [`4ce598`](https://github.com/akshat-OwO/syllabusx-client/commit/4ce5983077e13bb9b6e3cab757564553b105139d), [`57228c`](https://github.com/akshat-OwO/syllabusx-client/commit/57228cdb55ee01e74a4a2b3085a8a4e95a60617e), [`6bee84`](https://github.com/akshat-OwO/syllabusx-client/commit/6bee84a14212b9d5a8e60f42784bc768fd999492), [`33b78a`](https://github.com/akshat-OwO/syllabusx-client/commit/33b78ada2cb53da8092691a433221e05fd804f30), [`861ba3`](https://github.com/akshat-OwO/syllabusx-client/commit/861ba3a02db05671e572b7f2053023bcf5c9c43c), [`9f6a90`](https://github.com/akshat-OwO/syllabusx-client/commit/9f6a90d752fcef94c106a551b8ec4ab32bcce515) added AI(Beta) `Search with AI` with `AI Note Builder`(Coming soon...)
+
+### Patch Changes
+
+- [`4a50b8`](https://github.com/akshat-OwO/syllabusx-client/commit/4a50b8754ea108d5aa1e282f61c2d1bfffb04319) fixed invalid routes for semester and branch search buttons
+- [`45d460`](https://github.com/akshat-OwO/syllabusx-client/commit/45d46092f86a55dbc595765e16d921669a67e770) fixed cache to stay till 15 days.
+
 ## 4.2.0
 
 ### Minor Changes
