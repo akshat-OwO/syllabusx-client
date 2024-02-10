@@ -46,6 +46,7 @@ const NavLinks: FC<NavLinksProps> = ({}) => {
                 <ThemeCustomizer />
             </div>
             <div className="flex gap-2 md:hidden">
+                <ConfigureAI.MobileTrigger />
                 <ConfigureAI />
                 <ThemeCustomizer />
                 <Sheet>

@@ -42,7 +42,7 @@ const SearchAI: FC<SearchAIProps> = ({}) => {
         return (
             <Drawer
                 open={ai?.completion.isOpen}
-                onOpenChange={ai?.offConfiguring}
+                onOpenChange={ai?.onClose}
                 onClose={ai?.completion.onClose}
             >
                 <DrawerContent className="mt-0 max-h-[90vh] px-5 pb-10">

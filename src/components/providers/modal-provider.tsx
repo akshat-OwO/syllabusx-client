@@ -1,6 +1,7 @@
 "use client";
 
 import { FC, useEffect, useState } from "react";
+import ConfigureAI from "../ai/ConfigureAI";
 import SearchAI from "../ai/SearchAI";
 import EmbedModal from "../modals/embed-modal";
 import FeedbackModal from "../modals/feedback-modal";
@@ -23,6 +24,7 @@ const ModalProvider: FC<ModalProviderProps> = ({}) => {
             <EmbedModal />
             <SubjectListModal />
             <SubjectViewModal />
+            <ConfigureAI.Mobile />
             <SearchAI />
             <FeedbackModal />
         </>

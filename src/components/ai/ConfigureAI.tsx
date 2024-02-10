@@ -4,12 +4,13 @@ import { useAi } from "@/hooks/use-ai";
 import useStore from "@/hooks/use-store";
 import { AiSchema, TAiSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMediaQuery } from "@mantine/hooks";
 import { NotebookPen, Search, Sparkles, Undo } from "lucide-react";
-import React, { FC, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
-import { Drawer, DrawerContent, DrawerTrigger } from "../ui/drawer";
+import { Drawer, DrawerContent } from "../ui/drawer";
 import {
     Form,
     FormControl,
@@ -36,9 +37,8 @@ import { Switch } from "../ui/switch";
 
 interface ConfigureAIProps {}
 
-const ConfigureAI: FC<ConfigureAIProps> = ({}) => {
+const ConfigureAI = ({}: ConfigureAIProps) => {
     const [mounted, setMounted] = useState<boolean>(false);
-    const ai = useStore(useAi, (state) => state);
 
     useEffect(() => {
         setMounted(true);
@@ -46,22 +46,6 @@ const ConfigureAI: FC<ConfigureAIProps> = ({}) => {
 
     return (
         <div className="flex items-center space-x-2">
-            <Drawer open={ai?.isConfiguring} onClose={ai?.offConfiguring}>
-                <DrawerTrigger asChild>
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        disabled={!mounted}
-                        onClick={ai?.onConfiguring}
-                        className="md:hidden"
-                    >
-                        <Sparkles className="h-4 w-4" />
-                    </Button>
-                </DrawerTrigger>
-                <DrawerContent className="px-6 pb-6">
-                    {mounted && <AiForm />}
-                </DrawerContent>
-            </Drawer>
             <div className="hidden md:flex">
                 <Popover>
                     <PopoverTrigger asChild>
@@ -221,7 +205,7 @@ function AiForm() {
                 <AIFeature
                     title="Search with AI"
                     description="Ask literally anything"
-                    onClick={ai.completion.onOpen}
+                    onClick={() => ai.completion.onOpen()}
                     icon={<Search className="h-5 w-5" />}
                 />
                 <AIFeature
@@ -235,6 +219,42 @@ function AiForm() {
         </div>
     );
 }
+
+ConfigureAI.Mobile = function ConfigureAIMobile() {
+    const ai = useStore(useAi, (state) => state);
+
+    return (
+        <Drawer open={ai?.isOpen} onClose={ai?.onClose}>
+            <DrawerContent className="px-6 pb-6">
+                <AiForm />
+            </DrawerContent>
+        </Drawer>
+    );
+};
+
+ConfigureAI.MobileTrigger = function ConfigureAIMobileTrigger() {
+    const ai = useStore(useAi, (state) => state);
+    const [mounted, setMounted] = useState<boolean>(false);
+
+    const isDesktop = useMediaQuery("(min-width: 768px)");
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (isDesktop) return <></>;
+
+    return (
+        <Button
+            onClick={ai?.onOpen}
+            variant="ghost"
+            disabled={!mounted}
+            size="icon"
+        >
+            <Sparkles className="h-4 w-4" />
+        </Button>
+    );
+};
 
 function AIFeature({
     title,

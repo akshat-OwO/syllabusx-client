@@ -15,12 +15,12 @@ type AiStore = {
     toggle: boolean;
     key: string;
     model: TaiModels;
-    isConfiguring: boolean;
+    isOpen: boolean;
     setToggle: (toggle: boolean) => void;
     setKey: (key: string) => void;
     setModel: (model: TaiModels) => void;
-    onConfiguring: () => void;
-    offConfiguring: () => void;
+    onOpen: () => void;
+    onClose: () => void;
     setClear: () => void;
     completion: Completion;
 };
@@ -31,12 +31,12 @@ export const useAi = create<AiStore>()(
             toggle: false,
             key: "",
             model: "gemini-pro",
-            isConfiguring: false,
+            isOpen: false,
             setToggle: (toggle) => set({ toggle }),
             setKey: (key) => set({ key }),
             setModel: (model) => set({ model }),
-            onConfiguring: () => set({ isConfiguring: true }),
-            offConfiguring: () => set({ isConfiguring: false }),
+            onOpen: () => set({ isOpen: true }),
+            onClose: () => set({ isOpen: false }),
             setClear: () => set({ key: "", toggle: false }),
             completion: {
                 prompt: "",
