@@ -2,7 +2,15 @@ import EmailTemplate, { EmailAdminTemplate } from "@/components/EmailTemplate";
 import { FeedbackSchema, TFeedbackSchema } from "@/lib/schemas";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+declare global {
+    var resend: Resend;
+}
+
+if (process.env.RESEND_API_KEY) {
+    global.resend = new Resend(process.env.RESEND_API_KEY);
+} else {
+    console.log("Missing Resend API Key");
+}
 
 export async function POST(req: Request) {
     const { values } = await req.json();
