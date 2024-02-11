@@ -77,7 +77,7 @@ const page: FC<pageProps> = async ({ }) => {
                 ))}
 
 
-                <a href="https://github.com/akshat-OwO/syllabusx-client/releases" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                <a href="https://github.com/akshat-OwO/syllabusx-client/releases" target="_blank" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
                     <div className="text-sm font-medium leading-none">View More</div>
                     <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">See all releases on GitHub</p>
                 </a>
