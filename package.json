@@ -11,10 +11,16 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "prepare": "husky install | chmod ug+x .husky/*",
+        "prepare": "husky install",
         "release": "changeset publish",
         "format": "prettier --check .",
         "format:fix": "prettier --write ."
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "./.husky/pre-commit",
+            "commit-msg": "./.husky/commit-msg"
+        }
     },
     "dependencies": {
         "@contentful/rich-text-react-renderer": "^15.19.0",
