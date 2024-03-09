@@ -2,6 +2,8 @@
 
 import { cn } from "@/lib/utils";
 import { Github, Instagram, Menu, Star } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FC } from "react";
 import ConfigureAI from "./ai/ConfigureAI";
 import ThemeCustomizer from "./theme/theme-customizer";
@@ -9,6 +11,7 @@ import { Button, buttonVariants } from "./ui/button";
 import { ScrollArea } from "./ui/scroll-area";
 import {
     Sheet,
+    SheetClose,
     SheetContent,
     SheetHeader,
     SheetTitle,
@@ -146,16 +149,19 @@ interface ListAnchorProps {
 }
 
 const ListAnchor: FC<ListAnchorProps> = ({ children, href, title }) => {
+    const router = useRouter();
     return (
-        <a
-            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-            href={href}
-        >
-            <div className="text-sm font-medium leading-none">{title}</div>
-            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                {children}
-            </p>
-        </a>
+        <SheetClose>
+            <button
+                className="block select-none space-y-1 rounded-md p-3 text-start leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                onClick={() => router.push(href)}
+            >
+                <div className="text-sm font-medium leading-none">{title}</div>
+                <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                    {children}
+                </p>
+            </button>
+        </SheetClose>
     );
 };
 
