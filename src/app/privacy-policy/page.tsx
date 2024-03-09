@@ -38,10 +38,7 @@ const page: FC<pageProps> = async ({}) => {
             <div className="flex flex-col items-center gap-y-2">
                 <div className="prose prose-sm prose-neutral dark:prose-invert md:prose-base">
                     <h1 className="text-center">
-                        Privacy{" "}
-                        <span className="bg-gradient-to-r from-teal-500 via-teal-600 to-teal-500 bg-clip-text text-transparent">
-                            Policy
-                        </span>
+                        Privacy <span className="text-highlight">Policy</span>
                     </h1>
                 </div>
             </div>

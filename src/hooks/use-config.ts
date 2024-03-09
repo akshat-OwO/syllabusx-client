@@ -1,7 +1,7 @@
 import { createStore, useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
-import { Theme } from "@/lib/themes";
+import type { Theme } from "@/lib/themes";
 
 type Config = {
     theme: Theme["name"];

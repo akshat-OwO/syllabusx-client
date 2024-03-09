@@ -35,9 +35,7 @@ const page: FC<pageProps> = async ({}) => {
                 <div className="prose prose-sm prose-neutral dark:prose-invert md:prose-base">
                     <h1 className="text-center">
                         Unleash Your Academic{" "}
-                        <span className="bg-gradient-to-r from-teal-500 via-teal-600 to-teal-500 bg-clip-text text-transparent">
-                            Odyssey
-                        </span>
+                        <span className="text-highlight">Odyssey</span>
                     </h1>
                 </div>
                 <div className="prose prose-sm prose-neutral dark:prose-invert">
