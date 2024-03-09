@@ -1,5 +1,13 @@
 # syllabusx-client
 
+## 4.3.1
+
+### Patch Changes
+
+- [`6468bc`](https://github.com/akshat-OwO/syllabusx-client/commit/6468bc563639f5caea31190848d20f224fde3b6f) replace anchor tags with link comp
+- [`8859e0`](https://github.com/akshat-OwO/syllabusx-client/commit/8859e0cf7cabc0223147a85554bfa6e95b76cd45) Github, Material & Ayu theme added
+- [`6ffd51`](https://github.com/akshat-OwO/syllabusx-client/commit/6ffd514b3c51e4e53ae9f8f56f11910bcf5533a3) Fixed heading and gradient colors according to theme (Stable release of Customizer)
+
 ## 4.3.0
 
 ### Minor Changes
