@@ -86,6 +86,7 @@ function Customizer({ closeTriggerHidden = false }: CustomizerProps) {
                                 theme: "neutral",
                                 radius: 0.5,
                             });
+                            setMode("dark");
                         }}
                     >
                         <Undo />
