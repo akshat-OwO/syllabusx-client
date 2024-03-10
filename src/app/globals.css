@@ -24,7 +24,8 @@
         --input: 0 0% 89.8%;
         --ring: 0 0% 3.9%;
         --radius: 0.5rem;
-        --translucent: rgba(0, 200, 255, 0.3);
+        --translucent: 192.94, 100%, 50%, 0.3;
+        --highlight: 192.94, 100%, 50%;
     }
 
     .dark {
@@ -77,7 +78,7 @@
 .radial-top {
     background: radial-gradient(
         ellipse 80% 35% at 50% -20%,
-        var(--translucent),
+        hsl(var(--translucent)),
         rgba(0, 0, 100, 0)
     );
 }
@@ -85,8 +86,8 @@
 .conic-center {
     background: conic-gradient(
         from 230.29deg at 51.63% 52.16%,
-        var(--translucent) 0deg,
-        var(--translucent) 360deg
+        hsl(var(--translucent)) 0deg,
+        hsl(var(--translucent)) 360deg
     );
     filter: blur(150px);
     transform: translateZ(0px);

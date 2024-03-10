@@ -43,9 +43,7 @@ const page: FC<pageProps> = async ({}) => {
                 <div className="prose prose-sm prose-neutral dark:prose-invert md:prose-base">
                     <h1 className="text-center">
                         Unveiling the Minds Behind{" "}
-                        <span className="bg-gradient-to-r from-teal-500 via-teal-600 to-teal-500 bg-clip-text text-transparent">
-                            SyllabusX
-                        </span>
+                        <span className="text-highlight">SyllabusX</span>
                     </h1>
                 </div>
                 <div className="prose prose-sm prose-neutral dark:prose-invert">
@@ -57,17 +55,20 @@ const page: FC<pageProps> = async ({}) => {
             </div>
             <div className="w-full py-10">
                 <div className="relative aspect-video rounded-md">
-                    <Image
-                        src={
-                            aboutContent
-                                ? "https:" +
-                                  aboutContent.teamImage.fields.file.url
-                                : "/placeholder.png"
-                        }
-                        alt="Team Image"
-                        fill
-                        className="rounded-md"
-                    />
+                    <div className="conic-center absolute h-full w-full" />
+                    <div className="z-10 aspect-video w-full rounded-md bg-accent/20 p-2 shadow-2xl">
+                        <Image
+                            src={
+                                aboutContent
+                                    ? "https:" +
+                                      aboutContent.teamImage.fields.file.url
+                                    : "/placeholder.png"
+                            }
+                            alt="Team Image"
+                            fill
+                            className="rounded-md p-2"
+                        />
+                    </div>
                 </div>
             </div>
             {team ? (

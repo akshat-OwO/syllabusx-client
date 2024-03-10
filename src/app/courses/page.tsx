@@ -2,6 +2,7 @@ import { buttonVariants } from "@/components/ui/button";
 import LayoutWrapper from "@/layouts/LayoutWrapper";
 import { cn } from "@/lib/utils";
 import { Metadata } from "next";
+import Link from "next/link";
 import { FC } from "react";
 
 export const metadata: Metadata = {
@@ -35,9 +36,7 @@ const page: FC<pageProps> = async ({}) => {
                 <div className="prose prose-sm prose-neutral dark:prose-invert md:prose-base">
                     <h1 className="text-center">
                         Unleash Your Academic{" "}
-                        <span className="bg-gradient-to-r from-teal-500 via-teal-600 to-teal-500 bg-clip-text text-transparent">
-                            Odyssey
-                        </span>
+                        <span className="text-highlight">Odyssey</span>
                     </h1>
                 </div>
                 <div className="prose prose-sm prose-neutral dark:prose-invert">
@@ -47,7 +46,7 @@ const page: FC<pageProps> = async ({}) => {
                 </div>
             </div>
             <div className="mx-auto grid aspect-video w-full grid-cols-2 gap-2 py-20 lg:w-3/5">
-                <a
+                <Link
                     href="/courses/btech"
                     className={cn(
                         buttonVariants({
@@ -57,8 +56,8 @@ const page: FC<pageProps> = async ({}) => {
                     )}
                 >
                     B.Tech
-                </a>
-                <a
+                </Link>
+                <Link
                     href="/courses/bca"
                     className={cn(
                         buttonVariants({
@@ -68,7 +67,7 @@ const page: FC<pageProps> = async ({}) => {
                     )}
                 >
                     BCA
-                </a>
+                </Link>
                 <div
                     className={cn(
                         buttonVariants({

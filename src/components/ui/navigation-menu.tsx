@@ -4,6 +4,7 @@ import { ChevronDown } from "lucide-react";
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 const NavigationMenu = React.forwardRef<
     React.ElementRef<typeof NavigationMenuPrimitive.Root>,
@@ -118,17 +119,21 @@ NavigationMenuIndicator.displayName =
 const ListItem = React.forwardRef<
     React.ElementRef<"a">,
     React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
+>(({ className, title, children, href, ...props }, ref) => {
     return (
         <li>
-            <NavigationMenuLink asChild>
-                <a
-                    ref={ref}
+            <Link
+                ref={ref}
+                href={href as string}
+                {...props}
+                legacyBehavior
+                passHref
+            >
+                <NavigationMenuLink
                     className={cn(
                         "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
                         className
                     )}
-                    {...props}
                 >
                     <div className="text-sm font-medium leading-none">
                         {title}
@@ -136,8 +141,8 @@ const ListItem = React.forwardRef<
                     <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                         {children}
                     </p>
-                </a>
-            </NavigationMenuLink>
+                </NavigationMenuLink>
+            </Link>
         </li>
     );
 });
