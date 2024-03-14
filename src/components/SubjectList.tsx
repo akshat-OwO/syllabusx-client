@@ -1,14 +1,17 @@
 "use client";
 
 import { Courses } from "@/config";
-import { useSubjectList } from "@/hooks/use-subject-list";
+import {
+    useActiveSubjectsStore,
+    useSubjectList,
+} from "@/hooks/use-subject-list";
 import { getSubjectList } from "@/lib/server";
 import { cn } from "@/lib/utils";
 import { QueryKey, useQuery } from "@tanstack/react-query";
 import _ from "lodash";
-import { Expand, Maximize2, Minimize2 } from "lucide-react";
+import { Check, Expand, ListChecks, Maximize2, Minimize2 } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { Button } from "./ui/button";
 import {
     Card,
@@ -17,6 +20,8 @@ import {
     CardHeader,
     CardTitle,
 } from "./ui/card";
+import { Command, CommandGroup, CommandInput, CommandItem } from "./ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { ScrollArea } from "./ui/scroll-area";
 import { Skeleton } from "./ui/skeleton";
 
@@ -28,6 +33,8 @@ const SubjectList = ({ course }: SubjectListProps) => {
     const subjectListModal = useSubjectList();
 
     const searchParams = useSearchParams()!;
+
+    const { activeSubjects } = useActiveSubjectsStore();
 
     const semester = searchParams.get("semester");
     const branch = searchParams.get("branch");
@@ -49,6 +56,18 @@ const SubjectList = ({ course }: SubjectListProps) => {
         queryFn: async () => await getSubjectList({ course, branch, semester }),
     });
 
+    const generateSubjectList = useMemo(() => {
+        const subjects = activeSubjects.find(
+            (active) => active.branch === branch && active.semester === semester
+        );
+
+        if (subjects && subjects.subjects.length > 0) {
+            return subjects.subjects;
+        } else {
+            if (list) return list.slice(0, 9);
+        }
+    }, [list, semester, branch, activeSubjects]);
+
     if (isLoading) {
         return <SubjectList.Skeleton />;
     }
@@ -69,19 +88,24 @@ const SubjectList = ({ course }: SubjectListProps) => {
                                 Spoiler alert: courage required
                             </CardDescription>
                         </div>
-                        <Button
-                            onClick={() =>
-                                subjectListModal.onOpen(list as string[])
-                            }
-                            size={"icon"}
-                            variant={"ghost"}
-                        >
-                            <Expand className="h-4 w-4" />
-                        </Button>
+                        <div className="flex items-center gap-2">
+                            {list.length > 9 && (
+                                <SubjectList.ActiveSubjects list={list} />
+                            )}
+                            <Button
+                                onClick={() =>
+                                    subjectListModal.onOpen(generateSubjectList)
+                                }
+                                size={"icon"}
+                                variant={"ghost"}
+                            >
+                                <Expand className="h-4 w-4" />
+                            </Button>
+                        </div>
                     </CardHeader>
                     <CardContent>
                         <ScrollArea type="always" className="h-28 pr-5">
-                            <SubjectList.Data list={list as string[]} />
+                            <SubjectList.Data list={generateSubjectList} />
                         </ScrollArea>
                     </CardContent>
                 </Card>
@@ -182,6 +206,83 @@ SubjectList.Data = function SubjectListData({ list }: { list: string[] }) {
                 </Button>
             ))}
         </div>
+    );
+};
+
+SubjectList.ActiveSubjects = function SubjectListActiveSubjects({
+    list,
+}: {
+    list: string[];
+}) {
+    const inputRef = useRef<HTMLInputElement>(null);
+    const [open, setOpen] = useState<boolean>(false);
+
+    const searchParams = useSearchParams()!;
+
+    const semester = searchParams.get("semester");
+    const branch = searchParams.get("branch");
+
+    const { activeSubjects, toggleSubject } = useActiveSubjectsStore();
+
+    const onOpenChange = (value: boolean) => {
+        inputRef.current?.blur();
+        setOpen(value);
+    };
+
+    const toggle = (subject: string) => {
+        if (semester && branch) {
+            toggleSubject(semester, branch, subject);
+        }
+    };
+
+    return (
+        <Popover open={open} onOpenChange={onOpenChange}>
+            <PopoverTrigger asChild>
+                <Button
+                    variant="outline"
+                    size="icon"
+                    aria-expanded={open}
+                    role="combobox"
+                >
+                    <ListChecks className="size-4" />
+                </Button>
+            </PopoverTrigger>
+            <PopoverContent>
+                <Command loop>
+                    <CommandInput
+                        ref={inputRef}
+                        placeholder="Search Subjects..."
+                    />
+                    <CommandGroup>
+                        {list.map((subject) => {
+                            const isActive = activeSubjects.some(
+                                (active) =>
+                                    active.branch === branch &&
+                                    active.semester === semester &&
+                                    active.subjects.includes(subject)
+                            );
+                            return (
+                                <CommandItem
+                                    key={subject}
+                                    value={subject}
+                                    onSelect={() => toggle(subject)}
+                                >
+                                    <Check
+                                        className={cn(
+                                            "mr-2 h-4 w-4",
+                                            isActive
+                                                ? "opacity-100"
+                                                : "opacity-0"
+                                        )}
+                                    />
+                                    <div className="flex-1">{subject}</div>
+                                </CommandItem>
+                            );
+                        })}
+                    </CommandGroup>
+                </Command>
+            </PopoverContent>
+        </Popover>
     );
 };
 
