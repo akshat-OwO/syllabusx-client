@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { FC } from "react";
 import ConfigureAI from "./ai/ConfigureAI";
 import ThemeCustomizer from "./theme/theme-customizer";
+import AccessibleToolTip from "./ui/accessible-tooltip";
 import { Button, buttonVariants } from "./ui/button";
 import { ScrollArea } from "./ui/scroll-area";
 import {
@@ -24,27 +25,34 @@ const NavLinks: FC<NavLinksProps> = ({}) => {
     return (
         <>
             <div className="hidden items-center gap-2 md:flex">
-                <a
-                    className={cn(
-                        buttonVariants({ variant: "ghost", className: "gap-2" })
-                    )}
-                    href="https://github.com/akshat-OwO/syllabusx-client"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <Star className="h-4 w-4" />
-                    Star this project
-                </a>
-                <a
-                    className={cn(
-                        buttonVariants({ variant: "ghost", size: "icon" })
-                    )}
-                    href="https://www.instagram.com/syllabusx_.live/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <Instagram className="h-4 w-4" />
-                </a>
+                <AccessibleToolTip label="Github">
+                    <a
+                        className={cn(
+                            buttonVariants({
+                                variant: "ghost",
+                                className: "gap-2",
+                            })
+                        )}
+                        href="https://github.com/akshat-OwO/syllabusx-client"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <Star className="h-4 w-4" />
+                        Star this project
+                    </a>
+                </AccessibleToolTip>
+                <AccessibleToolTip label="Instagram">
+                    <a
+                        className={cn(
+                            buttonVariants({ variant: "ghost", size: "icon" })
+                        )}
+                        href="https://www.instagram.com/syllabusx_.live/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <Instagram className="h-4 w-4" />
+                    </a>
+                </AccessibleToolTip>
                 <ConfigureAI />
                 <ThemeCustomizer />
             </div>
@@ -107,32 +115,36 @@ const NavLinks: FC<NavLinksProps> = ({}) => {
                                 </ListAnchor>
                             </ul>
                             <div className="mt-5 flex items-center justify-center gap-2">
-                                <a
-                                    className={cn(
-                                        buttonVariants({
-                                            variant: "ghost",
-                                            size: "icon",
-                                        })
-                                    )}
-                                    href="https://www.instagram.com/syllabusx_.live/"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    <Instagram className="h-4 w-4" />
-                                </a>
-                                <a
-                                    className={cn(
-                                        buttonVariants({
-                                            variant: "ghost",
-                                            size: "icon",
-                                        })
-                                    )}
-                                    href="https://github.com/akshat-OwO/syllabusx-client"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    <Github className="h-4 w-4" />
-                                </a>
+                                <AccessibleToolTip label="Instagram">
+                                    <a
+                                        className={cn(
+                                            buttonVariants({
+                                                variant: "ghost",
+                                                size: "icon",
+                                            })
+                                        )}
+                                        href="https://www.instagram.com/syllabusx_.live/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        <Instagram className="h-4 w-4" />
+                                    </a>
+                                </AccessibleToolTip>
+                                <AccessibleToolTip label="Github">
+                                    <a
+                                        className={cn(
+                                            buttonVariants({
+                                                variant: "ghost",
+                                                size: "icon",
+                                            })
+                                        )}
+                                        href="https://github.com/akshat-OwO/syllabusx-client"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        <Github className="h-4 w-4" />
+                                    </a>
+                                </AccessibleToolTip>
                             </div>
                         </ScrollArea>
                     </SheetContent>

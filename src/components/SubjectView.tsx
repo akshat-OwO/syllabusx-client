@@ -10,6 +10,7 @@ import { useSearchParams } from "next/navigation";
 import { useCallback, useState } from "react";
 import StudyMaterial from "./StudyMaterial";
 import Syllabus from "./Syllabus";
+import AccessibleToolTip from "./ui/accessible-tooltip";
 import { Button } from "./ui/button";
 import {
     Card,
@@ -102,16 +103,18 @@ const SubjectView = ({ course, isModal }: SubjectViewProps) => {
                         >
                             <CardTitle>{sub[0].subject}</CardTitle>
                             {!subjectViewModal.isOpen && (
-                                <Button
-                                    onClick={() =>
-                                        subjectViewModal.onOpen(course)
-                                    }
-                                    size={"icon"}
-                                    variant={"ghost"}
-                                    className="hidden md:inline-flex"
-                                >
-                                    <Expand className="h-4 w-4" />
-                                </Button>
+                                <AccessibleToolTip label="Modal view">
+                                    <Button
+                                        onClick={() =>
+                                            subjectViewModal.onOpen(course)
+                                        }
+                                        size={"icon"}
+                                        variant={"ghost"}
+                                        className="hidden md:inline-flex"
+                                    >
+                                        <Expand className="h-4 w-4" />
+                                    </Button>
+                                </AccessibleToolTip>
                             )}
                         </CardHeader>
                         <CardContent>

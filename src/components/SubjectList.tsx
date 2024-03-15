@@ -9,9 +9,10 @@ import { getSubjectList } from "@/lib/server";
 import { cn } from "@/lib/utils";
 import { QueryKey, useQuery } from "@tanstack/react-query";
 import _ from "lodash";
-import { Check, Expand, ListChecks, Maximize2, Minimize2 } from "lucide-react";
+import { Check, Expand, ListChecks } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useRef, useState } from "react";
+import AccessibleToolTip from "./ui/accessible-tooltip";
 import { Button } from "./ui/button";
 import {
     Card,
@@ -21,11 +22,9 @@ import {
     CardTitle,
 } from "./ui/card";
 import { Command, CommandGroup, CommandInput, CommandItem } from "./ui/command";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { ScrollArea } from "./ui/scroll-area";
 import { Skeleton } from "./ui/skeleton";
-import { Tooltip, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 
 interface SubjectListProps {
     course: Courses;
@@ -94,15 +93,19 @@ const SubjectList = ({ course }: SubjectListProps) => {
                             {list.length > 9 && (
                                 <SubjectList.ActiveSubjects list={list} />
                             )}
-                            <Button
-                                onClick={() =>
-                                    subjectListModal.onOpen(generateSubjectList)
-                                }
-                                size={"icon"}
-                                variant={"ghost"}
-                            >
-                                <Expand className="h-4 w-4" />
-                            </Button>
+                            <AccessibleToolTip label="Modal view">
+                                <Button
+                                    onClick={() =>
+                                        subjectListModal.onOpen(
+                                            generateSubjectList
+                                        )
+                                    }
+                                    size={"icon"}
+                                    variant={"ghost"}
+                                >
+                                    <Expand className="h-4 w-4" />
+                                </Button>
+                            </AccessibleToolTip>
                         </div>
                     </CardHeader>
                     <CardContent>
@@ -239,32 +242,27 @@ SubjectList.ActiveSubjects = function SubjectListActiveSubjects({
 
     return (
         <Popover open={open} onOpenChange={onOpenChange}>
-            <HoverCard>
-                <HoverCardTrigger>
-                    <PopoverTrigger asChild>
-                        <Button
-                            variant={
-                                activeSubjects.some(
-                                    (active) =>
-                                        active.branch === branch &&
-                                        active.semester === semester &&
-                                        active.subjects.length > 0
-                                )
-                                    ? "ghost"
-                                    : "default"
-                            }
-                            size="icon"
-                            aria-expanded={open}
-                            role="combobox"
-                        >
-                            <ListChecks className="size-4" />
-                        </Button>
-                    </PopoverTrigger>
-                </HoverCardTrigger>
-                <HoverCardContent side="top" className="w-fit">
-                    Choose your subjects
-                </HoverCardContent>
-            </HoverCard>
+            <AccessibleToolTip label="Choose your subjects">
+                <PopoverTrigger asChild>
+                    <Button
+                        variant={
+                            activeSubjects.some(
+                                (active) =>
+                                    active.branch === branch &&
+                                    active.semester === semester &&
+                                    active.subjects.length > 0
+                            )
+                                ? "ghost"
+                                : "default"
+                        }
+                        size="icon"
+                        aria-expanded={open}
+                        role="combobox"
+                    >
+                        <ListChecks className="size-4" />
+                    </Button>
+                </PopoverTrigger>
+            </AccessibleToolTip>
             <PopoverContent>
                 <Command loop>
                     <CommandInput
