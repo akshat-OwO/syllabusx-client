@@ -21,9 +21,11 @@ import {
     CardTitle,
 } from "./ui/card";
 import { Command, CommandGroup, CommandInput, CommandItem } from "./ui/command";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { ScrollArea } from "./ui/scroll-area";
 import { Skeleton } from "./ui/skeleton";
+import { Tooltip, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 
 interface SubjectListProps {
     course: Courses;
@@ -64,7 +66,7 @@ const SubjectList = ({ course }: SubjectListProps) => {
         if (subjects && subjects.subjects.length > 0) {
             return subjects.subjects;
         } else {
-            if (list) return list.slice(0, 9);
+            if (list) return list;
         }
     }, [list, semester, branch, activeSubjects]);
 
@@ -177,7 +179,7 @@ SubjectList.Data = function SubjectListData({ list }: { list: string[] }) {
     );
 
     return (
-        <div className="grid grid-cols-2 gap-x-5 gap-y-5 sm:grid-cols-3">
+        <div className="grid grid-cols-2 gap-5 sm:grid-cols-3">
             {list.map((subject: string) => (
                 <Button
                     className="h-auto whitespace-normal shadow-md"
@@ -237,16 +239,32 @@ SubjectList.ActiveSubjects = function SubjectListActiveSubjects({
 
     return (
         <Popover open={open} onOpenChange={onOpenChange}>
-            <PopoverTrigger asChild>
-                <Button
-                    variant="outline"
-                    size="icon"
-                    aria-expanded={open}
-                    role="combobox"
-                >
-                    <ListChecks className="size-4" />
-                </Button>
-            </PopoverTrigger>
+            <HoverCard>
+                <HoverCardTrigger>
+                    <PopoverTrigger asChild>
+                        <Button
+                            variant={
+                                activeSubjects.some(
+                                    (active) =>
+                                        active.branch === branch &&
+                                        active.semester === semester &&
+                                        active.subjects.length > 0
+                                )
+                                    ? "ghost"
+                                    : "default"
+                            }
+                            size="icon"
+                            aria-expanded={open}
+                            role="combobox"
+                        >
+                            <ListChecks className="size-4" />
+                        </Button>
+                    </PopoverTrigger>
+                </HoverCardTrigger>
+                <HoverCardContent side="top" className="w-fit">
+                    Choose your subjects
+                </HoverCardContent>
+            </HoverCard>
             <PopoverContent>
                 <Command loop>
                     <CommandInput
@@ -254,31 +272,33 @@ SubjectList.ActiveSubjects = function SubjectListActiveSubjects({
                         placeholder="Search Subjects..."
                     />
                     <CommandGroup>
-                        {list.map((subject) => {
-                            const isActive = activeSubjects.some(
-                                (active) =>
-                                    active.branch === branch &&
-                                    active.semester === semester &&
-                                    active.subjects.includes(subject)
-                            );
-                            return (
-                                <CommandItem
-                                    key={subject}
-                                    value={subject}
-                                    onSelect={() => toggle(subject)}
-                                >
-                                    <Check
-                                        className={cn(
-                                            "mr-2 h-4 w-4",
-                                            isActive
-                                                ? "opacity-100"
-                                                : "opacity-0"
-                                        )}
-                                    />
-                                    <div className="flex-1">{subject}</div>
-                                </CommandItem>
-                            );
-                        })}
+                        <ScrollArea type="always" className="h-44 pr-4">
+                            {list.map((subject) => {
+                                const isActive = activeSubjects.some(
+                                    (active) =>
+                                        active.branch === branch &&
+                                        active.semester === semester &&
+                                        active.subjects.includes(subject)
+                                );
+                                return (
+                                    <CommandItem
+                                        key={subject}
+                                        value={subject}
+                                        onSelect={() => toggle(subject)}
+                                    >
+                                        <Check
+                                            className={cn(
+                                                "mr-2 h-4 w-4",
+                                                isActive
+                                                    ? "opacity-100"
+                                                    : "opacity-0"
+                                            )}
+                                        />
+                                        <div className="flex-1">{subject}</div>
+                                    </CommandItem>
+                                );
+                            })}
+                        </ScrollArea>
                     </CommandGroup>
                 </Command>
             </PopoverContent>

@@ -19,6 +19,10 @@ export const semesterList = [
         value: "fifthsemesters",
         label: "5th",
     },
+    {
+        value: "sixthsemesters",
+        label: "6th",
+    },
 ];
 
 export const bcaSemesterList = [
