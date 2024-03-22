@@ -4,6 +4,7 @@ import { FC } from "react";
 import SubjectList from "../SubjectList";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "../ui/drawer";
+import { ScrollArea } from "../ui/scroll-area";
 
 interface SubjectListModalProps {}
 
@@ -18,7 +19,9 @@ const SubjectListModal: FC<SubjectListModalProps> = ({}) => {
                     <DrawerHeader>
                         <DrawerTitle>Subjects</DrawerTitle>
                     </DrawerHeader>
-                    <SubjectList.Data list={subjectList.subjectList} />
+                    <ScrollArea type="scroll" tw="max-h-[75vh]">
+                        <SubjectList.Data list={subjectList.subjectList} />
+                    </ScrollArea>
                 </DrawerContent>
             </Drawer>
         );
@@ -30,7 +33,9 @@ const SubjectListModal: FC<SubjectListModalProps> = ({}) => {
                 <DialogHeader>
                     <DialogTitle>Subjects</DialogTitle>
                 </DialogHeader>
-                <SubjectList.Data list={subjectList.subjectList} />
+                <ScrollArea type="scroll" tw="max-h-[50vh]">
+                    <SubjectList.Data list={subjectList.subjectList} />
+                </ScrollArea>
             </DialogContent>
         </Dialog>
     );
