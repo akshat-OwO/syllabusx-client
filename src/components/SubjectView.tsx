@@ -216,32 +216,45 @@ SubjectView.Box = function SubjectViewBox({
 };
 
 SubjectView.Details = function SubjectViewDetails({ sub }: { sub: any }) {
+    function DetailItem({ label, value }: { label: string; value: string }) {
+        return (
+            <div className="flex flex-wrap items-center justify-between rounded-md bg-background p-2">
+                <p className="font-semibold">{label}</p>
+                <p>
+                    {typeof value === "string" && value.includes("/")
+                        ? value.split("/").join(" / ")
+                        : value}
+                </p>
+            </div>
+        );
+    }
+
     return (
         <CardContent className="">
-            <div className="flex flex-col gap-2 rounded-md bg-accent p-2 shadow-md">
+            <div className="flex flex-col gap-1.5 rounded-md bg-accent p-1 shadow-md">
                 {sub[0].theorypapercode ? (
-                    <div className="flex items-center justify-between">
-                        <p className="font-semibold">Theory Code</p>
-                        <p>{sub[0].theorypapercode}</p>
-                    </div>
+                    <DetailItem
+                        label="Theory Code"
+                        value={sub[0].theorypapercode}
+                    />
                 ) : null}
                 {sub[0].theorycredits ? (
-                    <div className="flex items-center justify-between">
-                        <p className="font-semibold">Theory Credits</p>
-                        <p>{sub[0].theorycredits}</p>
-                    </div>
+                    <DetailItem
+                        label="Theory Credits"
+                        value={sub[0].theorycredits}
+                    />
                 ) : null}
                 {sub[0].labpapercode ? (
-                    <div className="flex items-center justify-between">
-                        <p className="font-semibold">Lab Code</p>
-                        <p>{sub[0].labpapercode}</p>
-                    </div>
+                    <DetailItem label="Lab Code" value={sub[0].labpapercode} />
                 ) : null}
                 {sub[0].labcredits ? (
-                    <div className="flex items-center justify-between">
-                        <p className="font-semibold">Lab Credits</p>
-                        <p>{sub[0].labcredits}</p>
-                    </div>
+                    <DetailItem label="Lab Credits" value={sub[0].labcredits} />
+                ) : null}
+                {sub[0].coursecategory ? (
+                    <DetailItem
+                        label="Course Category"
+                        value={sub[0].coursecategory}
+                    />
                 ) : null}
             </div>
         </CardContent>
