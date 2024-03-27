@@ -1,5 +1,17 @@
 # syllabusx-client
 
+## 4.4.0
+
+### Minor Changes
+
+- [`443669`](https://github.com/akshat-OwO/syllabusx-client/commit/443669330b21cbe059a641026b30bdbb119ac517) [`2318ab`](https://github.com/akshat-OwO/syllabusx-client/commit/2318ab5c6c8d103b4fbfffa363bae9e60f0b96f9) [`60dd76`](https://github.com/akshat-OwO/syllabusx-client/commit/60dd768ead8fa60edd91b7801563834395932a6b) [`e7cfab`](https://github.com/akshat-OwO/syllabusx-client/commit/e7cfab29fe92856edf4f10f0f0c271f55a896cb4) subjects can be chosen now
+
+### Patch Changes
+
+- [`61fe6b`](https://github.com/akshat-OwO/syllabusx-client/commit/61fe6bf8d2c09b821f8d43ec16fcf1ec7b3966f0) fixed tablet navbar overflow
+- [`d760af`](https://github.com/akshat-OwO/syllabusx-client/commit/d760af020a2846d0c5fb397d64dd8cc7db115b6e) accessible tooltips for buttons
+- [`7e25ed`](https://github.com/akshat-OwO/syllabusx-client/commit/7e25ed0db66b33b629927a9949500fe36fbd416d) fixed email template header image
+
 ## 4.3.1
 
 ### Patch Changes
