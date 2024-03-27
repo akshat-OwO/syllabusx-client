@@ -9,6 +9,7 @@ import { NotebookPen, Search, Sparkles, Undo } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import AccessibleToolTip from "../ui/accessible-tooltip";
 import { Button } from "../ui/button";
 import { Drawer, DrawerContent } from "../ui/drawer";
 import {
@@ -48,11 +49,17 @@ const ConfigureAI = ({}: ConfigureAIProps) => {
         <div className="flex items-center space-x-2">
             <div className="hidden md:flex">
                 <Popover>
-                    <PopoverTrigger asChild>
-                        <Button variant="ghost" disabled={!mounted} size="icon">
-                            <Sparkles className="h-4 w-4" />
-                        </Button>
-                    </PopoverTrigger>
+                    <AccessibleToolTip label="AI">
+                        <PopoverTrigger asChild>
+                            <Button
+                                variant="ghost"
+                                disabled={!mounted}
+                                size="icon"
+                            >
+                                <Sparkles className="h-4 w-4" />
+                            </Button>
+                        </PopoverTrigger>
+                    </AccessibleToolTip>
                     <PopoverContent
                         align="end"
                         className="z-50 w-[340px] rounded-[0.5rem] p-6"
@@ -251,14 +258,16 @@ ConfigureAI.MobileTrigger = function ConfigureAIMobileTrigger() {
     if (isDesktop) return <></>;
 
     return (
-        <Button
-            onClick={ai?.onOpen}
-            variant="ghost"
-            disabled={!mounted}
-            size="icon"
-        >
-            <Sparkles className="h-4 w-4" />
-        </Button>
+        <AccessibleToolTip label="AI">
+            <Button
+                onClick={ai?.onOpen}
+                variant="ghost"
+                disabled={!mounted}
+                size="icon"
+            >
+                <Sparkles className="h-4 w-4" />
+            </Button>
+        </AccessibleToolTip>
     );
 };
 

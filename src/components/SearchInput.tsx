@@ -5,6 +5,7 @@ import _ from "lodash";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { FC, useCallback, useEffect, useState } from "react";
+import AccessibleToolTip from "./ui/accessible-tooltip";
 import { Button } from "./ui/button";
 import {
     Command,
@@ -68,18 +69,20 @@ const SearchInput: FC<SearchInputProps> = ({
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
-                <Button
-                    variant={!param ? "default" : "outline"}
-                    role="combobox"
-                    aria-expanded={open}
-                    disabled={!mounted}
-                    className="justify-between"
-                >
-                    {!param ? _.startCase(label) : param}
-                    <ChevronsUpDown className="h-4 w-4" />
-                </Button>
-            </PopoverTrigger>
+            <AccessibleToolTip label={`Choose your ${_.startCase(label)}`}>
+                <PopoverTrigger asChild>
+                    <Button
+                        variant={!param ? "default" : "outline"}
+                        role="combobox"
+                        aria-expanded={open}
+                        disabled={!mounted}
+                        className="justify-between"
+                    >
+                        {!param ? _.startCase(label) : param}
+                        <ChevronsUpDown className="h-4 w-4" />
+                    </Button>
+                </PopoverTrigger>
+            </AccessibleToolTip>
             <PopoverContent>
                 {mounted ? (
                     <Command>

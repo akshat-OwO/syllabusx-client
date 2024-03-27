@@ -23,7 +23,7 @@ const Navbar: FC<NavbarProps> = ({}) => {
                                 SyllabusX
                             </p>
                         </Link>
-                        <div className="hidden md:flex">
+                        <div className="hidden lg:flex">
                             <NavMenu />
                         </div>
                     </div>

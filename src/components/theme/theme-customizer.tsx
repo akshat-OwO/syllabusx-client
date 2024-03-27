@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { CheckIcon, MoonIcon, Palette, SunIcon, Undo, X } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import AccessibleToolTip from "../ui/accessible-tooltip";
 import { Button } from "../ui/button";
 import { Drawer, DrawerContent, DrawerTrigger } from "../ui/drawer";
 import { Label } from "../ui/label";
@@ -23,22 +24,34 @@ const ThemeCustomizer = () => {
     return (
         <div className="flex items-center space-x-2">
             <Drawer>
-                <DrawerTrigger asChild>
-                    <Button variant="ghost" size="icon" className="md:hidden">
-                        <Palette className="h-4 w-4" />
-                    </Button>
-                </DrawerTrigger>
+                <AccessibleToolTip label="Customize">
+                    <DrawerTrigger asChild>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="md:hidden"
+                        >
+                            <Palette className="h-4 w-4" />
+                        </Button>
+                    </DrawerTrigger>
+                </AccessibleToolTip>
                 <DrawerContent className="h-[85%] px-6">
                     <Customizer />
                 </DrawerContent>
             </Drawer>
             <div className="hidden md:flex">
                 <Sheet>
-                    <SheetTrigger asChild>
-                        <Button variant="ghost" disabled={!mounted} size="icon">
-                            <Palette className="h-4 w-4" />
-                        </Button>
-                    </SheetTrigger>
+                    <AccessibleToolTip label="Customize">
+                        <SheetTrigger asChild>
+                            <Button
+                                variant="ghost"
+                                disabled={!mounted}
+                                size="icon"
+                            >
+                                <Palette className="h-4 w-4" />
+                            </Button>
+                        </SheetTrigger>
+                    </AccessibleToolTip>
                     <SheetContent
                         isCloseTriggerVisible={false}
                         className="z-50"
