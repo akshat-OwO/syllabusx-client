@@ -13,6 +13,7 @@ import {
     useQuery,
 } from "@tanstack/react-query";
 import { AlertCircle, Download, Heart, RotateCw } from "lucide-react";
+import Clap from "./Clap";
 import { Icons } from "./Icons";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { Button } from "./ui/button";
@@ -157,14 +158,7 @@ const StudyMaterial = ({
                                 {d.name.slice(0, -4)}
                             </span>
                             <div className="flex w-full items-center justify-start divide-x divide-secondary rounded-b-md">
-                                <div
-                                    role="button"
-                                    title={`Vote ${d.name}`}
-                                    className="flex flex-1 items-center gap-2 rounded-bl-md bg-background/75 px-2 py-1 font-semibold text-secondary-foreground hover:bg-background/60"
-                                >
-                                    <Icons.clap className="h-4 w-4 fill-primary" />{" "}
-                                    {0}
-                                </div>
+                                <Clap material={d} />
                                 <div
                                     role="button"
                                     title={`Add ${d.name} to favorites`}
