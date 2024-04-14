@@ -24,6 +24,12 @@ const Footer: FC<FooterProps> = ({}) => {
                         Contact Us
                     </Link>
                     <Link
+                        href={"/changelog"}
+                        className={cn(buttonVariants({ variant: "link" }))}
+                    >
+                        Change Log
+                    </Link>
+                    <Link
                         href={"/t&c"}
                         className={cn(buttonVariants({ variant: "link" }))}
                     >

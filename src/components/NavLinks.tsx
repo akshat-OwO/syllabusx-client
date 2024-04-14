@@ -76,6 +76,10 @@ const NavLinks: FC<NavLinksProps> = ({}) => {
                                     Swipe through the academic menu, and let the
                                     learning feast begin!
                                 </ListAnchor>
+                                <ListAnchor title="Functions" href="/functions">
+                                    Elevate Your Academic Journey: Effortlessly
+                                    Calculate Your Grades
+                                </ListAnchor>
                                 <ListAnchor
                                     title="Change Log"
                                     href="/changelog"

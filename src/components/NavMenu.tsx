@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { FC } from "react";
 import { buttonVariants } from "./ui/button";
+import { Sigma } from "lucide-react";
 import {
     ListItem,
     NavigationMenu,
@@ -37,11 +38,14 @@ const NavMenu: FC<NavMenuProps> = ({}) => {
                     </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <Link href="/changelog" legacyBehavior passHref>
+                    <Link href="/functions" legacyBehavior passHref>
                         <NavigationMenuLink
-                            className={navigationMenuTriggerStyle()}
+                            className={cn(
+                                navigationMenuTriggerStyle(),
+                                "gap-2"
+                            )}
                         >
-                            Change Log
+                            <Sigma className="h-4 w-4" /> Functions
                         </NavigationMenuLink>
                     </Link>
                 </NavigationMenuItem>
