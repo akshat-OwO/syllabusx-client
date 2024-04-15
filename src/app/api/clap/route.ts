@@ -1,6 +1,16 @@
 import { redis } from "@/lib/redis";
 import { NextRequest, NextResponse } from "next/server";
 
+import { Ratelimit } from "@upstash/ratelimit";
+
+const ratelimit = new Ratelimit({
+    redis,
+    limiter: Ratelimit.slidingWindow(1, "5s"),
+    analytics: true,
+});
+
+const EXPIRATION_TIME_SECONDS = 30 * 24 * 60 * 60;
+
 export async function GET(req: NextRequest) {
     const url = new URL(req.url);
     const id = url.searchParams.get("id");
@@ -51,9 +61,26 @@ export async function POST(req: NextRequest) {
         );
     }
 
+    const { success, remaining } = await ratelimit.limit(RAW_IP);
+
+    if (!success) {
+        return NextResponse.json(
+            {
+                error: `Please wait ${remaining}s to vote again!`,
+            },
+            { status: 429 }
+        );
+    }
+
     try {
-        await redis.incr(`clap:${id}:${name}`);
-        await redis.set(`clap:${id}:${name}:${RAW_IP}`, "1");
+        const p = redis.pipeline();
+
+        p.incr(`clap:${id}:${name}`);
+        p.expire(`clap:${id}:${name}`, EXPIRATION_TIME_SECONDS);
+        p.set(`clap:${id}:${name}:${RAW_IP}`, "1");
+        p.expire(`clap:${id}:${name}:${RAW_IP}`, EXPIRATION_TIME_SECONDS);
+
+        await p.exec();
 
         const clapCount = await redis.get(`clap:${id}:${name}`);
 

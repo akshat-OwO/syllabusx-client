@@ -54,6 +54,7 @@
         "@types/node": "20.9.1",
         "@types/react": "18.2.37",
         "@types/react-dom": "18.2.15",
+        "@upstash/ratelimit": "^1.0.3",
         "@upstash/redis": "^1.29.0",
         "@vercel/analytics": "^1.2.2",
         "ai": "^2.2.37",

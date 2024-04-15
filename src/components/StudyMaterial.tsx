@@ -11,6 +11,7 @@ import {
     QueryObserverResult,
     RefetchOptions,
     useQuery,
+    useQueryClient,
 } from "@tanstack/react-query";
 import { AlertCircle, Download, Heart, RotateCw } from "lucide-react";
 import Clap from "./Clap";
@@ -234,13 +235,18 @@ StudyMaterial.Header = function StudyMaterialHeader({
         options?: RefetchOptions | undefined
     ) => Promise<QueryObserverResult<Drive[] | null, Error>>;
 }) {
+    const queryClient = useQueryClient();
+
     return (
         <div className="mb-2 flex items-center justify-end gap-2">
             <Button
                 variant={"secondary"}
                 size={"icon"}
                 disabled={isFetching}
-                onClick={() => refetch()}
+                onClick={() => {
+                    queryClient.invalidateQueries({ queryKey: ["clap"] });
+                    refetch();
+                }}
             >
                 <RotateCw
                     className={cn("h-4 w-4", isFetching ? "animate-spin" : "")}
