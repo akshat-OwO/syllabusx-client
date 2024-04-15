@@ -12,7 +12,7 @@ interface VoteProps {
 const Upvote: FC<VoteProps> = ({ material }) => {
     const queryClient = useQueryClient();
 
-    const { data, isFetching } = useQuery({
+    const { data, isFetching, isLoading } = useQuery({
         queryKey: ["vote", material.id, material.name],
         queryFn: async () => {
             const response: AxiosResponse<{
@@ -108,6 +108,7 @@ const Upvote: FC<VoteProps> = ({ material }) => {
                     "fill-primary": data ? data.hasVoted : false,
                 })}
             />
+            {isLoading && <Loader className="h-4 w-4 animate-spin" />}
             {data &&
                 (isFetching ? (
                     <Loader className="h-4 w-4 animate-spin" />
