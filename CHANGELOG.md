@@ -1,5 +1,15 @@
 # syllabusx-client
 
+## 4.5.0
+
+### Minor Changes
+
+- [`e99055`](https://github.com/akshat-OwO/syllabusx-client/commit/e990555a37f979f020bb7969f482f358a129c7ac) [`f8ea85`](https://github.com/akshat-OwO/syllabusx-client/commit/f8ea856987ba7c332e88374ed2fe75b6abef1fb2) [`3a5a57`](https://github.com/akshat-OwO/syllabusx-client/commit/3a5a57b25a6a3c45caac79e00a065d979c4369a5) [`afc34e2`](https://github.com/akshat-OwO/syllabusx-client/commit/afc34e2a4c520b0a55406858acee8b7086c758f5) [`a9534ac`](https://github.com/akshat-OwO/syllabusx-client/commit/a9534ac1d31042f6b19483c2ddf6aeb5543eadcd) [`ef13d67`](https://github.com/akshat-OwO/syllabusx-client/commit/ef13d6764a022f1d454c0cd10da3ed15db9bdab6) upvoting in study materials using @upstash/redis
+
+### Patch Changes
+
+- [`db574e`](https://github.com/akshat-OwO/syllabusx-client/commit/db574eb392752341194205f4138bfca4088974c2) updated dependencies
+
 ## 4.4.0
 
 ### Minor Changes
