@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
-import { Loader } from "lucide-react";
+import { ArrowBigUp, Loader } from "lucide-react";
 import { FC } from "react";
 import { toast } from "sonner";
 import { Icons } from "./Icons";
@@ -89,13 +89,13 @@ const Clap: FC<ClapProps> = ({ material }) => {
             role="button"
             title={`Vote ${material.name}`}
             className={cn(
-                "flex flex-1 items-center gap-2 rounded-bl-md bg-background/75 px-2 py-1 font-semibold text-secondary-foreground transition-colors hover:bg-background/60",
+                "flex flex-1 items-center gap-2 rounded-md border border-border bg-secondary/30 px-2 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-secondary/20",
                 {
-                    "pointer-events-none bg-primary text-primary-foreground hover:bg-primary/90":
-                        data ? data.hasClapped : false,
+                    "pointer-events-none": data ? data.hasClapped : false,
                 }
             )}
-            onClick={() => {
+            onClick={(e) => {
+                e.stopPropagation();
                 if (data && !data.hasClapped) {
                     mutate({
                         clapCount: data.clapCount,
@@ -107,13 +107,13 @@ const Clap: FC<ClapProps> = ({ material }) => {
             {isFetching || isPending ? (
                 <Loader className="h-4 w-4 animate-spin" />
             ) : (
-                <Icons.clap
-                    className={cn("h-4 w-4 fill-primary transition-colors", {
-                        "fill-secondary": data ? data.hasClapped : false,
+                <ArrowBigUp
+                    className={cn("h-4 w-4 stroke-primary transition-colors", {
+                        "fill-primary": data ? data.hasClapped : false,
                     })}
                 />
             )}
-            {data ? data.clapCount : 0}
+            {data && data.clapCount > 0 ? data.clapCount : "Upvote"}
         </div>
     );
 };

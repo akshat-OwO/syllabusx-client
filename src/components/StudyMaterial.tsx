@@ -5,7 +5,6 @@ import { useEmbed } from "@/hooks/use-embed";
 import { useFeedback } from "@/hooks/use-feedback";
 import { getBcaStudyMaterial, getBtechStudyMaterial } from "@/lib/server";
 import { cn } from "@/lib/utils";
-import { useLocalStorage } from "@mantine/hooks";
 import {
     QueryKey,
     QueryObserverResult,
@@ -13,9 +12,8 @@ import {
     useQuery,
     useQueryClient,
 } from "@tanstack/react-query";
-import { AlertCircle, Download, Heart, RotateCw } from "lucide-react";
+import { AlertCircle, Download, RotateCw } from "lucide-react";
 import Clap from "./Clap";
-import { Icons } from "./Icons";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
@@ -44,37 +42,13 @@ const StudyMaterial = ({
     branch,
     subject,
 }: StudyMaterialProps) => {
-    const [favorites, setFavorites] = useLocalStorage<string[]>({
-        key: "favorites",
-        defaultValue: [],
-    });
-
     const embed = useEmbed();
-
-    const addFavorite = (materialId: string) => {
-        setFavorites((current) => {
-            return [...current, materialId];
-        });
-    };
-
-    const removeFavorite = (materialId: string) => {
-        setFavorites((current) => {
-            return current.filter((id) => id !== materialId);
-        });
-    };
 
     const downloadFile = (fileId: string) => {
         window.open(
             `https://drive.google.com/uc?export=download&id=${fileId}`,
             "_blank"
         );
-    };
-
-    const toggleFavorite = (d: Drive) => {
-        if (favorites.includes(d.id)) {
-            return removeFavorite(d.id);
-        }
-        return addFavorite(d.id);
     };
 
     const generateQueryKey = (): QueryKey => {
@@ -125,8 +99,16 @@ const StudyMaterial = ({
                         <div
                             key={d.id}
                             className={cn(
-                                "relative flex flex-col justify-center divide-y divide-secondary rounded-md"
+                                "relative flex flex-col justify-center rounded-md bg-background text-foreground hover:bg-background/90"
                             )}
+                            onClick={() =>
+                                embed.onOpen({
+                                    embedLink:
+                                        d.webViewLink.slice(0, -17) + "preview",
+                                    name: d.name.slice(0, -4),
+                                    embedId: d.id,
+                                })
+                            }
                         >
                             {!(
                                 new Date(Date.parse(d.createdTime)).getTime() <
@@ -139,45 +121,20 @@ const StudyMaterial = ({
                             <span
                                 role="button"
                                 title={`${d.name}`}
-                                className={cn(
-                                    "h-10 truncate rounded-t-md bg-background px-4 py-2 text-center text-sm font-semibold text-foreground transition-colors hover:bg-background/90",
-                                    {
-                                        "bg-primary text-primary-foreground hover:bg-primary/90":
-                                            favorites.includes(d.id),
-                                    }
-                                )}
-                                onClick={() =>
-                                    embed.onOpen({
-                                        embedLink:
-                                            d.webViewLink.slice(0, -17) +
-                                            "preview",
-                                        name: d.name.slice(0, -4),
-                                        embedId: d.id,
-                                    })
-                                }
+                                className="h-10 truncate rounded-t-md px-4 py-2 text-center text-sm font-semibold"
                             >
                                 {d.name.slice(0, -4)}
                             </span>
-                            <div className="flex w-full items-center justify-start divide-x divide-secondary rounded-b-md">
+                            <div className="flex w-full items-center justify-start gap-2 px-2 pb-2">
                                 <Clap material={d} />
                                 <div
                                     role="button"
-                                    title={`Add ${d.name} to favorites`}
-                                    className="flex h-full items-center bg-background/75 px-3 py-1 font-semibold text-secondary-foreground hover:bg-background/60"
-                                    onClick={() => toggleFavorite(d)}
-                                >
-                                    <Heart
-                                        className={cn("h-4 w-4", {
-                                            "fill-red-500 stroke-red-500 transition-colors":
-                                                favorites.includes(d.id),
-                                        })}
-                                    />
-                                </div>
-                                <div
-                                    role="button"
                                     title={`Download ${d.name}`}
-                                    className="flex h-full items-center rounded-br-md bg-background/75 px-3 py-1 font-semibold text-secondary-foreground hover:bg-background/60"
-                                    onClick={() => downloadFile(d.id)}
+                                    className="flex items-center rounded-md border border-border bg-secondary/30 p-1.5 font-semibold text-foreground hover:bg-secondary/20"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        downloadFile(d.id);
+                                    }}
                                 >
                                     <Download className="h-4 w-4" />
                                 </div>
