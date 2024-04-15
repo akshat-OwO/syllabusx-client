@@ -26,10 +26,10 @@ export async function GET(req: NextRequest) {
     }
 
     try {
-        const clapCount = await redis.get(`clap:${id}:${name}`);
-        const hasClapped = await redis.get(`clap:${id}:${name}:${RAW_IP}`);
+        const voteCount = await redis.get(`vote:${id}:${name}`);
+        const hasVoted = await redis.get(`vote:${id}:${name}:${RAW_IP}`);
         return NextResponse.json(
-            { clapCount: clapCount || 0, hasClapped: !!hasClapped },
+            { voteCount: voteCount || 0, hasVoted: !!hasVoted },
             { status: 200 }
         );
     } catch (error) {
@@ -53,10 +53,10 @@ export async function POST(req: NextRequest) {
         );
     }
 
-    const hasClapped = await redis.get(`clap:${id}:${name}:${RAW_IP}`);
-    if (hasClapped) {
+    const hasVoted = await redis.get(`vote:${id}:${name}:${RAW_IP}`);
+    if (hasVoted) {
         return NextResponse.json(
-            { error: "You have already clapped for this file." },
+            { error: "You have already voted for this file!" },
             { status: 400 }
         );
     }
@@ -75,16 +75,16 @@ export async function POST(req: NextRequest) {
     try {
         const p = redis.pipeline();
 
-        p.incr(`clap:${id}:${name}`);
-        p.expire(`clap:${id}:${name}`, EXPIRATION_TIME_SECONDS);
-        p.set(`clap:${id}:${name}:${RAW_IP}`, "1");
-        p.expire(`clap:${id}:${name}:${RAW_IP}`, EXPIRATION_TIME_SECONDS);
+        p.incr(`vote:${id}:${name}`);
+        p.expire(`vote:${id}:${name}`, EXPIRATION_TIME_SECONDS);
+        p.set(`vote:${id}:${name}:${RAW_IP}`, "1");
+        p.expire(`vote:${id}:${name}:${RAW_IP}`, EXPIRATION_TIME_SECONDS);
 
         await p.exec();
 
-        const clapCount = await redis.get(`clap:${id}:${name}`);
+        const voteCount = await redis.get(`vote:${id}:${name}`);
 
-        return NextResponse.json({ clapCount }, { status: 200 });
+        return NextResponse.json({ voteCount }, { status: 200 });
     } catch (error) {
         let message = error;
         if (error instanceof Error) {

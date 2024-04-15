@@ -13,7 +13,7 @@ import {
     useQueryClient,
 } from "@tanstack/react-query";
 import { AlertCircle, Download, RotateCw } from "lucide-react";
-import Clap from "./Clap";
+import Upvote from "./Upvote";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
@@ -126,7 +126,7 @@ const StudyMaterial = ({
                                 {d.name.slice(0, -4)}
                             </span>
                             <div className="flex w-full items-center justify-start gap-2 px-2 pb-2">
-                                <Clap material={d} />
+                                <Upvote material={d} />
                                 <div
                                     role="button"
                                     title={`Download ${d.name}`}
@@ -201,7 +201,7 @@ StudyMaterial.Header = function StudyMaterialHeader({
                 size={"icon"}
                 disabled={isFetching}
                 onClick={() => {
-                    queryClient.invalidateQueries({ queryKey: ["clap"] });
+                    queryClient.invalidateQueries({ queryKey: ["vote"] });
                     refetch();
                 }}
             >
