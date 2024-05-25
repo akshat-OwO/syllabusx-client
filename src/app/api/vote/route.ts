@@ -12,6 +12,7 @@ const ratelimit = new Ratelimit({
 const EXPIRATION_TIME_SECONDS = 30 * 24 * 60 * 60;
 
 export async function GET(req: NextRequest) {
+    return null;
     const url = new URL(req.url);
     const id = url.searchParams.get("id");
     const name = url.searchParams.get("name");
@@ -42,6 +43,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+    return null;
     const { id, name } = await req.json();
 
     const RAW_IP = req.headers.get("X-Forwarded-For") || "127.0.0.1";

@@ -15,6 +15,7 @@ const Upvote: FC<VoteProps> = ({ material }) => {
     const { data, isFetching, isLoading } = useQuery({
         queryKey: ["vote", material.id, material.name],
         queryFn: async () => {
+            return undefined;
             const response: AxiosResponse<{
                 voteCount: number;
                 hasVoted: boolean;
@@ -31,6 +32,7 @@ const Upvote: FC<VoteProps> = ({ material }) => {
     const { mutate } = useMutation({
         mutationKey: ["vote", material.id, material.name],
         mutationFn: async () => {
+            return undefined;
             const response: AxiosResponse<{ voteCount: number }> =
                 await axios.post("/api/vote", {
                     id: material.id,
@@ -95,11 +97,12 @@ const Upvote: FC<VoteProps> = ({ material }) => {
             )}
             onClick={(e) => {
                 e.stopPropagation();
+                toast.warning("Voting has been disabled for now!");
                 if (data && !data.hasVoted) {
-                    mutate({
-                        voteCount: data.voteCount,
-                        hasVoted: data.hasVoted,
-                    });
+                    // mutate({
+                    //     voteCount: data.voteCount,
+                    //     hasVoted: data.hasVoted,
+                    // });
                 }
             }}
         >
@@ -109,14 +112,17 @@ const Upvote: FC<VoteProps> = ({ material }) => {
                 })}
             />
             {isLoading && <Loader className="h-4 w-4 animate-spin" />}
-            {data &&
-                (isFetching ? (
+            {data ? (
+                isFetching ? (
                     <Loader className="h-4 w-4 animate-spin" />
                 ) : data.voteCount > 0 ? (
                     data.voteCount
                 ) : (
                     "Upvote"
-                ))}
+                )
+            ) : (
+                "Upvote"
+            )}
         </div>
     );
 };
