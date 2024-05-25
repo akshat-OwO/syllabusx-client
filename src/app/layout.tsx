@@ -5,7 +5,6 @@ import Providers from "@/components/providers/providers";
 import { constructMetadata } from "@/lib/utils";
 import { GeistSans } from "geist/font/sans";
 import Script from "next/script";
-import "public/theme.css";
 import "./globals.css";
 
 export const metadata = constructMetadata();
