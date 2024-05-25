@@ -16,7 +16,7 @@ const Scripts: FC<ScriptsProps> = ({}) => {
                 {`window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
-                
+
                 gtag('config', 'G-CPHDPDZJXM');`}
             </Script>
             <Script
@@ -33,17 +33,17 @@ const Scripts: FC<ScriptsProps> = ({}) => {
                         } else {
                             googletag.defineSlot('/147246189,23074770258/syllabusx.live_320x100_anchor_mobile', [[320,100],[300,100],[320,50],[300,50]], 'syllabusx_live_1000x100_anchor_responsive').addService(googletag.pubads());
                         }
-                
+
                         var interstitialSlot = googletag.defineOutOfPageSlot('/147246189,23074770258/syllabusx.live_interstitial', googletag.enums.OutOfPageFormat.INTERSTITIAL);
                         if (interstitialSlot) interstitialSlot.addService(googletag.pubads());
-                        
+
                         googletag.pubads().disableInitialLoad();
                         googletag.pubads().enableSingleRequest();
                         googletag.pubads().collapseEmptyDivs();
                         googletag.pubads().setTargeting('category', 'education').setTargeting('audience_interest', 'education');
                         googletag.enableServices();
                         googletag.display(interstitialSlot);
-                
+
                         window.stpd = window.stpd || {que: []};
                         stpd.que.push((function() {
                               stpd.initialize();
@@ -51,19 +51,6 @@ const Scripts: FC<ScriptsProps> = ({}) => {
                     });`}
             </Script>
             <Script async src="https://stpd.cloud/saas/6965" />
-
-            {/* microsoft clarity */}
-            <Script
-                id="clarity"
-                strategy="afterInteractive"
-                dangerouslySetInnerHTML={{
-                    __html: `(function(c,l,a,r,i,t,y){
-                    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-                    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-                    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-                    })(window, document, "clarity", "script", "mbedeoutkn");`,
-                }}
-            />
         </>
     );
 };
