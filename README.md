@@ -97,7 +97,7 @@ While we don't require a specific pull request format, we kindly ask our contrib
 
 # License 👮
 
-SyllabusX is Licensed under the <a href="./LICENSE.md">GPL License</a>. Please go through the License at least once before contributing.
+SyllabusX is Licensed under the <a href="./LICENSE">GPL License</a>. Please go through the License at least once before contributing.
 
 # Contributors
 
