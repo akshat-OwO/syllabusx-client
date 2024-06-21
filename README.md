@@ -93,6 +93,13 @@ While we don't require a specific pull request format, we kindly ask our contrib
                     <sub><b>Sparsh</b></sub>
                 </a>
             </td>
+            <td align="center">
+                <a href="https://github.com/Jain-Pranjal">
+                    <img src="https://avatars.githubusercontent.com/u/111055946?v=4" width="100px;" alt="Pranjal Jain"/>
+                    <br />
+                    <sub><b>Pranjal Jain</b></sub>
+                </a>
+            </td>
 </table>
 
 # License 👮
