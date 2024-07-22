@@ -5,15 +5,13 @@ import {
     useActiveSubjectsStore,
     useSubjectList,
 } from "@/hooks/use-subject-list";
-import { getSubjectList } from "@/lib/server";
 import { cn } from "@/lib/utils";
-import { QueryKey, useQuery } from "@tanstack/react-query";
 import _ from "lodash";
 import { Check, Expand, ListChecks } from "lucide-react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { useCallback, useMemo, useRef, useState } from "react";
 import AccessibleToolTip from "./ui/accessible-tooltip";
-import { Button } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import {
     Card,
     CardContent,
@@ -24,38 +22,22 @@ import {
 import { Command, CommandGroup, CommandInput, CommandItem } from "./ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { ScrollArea } from "./ui/scroll-area";
-import { Skeleton } from "./ui/skeleton";
+import Link from "next/link";
 
 interface SubjectListProps {
     course: Courses;
+    list: string[];
 }
 
-const SubjectList = ({ course }: SubjectListProps) => {
+const SubjectList = ({ course, list }: SubjectListProps) => {
     const subjectListModal = useSubjectList();
 
-    const searchParams = useSearchParams()!;
+    const params = useParams<{ slug: string[] }>();
 
     const { activeSubjects } = useActiveSubjectsStore();
 
-    const semester = searchParams.get("semester");
-    const branch = searchParams.get("branch");
-
-    const generateQueryKey = (): QueryKey => {
-        if (course === Courses.BTECH)
-            return [course, "subject-list", semester, branch];
-        if (course === Courses.BCA) return [course, "subject-list", semester];
-        return [course];
-    };
-
-    const {
-        data: list,
-        isLoading,
-        error,
-    } = useQuery({
-        // eslint-disable-next-line @tanstack/query/exhaustive-deps
-        queryKey: generateQueryKey(),
-        queryFn: async () => await getSubjectList({ course, branch, semester }),
-    });
+    const semester = params.slug[0];
+    const branch = params.slug[1];
 
     const generateSubjectList = useMemo(() => {
         const subjects = activeSubjects.find(
@@ -64,18 +46,10 @@ const SubjectList = ({ course }: SubjectListProps) => {
 
         if (subjects && subjects.subjects.length > 0) {
             return subjects.subjects;
-        } else {
-            if (list) return list;
         }
+
+        return list;
     }, [list, semester, branch, activeSubjects]);
-
-    if (isLoading) {
-        return <SubjectList.Skeleton />;
-    }
-
-    if (error) {
-        return <SubjectList.Error error={error} />;
-    }
 
     return (
         <>
@@ -119,96 +93,51 @@ const SubjectList = ({ course }: SubjectListProps) => {
     );
 };
 
-SubjectList.Skeleton = function SubjectListSKeleton() {
-    return (
-        <Card className="col-span-3 h-fit shadow-2xl lg:col-span-2">
-            <CardHeader>
-                <CardTitle>
-                    <Skeleton className="h-8 w-48" />
-                </CardTitle>
-                <CardDescription>
-                    <Skeleton className="h-5 w-52 " />
-                </CardDescription>
-            </CardHeader>
-            <CardContent className="grid grid-cols-2 gap-x-10 gap-y-5 sm:grid-cols-3">
-                <Skeleton className="h-10 w-full" />
-                <Skeleton className="h-10 w-full" />
-                <Skeleton className="h-10 w-full" />
-                <Skeleton className="h-10 w-full" />
-                <Skeleton className="h-10 w-full" />
-                <Skeleton className="h-10 w-full" />
-                <Skeleton className="h-10 w-full" />
-                <Skeleton className="h-10 w-full" />
-            </CardContent>
-        </Card>
-    );
-};
-
-SubjectList.Error = function SubjectListError({ error }: { error: Error }) {
-    return (
-        <Card className="col-span-3 h-fit shadow-2xl lg:col-span-2">
-            <CardHeader>
-                <CardTitle>Temporary Glitch in the Matrix</CardTitle>
-                <CardDescription>
-                    {error.message
-                        ? error.message
-                        : "Something went wrong! Please try again later."}
-                </CardDescription>
-            </CardHeader>
-            <CardContent>
-                <div className="h-[7.5rem] w-full rounded-md bg-accent" />
-            </CardContent>
-        </Card>
-    );
-};
-
 SubjectList.Data = function SubjectListData({ list }: { list: string[] }) {
     const subjectListModal = useSubjectList();
 
     const router = useRouter();
     const pathname = usePathname();
-    const searchParams = useSearchParams()!;
+    const params = useParams<{ slug: string[] }>();
 
-    const subjectParam = searchParams.get("subject");
+    const semester = params.slug[0];
+    const branch = params.slug[1];
+    const subjectParam = params.slug[2];
 
-    const createQueryString = useCallback(
-        (name: string, value: string) => {
-            const params = new URLSearchParams(searchParams);
-            params.set(name, value);
+    const createHref = useCallback(
+        (subject: string) => {
+            if (pathname.includes("btech")) {
+                return `/courses/btech/${semester}/${branch}/${subject}`;
+            }
 
-            return params.toString();
+            if (pathname.includes("bca")) {
+                return `/courses/bca/${semester}/${subject}`;
+            }
+
+            return `/courses/btech/${semester}/${branch}`;
         },
-        [searchParams]
+        [semester, branch, pathname]
     );
 
     return (
         <div className="grid grid-cols-2 gap-5 sm:grid-cols-3">
             {list.map((subject: string) => (
-                <Button
-                    className="h-auto whitespace-normal shadow-md"
-                    variant={
-                        subjectParam &&
-                        _.startCase(_.toLower(subjectParam)) === subject
-                            ? "default"
-                            : "secondary"
-                    }
-                    size={"default"}
+                <Link
+                    href={createHref(subject)}
+                    className={cn(
+                        buttonVariants({
+                            variant:
+                                subjectParam === subject
+                                    ? "default"
+                                    : "secondary",
+                            className:
+                                "h-auto whitespace-normal text-center shadow-md",
+                        })
+                    )}
                     key={subject}
-                    onClick={() => {
-                        router.push(
-                            pathname +
-                                "?" +
-                                createQueryString(
-                                    "subject",
-                                    _.kebabCase(subject)
-                                ),
-                            { scroll: false }
-                        );
-                        subjectListModal.onClose();
-                    }}
                 >
-                    {subject}
-                </Button>
+                    {_.startCase(subject.split("-").join(" "))}
+                </Link>
             ))}
         </div>
     );
@@ -222,10 +151,10 @@ SubjectList.ActiveSubjects = function SubjectListActiveSubjects({
     const inputRef = useRef<HTMLInputElement>(null);
     const [open, setOpen] = useState<boolean>(false);
 
-    const searchParams = useSearchParams()!;
+    const params = useParams<{ slug: string[] }>();
 
-    const semester = searchParams.get("semester");
-    const branch = searchParams.get("branch");
+    const semester = params.slug[0];
+    const branch = params.slug[1];
 
     const { activeSubjects, toggleSubject } = useActiveSubjectsStore();
 
@@ -292,7 +221,11 @@ SubjectList.ActiveSubjects = function SubjectListActiveSubjects({
                                                     : "opacity-0"
                                             )}
                                         />
-                                        <div className="flex-1">{subject}</div>
+                                        <div className="flex-1">
+                                            {_.startCase(
+                                                subject.split("-").join(" ")
+                                            )}
+                                        </div>
                                     </CommandItem>
                                 );
                             })}

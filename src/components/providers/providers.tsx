@@ -1,5 +1,3 @@
-"use client";
-
 import { Analytics } from "@vercel/analytics/react";
 import { FC, ReactNode } from "react";
 import { ThemeSwitcher } from "../theme/theme-switcher";
@@ -21,9 +19,9 @@ const Providers: FC<ProvidersProps> = ({ children }) => {
                 <ModalProvider />
                 <Toaster />
                 <SonnerToaster />
+                <ThemeSwitcher />
+                <Analytics />
             </ThemeProvider>
-            <ThemeSwitcher />
-            <Analytics />
         </QueryProvider>
     );
 };
