@@ -15,6 +15,13 @@ import {
 } from "./ui/command";
 import { ScrollArea } from "./ui/scroll-area";
 import { cn } from "@/lib/utils";
+import {
+    Drawer,
+    DrawerContent,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerTrigger,
+} from "./ui/drawer";
 
 interface SearchInputProps {
     searchList: { label: string; value: string }[];
@@ -24,17 +31,17 @@ interface SearchInputProps {
     search?: boolean;
 }
 
-const SearchInput: React.FC<SearchInputProps> = ({
+const SearchInput = ({
     searchList,
     value,
     onSelect,
     label,
     search = false,
-}) => {
+}: SearchInputProps) => {
     const [open, setOpen] = useState<boolean>(false);
     const [mounted, setMounted] = useState<boolean>(false);
 
-    // const isDesktop = useMediaQuery("(min-width: 768px)");
+    const isDesktop = useMediaQuery("(min-width: 768px)");
 
     useEffect(() => {
         setMounted(true);
@@ -45,10 +52,38 @@ const SearchInput: React.FC<SearchInputProps> = ({
         setOpen(false);
     };
 
-    // if (isDesktop) {
+    if (isDesktop) {
+        return (
+            <Popover open={open} onOpenChange={setOpen}>
+                <PopoverTrigger asChild>
+                    <Button
+                        variant={!value ? "default" : "outline"}
+                        role="combobox"
+                        aria-expanded={open}
+                        disabled={!mounted}
+                        className="justify-between"
+                    >
+                        {!value ? _.startCase(label) : value.toUpperCase()}
+                        <ChevronsUpDown className="h-4 w-4" />
+                    </Button>
+                </PopoverTrigger>
+                <PopoverContent>
+                    <SearchInput.List
+                        isDesktop={isDesktop}
+                        label={label}
+                        onSelect={handleSelect}
+                        search={search}
+                        searchList={searchList}
+                        value={value}
+                    />
+                </PopoverContent>
+            </Popover>
+        );
+    }
+
     return (
-        <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
+        <Drawer open={open} onOpenChange={setOpen}>
+            <DrawerTrigger asChild>
                 <Button
                     variant={!value ? "default" : "outline"}
                     role="combobox"
@@ -59,43 +94,88 @@ const SearchInput: React.FC<SearchInputProps> = ({
                     {!value ? _.startCase(label) : value.toUpperCase()}
                     <ChevronsUpDown className="h-4 w-4" />
                 </Button>
-            </PopoverTrigger>
-            <PopoverContent>
-                <Command>
-                    {search && (
-                        <CommandInput
-                            placeholder={`Search ${_.startCase(label)}...`}
-                        />
-                    )}
-                    <CommandEmpty>No {label} found</CommandEmpty>
-                    <CommandGroup>
-                        <ScrollArea className="h-36 pr-4">
-                            {searchList.map((list) => (
-                                <CommandItem
-                                    key={list.value}
-                                    value={list.label}
-                                    onSelect={handleSelect}
-                                >
-                                    <Check
-                                        className={cn(
-                                            "mr-2 h-4 w-4",
-                                            value === list.label
-                                                ? "opacity-100"
-                                                : "opacity-0"
-                                        )}
-                                    />
-                                    {list.label}
-                                </CommandItem>
-                            ))}
-                        </ScrollArea>
-                    </CommandGroup>
-                </Command>
-            </PopoverContent>
-        </Popover>
+            </DrawerTrigger>
+            <DrawerContent className="pb-5">
+                <DrawerHeader>
+                    <DrawerTitle>{_.startCase(label)}</DrawerTitle>
+                </DrawerHeader>
+                <SearchInput.List
+                    isDesktop={isDesktop}
+                    label={label}
+                    onSelect={handleSelect}
+                    search={search}
+                    searchList={searchList}
+                    value={value}
+                />
+            </DrawerContent>
+        </Drawer>
     );
-    // }
+};
 
-    // return <></>;
+SearchInput.List = function SearchInputList({
+    isDesktop = false,
+    label,
+    value,
+    onSelect,
+    search,
+    searchList,
+}: {
+    search: boolean;
+    isDesktop?: boolean;
+    label: string;
+    value: string | null;
+    onSelect: (value: string) => void;
+    searchList: { label: string; value: string }[];
+}) {
+    return (
+        <Command>
+            {search && (
+                <CommandInput placeholder={`Search ${_.startCase(label)}...`} />
+            )}
+            <CommandEmpty>No {label} found</CommandEmpty>
+            <CommandGroup>
+                {isDesktop ? (
+                    <ScrollArea className="h-36 pr-4">
+                        {searchList.map((list) => (
+                            <CommandItem
+                                key={list.value}
+                                value={list.label}
+                                onSelect={onSelect}
+                            >
+                                <Check
+                                    className={cn(
+                                        "mr-2 h-4 w-4",
+                                        value === list.label
+                                            ? "opacity-100"
+                                            : "opacity-0"
+                                    )}
+                                />
+                                {list.label}
+                            </CommandItem>
+                        ))}
+                    </ScrollArea>
+                ) : (
+                    searchList.map((list) => (
+                        <CommandItem
+                            key={list.value}
+                            value={list.label}
+                            onSelect={onSelect}
+                        >
+                            <Check
+                                className={cn(
+                                    "mr-2 h-4 w-4",
+                                    value === list.label
+                                        ? "opacity-100"
+                                        : "opacity-0"
+                                )}
+                            />
+                            {list.label}
+                        </CommandItem>
+                    ))
+                )}
+            </CommandGroup>
+        </Command>
+    );
 };
 
 export default SearchInput;
