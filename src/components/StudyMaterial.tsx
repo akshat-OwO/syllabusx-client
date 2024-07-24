@@ -18,6 +18,7 @@ import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
 import { TabsContent } from "./ui/tabs";
+import axios, { AxiosResponse } from "axios";
 
 interface StudyMaterialProps {
     tab: Tab;
@@ -58,6 +59,13 @@ const StudyMaterial = ({
         return [course, tab, semester, subject];
     };
 
+    const generateUpvoteQueryKey = (): QueryKey => {
+        if (course == "btech") {
+            return ["votes", course, tab, semester, branch, subject];
+        }
+        return ["votes", course, tab, semester, subject];
+    };
+
     const { data, isLoading, error, refetch, isFetching } = useQuery({
         // eslint-disable-next-line @tanstack/query/exhaustive-deps
         queryKey: generateQueryKey(),
@@ -83,6 +91,26 @@ const StudyMaterial = ({
                 practical,
                 pyq,
             });
+        },
+    });
+
+    const { data: votes, isLoading: isVoteLoading } = useQuery({
+        // eslint-disable-next-line @tanstack/query/exhaustive-deps
+        queryKey: generateUpvoteQueryKey(),
+        enabled: Array.isArray(data) && data.length > 0,
+        queryFn: async () => {
+            const files = data!.map((d) => ({ id: d.id, name: d.name }));
+
+            const response: AxiosResponse<
+                {
+                    id: string;
+                    name: string;
+                    voteCount: number;
+                    hasVoted: boolean;
+                }[]
+            > = await axios.post(`/api/vote?action=getVotes`, files);
+
+            return response.data;
         },
     });
 
@@ -126,7 +154,13 @@ const StudyMaterial = ({
                                 {d.name.slice(0, -4)}
                             </span>
                             <div className="flex w-full items-center justify-start gap-2 px-2 pb-2">
-                                <Upvote material={d} />
+                                <Upvote
+                                    material={d}
+                                    isLoading={isVoteLoading}
+                                    vote={votes?.find(
+                                        (vote) => vote.id === d.id
+                                    )}
+                                />
                                 <div
                                     role="button"
                                     title={`Download ${d.name}`}
@@ -201,7 +235,7 @@ StudyMaterial.Header = function StudyMaterialHeader({
                 size={"icon"}
                 disabled={isFetching}
                 onClick={() => {
-                    queryClient.invalidateQueries({ queryKey: ["vote"] });
+                    queryClient.invalidateQueries({ queryKey: ["votes"] });
                     refetch();
                 }}
             >

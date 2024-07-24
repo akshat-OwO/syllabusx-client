@@ -11,87 +11,135 @@ const ratelimit = new Ratelimit({
 
 const EXPIRATION_TIME_SECONDS = 30 * 24 * 60 * 60;
 
-export async function GET(req: NextRequest) {
-    return NextResponse.json(null, { status: 200 });
-    // const url = new URL(req.url);
-    // const id = url.searchParams.get("id");
-    // const name = url.searchParams.get("name");
+type File = {
+    id: string;
+    name: string;
+};
 
-    // const RAW_IP = req.headers.get("X-Forwarded-For") || "127.0.0.1";
-
-    // if (!id || !name) {
-    //     return NextResponse.json(
-    //         { error: "Bad Request! Id or Name not found!" },
-    //         { status: 400 }
-    //     );
-    // }
-
-    // try {
-    //     const voteCount = await redis.get(`vote:${id}:${name}`);
-    //     const hasVoted = await redis.get(`vote:${id}:${name}:${RAW_IP}`);
-    //     return NextResponse.json(
-    //         { voteCount: voteCount || 0, hasVoted: !!hasVoted },
-    //         { status: 200 }
-    //     );
-    // } catch (error) {
-    //     let message = error;
-    //     if (error instanceof Error) {
-    //         message = error.message;
-    //     }
-    //     return NextResponse.json({ error: message }, { status: 500 });
-    // }
-}
+type VoteCount = {
+    id: string;
+    name: string;
+    voteCount: number;
+    hasVoted: boolean;
+};
 
 export async function POST(req: NextRequest) {
-    return NextResponse.json(null, { status: 200 });
-    // const { id, name } = await req.json();
+    const url = new URL(req.url);
+    const action = url.searchParams.get("action");
+    const RAW_IP = req.headers.get("X-Forwarded-For") || "127.0.0.1";
+    const userAgent = req.headers.get("User-Agent") || "";
+    const fingerprint = `${RAW_IP}:${userAgent}`;
 
-    // const RAW_IP = req.headers.get("X-Forwarded-For") || "127.0.0.1";
+    if (action === "getVotes") {
+        return handleGetVotes(req, fingerprint);
+    } else {
+        return handleVote(req, fingerprint);
+    }
+}
 
-    // if (!id || !name) {
-    //     return NextResponse.json(
-    //         { error: "Bad Request! Id or Name not found!" },
-    //         { status: 400 }
-    //     );
-    // }
+async function handleGetVotes(req: NextRequest, fingerprint: string) {
+    let files: File[];
+    try {
+        files = await req.json();
+    } catch (error) {
+        return NextResponse.json(
+            { error: "Bad Request! Invalid JSON in request body." },
+            { status: 400 }
+        );
+    }
 
-    // const hasVoted = await redis.get(`vote:${id}:${name}:${RAW_IP}`);
-    // if (hasVoted) {
-    //     return NextResponse.json(
-    //         { error: "You have already voted for this file!" },
-    //         { status: 400 }
-    //     );
-    // }
+    if (!Array.isArray(files) || files.length === 0) {
+        return NextResponse.json(
+            { error: "Bad Request! Files data is not a valid array." },
+            { status: 400 }
+        );
+    }
 
-    // const { success, remaining } = await ratelimit.limit(RAW_IP);
+    try {
+        const voteKeys = files.map(({ id, name }) => `vote:${id}:${name}`);
+        const voteFingerprintKeys = files.map(
+            ({ id, name }) => `vote:${id}:${name}:${fingerprint}`
+        );
 
-    // if (!success) {
-    //     return NextResponse.json(
-    //         {
-    //             error: `Please wait ${remaining}s to vote again!`,
-    //         },
-    //         { status: 429 }
-    //     );
-    // }
+        const results = await redis.mget(...voteKeys, ...voteFingerprintKeys);
 
-    // try {
-    //     const p = redis.pipeline();
+        const voteCounts: VoteCount[] = files.map((file, index) => {
+            const voteCountResult = results[index];
+            const hasVotedResult = results[index + files.length];
 
-    //     p.incr(`vote:${id}:${name}`);
-    //     p.expire(`vote:${id}:${name}`, EXPIRATION_TIME_SECONDS);
-    //     p.set(`vote:${id}:${name}:${RAW_IP}`, "1");
-    //     p.expire(`vote:${id}:${name}:${RAW_IP}`, EXPIRATION_TIME_SECONDS);
+            let voteCount = 0;
+            let hasVoted = false;
 
-    //     await p.exec();
+            if (
+                typeof voteCountResult === "number" &&
+                voteCountResult !== null
+            ) {
+                voteCount = voteCountResult;
+            }
 
-    //     const voteCount = await redis.get(`vote:${id}:${name}`);
+            if (typeof hasVotedResult === "number" && hasVotedResult !== null) {
+                hasVoted = true;
+            }
 
-    //     return NextResponse.json({ voteCount }, { status: 200 });
-    // } catch (error) {
-    //     let message = error;
-    //     if (error instanceof Error) {
-    //         message = error.message;
-    //     }
-    //     return NextResponse.json({ error: message }, { status: 500 });
-    // }
+            return {
+                id: file.id,
+                name: file.name,
+                voteCount,
+                hasVoted,
+            };
+        });
+
+        return NextResponse.json(voteCounts, { status: 200 });
+    } catch (error) {
+        console.error("Error in handleGetVotes:", error);
+        const message = error instanceof Error ? error.message : String(error);
+        return NextResponse.json({ error: message }, { status: 500 });
+    }
+}
+
+async function handleVote(req: NextRequest, fingerprint: string) {
+    const { id, name } = await req.json();
+
+    if (!id || !name) {
+        return NextResponse.json(
+            { error: "Bad Request! Id or Name not found!" },
+            { status: 400 }
+        );
+    }
+
+    const hasVoted = await redis.get(`vote:${id}:${name}:${fingerprint}`);
+    if (hasVoted) {
+        return NextResponse.json(
+            { error: "You have already voted for this file!" },
+            { status: 400 }
+        );
+    }
+
+    const { success, remaining } = await ratelimit.limit(fingerprint);
+    if (!success) {
+        return NextResponse.json(
+            {
+                error: `Please wait ${remaining}s to vote again!`,
+            },
+            { status: 429 }
+        );
+    }
+
+    try {
+        const p = redis.pipeline();
+
+        p.incr(`vote:${id}:${name}`);
+        p.expire(`vote:${id}:${name}`, EXPIRATION_TIME_SECONDS);
+        p.set(`vote:${id}:${name}:${fingerprint}`, "1");
+        p.expire(`vote:${id}:${name}:${fingerprint}`, EXPIRATION_TIME_SECONDS);
+
+        await p.exec();
+
+        const voteCount = await redis.get(`vote:${id}:${name}`);
+
+        return NextResponse.json({ voteCount }, { status: 200 });
+    } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        return NextResponse.json({ error: message }, { status: 500 });
+    }
 }

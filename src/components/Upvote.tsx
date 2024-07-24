@@ -1,38 +1,41 @@
 import { cn } from "@/lib/utils";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
-import { ArrowBigUp, Loader } from "lucide-react";
-import { FC } from "react";
+import { ArrowBigUp } from "lucide-react";
+import { FC, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 interface VoteProps {
     material: Drive;
+    vote:
+        | {
+              voteCount: number;
+              hasVoted: boolean;
+              id: string;
+              name: string;
+          }
+        | undefined;
+    isLoading: boolean;
 }
 
-const Upvote: FC<VoteProps> = ({ material }) => {
+const Upvote: FC<VoteProps> = ({ material, vote, isLoading }) => {
+    const [clientVote, setClientVote] = useState<number>(vote?.voteCount ?? 0);
+    const [clientHasVoted, setClientHasVoted] = useState<boolean>(
+        vote?.hasVoted ?? false
+    );
+
     const queryClient = useQueryClient();
 
-    const { data, isFetching, isLoading } = useQuery({
-        queryKey: ["vote", material.id, material.name],
-        queryFn: async () => {
-            return undefined;
-            const response: AxiosResponse<{
-                voteCount: number;
-                hasVoted: boolean;
-            }> = await axios.get(
-                `/api/vote?id=${material.id}&name=${material.name}`
-            );
+    useEffect(() => {
+        if (vote) {
+            setClientVote(vote.voteCount);
+            setClientHasVoted(vote.hasVoted);
+        }
+    }, [vote]);
 
-            return response.data;
-        },
-        staleTime: 1000 * 60 * 60,
-        gcTime: 1000 * 60 * 60,
-    });
-
-    const { mutate } = useMutation({
+    const { mutate, isPending } = useMutation({
         mutationKey: ["vote", material.id, material.name],
         mutationFn: async () => {
-            return undefined;
             const response: AxiosResponse<{ voteCount: number }> =
                 await axios.post("/api/vote", {
                     id: material.id,
@@ -45,31 +48,13 @@ const Upvote: FC<VoteProps> = ({ material }) => {
             voteCount: number;
             hasVoted: boolean;
         }) => {
-            await queryClient.cancelQueries({ queryKey: ["vote"] });
-
-            const previousCount = queryClient.getQueryData([
-                "vote",
-                material.id,
-                material.name,
-            ]);
-
-            if (previousCount) {
-                queryClient.setQueryData(["vote", material.id, material.name], {
-                    voteCount: newCount.voteCount + 1,
-                    hasVoted: true,
-                });
-            }
-
-            return { previousCount };
+            setClientVote((prev) => prev + 1);
+            setClientHasVoted(true);
         },
         onError: (err: any, variables, context) => {
-            if (context?.previousCount) {
-                queryClient.setQueryData(
-                    ["vote", material.id, material.name],
-                    context.previousCount
-                );
-            }
             if (err) {
+                setClientVote((prev) => prev - 1);
+                setClientHasVoted(false);
                 toast.error(err.response.data.error);
             }
         },
@@ -80,7 +65,7 @@ const Upvote: FC<VoteProps> = ({ material }) => {
         },
         onSettled: () => {
             queryClient.invalidateQueries({
-                queryKey: ["vote", material.id, material.name],
+                queryKey: ["votes"],
             });
         },
     });
@@ -92,37 +77,31 @@ const Upvote: FC<VoteProps> = ({ material }) => {
             className={cn(
                 "flex flex-1 items-center gap-2 rounded-md border border-border bg-secondary/30 px-2 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-secondary/20",
                 {
-                    "pointer-events-none": data ? data.hasVoted : false,
+                    "pointer-events-none": clientHasVoted,
                 }
             )}
             onClick={(e) => {
                 e.stopPropagation();
-                toast.warning("Voting has been disabled for now!");
-                if (data && !data.hasVoted) {
-                    // mutate({
-                    //     voteCount: data.voteCount,
-                    //     hasVoted: data.hasVoted,
-                    // });
+                if (!clientHasVoted) {
+                    mutate({
+                        voteCount: clientVote,
+                        hasVoted: clientHasVoted,
+                    });
                 }
             }}
         >
             <ArrowBigUp
                 className={cn("h-4 w-4 stroke-primary transition-colors", {
-                    "fill-primary": data ? data.hasVoted : false,
+                    "fill-primary": clientHasVoted,
                 })}
             />
-            {isLoading && <Loader className="h-4 w-4 animate-spin" />}
-            {data ? (
-                isFetching ? (
-                    <Loader className="h-4 w-4 animate-spin" />
-                ) : data.voteCount > 0 ? (
-                    data.voteCount
-                ) : (
-                    "Upvote"
-                )
-            ) : (
-                "Upvote"
-            )}
+            <span
+                className={cn({
+                    "animate-pulse": isLoading || isPending,
+                })}
+            >
+                {clientVote > 0 ? clientVote : "Upvote"}
+            </span>
         </div>
     );
 };
