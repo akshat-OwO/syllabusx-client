@@ -115,11 +115,11 @@ async function handleVote(req: NextRequest, fingerprint: string) {
         );
     }
 
-    const { success, remaining } = await ratelimit.limit(fingerprint);
+    const { success, reset } = await ratelimit.limit(fingerprint);
     if (!success) {
         return NextResponse.json(
             {
-                error: `Please wait ${remaining}s to vote again!`,
+                error: `Please wait ${reset} to vote again!`,
             },
             { status: 429 }
         );
