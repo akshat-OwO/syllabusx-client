@@ -27,7 +27,8 @@ const SubjectList = ({ course, list }: SubjectListProps) => {
         if (course === Courses.BCA && !params.slug[1]) {
             subjectList.onOpen(list);
         }
-    }, [course, params, subjectList, list]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [course, params]);
 
     return (
         <>
