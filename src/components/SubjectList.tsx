@@ -10,6 +10,7 @@ import { useParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useEffect } from "react";
 import SubjectListHistory from "./SubjectListHistory";
+import SubjectListModal from "./modals/subject-list-modal";
 
 interface SubjectListProps {
     course: Courses;
@@ -70,6 +71,7 @@ const SubjectList = ({ course, list }: SubjectListProps) => {
                     </CardContent>
                 </Card>
             )}
+            <SubjectListModal />
         </>
     );
 };
