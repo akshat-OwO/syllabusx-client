@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     branches:
-      - main
+      - prod
 
 permissions: write-all
 concurrency: ${{ github.workflow }}-${{ github.ref }}
@@ -16,7 +16,7 @@ jobs:
       - name: Checkout Repo
         # https://github.com/actions/checkout
         uses: actions/checkout@v3
-        
+
         # https://github.com/pnpm/action-setup
       - uses: pnpm/action-setup@v2
         with:
