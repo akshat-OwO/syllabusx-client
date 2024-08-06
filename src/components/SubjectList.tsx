@@ -1,28 +1,14 @@
 "use client";
 
 import { Courses } from "@/config";
-import {
-    useActiveSubjectsStore,
-    useSubjectList,
-} from "@/hooks/use-subject-list";
-import { cn } from "@/lib/utils";
 import _ from "lodash";
-import { Check, Expand, ListChecks } from "lucide-react";
-import { useParams, usePathname, useRouter } from "next/navigation";
-import { useCallback, useMemo, useRef, useState } from "react";
-import AccessibleToolTip from "./ui/accessible-tooltip";
-import { Button, buttonVariants } from "./ui/button";
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from "./ui/card";
-import { Command, CommandGroup, CommandInput, CommandItem } from "./ui/command";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { ScrollArea } from "./ui/scroll-area";
-import Link from "next/link";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { useSubjectList } from "@/hooks/use-subject-list";
+import { Button } from "./ui/button";
+import { ChevronsRight } from "lucide-react";
+import { useParams } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { useEffect } from "react";
 
 interface SubjectListProps {
     course: Courses;
@@ -30,210 +16,58 @@ interface SubjectListProps {
 }
 
 const SubjectList = ({ course, list }: SubjectListProps) => {
-    const subjectListModal = useSubjectList();
-
+    const subjectList = useSubjectList();
     const params = useParams<{ slug: string[] }>();
 
-    const { activeSubjects } = useActiveSubjectsStore();
-
-    const semester = params.slug[0];
-    const branch = params.slug[1];
-
-    const generateSubjectList = useMemo(() => {
-        const subjects = activeSubjects.find(
-            (active) => active.branch === branch && active.semester === semester
-        );
-
-        if (subjects && subjects.subjects.length > 0) {
-            return subjects.subjects;
+    useEffect(() => {
+        if (course === Courses.BTECH && !params.slug[2]) {
+            subjectList.onOpen(list);
         }
-
-        return list;
-    }, [list, semester, branch, activeSubjects]);
+        if (course === Courses.BCA && !params.slug[1]) {
+            subjectList.onOpen(list);
+        }
+    }, [course, params, subjectList, list]);
 
     return (
         <>
             {list && (
                 <Card className="col-span-3 shadow-2xl lg:col-span-2">
-                    <CardHeader className="flex-row justify-between">
-                        <div className="flex flex-col space-y-1.5">
-                            <CardTitle>Subjects</CardTitle>
-                            <CardDescription>
-                                Click on any subject to unveil its syllabus.
-                                Spoiler alert: courage required
-                            </CardDescription>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            {list.length > 9 && (
-                                <SubjectList.ActiveSubjects list={list} />
-                            )}
-                            <AccessibleToolTip label="Modal view">
-                                <Button
-                                    onClick={() =>
-                                        subjectListModal.onOpen(
-                                            generateSubjectList
-                                        )
-                                    }
-                                    size={"icon"}
-                                    variant={"ghost"}
-                                >
-                                    <Expand className="h-4 w-4" />
-                                </Button>
-                            </AccessibleToolTip>
-                        </div>
+                    <CardHeader className="pb-4">
+                        <CardTitle>Subjects</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <ScrollArea type="always" className="h-28 pr-5">
-                            <SubjectList.Data list={generateSubjectList} />
-                        </ScrollArea>
+                        <div className="flex flex-col gap-5">
+                            <div className="flex flex-col gap-2">
+                                <p className="text-sm font-semibold text-muted-foreground">
+                                    Choose your subject
+                                </p>
+                                <Button
+                                    onClick={() => subjectList.onOpen(list)}
+                                    variant="outline"
+                                    className={cn("justify-between", {
+                                        "animate-pulse bg-secondary":
+                                            (course === Courses.BTECH &&
+                                                !params.slug[2]) ||
+                                            (course === Courses.BCA &&
+                                                !params.slug[1]),
+                                    })}
+                                >
+                                    {course === Courses.BTECH &&
+                                        (params.slug[2]
+                                            ? params.slug[2]
+                                            : "Select Subject")}
+                                    {course === Courses.BCA &&
+                                        (params.slug[1]
+                                            ? params.slug[1]
+                                            : "Select Subject")}
+                                    <ChevronsRight className="h-4 w-4" />
+                                </Button>
+                            </div>
+                        </div>
                     </CardContent>
                 </Card>
             )}
         </>
-    );
-};
-
-SubjectList.Data = function SubjectListData({ list }: { list: string[] }) {
-    const subjectListModal = useSubjectList();
-
-    const router = useRouter();
-    const pathname = usePathname();
-    const params = useParams<{ slug: string[] }>();
-
-    const semester = params.slug[0];
-    const branch = params.slug[1];
-    const subjectParam = params.slug[2];
-
-    const createHref = useCallback(
-        (subject: string) => {
-            if (pathname.includes("btech")) {
-                return `/courses/btech/${semester}/${branch}/${subject}`;
-            }
-
-            if (pathname.includes("bca")) {
-                return `/courses/bca/${semester}/${subject}`;
-            }
-
-            return `/courses/btech/${semester}/${branch}`;
-        },
-        [semester, branch, pathname]
-    );
-
-    return (
-        <div className="grid grid-cols-2 gap-5 sm:grid-cols-3">
-            {list.map((subject: string) => (
-                <Link
-                    href={createHref(subject)}
-                    className={cn(
-                        buttonVariants({
-                            variant:
-                                subjectParam === subject
-                                    ? "default"
-                                    : "secondary",
-                            className:
-                                "h-auto whitespace-normal text-center shadow-md",
-                        })
-                    )}
-                    key={subject}
-                >
-                    {_.startCase(subject.split("-").join(" "))}
-                </Link>
-            ))}
-        </div>
-    );
-};
-
-SubjectList.ActiveSubjects = function SubjectListActiveSubjects({
-    list,
-}: {
-    list: string[];
-}) {
-    const inputRef = useRef<HTMLInputElement>(null);
-    const [open, setOpen] = useState<boolean>(false);
-
-    const params = useParams<{ slug: string[] }>();
-
-    const semester = params.slug[0];
-    const branch = params.slug[1];
-
-    const { activeSubjects, toggleSubject } = useActiveSubjectsStore();
-
-    const onOpenChange = (value: boolean) => {
-        inputRef.current?.blur();
-        setOpen(value);
-    };
-
-    const toggle = (subject: string) => {
-        if (semester && branch) {
-            toggleSubject(semester, branch, subject);
-        }
-    };
-
-    return (
-        <Popover open={open} onOpenChange={onOpenChange}>
-            <AccessibleToolTip label="Choose your subjects">
-                <PopoverTrigger asChild>
-                    <Button
-                        variant={
-                            activeSubjects.some(
-                                (active) =>
-                                    active.branch === branch &&
-                                    active.semester === semester &&
-                                    active.subjects.length > 0
-                            )
-                                ? "ghost"
-                                : "default"
-                        }
-                        size="icon"
-                        aria-expanded={open}
-                        role="combobox"
-                    >
-                        <ListChecks className="size-4" />
-                    </Button>
-                </PopoverTrigger>
-            </AccessibleToolTip>
-            <PopoverContent>
-                <Command loop>
-                    <CommandInput
-                        ref={inputRef}
-                        placeholder="Search Subjects..."
-                    />
-                    <CommandGroup>
-                        <ScrollArea type="always" className="h-44 pr-4">
-                            {list.map((subject) => {
-                                const isActive = activeSubjects.some(
-                                    (active) =>
-                                        active.branch === branch &&
-                                        active.semester === semester &&
-                                        active.subjects.includes(subject)
-                                );
-                                return (
-                                    <CommandItem
-                                        key={subject}
-                                        value={subject}
-                                        onSelect={() => toggle(subject)}
-                                    >
-                                        <Check
-                                            className={cn(
-                                                "mr-2 h-4 w-4",
-                                                isActive
-                                                    ? "opacity-100"
-                                                    : "opacity-0"
-                                            )}
-                                        />
-                                        <div className="flex-1">
-                                            {_.startCase(
-                                                subject.split("-").join(" ")
-                                            )}
-                                        </div>
-                                    </CommandItem>
-                                );
-                            })}
-                        </ScrollArea>
-                    </CommandGroup>
-                </Command>
-            </PopoverContent>
-        </Popover>
     );
 };
 
