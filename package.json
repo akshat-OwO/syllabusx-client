@@ -11,16 +11,9 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "prepare": "husky install",
         "release": "changeset publish",
         "format": "prettier --check .",
         "format:fix": "prettier --write ."
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "./.husky/pre-commit",
-            "commit-msg": "./.husky/commit-msg"
-        }
     },
     "dependencies": {
         "@contentful/rich-text-react-renderer": "^15.22.7",
@@ -103,7 +96,6 @@
         "@tanstack/eslint-plugin-query": "^5.51.12",
         "@types/lodash": "^4.17.7",
         "eslint-config-prettier": "^9.1.0",
-        "husky": "^8.0.3",
         "prettier": "^3.3.3",
         "prettier-plugin-tailwindcss": "^0.5.14",
         "webpack": "^5.93.0"
