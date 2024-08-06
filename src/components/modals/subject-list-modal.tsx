@@ -2,7 +2,7 @@ import {
     useActiveSubjectsStore,
     useSubjectList,
 } from "@/hooks/use-subject-list";
-import { useMediaQuery } from "@mantine/hooks";
+import { useLocalStorage, useMediaQuery } from "@mantine/hooks";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "../ui/drawer";
 import {
     Sheet,
@@ -57,6 +57,11 @@ SubjectListModal.List = function SubjectListModalList() {
     const subjectList = useSubjectList();
     const { activeSubjects, toggleSubject } = useActiveSubjectsStore();
 
+    const [subjectHistory, setSubjectHistory] = useLocalStorage<string[]>({
+        key: "subject-history",
+        defaultValue: [],
+    });
+
     const router = useRouter();
     const pathname = usePathname();
     const params = useParams<{ slug: string[] }>();
@@ -105,16 +110,26 @@ SubjectListModal.List = function SubjectListModalList() {
     ]);
 
     const handleHref = (subject: string) => {
+        let path: string = "";
         if (pathname.includes("btech")) {
-            router.push(
-                `/courses/btech/${params.slug[0]}/${params.slug[1]}/${subject}`
-            );
-            subjectList.onClose();
+            path = `/courses/btech/${params.slug[0]}/${params.slug[1]}/${subject}`;
         }
         if (pathname.includes("bca")) {
-            router.push(`/courses/bca/${params.slug[0]}/${subject}`);
-            subjectList.onClose();
+            path = `/courses/bca/${params.slug[0]}/${subject}`;
         }
+        setSubjectHistory((prev) => {
+            let history: string[] = [];
+            if (prev.includes(path)) {
+                prev.splice(prev.indexOf(path), 1);
+            }
+            history = [path, ...prev];
+            if (history.length > 7) {
+                history.pop();
+            }
+            return history;
+        });
+        router.push(path);
+        subjectList.onClose();
     };
 
     const handleSubjectClick = (subject: string) => {

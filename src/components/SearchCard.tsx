@@ -61,7 +61,7 @@ const SearchCard: FC<SearchCardProps> = ({
     };
 
     return (
-        <Card className="col-span-3 h-fit shadow-2xl lg:col-span-1">
+        <Card className="col-span-3 shadow-2xl lg:col-span-1">
             <CardHeader>
                 <CardTitle>{title}</CardTitle>
                 <CardDescription>{description}</CardDescription>

@@ -9,6 +9,7 @@ import { ChevronsRight } from "lucide-react";
 import { useParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useEffect } from "react";
+import SubjectListHistory from "./SubjectListHistory";
 
 interface SubjectListProps {
     course: Courses;
@@ -63,6 +64,7 @@ const SubjectList = ({ course, list }: SubjectListProps) => {
                                     <ChevronsRight className="h-4 w-4" />
                                 </Button>
                             </div>
+                            <SubjectListHistory />
                         </div>
                     </CardContent>
                 </Card>
