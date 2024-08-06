@@ -8,8 +8,8 @@ interface FooterProps {}
 
 const Footer: FC<FooterProps> = ({}) => {
     return (
-        <LayoutWrapper className="hidden md:block">
-            <div className="flex w-full items-center justify-end border-t border-border">
+        <LayoutWrapper className="hidden border-t border-border md:block md:max-w-none md:px-16">
+            <div className="flex w-full items-center justify-end">
                 <div className="flex items-center gap-x-5">
                     <Link
                         href={"/about-us"}

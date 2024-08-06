@@ -4,7 +4,7 @@ import { useFeedback } from "@/hooks/use-feedback";
 import { FeedbackSchema, TFeedbackSchema } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { MessageSquare, UploadCloud } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -38,7 +38,12 @@ const FeedbackForm = ({}) => {
                 feedback.onClose();
                 return "Form submitted!";
             },
-            error: "Something went wrong! Try again later",
+            error: (error) => {
+                if (error instanceof AxiosError) {
+                    return error.response?.data.error;
+                }
+                return "Something went wrong! Please Try again later.";
+            },
         });
     };
 

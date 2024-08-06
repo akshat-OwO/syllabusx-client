@@ -10,7 +10,6 @@ If you need any help, feel free to reach out to [@akshat_OwO](https://twitter.co
 
 - We use [pnpm](https://pnpm.io).
 - We use [changesets](https://github.com/changesets/changesets) for managing releases.
-- We use [husky](https://typicode.github.io/husky/) for linting commit messages and code.
 
 ## Structure
 

@@ -9,80 +9,145 @@ import {
 import axios, { AxiosError, AxiosResponse } from "axios";
 import _ from "lodash";
 
-export const getSubjectList = async ({
+export async function getSubjects({
+    branch = "",
     course,
     semester,
-    branch,
 }: {
+    branch?: string;
     course: Courses;
-    semester: string | null;
-    branch: string | null;
-}) => {
+    semester: string;
+}) {
     if (course === Courses.BTECH) {
-        if (
-            !semesterList.some((s) => semester === s.label) ||
-            !branchList.some((b) => branch === b.value)
-        ) {
-            throw new AxiosError("Please check semester and branch.");
-        }
         try {
-            const response = (await axios.get(
-                `${server}btech/${
-                    semesterList.find((s) => semester === s.label)?.value
-                }/${branchList.find((b) => branch === b.label)?.value}`
-            )) as AxiosResponse;
-            return response.data;
+            const response = await fetch(
+                `${server}btech/${semesterList.find((s) => s.label === semester)?.value}/${branchList.find((b) => b.label === branch.toUpperCase())?.value}`
+            );
+
+            const subjects = await response.json();
+
+            return subjects;
         } catch (error) {
-            throw new Error("Something went wrong! Please try again later.");
+            console.error(error);
+            return [];
         }
     }
 
     if (course === Courses.BCA) {
-        if (!bcaSemesterList.some((s) => semester === s.label)) {
-            throw new AxiosError("Please check semester and branch.");
-        }
         try {
-            const response = (await axios.get(
-                `${server}bca/${
-                    bcaSemesterList.find((s) => semester === s.label)?.value
-                }`
-            )) as AxiosResponse;
-            return response.data;
+            const response = await fetch(
+                `${server}bca/${bcaSemesterList.find((s) => s.label === semester)?.value}`
+            );
+
+            const subjects = await response.json();
+
+            return subjects;
         } catch (error) {
-            throw new Error("Something went wrong! Please try again later.");
+            console.error(error);
+            return [];
         }
     }
+
+    return [];
+}
+
+export type SubjectDetail = {
+    _id: string;
+    subject: string;
+    dept: string[];
+    theorypapercode: string;
+    labpapercode?: string | null;
+    theorycredits: number;
+    labcredits?: number | null;
+    theory?: {
+        unit: number;
+        topics: string[];
+    }[];
+    units?: {
+        unit: number;
+        topics: string[];
+    }[];
+    lab?: {
+        experiment: number;
+        aim: {
+            objective: string;
+            steps: string[];
+        };
+    }[];
+    coursecategory?: string | null;
+    camel?: string | null;
+    pYq?: string | null;
+    book?: string | null;
+    practical?: string | null;
 };
 
-export const getBtechSubjectDetails = async ({
+export async function getSubjectDetails({
+    course,
     semester,
-    branch,
+    branch = "",
     subject,
 }: {
-    semester: string | null;
-    branch: string | null;
-    subject: string | null;
-}) => {
-    if (
-        !semesterList.some((s) => semester === s.label) ||
-        !branchList.some((b) => branch === b.value) ||
-        !subject
-    ) {
-        throw new AxiosError("Please check again what you searched.");
-    } else if (!subject) return null;
-    try {
-        const response = (await axios.get(
-            `${server}btech/${
-                semesterList.find((s) => semester === s.label)?.value
-            }/${
-                branchList.find((b) => branch === b.label)?.value
-            }/${_.startCase(_.toLower(subject))}`
-        )) as AxiosResponse;
-        return response.data;
-    } catch (error) {
-        throw new Error("Something went wrong! Please try again later.");
+    course: Courses;
+    semester: string;
+    branch?: string;
+    subject: string;
+}) {
+    if (course === Courses.BTECH) {
+        try {
+            const response = await fetch(
+                `${server}btech/${semesterList.find((s) => s.label === semester)?.value}/${branchList.find((b) => b.label === branch.toUpperCase())?.value}/${_.startCase(subject.split("-").join(" "))}`
+            );
+
+            const subjectDetail: SubjectDetail[] = await response.json();
+
+            return subjectDetail[0];
+        } catch (error) {
+            console.error(error);
+
+            // placeholder value
+            return {
+                _id: "",
+                subject: "",
+                dept: [],
+                theorypapercode: "",
+                theorycredits: 0,
+            } satisfies SubjectDetail;
+        }
     }
-};
+
+    if (course === Courses.BCA) {
+        try {
+            const response = await fetch(
+                `${server}bca/${semesterList.find((s) => s.label === semester)?.value}/${_.startCase(subject.split("-").join(" "))}`
+            );
+
+            const subjectDetail: SubjectDetail[] = await response.json();
+
+            return subjectDetail[0];
+        } catch (error) {
+            console.error(error);
+
+            // placeholder value
+            return {
+                _id: "",
+                subject: "",
+                dept: [],
+                theorypapercode: "",
+                theorycredits: 0,
+            } satisfies SubjectDetail;
+        }
+    }
+
+    // placeholder value
+    return {
+        _id: "",
+        subject: "",
+        dept: [],
+        theorypapercode: "",
+        theorycredits: 0,
+        theory: [],
+    } satisfies SubjectDetail;
+}
 
 export const getBtechStudyMaterial = async ({
     semester,
@@ -148,28 +213,6 @@ export const getBtechStudyMaterial = async ({
     }
 
     return null;
-};
-
-export const getBcaSubjectDetails = async ({
-    semester,
-    subject,
-}: {
-    semester: string | null;
-    subject: string | null;
-}) => {
-    if (!bcaSemesterList.some((s) => semester === s.label) || !subject) {
-        throw new AxiosError("Please check again what you searched.");
-    } else if (!subject) return null;
-    try {
-        const response = (await axios.get(
-            `${server}bca/${
-                bcaSemesterList.find((s) => semester === s.label)?.value
-            }/${_.startCase(_.toLower(subject))}`
-        )) as AxiosResponse;
-        return response.data;
-    } catch (error) {
-        throw new Error("Something went wrong! Please try again later.");
-    }
 };
 
 export const getBcaStudyMaterial = async ({

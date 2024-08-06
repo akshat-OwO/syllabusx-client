@@ -1,10 +1,9 @@
 "use client";
-
 import { Tab } from "@/config";
 import { cn } from "@/lib/utils";
 import { useLocalStorage } from "@mantine/hooks";
 import { ExternalLink } from "lucide-react";
-import { FC } from "react";
+import { FC, useState, useRef } from "react";
 import {
     Accordion,
     AccordionContent,
@@ -14,6 +13,8 @@ import {
 import { buttonVariants } from "./ui/button";
 import { Checkbox } from "./ui/checkbox";
 import { TabsContent } from "./ui/tabs";
+
+import useSound from "use-sound";
 
 interface SyllabusProps {
     theory: Theory[];
@@ -25,13 +26,43 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab }) => {
         key: "completed",
         defaultValue: [],
     });
+    const [playbackRate, setplaybackRate] = useState(0);
+    const lastClickTime = useRef<number>(0);
+
+    const playRate = () => {
+        const currentTime = Date.now();
+        const timeSinceLastClick = currentTime - lastClickTime.current;
+
+        if (timeSinceLastClick <= 500 && lastClickTime.current !== 0) {
+            setplaybackRate(playbackRate + 0.05);
+        } else {
+            setplaybackRate(1);
+        }
+
+        lastClickTime.current = currentTime;
+    };
+
+    const [playUncheck] = useSound("/topic_uncheck.mp3", {
+        playbackRate,
+        volume: 0.35,
+    });
+    const [playCheck] = useSound("/topic_check.mp3", {
+        playbackRate,
+        volume: 0.35,
+    });
 
     const handleComplete = (topic: string) => {
+        playRate();
+
         if (!completed.includes(topic)) {
+            playUncheck();
+
             setCompleted((current) => {
                 return [...current, topic];
             });
         } else {
+            playCheck();
+
             setCompleted((current) => {
                 return current.filter((curr) => curr !== topic);
             });

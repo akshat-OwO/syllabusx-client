@@ -1,5 +1,24 @@
 # syllabusx-client
 
+## 4.6.0
+
+### Minor Changes
+
+-   feat: Server Side Rendering [`3dbcce`](https://github.com/akshat-OwO/syllabusx-client/commit/3dbcce979c39665dae15d302d03b3fa90bc6438a)
+-   feat: new subject list card [`872fd7`](https://github.com/akshat-OwO/syllabusx-client/commit/872fd73f090ac7155bf9b50a6085ee0ca449d79d)
+-   feat: search card mobile drawers [`de4883`](https://github.com/akshat-OwO/syllabusx-client/commit/de48834f43828572f48edf5aa126a4d0d89e5dbe)
+-   feat: topic selection feedback [`321a37`](https://github.com/akshat-OwO/syllabusx-client/commit/321a3793a6e0878edc99d0f82f5dba3d563a922a)
+-   build: remove husky [`cc8f6d`](https://github.com/akshat-OwO/syllabusx-client/commit/cc8f6d25ce1ea6a53d5f183a955fd6c999fc3254)
+-   feat: subject history [`cd08a6`](https://github.com/akshat-OwO/syllabusx-client/commit/cd08a6e44eb2b332c40e3b5d34a7abb2073bc443) [`6bceb6`](https://github.com/akshat-OwO/syllabusx-client/commit/6bceb620801eb6f425edd8ee7e810c6fda60f4e3)
+
+### Patch Changes
+
+-   ci: changeset release branch [`1e3f19`](https://github.com/akshat-OwO/syllabusx-client/commit/1e3f19e12cb10bd95ba5df2ef944bc3dabf6d2f3)
+-   perf: bulk fetch upvotes [`bd1c01`](https://github.com/akshat-OwO/syllabusx-client/commit/bd1c01351880a7d193dc59a40af2941e6137bb34)
+-   fix: feadback form ratelimit [`a80bf9`](https://github.com/akshat-OwO/syllabusx-client/commit/a80bf99109026966661165ef37090c563f2bc4b4)
+-   feat(style): padding for navbar and footer [`8b11d5`](https://github.com/akshat-OwO/syllabusx-client/commit/8b11d5029d06a739e70a097b968d0598804c1ee6)
+-   build: dependency updates [`451523`](https://github.com/akshat-OwO/syllabusx-client/commit/451523d14be56e11b39103082b0a91dded57dac5)
+
 ## 4.5.1
 
 ### Patch Changes
