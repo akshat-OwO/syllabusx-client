@@ -1,5 +1,11 @@
 # syllabusx-client
 
+## 4.7.0
+
+### Minor Changes
+
+-   feat: track exam datesheet [`51a2e5`](https://github.com/akshat-OwO/syllabusx-client/commit/51a2e5bc8021cbbd6620c0dd53a844670f009ab2)
+
 ## 4.6.0
 
 ### Minor Changes

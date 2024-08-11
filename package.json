@@ -1,6 +1,6 @@
 {
     "name": "syllabusx-client",
-    "version": "4.6.0",
+    "version": "4.7.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/akshat-OwO/syllabusx-client.git"
@@ -71,6 +71,7 @@
         "openai": "^4.53.0",
         "postcss": "8.4.31",
         "react": "18.3.1",
+        "react-day-picker": "8.10.1",
         "react-dom": "18.3.1",
         "react-hook-form": "^7.52.1",
         "react-markdown": "^9.0.1",
