@@ -5,6 +5,7 @@ import ConfigureAI from "../ai/ConfigureAI";
 import SearchAI from "../ai/SearchAI";
 import EmbedModal from "../modals/embed-modal";
 import FeedbackModal from "../modals/feedback-modal";
+import DatesheetModal from "../modals/datesheet-modal";
 
 interface ModalProviderProps {}
 
@@ -22,6 +23,7 @@ const ModalProvider: FC<ModalProviderProps> = ({}) => {
             <EmbedModal />
             <ConfigureAI.Mobile />
             <SearchAI />
+            <DatesheetModal />
             <FeedbackModal />
         </>
     );

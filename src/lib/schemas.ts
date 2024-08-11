@@ -30,3 +30,10 @@ export const AiSearchSchema = z.object({
 });
 
 export type TAiSearchSchema = z.infer<typeof AiSearchSchema>;
+
+export const datesheetSchema = z.object({
+    name: z.string().min(1),
+    date: z.date(),
+});
+
+export type TDatesheetSchema = z.infer<typeof datesheetSchema>;

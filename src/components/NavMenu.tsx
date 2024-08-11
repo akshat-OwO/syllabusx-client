@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { FC } from "react";
-import { buttonVariants } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import {
     ListItem,
     NavigationMenu,
@@ -14,10 +14,12 @@ import {
     NavigationMenuTrigger,
     navigationMenuTriggerStyle,
 } from "./ui/navigation-menu";
+import { useDatesheet } from "@/hooks/use-datesheet";
 
 interface NavMenuProps {}
 
 const NavMenu: FC<NavMenuProps> = ({}) => {
+    const { onOpen } = useDatesheet();
     return (
         <NavigationMenu>
             <NavigationMenuList>
@@ -36,6 +38,13 @@ const NavMenu: FC<NavMenuProps> = ({}) => {
                         </ul>
                     </NavigationMenuContent>
                 </NavigationMenuItem>
+                <Button
+                    variant="ghost"
+                    className="focus:bg-accent focus:text-accent-foreground focus-visible:ring-0 focus-visible:ring-offset-0"
+                    onClick={() => onOpen()}
+                >
+                    Datesheet
+                </Button>
                 <NavigationMenuItem>
                     <Link href="/changelog" legacyBehavior passHref>
                         <NavigationMenuLink

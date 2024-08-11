@@ -1,8 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { Github, Instagram, Menu, Star } from "lucide-react";
-import Link from "next/link";
+import { Calendar, Github, Instagram, Menu, Star } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FC } from "react";
 import ConfigureAI from "./ai/ConfigureAI";
@@ -18,10 +17,13 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "./ui/sheet";
+import { useDatesheet } from "@/hooks/use-datesheet";
 
 interface NavLinksProps {}
 
 const NavLinks: FC<NavLinksProps> = ({}) => {
+    const { onOpen } = useDatesheet();
+
     return (
         <>
             <div className="hidden items-center gap-2 md:flex">
@@ -57,6 +59,9 @@ const NavLinks: FC<NavLinksProps> = ({}) => {
                 <ThemeCustomizer />
             </div>
             <div className="flex gap-2 md:hidden">
+                <Button variant="ghost" size="icon" onClick={() => onOpen()}>
+                    <Calendar className="h-4 w-4" />
+                </Button>
                 <ConfigureAI.MobileTrigger />
                 <ConfigureAI />
                 <ThemeCustomizer />
