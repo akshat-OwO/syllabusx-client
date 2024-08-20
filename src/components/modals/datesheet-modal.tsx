@@ -221,7 +221,11 @@ DatesheetModal.Form = function DatesheetModalForm({
                                         }}
                                     />
                                     {!isEditForm && (
-                                        <Button type="submit" className="w-full" variant="outline">
+                                        <Button
+                                            type="submit"
+                                            className="w-full"
+                                            variant="outline"
+                                        >
                                             Add
                                         </Button>
                                     )}
