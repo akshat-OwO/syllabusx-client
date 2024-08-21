@@ -87,8 +87,6 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab }) => {
         });
     }, [theory, completed]);
 
-    console.log(unitProgress);
-
     return (
         <>
             <TabsContent value={Tab.THEORY}>
