@@ -46,7 +46,7 @@ const ConfigureAI = ({}: ConfigureAIProps) => {
     }, []);
 
     return (
-        <div className="hidden md:flex items-center space-x-2">
+        <div className="hidden items-center space-x-2 md:flex">
             <div className="hidden md:flex">
                 <Popover>
                     <AccessibleToolTip label="AI">

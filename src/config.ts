@@ -115,7 +115,7 @@ export enum Courses {
 }
 
 export const server = "https://server.syllabusx.live/";
-// export const server = 'http://localhost:8080/';
+// export const server = "http://localhost:5000/";
 
 export const STALE_TIME = 1000 * 60 * 60 * 24 * 15;
 export const CACHE_TIME = 1000 * 60 * 60 * 24 * 15;

@@ -1,5 +1,11 @@
 # syllabusx-client
 
+## 4.8.0
+
+### Minor Changes
+
+-   feat: topic progression [`20c127`](https://github.com/akshat-OwO/syllabusx-client/commit/20c1276705bf3d2aaf1c9ef0be9cb3e8e5f389ec)
+
 ## 4.7.0
 
 ### Minor Changes
