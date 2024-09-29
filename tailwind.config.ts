@@ -55,6 +55,7 @@ module.exports = {
                 },
                 translucent: "hsl(var(--translucent))",
                 highlight: "hsl(var(--highlight))",
+                stroke: "hsl(var(--stroke))",
             },
             borderRadius: {
                 lg: "var(--radius)",

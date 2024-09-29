@@ -26,6 +26,7 @@
         --radius: 0.5rem;
         --translucent: 192.94, 100%, 50%, 0.3;
         --highlight: 192.94, 100%, 50%;
+        --stroke: 172 51.7% 52.9%;
     }
 
     .dark {
