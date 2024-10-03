@@ -9,70 +9,71 @@ interface PricingProps {}
 const Pricing: FC<PricingProps> = ({}) => {
     return (
         <LayoutWrapper className="py-20">
-            <div className="flex flex-col justify-center gap-10">
+            <div className="mx-auto flex max-w-md flex-col justify-center gap-8">
                 <div className="prose prose-neutral self-center text-center dark:prose-invert">
-                    <h2>Pricing</h2>
-                    <p>No wallet required! SyllabusX is free and open-source</p>
+                    <h2 className="mb-2 text-3xl font-bold">Pricing</h2>
+                    <p className="text-muted-foreground">
+                        No wallet required! SyllabusX is free and open-source
+                    </p>
                 </div>
-                <div className="flex flex-col justify-center gap-2 md:flex-row md:items-end md:gap-0">
-                    <div className="flex flex-col items-center justify-center gap-2 border-border md:items-start md:border-r md:pr-10">
-                        <a
-                            href="https://github.com/akshat-OwO/syllabusx-client"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={cn(
-                                buttonVariants({
-                                    variant: "outline",
-                                    className: "w-full items-center gap-2",
-                                })
-                            )}
-                        >
-                            <Star className="h-4 w-4" />
-                            Give us a star
-                        </a>
-                        <a
-                            href="https://www.instagram.com/syllabusx_.live/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={cn(
-                                buttonVariants({
-                                    variant: "outline",
-                                    className: "w-full items-center gap-2",
-                                })
-                            )}
-                        >
-                            <Heart className="h-4 w-4" />
-                            Follow us on Instagram
-                        </a>
-                        <a
-                            href="https://forms.gle/BFTv1uy8L33ptic6A"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={cn(
-                                buttonVariants({
-                                    variant: "outline",
-                                    className: "w-full items-center gap-2",
-                                })
-                            )}
-                        >
-                            <MessageSquarePlus className="h-4 w-4" />
-                            Give us feedback
-                        </a>
-                    </div>
-                    <div className="flex flex-col items-center gap-2 md:items-start md:pl-10">
+                <div className="flex flex-col gap-4">
+                    <a
+                        href="https://github.com/akshat-OwO/syllabusx-client"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={cn(
+                            buttonVariants({
+                                variant: "outline",
+                                className:
+                                    "h-12 w-full items-center justify-start gap-2",
+                            })
+                        )}
+                    >
+                        <Star className="h-5 w-5 fill-highlight text-highlight" />
+                        Give us a star
+                    </a>
+                    <a
+                        href="https://www.instagram.com/syllabusx_.live/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={cn(
+                            buttonVariants({
+                                variant: "outline",
+                                className:
+                                    "h-12 w-full items-center justify-start gap-2",
+                            })
+                        )}
+                    >
+                        <Heart className="h-5 w-5 fill-highlight text-highlight" />
+                        Follow us on Instagram
+                    </a>
+                    <a
+                        href="https://forms.gle/BFTv1uy8L33ptic6A"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={cn(
+                            buttonVariants({
+                                variant: "outline",
+                                className:
+                                    "h-12 w-full items-center justify-start gap-2",
+                            })
+                        )}
+                    >
+                        <MessageSquarePlus className="h-5 w-5 fill-highlight text-highlight" />
+                        Give us feedback
+                    </a>
+                    <div className="mt-2 flex flex-col items-center gap-4 rounded-lg border border-secondary p-6">
+                        <Gift className="h-20 w-20 stroke-1 text-highlight" />
                         <a
                             href="https://github.com/sponsors/akshat-OwO"
                             target="_blank"
                             rel="noopener noreferrer"
                             className={cn(
                                 buttonVariants({
-                                    variant: "outline",
-                                    className:
-                                        "w-full gap-2 md:items-center md:justify-self-end",
+                                    className: "h-10 w-full items-center gap-2",
                                 })
                             )}
                         >
-                            <Gift className="h-4 w-4" />
                             Become a sponsor
                         </a>
                     </div>
