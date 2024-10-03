@@ -63,7 +63,7 @@ const Pricing: FC<PricingProps> = ({}) => {
                         Give us feedback
                     </a>
                     <div className="mt-2 flex flex-col items-center gap-4 rounded-lg border border-secondary p-6">
-                        <Gift className="text-stroke h-20 w-20 stroke-1" />
+                        <Gift className="h-20 w-20 stroke-1 text-highlight" />
                         <a
                             href="https://github.com/sponsors/akshat-OwO"
                             target="_blank"
