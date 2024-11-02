@@ -1,14 +1,15 @@
+import { Courses } from "@/config";
 import { create } from "zustand";
 
 type SubjectViewStore = {
-    course: string;
+    course: Courses;
     isOpen: boolean;
-    onOpen: (course: string) => void;
+    onOpen: (course: Courses) => void;
     onClose: () => void;
 };
 
 export const useSubjectView = create<SubjectViewStore>((set, get) => ({
-    course: "",
+    course: Courses.BTECH,
     isOpen: false,
     onOpen: (course) => set({ isOpen: true, course }),
     onClose: () => set({ isOpen: false }),
