@@ -170,7 +170,7 @@ export const getBtechStudyMaterial = async ({
 }) => {
     if (
         !semesterList.some((s) => semester === s.label) ||
-        !branchList.some((b) => branch === b.value) ||
+        !branchList.some((b) => branch === b.value.toLowerCase()) ||
         !subject
     ) {
         throw new AxiosError("Please check again what you searched.");
