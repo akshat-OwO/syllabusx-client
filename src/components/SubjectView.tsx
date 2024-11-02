@@ -171,7 +171,7 @@ SubjectView.Details = function SubjectViewDetails({
                 <p className="font-semibold">{label}</p>
                 <p>
                     {typeof value === "string" && value.includes("/")
-                        ? value.split("/").join(" / ")
+                        ? value.split("/").map((s) => s.trim()).join(" / ")
                         : value}
                 </p>
             </div>
