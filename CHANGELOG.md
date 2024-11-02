@@ -1,5 +1,11 @@
 # syllabusx-client
 
+## 4.8.1
+
+### Patch Changes
+
+-   fix: [`e42ef78`](https://github.com/akshat-OwO/syllabusx-client/commit/e42ef78947e81792e1e250d987304bf2098d115d) study materials fetcher identifier
+
 ## 4.8.0
 
 ### Minor Changes

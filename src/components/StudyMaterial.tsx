@@ -1,6 +1,6 @@
 "use client";
 
-import { Tab } from "@/config";
+import { Courses, Tab } from "@/config";
 import { useEmbed } from "@/hooks/use-embed";
 import { useFeedback } from "@/hooks/use-feedback";
 import { getBcaStudyMaterial, getBtechStudyMaterial } from "@/lib/server";
@@ -22,7 +22,7 @@ import axios, { AxiosResponse } from "axios";
 
 interface StudyMaterialProps {
     tab: Tab;
-    course: string;
+    course: Courses;
     semester: string | null;
     branch: string | null;
     subject: string | null;
@@ -53,24 +53,28 @@ const StudyMaterial = ({
     };
 
     const generateQueryKey = (): QueryKey => {
-        if (course == "btech") {
+        if (course === Courses.BTECH) {
             return [course, tab, semester, branch, subject];
+        } else if (course === Courses.BCA) {
+            return [course, tab, semester, subject];
         }
-        return [course, tab, semester, subject];
+        return [];
     };
 
     const generateUpvoteQueryKey = (): QueryKey => {
-        if (course == "btech") {
+        if (course === Courses.BTECH) {
             return ["votes", course, tab, semester, branch, subject];
+        } else if (course === Courses.BCA) {
+            return ["votes", course, tab, semester, subject];
         }
-        return ["votes", course, tab, semester, subject];
+        return [];
     };
 
     const { data, isLoading, error, refetch, isFetching } = useQuery({
         // eslint-disable-next-line @tanstack/query/exhaustive-deps
         queryKey: generateQueryKey(),
         queryFn: async () => {
-            if (course == "btech") {
+            if (course === Courses.BTECH) {
                 return await getBtechStudyMaterial({
                     semester,
                     branch,
@@ -81,16 +85,18 @@ const StudyMaterial = ({
                     practical,
                     pyq,
                 });
+            } else if (course === Courses.BCA) {
+                return await getBcaStudyMaterial({
+                    semester,
+                    subject,
+                    tab,
+                    book,
+                    note,
+                    practical,
+                    pyq,
+                });
             }
-            return await getBcaStudyMaterial({
-                semester,
-                subject,
-                tab,
-                book,
-                note,
-                practical,
-                pyq,
-            });
+            return null;
         },
     });
 

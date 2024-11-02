@@ -1,6 +1,6 @@
 "use client";
 
-import { Tab } from "@/config";
+import { Courses, Tab } from "@/config";
 import { useSubjectView } from "@/hooks/use-subject-view";
 import { cn } from "@/lib/utils";
 import { Expand } from "lucide-react";
@@ -16,7 +16,7 @@ import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import { SubjectDetail } from "@/lib/server";
 
 interface SubjectViewProps {
-    course: string;
+    course: Courses;
     subjectDetail: SubjectDetail;
     isModal?: boolean;
 }
@@ -129,7 +129,7 @@ SubjectView.Box = function SubjectViewBox({
 }: {
     sub: SubjectDetail;
     tab: Tab;
-    course: string;
+    course: Courses;
     semester: string | null;
     branch: string | null;
     subject: string | null;
@@ -171,7 +171,7 @@ SubjectView.Details = function SubjectViewDetails({
                 <p className="font-semibold">{label}</p>
                 <p>
                     {typeof value === "string" && value.includes("/")
-                        ? value.split("/").join(" / ")
+                        ? value.split("/").map((s) => s.trim()).join(" / ")
                         : value}
                 </p>
             </div>
