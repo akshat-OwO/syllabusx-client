@@ -16,6 +16,7 @@
 
 -   [Introduction🚀](#Introduction)
 -   [Usage](#Usage)
+-   [Docker Setup for Development](#Docker-Setup-for-Development)
 -   [Technologies Used📫](#-Technologies-Used)
 -   [Features](#Features)
 -   [How to Contributie](#Contributing-to-SyllabusX)
@@ -43,6 +44,34 @@ To access syllabus information for your branch and semester, follow these simple
 4. Explore the syllabus, recommended books, handwritten notes, previous year questions, and practical files for your selected semester.
 
 It's that easy! Enjoy using SyllabusX for all your academic needs.
+
+# Docker Setup for Development
+
+To run this project with Docker  follow these steps:
+
+### Starting the Application
+
+1. **Start Docker Engine**  
+   Ensure that Docker is installed and running on your system.
+
+2. **Copy Environment Variables**  
+   Copy the example environment file to create a local `.env` file:
+   ```bash
+   cp .env.example .env
+   ```
+
+3. **Start Docker Compose with Watch Mode**  
+   Use Docker Compose to start the application in watch mode:
+   ```bash
+   docker compose up --watch
+   ```
+
+### Stopping the Application
+
+To stop the Docker containers, run:
+```bash
+docker compose down
+```
 
 # Technologies-Used 💻
 
@@ -109,7 +138,8 @@ SyllabusX is Licensed under the <a href="./LICENSE">GPL License</a>. Please go t
 # Contributors
 
 <a href="https://github.com/akshat-OwO/syllabusx-client/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=akshat-OwO/syllabusx-client" />
+ <img src="https://contrib.rocks/image?repo=akshat-OwO/syllabusx-client&v=1" />
+
 </a>
 
 Made with [contrib.rocks](https://contrib.rocks).
