@@ -6,13 +6,6 @@ services:
       dockerfile: Dockerfile  
     ports:
       - 3000:3000
-    environment:
-      - NEXT_PUBLIC_URL=https://localhost:3000
-      - CONTENTFUL_SPACE_ID=dummy_space_id
-      - CONTENTFUL_ACCESS_TOKEN=dummy_access_token
-      - RESEND_API_KEY=dummy_resend_key
-      - UPSTASH_REDIS_REST_URL=https://dummy-upstash-redis-url.com
-      - UPSTASH_REDIS_REST_TOKEN=dummy_token  
     develop:
       watch:
         - path: ./package.json
