@@ -1,3 +1,4 @@
+
 <div align="center"> 
     <a href="https://github.com/akshat-OwO/syllabusx-client">
         <img src="https://github.com/akshat-OwO/syllabusx-client/blob/main/.github/assets/banner.png?raw=true" alt="SyllabusX Banner">
@@ -12,18 +13,19 @@
   </p>
 </div>
 
-# 🧭 Table of contents
+# 🧭 Table of Contents
 
--   [Introduction🚀](#Introduction)
--   [Usage](#Usage)
--   [Docker Setup for Development](#Docker-Setup-for-Development)
--   [Technologies Used📫](#-Technologies-Used)
--   [Features](#Features)
--   [How to Contributie](#Contributing-to-SyllabusX)
--   [Maintainers](#Maintainers)
--   [License](#License)
--   [Contributors](#Contributors)
--   [Support](#Support)
+- [Introduction 🚀](#Introduction)
+- [Usage](#Usage)
+- [Docker Setup for Development](#Docker-Setup-for-Development)
+- [Technologies Used 📫](#Technologies-Used)
+- [Features](#Features)
+- [How to Contribute](#How-to-Contribute)
+- [Maintainers](#Maintainers)
+- [License](#License)
+- [Contributors](#Contributors)
+- [Support](#Support)
+
 
 <br>
 
