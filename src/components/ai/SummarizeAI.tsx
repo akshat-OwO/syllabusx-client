@@ -11,7 +11,7 @@ import {
 } from "../ui/dialog";
 import { useMediaQuery } from '@mantine/hooks';
 import { useChat } from 'ai/react';
-import { RefreshCcw, Sparkles, StopCircle, User } from 'lucide-react';
+import { RefreshCcw, SendHorizonal, Sparkles, StopCircle, User } from 'lucide-react';
 import Markdown from 'react-markdown';
 import { cn } from '@/lib/utils';
 import { Message } from 'ai';
@@ -122,7 +122,9 @@ const SummarizeAI: FC<SummarizeAiProps> = ({ }) => {
                     <DrawerHeader className="px-0">
                         <DrawerTitle>Summarize with AI</DrawerTitle>
                     </DrawerHeader>
-                    <Content messages={messages} isLoading={isLoading} handleappend={handleappend} setprompt={setPrompt} prompt={prompt} />
+                    <div className='w-full h-full overflow-y-auto'>
+                        <Content messages={messages} isLoading={isLoading} handleappend={handleappend} setprompt={setPrompt} prompt={prompt} isDesktop={isDesktop || false} />
+                    </div>
                 </DrawerContent>
             </Drawer>
         );
@@ -138,14 +140,14 @@ const SummarizeAI: FC<SummarizeAiProps> = ({ }) => {
                     <DialogTitle>Summarize with AI</DialogTitle>
                 </DialogHeader>
                 <div className='w-full h-[80vh] overflow-y-auto'>
-                    <Content messages={messages} isLoading={isLoading} handleappend={handleappend} setprompt={setPrompt} prompt={prompt} />
+                    <Content messages={messages} isLoading={isLoading} handleappend={handleappend} setprompt={setPrompt} prompt={prompt} isDesktop={isDesktop}/>
                 </div>
             </DialogContent>
         </Dialog>
     );
 }
 
-const Content = ({ messages, isLoading, handleappend, setprompt, prompt }: { messages: Message[], isLoading: boolean, handleappend: any, setprompt: any, prompt: string }) => {
+const Content = ({ messages, isLoading, handleappend, setprompt, prompt,isDesktop }: { messages: Message[], isLoading: boolean, handleappend: any, setprompt: any, prompt: string,isDesktop:boolean }) => {
 
     if (!messages[1]) {
         return;
@@ -173,7 +175,7 @@ const Content = ({ messages, isLoading, handleappend, setprompt, prompt }: { mes
                         </div>
                     </div>
                 )}
-                <Markdown className="prose rounded-md pr-8 border border-border bg-secondary p-4 dark:prose-invert">
+                <Markdown className={`prose rounded-md pr-8 border border-border bg-secondary p-4 dark:prose-invert ${!isDesktop && "text-sm"}`}>
                     {m.content}
                 </Markdown>
                 {m.role === "user" && (
@@ -187,7 +189,7 @@ const Content = ({ messages, isLoading, handleappend, setprompt, prompt }: { mes
             {aiSummarizer?.currentTab == Tab.THEORY && messages[1]?.content && <select value={'Topics...'} onChange={(e) => {
                 setprompt(e.target.value);
                 inputRef?.current?.focus();
-            }} disabled={isLoading} className='px-2 bg-background w-1/4 h-full outline-none text-sm rounded-sm self-center cursor-pointer' placeholder='Topics'>
+            }} disabled={isLoading} className={`px-2 bg-background w-1/4 ${!isDesktop && "w-1/12"} h-full outline-none text-sm rounded-sm self-center cursor-pointer`} placeholder='Topics'>
                 <option disabled value={'Topics...'}>Select Topic</option>
                 {topics.map((q) => {
                     return <option value={q}>{q}</option>
@@ -200,7 +202,7 @@ const Content = ({ messages, isLoading, handleappend, setprompt, prompt }: { mes
                 ref={inputRef}
                 value={prompt}
                 onChange={(e) => { setprompt(e.target.value); }}
-                className='w-full h-10 resize-none self-center p-5 rounded-sm overflow-y-auto'
+                className={`w-full h-10 resize-none self-center p-5 rounded-sm overflow-y-auto ${!isDesktop && "p-1"}`}
                 onKeyDown={(e) => {
                     if (
                         e.key === "Enter" &&
@@ -224,7 +226,7 @@ const Content = ({ messages, isLoading, handleappend, setprompt, prompt }: { mes
                 {isLoading ? (
                     <StopCircle className="h-4 w-4" />
                 ) : (
-                    "Submit"
+                    <SendHorizonal className="h-4 w-4"/>
                 )}
             </Button>
         </div>
