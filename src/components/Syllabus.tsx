@@ -17,6 +17,7 @@ import useSound from "use-sound";
 import useStore from "@/hooks/use-store";
 import { useAi, useAiSummarizer } from "@/hooks/use-ai";
 import { toast } from "sonner";
+import { motion } from 'framer-motion';
 
 interface Theory {
     unit: number;
@@ -156,7 +157,7 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab, tab }) => {
                                                     )
                                                 }
                                             />
-                                            <div className="flex flex-col gap-1 w-full">
+                                            <div className="flex flex-col gap-1 w-full group">
                                                 <p
                                                     className={cn(
                                                         completed.includes(
@@ -167,8 +168,10 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab, tab }) => {
                                                     {topic}
 
                                                 </p>
-                                                <span className="w-full flex justify-end px-3">
-                                                    <Sparkles onClick={() => handleAiClick(topic)} className="h-5 w-5 cursor-pointer hover:scale-125 hover:rotate-12 transition-all active:scale-90" />
+                                                <span className="w-full flex justify-end px-3 h-5">
+                                                    <motion.p transition={{duration:0.1}} initial={{ x: -10, opacity: 0 }} whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.2, rotate: '12deg' }} whileInView={{ x: 0, opacity: 1 }} className="cursor-pointer hidden group-hover:block transition-all">
+                                                        <Sparkles onClick={() => handleAiClick(topic)} className="h-5 w-5" />
+                                                    </motion.p>
                                                 </span>
                                             </div>
                                         </div>
@@ -217,7 +220,7 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab, tab }) => {
                                                     )
                                                 }
                                             />
-                                            <div className="flex flex-col gap-1 w-full">
+                                            <div className="flex flex-col gap-1 w-full group">
                                                 <p
                                                     className={cn(
                                                         completed.includes(
@@ -227,8 +230,10 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab, tab }) => {
                                                 >
                                                     {l.aim.objective}
                                                 </p>
-                                                <span className="w-full flex justify-end px-3">
-                                                    <Sparkles onClick={() => handleAiClick(l.aim.objective)} className="h-5 w-5 cursor-pointer hover:scale-125 hover:rotate-12 transition-all active:scale-90" />
+                                                <span className="w-full flex justify-end px-3 h-5">
+                                                    <motion.p transition={{duration:0.1}} initial={{ x: -10, opacity: 0 }} whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.2, rotate: '12deg' }} whileInView={{ x: 0, opacity: 1 }} className="cursor-pointer hidden group-hover:block transition-all">
+                                                        <Sparkles onClick={() => handleAiClick(l.aim.objective)} className="h-5 w-5" />
+                                                    </motion.p>
                                                 </span>
                                             </div>
                                         </div>
