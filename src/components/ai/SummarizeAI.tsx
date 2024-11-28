@@ -110,6 +110,7 @@ const SummarizeAI: FC<SummarizeAiProps> = ({ }) => {
         if (aiSummarizer?.isOpen) {
             fetch();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [aiSummarizer?.isOpen])
 
     if (!isDesktop) {
@@ -148,13 +149,14 @@ const SummarizeAI: FC<SummarizeAiProps> = ({ }) => {
 }
 
 const Content = ({ messages, isLoading, handleappend, setprompt, prompt,isDesktop }: { messages: Message[], isLoading: boolean, handleappend: any, setprompt: any, prompt: string,isDesktop:boolean }) => {
+    const inputRef = useRef<HTMLInputElement>(null);
+    const aiSummarizer = useStore(useAiSummarizer, (state) => state);
 
     if (!messages[1]) {
         return;
     }
+
     const topics = messages[1].content.split(':-')[1].split(',');
-    const inputRef = useRef<HTMLInputElement>(null);
-    const aiSummarizer = useStore(useAiSummarizer, (state) => state);
 
 
     return <div className={`w-full h-full flex flex-col gap-3 pr-5 ${isLoading && "animate-pulse"}`}>
@@ -192,7 +194,7 @@ const Content = ({ messages, isLoading, handleappend, setprompt, prompt,isDeskto
             }} disabled={isLoading} className={`px-2 bg-background w-1/4 ${!isDesktop && "w-1/12"} h-full outline-none text-sm rounded-sm self-center cursor-pointer`} placeholder='Topics'>
                 <option disabled value={'Topics...'}>Select Topic</option>
                 {topics.map((q) => {
-                    return <option value={q}>{q}</option>
+                    return <option key={q} value={q}>{q}</option>
                 })}
             </select>}
             <Input
