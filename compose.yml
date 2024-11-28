@@ -1,0 +1,17 @@
+name: SyllabusX
+services:
+  client:
+    build:
+      context: ./
+      dockerfile: Dockerfile  
+    ports:
+      - 3000:3000
+    develop:
+      watch:
+        - path: ./package.json
+          action: rebuild
+        - path: ./package-lock.json
+          action: rebuild
+        - path: ./
+          target: /app
+          action: sync

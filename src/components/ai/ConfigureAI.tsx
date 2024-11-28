@@ -5,7 +5,7 @@ import useStore from "@/hooks/use-store";
 import { AiSchema, TAiSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMediaQuery } from "@mantine/hooks";
-import { NotebookPen, Search, Sparkles, Undo } from "lucide-react";
+import { BookOpenIcon, NotebookPen, Search, Sparkles, Undo } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -36,9 +36,9 @@ import {
 import { Separator } from "../ui/separator";
 import { Switch } from "../ui/switch";
 
-interface ConfigureAIProps {}
+interface ConfigureAIProps { }
 
-const ConfigureAI = ({}: ConfigureAIProps) => {
+const ConfigureAI = ({ }: ConfigureAIProps) => {
     const [mounted, setMounted] = useState<boolean>(false);
 
     useEffect(() => {
@@ -222,9 +222,15 @@ function AiForm() {
                     icon={<Search className="h-5 w-5" />}
                 />
                 <AIFeature
+                    title="Summary with AI"
+                    description="Key points at a glance"
+                    onClick={() => { }}
+                    icon={<BookOpenIcon className="h-5 w-5" />}
+                />
+                <AIFeature
                     title="AI note builder"
                     description=""
-                    onClick={() => {}}
+                    onClick={() => { }}
                     preview
                     icon={<NotebookPen className="h-5 w-5" />}
                 />

@@ -1,5 +1,11 @@
 # syllabusx-client
 
+## 4.9.0
+
+### Minor Changes
+
+-   feat [`268fb1`](https://github.com/akshat-OwO/syllabusx-client/commit/268fb11edfd8ce9e6fbc51f32c024e8454b5c429) ai topic summarizer by [`@mohitarora8181`](https://github.com/mohitarora8181)
+
 ## 4.8.1
 
 ### Patch Changes

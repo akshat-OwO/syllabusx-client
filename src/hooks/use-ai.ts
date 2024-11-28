@@ -11,6 +11,7 @@ type Completion = {
     onClose: () => void;
 };
 
+
 type AiStore = {
     toggle: boolean;
     key: string;
@@ -23,6 +24,16 @@ type AiStore = {
     onClose: () => void;
     setClear: () => void;
     completion: Completion;
+};
+
+type AiSummarizer = {
+    isOpen: boolean;
+    topic: string;
+    currentTab: string;
+    setTopic: (input: string) => void;
+    setTab: (input: string) => void;
+    onOpen: () => void;
+    onClose: () => void;
 };
 
 export const useAi = create<AiStore>()(
@@ -66,6 +77,23 @@ export const useAi = create<AiStore>()(
                 toggle: state.toggle,
                 model: state.model,
             }),
+        }
+    )
+);
+
+export const useAiSummarizer = create<AiSummarizer>()(
+    persist(
+        (set, get) => ({
+            topic: "",
+            currentTab: "",
+            isOpen: false,
+            setTopic: (input: string) => set({ topic: input }),
+            setTab: (input: string) => set({ currentTab: input }),
+            onOpen: () => set({ isOpen: true }),
+            onClose: () => set({ isOpen: false })
+        }),
+        {
+            name: "aiSummarizer"
         }
     )
 );
