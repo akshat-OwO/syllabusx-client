@@ -2,7 +2,7 @@
 import { Tab } from "@/config";
 import { cn } from "@/lib/utils";
 import { useLocalStorage } from "@mantine/hooks";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Sparkles } from "lucide-react";
 import { FC, useState, useRef, useMemo } from "react";
 import {
     Accordion,
@@ -12,9 +12,12 @@ import {
 } from "./ui/accordion";
 import { buttonVariants } from "./ui/button";
 import { Checkbox } from "./ui/checkbox";
-import { TabsContent } from "./ui/tabs";
-import { Progress } from "./ui/progress";
+import { TabsContent, TabsTrigger } from "./ui/tabs";
 import useSound from "use-sound";
+import useStore from "@/hooks/use-store";
+import { useAi, useAiSummarizer } from "@/hooks/use-ai";
+import { toast } from "sonner";
+import { motion } from 'framer-motion';
 
 interface Theory {
     unit: number;
@@ -33,15 +36,19 @@ interface Lab {
 interface SyllabusProps {
     theory: Theory[];
     lab: Lab[];
+    tab: string
 }
 
-const Syllabus: FC<SyllabusProps> = ({ theory, lab }) => {
+const Syllabus: FC<SyllabusProps> = ({ theory, lab, tab }) => {
     const [completed, setCompleted] = useLocalStorage<string[]>({
         key: "completed",
         defaultValue: [],
     });
     const [playbackRate, setplaybackRate] = useState(0);
     const lastClickTime = useRef<number>(0);
+
+    const ai = useStore(useAi, (state) => state);
+    const aiSummarizer = useStore(useAiSummarizer, (state) => state);
 
     const playRate = () => {
         const currentTime = Date.now();
@@ -87,6 +94,26 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab }) => {
         });
     }, [theory, completed]);
 
+    const handleAiClick = async (topic: string) => {
+        if (!ai?.toggle) {
+            toast.error("Toggle AI first!");
+            return;
+        }
+
+        if (!ai?.key) {
+            toast.error("Missing API key!");
+            return;
+        }
+
+        if (!ai?.model) {
+            toast.error("Select model first!");
+            return;
+        }
+        aiSummarizer?.setTab(tab);
+        aiSummarizer?.setTopic(topic);
+        aiSummarizer?.onOpen()
+    }
+
     return (
         <>
             <TabsContent value={Tab.THEORY}>
@@ -130,15 +157,23 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab }) => {
                                                     )
                                                 }
                                             />
-                                            <p
-                                                className={cn(
-                                                    completed.includes(
-                                                        topic + index
-                                                    ) && "line-through"
-                                                )}
-                                            >
-                                                {topic}
-                                            </p>
+                                            <div className="flex flex-col gap-1 w-full group">
+                                                <p
+                                                    className={cn(
+                                                        completed.includes(
+                                                            topic + index
+                                                        ) && "line-through"
+                                                    )}
+                                                >
+                                                    {topic}
+
+                                                </p>
+                                                <span className="w-full flex justify-end px-3 h-5">
+                                                    <motion.p transition={{duration:0.1}} initial={{ x: -10, opacity: 0 }} whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.2, rotate: '12deg' }} whileInView={{ x: 0, opacity: 1 }} className="cursor-pointer hidden group-hover:block transition-all">
+                                                        <Sparkles onClick={() => handleAiClick(topic)} className="h-5 w-5" />
+                                                    </motion.p>
+                                                </span>
+                                            </div>
                                         </div>
                                     ))}
                                 </div>
@@ -185,15 +220,22 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab }) => {
                                                     )
                                                 }
                                             />
-                                            <p
-                                                className={cn(
-                                                    completed.includes(
-                                                        l.aim.objective
-                                                    ) && "line-through"
-                                                )}
-                                            >
-                                                {l.aim.objective}
-                                            </p>
+                                            <div className="flex flex-col gap-1 w-full group">
+                                                <p
+                                                    className={cn(
+                                                        completed.includes(
+                                                            l.aim.objective
+                                                        ) && "line-through"
+                                                    )}
+                                                >
+                                                    {l.aim.objective}
+                                                </p>
+                                                <span className="w-full flex justify-end px-3 h-5">
+                                                    <motion.p transition={{duration:0.1}} initial={{ x: -10, opacity: 0 }} whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.2, rotate: '12deg' }} whileInView={{ x: 0, opacity: 1 }} className="cursor-pointer hidden group-hover:block transition-all">
+                                                        <Sparkles onClick={() => handleAiClick(l.aim.objective)} className="h-5 w-5" />
+                                                    </motion.p>
+                                                </span>
+                                            </div>
                                         </div>
                                         {l.aim.steps.length > 0 &&
                                             l.aim.steps.map((step, index) => (

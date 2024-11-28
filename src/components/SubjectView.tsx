@@ -139,6 +139,7 @@ SubjectView.Box = function SubjectViewBox({
             <Syllabus
                 theory={sub.theory || sub.units || []}
                 lab={sub.lab || []}
+                tab={tab}
             />
             {tab === Tab.NOTES ||
             tab === Tab.BOOKS ||
