@@ -139,7 +139,7 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab, tab }) => {
                                         <div
                                             key={index}
                                             className={cn(
-                                                "flex w-full items-center gap-4 rounded-md p-2 pl-4 text-sm shadow-sm transition-colors lg:text-base",
+                                                "flex w-full items-center gap-4 rounded-md p-2 pl-4 text-sm shadow-sm transition-colors lg:text-base group",
                                                 completed.includes(
                                                     topic + index
                                                 )
