@@ -139,7 +139,7 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab, tab }) => {
                                         <div
                                             key={index}
                                             className={cn(
-                                                "flex w-full items-center gap-4 rounded-md p-2 text-sm shadow-sm transition-colors lg:text-base",
+                                                "flex w-full items-center gap-4 rounded-md p-2 pl-4 text-sm shadow-sm transition-colors lg:text-base",
                                                 completed.includes(
                                                     topic + index
                                                 )
@@ -157,9 +157,10 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab, tab }) => {
                                                     )
                                                 }
                                             />
-                                            <div className="flex flex-col gap-1 w-full group">
+                                            <div className="flex flex-col w-full px-4 pt-2">
                                                 <p
                                                     className={cn(
+                                                        "flex-1 text-justify break-words",
                                                         completed.includes(
                                                             topic + index
                                                         ) && "line-through"
@@ -169,7 +170,7 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab, tab }) => {
 
                                                 </p>
                                                 <span className="w-full flex justify-end px-3 h-5">
-                                                    <motion.p transition={{duration:0.1}} initial={{ x: -10, opacity: 0 }} whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.2, rotate: '12deg' }} whileInView={{ x: 0, opacity: 1 }} className="cursor-pointer hidden group-hover:block transition-all">
+                                                    <motion.p transition={{ duration: 0.1 }} initial={{ x: -10, opacity: 0 }} whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.2, rotate: '12deg' }} whileInView={{ x: 0, opacity: 1 }} className="cursor-pointer hidden group-hover:block transition-all">
                                                         <Sparkles onClick={() => handleAiClick(topic)} className="h-5 w-5" />
                                                     </motion.p>
                                                 </span>
@@ -231,7 +232,7 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab, tab }) => {
                                                     {l.aim.objective}
                                                 </p>
                                                 <span className="w-full flex justify-end px-3 h-5">
-                                                    <motion.p transition={{duration:0.1}} initial={{ x: -10, opacity: 0 }} whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.2, rotate: '12deg' }} whileInView={{ x: 0, opacity: 1 }} className="cursor-pointer hidden group-hover:block transition-all">
+                                                    <motion.p transition={{ duration: 0.1 }} initial={{ x: -10, opacity: 0 }} whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.2, rotate: '12deg' }} whileInView={{ x: 0, opacity: 1 }} className="cursor-pointer hidden group-hover:block transition-all">
                                                         <Sparkles onClick={() => handleAiClick(l.aim.objective)} className="h-5 w-5" />
                                                     </motion.p>
                                                 </span>
