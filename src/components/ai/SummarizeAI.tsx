@@ -35,7 +35,7 @@ const SummarizeAI: FC<SummarizeAiProps> = ({ }) => {
 
 
     const { messages, setMessages, isLoading, stop, reload, append } = useChat({
-        api: ai?.model.includes("gemini-pro")
+        api: ai?.model.includes("gemini")
             ? "/api/google-search"
             : "/api/openai-search",
         body: {
