@@ -41,7 +41,7 @@ export const useAi = create<AiStore>()(
         (set, get) => ({
             toggle: false,
             key: "",
-            model: "gemini-pro",
+            model: "gemini-1.5-flash",
             isOpen: false,
             setToggle: (toggle) => set({ toggle }),
             setKey: (key) => set({ key }),
