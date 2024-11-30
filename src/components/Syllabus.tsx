@@ -139,42 +139,38 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab, tab }) => {
                                         <div
                                             key={index}
                                             className={cn(
-                                                "flex w-full items-center gap-4 rounded-md p-2 pl-4 text-sm shadow-sm transition-colors lg:text-base group",
-                                                completed.includes(
-                                                    topic + index
-                                                )
+                                                "flex w-full flex-col rounded-md p-4 pl-4 text-sm shadow-sm transition-colors lg:text-base group",
+                                                completed.includes(topic + index)
                                                     ? "bg-accent"
                                                     : "bg-background"
                                             )}
                                         >
-                                            <Checkbox
-                                                checked={completed.includes(
-                                                    topic + index
-                                                )}
-                                                onCheckedChange={() =>
-                                                    handleComplete(
-                                                        topic + index
-                                                    )
-                                                }
-                                            />
-                                            <div className="flex flex-col w-full px-4 pt-2">
+                                            <div className="flex items-center gap-4">
+                                                <Checkbox
+                                                    checked={completed.includes(topic + index)}
+                                                    onCheckedChange={() => handleComplete(topic + index)}
+                                                />
                                                 <p
                                                     className={cn(
-                                                        "flex-1 text-justify break-words",
-                                                        completed.includes(
-                                                            topic + index
-                                                        ) && "line-through"
+                                                        "text-justify break-words",
+                                                        completed.includes(topic + index) && "line-through"
                                                     )}
                                                 >
                                                     {topic}
-
                                                 </p>
-                                                <span className="w-full flex justify-end px-3 h-5">
-                                                    <motion.p transition={{ duration: 0.1 }} initial={{ x: -10, opacity: 0 }} whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.2, rotate: '12deg' }} whileInView={{ x: 0, opacity: 1 }} className="cursor-pointer hidden group-hover:block transition-all">
-                                                        <Sparkles onClick={() => handleAiClick(topic)} className="h-5 w-5" />
-                                                    </motion.p>
-                                                </span>
                                             </div>
+                                            <motion.button 
+                                                type="button" 
+                                                transition={{ duration: 0.1 }} 
+                                                initial={{ x: -10, opacity: 0 }} 
+                                                whileTap={{ scale: 0.9 }} 
+                                                whileInView={{ x: 0, opacity: 1 }} 
+                                                className="hidden group-hover:flex items-center gap-2 p-2 border rounded-md border-gray-500 transition-all self-end mt-2"
+                                                onClick={() => handleAiClick(topic)}
+                                            >
+                                                <Sparkles className="h-5 w-5"/>
+                                                <span>Summarize</span>
+                                            </motion.button>
                                         </div>
                                     ))}
                                 </div>
@@ -203,80 +199,65 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab, tab }) => {
                                     <div className="flex flex-col items-center gap-2 first:mt-2">
                                         <div
                                             className={cn(
-                                                "flex w-full items-center gap-4 rounded-md p-2 text-sm shadow-sm transition-colors lg:text-base",
-                                                completed.includes(
-                                                    l.aim.objective
-                                                )
+                                                "flex w-full flex-col rounded-md p-4 text-sm shadow-sm transition-colors lg:text-base group",
+                                                completed.includes(l.aim.objective)
                                                     ? "bg-accent"
                                                     : "bg-background"
                                             )}
                                         >
-                                            <Checkbox
-                                                checked={completed.includes(
-                                                    l.aim.objective
-                                                )}
-                                                onCheckedChange={() =>
-                                                    handleComplete(
-                                                        l.aim.objective
-                                                    )
-                                                }
-                                            />
-                                            <div className="flex flex-col gap-1 w-full group">
+                                            <div className="flex items-center gap-4">
+                                                <Checkbox
+                                                    checked={completed.includes(l.aim.objective)}
+                                                    onCheckedChange={() => handleComplete(l.aim.objective)}
+                                                />
                                                 <p
                                                     className={cn(
-                                                        completed.includes(
-                                                            l.aim.objective
-                                                        ) && "line-through"
+                                                        completed.includes(l.aim.objective) && "line-through"
                                                     )}
                                                 >
                                                     {l.aim.objective}
                                                 </p>
-                                                <span className="w-full flex justify-end px-3 h-5">
-                                                    <motion.p transition={{ duration: 0.1 }} initial={{ x: -10, opacity: 0 }} whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.2, rotate: '12deg' }} whileInView={{ x: 0, opacity: 1 }} className="cursor-pointer hidden group-hover:block transition-all">
-                                                        <Sparkles onClick={() => handleAiClick(l.aim.objective)} className="h-5 w-5" />
-                                                    </motion.p>
-                                                </span>
                                             </div>
+                                            <motion.button 
+                                                type="button" 
+                                                transition={{ duration: 0.1 }} 
+                                                initial={{ x: -10, opacity: 0 }} 
+                                                whileTap={{ scale: 0.9 }} 
+                                                whileInView={{ x: 0, opacity: 1 }} 
+                                                className="hidden group-hover:flex items-center gap-2 p-2 border rounded-md border-gray-500 transition-all self-end mt-2"
+                                                onClick={() => handleAiClick(l.aim.objective)}
+                                            >
+                                                <Sparkles className="h-5 w-5"/>
+                                                <span>Summarize</span>
+                                            </motion.button>
                                         </div>
                                         {l.aim.steps.length > 0 &&
                                             l.aim.steps.map((step, index) => (
                                                 <div
                                                     className={cn(
-                                                        "flex w-full items-center gap-4 rounded-md p-2 text-sm shadow-sm transition-colors lg:text-base",
-                                                        completed.includes(
-                                                            l.aim.objective
-                                                        ) ||
-                                                            completed.includes(
-                                                                step
-                                                            )
+                                                        "flex w-full items-start gap-4 rounded-md p-2 text-sm shadow-sm transition-colors lg:text-base",
+                                                        completed.includes(l.aim.objective) ||
+                                                            completed.includes(step)
                                                             ? "bg-accent"
                                                             : "bg-background"
                                                     )}
                                                     key={index}
                                                 >
-                                                    <Checkbox
-                                                        checked={
-                                                            completed.includes(
-                                                                l.aim.objective
-                                                            ) ||
-                                                            completed.includes(
-                                                                step
-                                                            )
-                                                        }
-                                                        onCheckedChange={() =>
-                                                            handleComplete(step)
-                                                        }
-                                                    />
-                                                    <p
-                                                        className={cn(
-                                                            completed.includes(
-                                                                l.aim.objective
-                                                            ) && "line-through",
-                                                            completed.includes(
-                                                                step
-                                                            ) && "line-through"
-                                                        )}
-                                                    >{`${index + 1}) ${step}`}</p>
+                                                    <div className="flex items-center gap-4 flex-1">
+                                                        <Checkbox
+                                                            checked={
+                                                                completed.includes(l.aim.objective) ||
+                                                                completed.includes(step)
+                                                            }
+                                                            onCheckedChange={() => handleComplete(step)}
+                                                        />
+                                                        <p
+                                                            className={cn(
+                                                                completed.includes(l.aim.objective) && "line-through",
+                                                                completed.includes(step) && "line-through"
+                                                            )}
+                                                        >{`${index + 1}) ${step}`}</p>
+                                                    </div>
                                                 </div>
                                             ))}
                                         {l.aim.externalLinks && (
@@ -285,8 +266,7 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab, tab }) => {
                                                 className={cn(
                                                     buttonVariants({
                                                         variant: "tertiary",
-                                                        className:
-                                                            "gap-2 self-start rounded-md",
+                                                        className: "gap-2 self-start rounded-md",
                                                     })
                                                 )}
                                                 target="_blank"
