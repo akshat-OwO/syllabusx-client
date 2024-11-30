@@ -146,7 +146,7 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab, tab }) => {
                                                         ...prev,
                                                         [`${topic}-${index}`]: true,
                                                     }));
-                                                }, 1000);
+                                                }, 500);
                                                 setHoverTimers((prev) => ({
                                                     ...prev,
                                                     [`${topic}-${index}`]: timer,
@@ -234,7 +234,7 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab, tab }) => {
                                                         ...prev,
                                                         [`${l.aim.objective}-${i}`]: true,
                                                     }));
-                                                }, 1000);
+                                                }, 500);
                                                 setHoverTimers((prev) => ({
                                                     ...prev,
                                                     [`${l.aim.objective}-${i}`]: timer,
