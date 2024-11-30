@@ -1,5 +1,13 @@
 # syllabusx-client
 
+## 4.9.1
+
+### Patch Changes
+
+-   fix[`75c047`](https://github.com/akshat-OwO/syllabusx-client/commit/75c0477bcfa4850520312fd36944ccf228ac08eb) [`33e9aa`](https://github.com/akshat-OwO/syllabusx-client/commit/33e9aa2fa01b4cff1ed828924da9377bcf0287c2) [`c480b2`](https://github.com/akshat-OwO/syllabusx-client/commit/c480b23e1968c47cfd6da4b3fb8695fa578b0ec7): topic containers alignments [@brownpanthera](https://github.com/brownpanthera)
+-   feat[`977169`](https://github.com/akshat-OwO/syllabusx-client/commit/977169ea5d99836fe0cc2e6106eb0e8903c27766): updated ai sdk and models
+-   fix[`0580d9`](https://github.com/akshat-OwO/syllabusx-client/commit/0580d9ed7d76e36008be7a7784d552c33a58fd20): summarizer button reveal animation
+
 ## 4.9.0
 
 ### Minor Changes
