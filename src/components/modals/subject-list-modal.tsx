@@ -20,6 +20,14 @@ import { useEffect, useMemo, useState } from "react";
 import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";
 import { Checkbox } from "../ui/checkbox";
+import Fuse from "fuse.js";
+import type { IFuseOptions, FuseResult } from "fuse.js";
+
+interface Subject {
+    name: string;
+    path: string;
+    acronym: string;
+}
 
 const SubjectListModal = () => {
     const subjectList = useSubjectList();
@@ -70,6 +78,25 @@ SubjectListModal.List = function SubjectListModalList() {
     const [isEditMode, setIsEditMode] = useState(false);
     const [filteredSubjects, setFilteredSubjects] = useState<string[]>([]);
 
+    // Helper functions for acronym generation
+    const generateSearchableAcronyms = (text: string): string[] => {
+        const words = text.split(/[\s-]+/);
+        const acronyms = [];
+
+        // Standard acronym
+        acronyms.push(words.map((word) => word[0]).join(""));
+
+        // Acronym with first two letters of each word
+        acronyms.push(words.map((word) => word.slice(0, 2)).join(""));
+
+        // Handle special cases
+        if (text.toLowerCase().includes("c++")) {
+            acronyms.push("cpp");
+        }
+
+        return acronyms.map((a) => a.toLowerCase());
+    };
+
     const { semester, branch } = useMemo(() => {
         if (pathname.includes("btech")) {
             return { semester: params.slug[0], branch: params.slug[1] };
@@ -88,25 +115,62 @@ SubjectListModal.List = function SubjectListModalList() {
         [activeSubjects, semester, branch]
     );
 
+    const fuse = useMemo(() => {
+        const options: IFuseOptions<Subject> = {
+            keys: [
+                { name: "name", weight: 0.7 },
+                { name: "acronym", weight: 0.3 },
+            ],
+            threshold: 0.3,
+            distance: 100,
+            minMatchCharLength: 2,
+            shouldSort: true,
+            includeScore: true,
+            useExtendedSearch: true,
+            findAllMatches: true,
+            location: 0,
+            ignoreLocation: true,
+        };
+
+        const items: Subject[] = subjectList.subjectList.map((subject) => {
+            const name = _.startCase(subject.split("-").join(" "));
+            const acronyms = generateSearchableAcronyms(name);
+            return {
+                name,
+                path: subject,
+                acronym: acronyms.join(" "),
+            };
+        });
+
+        return new Fuse(items, options);
+    }, [subjectList.subjectList]);
+
+    // Enhanced search effect
     useEffect(() => {
-        let subjectsToShow: string[];
+        let subjectsToSearch = subjectList.subjectList;
+
         if (currentActiveSubjects.length > 0 && !isEditMode) {
-            subjectsToShow = subjectList.subjectList.filter((subject) =>
+            subjectsToSearch = subjectsToSearch.filter((subject) =>
                 currentActiveSubjects.includes(subject)
             );
-        } else {
-            subjectsToShow = subjectList.subjectList;
         }
+        if (searchTerm) {
+            const searchResults = fuse.search(searchTerm);
+            const filteredResults = searchResults
+                .filter((result) => result.score && result.score < 0.4)
+                .map((result) => result.item.path)
+                .filter((subject) => subjectsToSearch.includes(subject));
 
-        const filtered = subjectsToShow.filter((subject) =>
-            subject.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-        setFilteredSubjects(filtered);
+            setFilteredSubjects(filteredResults);
+        } else {
+            setFilteredSubjects(subjectsToSearch);
+        }
     }, [
         searchTerm,
         subjectList.subjectList,
         currentActiveSubjects,
         isEditMode,
+        fuse,
     ]);
 
     const handleHref = (subject: string) => {
@@ -151,6 +215,7 @@ SubjectListModal.List = function SubjectListModalList() {
                     placeholder="Search Subjects..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
+                    className="flex-1"
                 />
                 <Button
                     className="gap-2"

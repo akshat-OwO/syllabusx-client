@@ -1,5 +1,13 @@
 # syllabusx-client
 
+## 4.9.2
+
+### Patch Changes
+
+-   fix [`0224e6`](https://github.com/akshat-OwO/syllabusx-client/commit/0224e6ab30f3f4a3c43c0ca580d1be660be0b5af): made summarizer button position absolute
+-   fix [`ae0342`](https://github.com/akshat-OwO/syllabusx-client/commit/ae03424d67f99e152738b69c267034a9822297d5): overflow in subject list for smaller display widths
+-   fix [`97953e`](https://github.com/akshat-OwO/syllabusx-client/commit/97953e9963ae08db438c5c59cfc6df838f40c942): fuzzy searching in subject list modal
+
 ## 4.9.1
 
 ### Patch Changes
