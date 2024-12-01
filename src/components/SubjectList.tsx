@@ -41,28 +41,27 @@ const SubjectList = ({ course, list }: SubjectListProps) => {
                     <CardContent>
                         <div className="flex flex-col gap-5">
                             <div className="flex flex-col gap-2">
-                                <p className="text-sm font-semibold text-muted-foreground">
-                                    Choose your subject
-                                </p>
+                                <p className="text-sm font-semibold text-muted-foreground">Choose your subject</p>
                                 <Button
                                     onClick={() => subjectList.onOpen(list)}
                                     variant="outline"
-                                    className={cn("justify-between", {
+                                    className={cn("group justify-between", {
                                         "animate-pulse bg-secondary":
-                                            (course === Courses.BTECH &&
-                                                !params.slug[2]) ||
-                                            (course === Courses.BCA &&
-                                                !params.slug[1]),
+                                            (course === Courses.BTECH && !params.slug[2]) ||
+                                            (course === Courses.BCA && !params.slug[1]),
                                     })}
                                 >
-                                    {course === Courses.BTECH &&
-                                        (params.slug[2]
-                                            ? params.slug[2]
-                                            : "Select Subject")}
-                                    {course === Courses.BCA &&
-                                        (params.slug[1]
-                                            ? params.slug[1]
-                                            : "Select Subject")}
+                                    <div className="flex-1 relative max-w-[calc(90%)] sm:max-w-full text-start">
+                                        <div className="overflow-hidden whitespace-nowrap">
+                                            <span className="">
+                                                {course === Courses.BTECH &&
+                                                    (params.slug[2] ? params.slug[2] : "Select Subject")}
+                                                {course === Courses.BCA &&
+                                                    (params.slug[1] ? params.slug[1] : "Select Subject")}
+                                            </span>
+                                        </div>
+                                        <div className="pointer-events-none absolute right-0 top-0 h-full sm:hidden w-12 bg-gradient-to-l from-background to-transparent group-hover:from-secondary transition-colors" />
+                                    </div>
                                     <ChevronsRight className="h-4 w-4" />
                                 </Button>
                             </div>
