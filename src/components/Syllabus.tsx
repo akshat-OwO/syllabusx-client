@@ -163,7 +163,7 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab, tab }) => {
                                             }}
                                             key={index}
                                             className={cn(
-                                                "flex w-full items-center gap-4 rounded-md p-2 text-sm shadow-sm transition-colors lg:text-base",
+                                                "relative flex w-full items-center gap-4 rounded-md p-2 text-sm shadow-sm transition-colors lg:text-base",
                                                 completed.includes(topic + index) ? "bg-accent" : "bg-background"
                                             )}
                                         >
@@ -172,16 +172,27 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab, tab }) => {
                                                     <motion.button
                                                         title="Summarise with AI"
                                                         key={`${topic}-${index}`}
-                                                        initial={{ opacity: 0, width: 0, height: 0 }}
+                                                        initial={{
+                                                            top: "50%",
+                                                            translateY: "-50%",
+                                                            right: 0,
+                                                            opacity: 0,
+                                                            width: 0,
+                                                            height: 0,
+                                                        }}
                                                         animate={{
+                                                            right: "12px",
                                                             opacity: 100,
                                                             width: "fit-content",
                                                             height: "fit-content",
                                                         }}
-                                                        exit={{ opacity: 0, width: 0, height: 0 }}
+                                                        exit={{ right: 0, opacity: 0, width: 0, height: 0 }}
                                                         transition={{ duration: 0.12 }}
                                                         className={cn(
-                                                            buttonVariants({ className: "overflow-hidden px-1 py-0.5" })
+                                                            buttonVariants({
+                                                                className:
+                                                                    "absolute overflow-hidden px-1 py-0.5",
+                                                            })
                                                         )}
                                                         onClick={() => handleAiClick(topic)}
                                                     >
@@ -250,7 +261,7 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab, tab }) => {
                                                 }));
                                             }}
                                             className={cn(
-                                                "flex w-full items-center gap-4 rounded-md p-2 text-sm shadow-sm transition-colors lg:text-base",
+                                                "relative flex w-full items-center gap-4 rounded-md p-2 text-sm shadow-sm transition-colors lg:text-base",
                                                 completed.includes(l.aim.objective) ? "bg-accent" : "bg-background"
                                             )}
                                         >
@@ -259,16 +270,24 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab, tab }) => {
                                                     <motion.button
                                                         title="Summarise with AI"
                                                         key={`${l.aim.objective}-${i}`}
-                                                        initial={{ opacity: 0, width: 0, height: 0 }}
+                                                        initial={{
+                                                            top: "50%",
+                                                            translateY: "-50%",
+                                                            right: 0,
+                                                            opacity: 0,
+                                                            width: 0,
+                                                            height: 0,
+                                                        }}
                                                         animate={{
+                                                            right: "12px",
                                                             opacity: 100,
                                                             width: "fit-content",
                                                             height: "fit-content",
                                                         }}
-                                                        exit={{ opacity: 0, width: 0, height: 0 }}
+                                                        exit={{ right: 0, opacity: 0, width: 0, height: 0 }}
                                                         transition={{ duration: 0.12 }}
                                                         className={cn(
-                                                            buttonVariants({ className: "overflow-hidden px-1 py-0.5" })
+                                                            buttonVariants({ className: "absolute overflow-hidden px-1 py-0.5" })
                                                         )}
                                                         onClick={() => handleAiClick(l.aim.objective)}
                                                     >
