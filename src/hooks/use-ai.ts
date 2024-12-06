@@ -11,6 +11,14 @@ type Completion = {
     onClose: () => void;
 };
 
+type MockStore = {
+    topics: string[][];
+    setTopics: (topics: string[][]) => void;
+    isOpen: boolean;
+    onOpen: () => void;
+    onClose: () => void;
+};
+
 type AiStore = {
     toggle: boolean;
     key: string;
@@ -23,6 +31,7 @@ type AiStore = {
     onClose: () => void;
     setClear: () => void;
     completion: Completion;
+    mock: MockStore;
 };
 
 type AiSummarizer = {
@@ -68,6 +77,24 @@ export const useAi = create<AiStore>()(
                     return set({
                         completion: { isOpen: false, ...prevCompletion },
                     });
+                },
+            },
+            mock: {
+                isOpen: false,
+                topics: [],
+                setTopics: (topics) => {
+                    let prevMock = _.omit(get().mock, "topics");
+                    return set({ mock: { topics, ...prevMock } });
+                },
+                onOpen: () => {
+                    let prevMock = _.omit(get().mock, "isOpen");
+                    return set({
+                        mock: { isOpen: true, ...prevMock },
+                    });
+                },
+                onClose: () => {
+                    let prevMock = _.omit(get().mock, "isOpen");
+                    return set({ mock: { isOpen: false, ...prevMock } });
                 },
             },
         }),

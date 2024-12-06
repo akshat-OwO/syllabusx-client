@@ -5,7 +5,7 @@ import useStore from "@/hooks/use-store";
 import { AiSchema, TAiSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMediaQuery } from "@mantine/hooks";
-import { BookOpenIcon, NotebookPen, Search, Sparkles, Undo } from "lucide-react";
+import { BookOpenIcon, NotebookPen, NotepadTextDashed, Search, Sparkles, Undo } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -176,6 +176,12 @@ function AiForm() {
                             onCheckedChange={aiSummarizer?.setToggled}
                             onClick={() => {}}
                             icon={<BookOpenIcon className="h-5 w-5" />}
+                        />
+                        <AIFeature
+                            title="Generate Mock Tests"
+                            description="Predict question paper"
+                            onClick={() => ai.mock.onOpen()}
+                            icon={<NotepadTextDashed className="h-5 w-5" />}
                         />
                         <AIFeature
                             title="AI note builder"

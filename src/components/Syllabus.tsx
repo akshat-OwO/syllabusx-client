@@ -142,6 +142,13 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab, tab }) => {
         };
     }, [hoverTimers]);
 
+    useEffect(() => {
+        if (ai) {
+            ai.mock.setTopics(theory.map((t) => t.topics));
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ai?.mock.isOpen]);
+
     return (
         <>
             <TabsContent value={Tab.THEORY}>

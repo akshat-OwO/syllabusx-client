@@ -7,6 +7,7 @@ import EmbedModal from "../modals/embed-modal";
 import FeedbackModal from "../modals/feedback-modal";
 import DatesheetModal from "../modals/datesheet-modal";
 import SummarizeAI from "../ai/SummarizeAI";
+import GenerateMock from "../ai/GenerateMock";
 
 interface ModalProviderProps {}
 
@@ -24,7 +25,8 @@ const ModalProvider: FC<ModalProviderProps> = ({}) => {
             <EmbedModal />
             <ConfigureAI.Mobile />
             <SearchAI />
-            <SummarizeAI/>
+            <SummarizeAI />
+            <GenerateMock />
             <DatesheetModal />
             <FeedbackModal />
         </>
