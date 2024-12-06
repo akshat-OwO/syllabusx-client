@@ -60,7 +60,7 @@ const SubjectList = ({ course, list }: SubjectListProps) => {
                                                     (params.slug[1] ? params.slug[1] : "Select Subject")}
                                             </span>
                                         </div>
-                                        <div className="pointer-events-none absolute right-0 top-0 h-full sm:hidden w-12 bg-gradient-to-l from-background to-transparent group-hover:from-secondary transition-colors" />
+                                        <div className="pointer-events-none absolute right-0 top-0 h-full sm:hidden w-12 bg-gradient-to-l from-background to-transparent group-hover:from-accent transition-colors" />
                                     </div>
                                     <ChevronsRight className="h-4 w-4" />
                                 </Button>

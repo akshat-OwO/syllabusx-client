@@ -21,6 +21,7 @@ import { Separator } from "../ui/separator";
 import { Switch } from "../ui/switch";
 import { cn } from "@/lib/utils";
 import { Checkbox } from "../ui/checkbox";
+import { ScrollArea } from "../ui/scroll-area";
 
 interface ConfigureAIProps {}
 
@@ -108,7 +109,7 @@ function AiForm() {
                                 <FormItem>
                                     <FormLabel>API key</FormLabel>
                                     <FormControl>
-                                        <Input {...field} placeholder="xxxxxxxxxxxxxxx" />
+                                        <Input type="password" {...field} placeholder="xxxxxxxxxxxxxxx" />
                                     </FormControl>
                                     <FormDescription>API key provided by model.</FormDescription>
                                     <FormMessage />
@@ -159,28 +160,32 @@ function AiForm() {
                 </Form>
                 <Separator />
                 <Label>AI Features</Label>
-                <AIFeature
-                    title="Search with AI"
-                    description="Ask literally anything"
-                    onClick={() => ai.completion.onOpen()}
-                    icon={<Search className="h-5 w-5" />}
-                />
-                <AIFeature
-                    title="Summary with AI"
-                    description="Key points at a glance"
-                    togglable={true}
-                    toggledState={aiSummarizer?.toggled}
-                    onCheckedChange={aiSummarizer?.setToggled}
-                    onClick={() => {}}
-                    icon={<BookOpenIcon className="h-5 w-5" />}
-                />
-                <AIFeature
-                    title="AI note builder"
-                    description=""
-                    onClick={() => {}}
-                    preview
-                    icon={<NotebookPen className="h-5 w-5" />}
-                />
+                <ScrollArea type="scroll" className="flex max-h-40 flex-col overflow-y-scroll">
+                    <div className="w-full space-y-4">
+                        <AIFeature
+                            title="Search with AI"
+                            description="Ask literally anything"
+                            onClick={() => ai.completion.onOpen()}
+                            icon={<Search className="h-5 w-5" />}
+                        />
+                        <AIFeature
+                            title="Summary with AI"
+                            description="Key points at a glance"
+                            togglable={true}
+                            toggledState={aiSummarizer?.toggled}
+                            onCheckedChange={aiSummarizer?.setToggled}
+                            onClick={() => {}}
+                            icon={<BookOpenIcon className="h-5 w-5" />}
+                        />
+                        <AIFeature
+                            title="AI note builder"
+                            description=""
+                            onClick={() => {}}
+                            preview
+                            icon={<NotebookPen className="h-5 w-5" />}
+                        />
+                    </div>
+                </ScrollArea>
             </div>
         </div>
     );
@@ -244,7 +249,7 @@ function AIFeature({
             onClick={onClick}
             disabled={preview}
             className={cn(
-                "h-fit items-center justify-between gap-2 border border-border/75 p-2 text-start hover:border-border hover:bg-transparent",
+                "h-fit w-full items-center justify-between gap-2 border border-border/75 p-2 text-start hover:border-border hover:bg-transparent",
                 {
                     "border-primary hover:border-primary": toggledState,
                 }
