@@ -11,7 +11,6 @@ type Completion = {
     onClose: () => void;
 };
 
-
 type AiStore = {
     toggle: boolean;
     key: string;
@@ -30,6 +29,8 @@ type AiSummarizer = {
     isOpen: boolean;
     topic: string;
     currentTab: string;
+    toggled: boolean;
+    setToggled: (toggled: boolean) => void;
     setTopic: (input: string) => void;
     setTab: (input: string) => void;
     onOpen: () => void;
@@ -83,17 +84,22 @@ export const useAi = create<AiStore>()(
 
 export const useAiSummarizer = create<AiSummarizer>()(
     persist(
-        (set, get) => ({
+        (set) => ({
             topic: "",
             currentTab: "",
             isOpen: false,
+            toggled: false,
+            setToggled: (toggled) => set({ toggled }),
             setTopic: (input: string) => set({ topic: input }),
             setTab: (input: string) => set({ currentTab: input }),
             onOpen: () => set({ isOpen: true }),
-            onClose: () => set({ isOpen: false })
+            onClose: () => set({ isOpen: false }),
         }),
         {
-            name: "aiSummarizer"
+            name: "aiSummarizer",
+            partialize: (state) => ({
+                toggled: state.toggled,
+            }),
         }
     )
 );

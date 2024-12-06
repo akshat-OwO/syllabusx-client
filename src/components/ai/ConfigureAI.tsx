@@ -1,6 +1,6 @@
 "use client";
 
-import { useAi } from "@/hooks/use-ai";
+import { useAi, useAiSummarizer } from "@/hooks/use-ai";
 import useStore from "@/hooks/use-store";
 import { AiSchema, TAiSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,6 +19,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../ui/select";
 import { Separator } from "../ui/separator";
 import { Switch } from "../ui/switch";
+import { cn } from "@/lib/utils";
+import { Checkbox } from "../ui/checkbox";
 
 interface ConfigureAIProps {}
 
@@ -51,6 +53,7 @@ const ConfigureAI = ({}: ConfigureAIProps) => {
 
 function AiForm() {
     const ai = useStore(useAi, (state) => state);
+    const aiSummarizer = useStore(useAiSummarizer, (state) => state);
 
     const form = useForm<TAiSchema>({
         resolver: zodResolver(AiSchema),
@@ -165,6 +168,9 @@ function AiForm() {
                 <AIFeature
                     title="Summary with AI"
                     description="Key points at a glance"
+                    togglable={true}
+                    toggledState={aiSummarizer?.toggled}
+                    onCheckedChange={aiSummarizer?.setToggled}
                     onClick={() => {}}
                     icon={<BookOpenIcon className="h-5 w-5" />}
                 />
@@ -218,26 +224,40 @@ function AIFeature({
     description,
     icon,
     preview,
+    togglable,
+    toggledState,
     onClick,
+    onCheckedChange,
 }: {
     title: string;
     description: string;
     icon: React.ReactNode;
     preview?: boolean;
+    togglable?: boolean;
+    toggledState?: boolean;
     onClick: React.MouseEventHandler<HTMLButtonElement>;
+    onCheckedChange?: (checked: boolean) => void;
 }) {
     return (
         <Button
             variant="ghost"
             onClick={onClick}
             disabled={preview}
-            className="h-fit justify-start gap-2 border border-border/75 p-2 text-start hover:border-border hover:bg-transparent"
+            className={cn(
+                "h-fit items-center justify-between gap-2 border border-border/75 p-2 text-start hover:border-border hover:bg-transparent",
+                {
+                    "border-primary hover:border-primary": toggledState,
+                }
+            )}
         >
-            <div className="rounded-md border border-border p-2">{icon}</div>
-            <div className="flex flex-col justify-center gap-0.5">
-                <p className="text-sm font-medium leading-none">{title}</p>
-                <span className="text-sm text-muted-foreground">{preview ? "Coming soon..." : description}</span>
+            <div className="flex items-center gap-2">
+                <div className="rounded-md border border-border p-2">{icon}</div>
+                <div className="flex flex-col justify-center gap-0.5">
+                    <p className="text-sm font-medium leading-none">{title}</p>
+                    <span className="text-sm text-muted-foreground">{preview ? "Coming soon..." : description}</span>
+                </div>
             </div>
+            {togglable && <Checkbox checked={toggledState} onCheckedChange={onCheckedChange} />}
         </Button>
     );
 }
