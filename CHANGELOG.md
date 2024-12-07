@@ -1,5 +1,18 @@
 # syllabusx-client
 
+## 4.10.0
+
+### Minor Changes
+
+-   feat [`86ba31`](https://github.com/akshat-OwO/syllabusx-client/commit/86ba317fa6deef359182d98e124af98a7c8fc6c8) [`c4e3fa`](https://github.com/akshat-OwO/syllabusx-client/commit/c4e3fac450a15cd1a42eb665dd2b97a368a38b30): generate mock tests with ai
+
+### Patch Changes
+
+-   fix [`82dbdf`](https://github.com/akshat-OwO/syllabusx-client/commit/82dbdfbdae90024089cfda6ae6bedc4c317e17ef): password input for api key
+-   feat [`5322ab`](https://github.com/akshat-OwO/syllabusx-client/commit/5322ab8cbe147df2635f9d916912c546210570c6): togglable ai summariser
+-   fix [`82dbdf`](https://github.com/akshat-OwO/syllabusx-client/commit/82dbdfbdae90024089cfda6ae6bedc4c317e17ef): mobile-> subject list button fade over color on hover
+-   fix [`82dbdf`](https://github.com/akshat-OwO/syllabusx-client/commit/82dbdfbdae90024089cfda6ae6bedc4c317e17ef): scrollable ai features
+
 ## 4.9.2
 
 ### Patch Changes

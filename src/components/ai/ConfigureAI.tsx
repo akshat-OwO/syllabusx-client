@@ -1,11 +1,11 @@
 "use client";
 
-import { useAi } from "@/hooks/use-ai";
+import { useAi, useAiSummarizer } from "@/hooks/use-ai";
 import useStore from "@/hooks/use-store";
 import { AiSchema, TAiSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMediaQuery } from "@mantine/hooks";
-import { BookOpenIcon, NotebookPen, Search, Sparkles, Undo } from "lucide-react";
+import { BookOpenIcon, NotebookPen, NotepadTextDashed, Search, Sparkles, Undo } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -19,6 +19,9 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../ui/select";
 import { Separator } from "../ui/separator";
 import { Switch } from "../ui/switch";
+import { cn } from "@/lib/utils";
+import { Checkbox } from "../ui/checkbox";
+import { ScrollArea } from "../ui/scroll-area";
 
 interface ConfigureAIProps {}
 
@@ -51,6 +54,7 @@ const ConfigureAI = ({}: ConfigureAIProps) => {
 
 function AiForm() {
     const ai = useStore(useAi, (state) => state);
+    const aiSummarizer = useStore(useAiSummarizer, (state) => state);
 
     const form = useForm<TAiSchema>({
         resolver: zodResolver(AiSchema),
@@ -105,7 +109,7 @@ function AiForm() {
                                 <FormItem>
                                     <FormLabel>API key</FormLabel>
                                     <FormControl>
-                                        <Input {...field} placeholder="xxxxxxxxxxxxxxx" />
+                                        <Input type="password" {...field} placeholder="xxxxxxxxxxxxxxx" />
                                     </FormControl>
                                     <FormDescription>API key provided by model.</FormDescription>
                                     <FormMessage />
@@ -156,25 +160,38 @@ function AiForm() {
                 </Form>
                 <Separator />
                 <Label>AI Features</Label>
-                <AIFeature
-                    title="Search with AI"
-                    description="Ask literally anything"
-                    onClick={() => ai.completion.onOpen()}
-                    icon={<Search className="h-5 w-5" />}
-                />
-                <AIFeature
-                    title="Summary with AI"
-                    description="Key points at a glance"
-                    onClick={() => {}}
-                    icon={<BookOpenIcon className="h-5 w-5" />}
-                />
-                <AIFeature
-                    title="AI note builder"
-                    description=""
-                    onClick={() => {}}
-                    preview
-                    icon={<NotebookPen className="h-5 w-5" />}
-                />
+                <ScrollArea type="scroll" className="flex max-h-40 flex-col overflow-y-scroll">
+                    <div className="w-full space-y-4">
+                        <AIFeature
+                            title="Search with AI"
+                            description="Ask literally anything"
+                            onClick={() => ai.completion.onOpen()}
+                            icon={<Search className="h-5 w-5" />}
+                        />
+                        <AIFeature
+                            title="Summary with AI"
+                            description="Key points at a glance"
+                            togglable={true}
+                            toggledState={aiSummarizer?.toggled}
+                            onCheckedChange={aiSummarizer?.setToggled}
+                            onClick={() => {}}
+                            icon={<BookOpenIcon className="h-5 w-5" />}
+                        />
+                        <AIFeature
+                            title="Generate Mock Tests"
+                            description="Predict question paper"
+                            onClick={() => ai.mock.onOpen()}
+                            icon={<NotepadTextDashed className="h-5 w-5" />}
+                        />
+                        <AIFeature
+                            title="AI note builder"
+                            description=""
+                            onClick={() => {}}
+                            preview
+                            icon={<NotebookPen className="h-5 w-5" />}
+                        />
+                    </div>
+                </ScrollArea>
             </div>
         </div>
     );
@@ -218,26 +235,40 @@ function AIFeature({
     description,
     icon,
     preview,
+    togglable,
+    toggledState,
     onClick,
+    onCheckedChange,
 }: {
     title: string;
     description: string;
     icon: React.ReactNode;
     preview?: boolean;
+    togglable?: boolean;
+    toggledState?: boolean;
     onClick: React.MouseEventHandler<HTMLButtonElement>;
+    onCheckedChange?: (checked: boolean) => void;
 }) {
     return (
         <Button
             variant="ghost"
             onClick={onClick}
             disabled={preview}
-            className="h-fit justify-start gap-2 border border-border/75 p-2 text-start hover:border-border hover:bg-transparent"
+            className={cn(
+                "h-fit w-full items-center justify-between gap-2 border border-border/75 p-2 text-start hover:border-border hover:bg-transparent",
+                {
+                    "border-primary hover:border-primary": toggledState,
+                }
+            )}
         >
-            <div className="rounded-md border border-border p-2">{icon}</div>
-            <div className="flex flex-col justify-center gap-0.5">
-                <p className="text-sm font-medium leading-none">{title}</p>
-                <span className="text-sm text-muted-foreground">{preview ? "Coming soon..." : description}</span>
+            <div className="flex items-center gap-2">
+                <div className="rounded-md border border-border p-2">{icon}</div>
+                <div className="flex flex-col justify-center gap-0.5">
+                    <p className="text-sm font-medium leading-none">{title}</p>
+                    <span className="text-sm text-muted-foreground">{preview ? "Coming soon..." : description}</span>
+                </div>
             </div>
+            {togglable && <Checkbox checked={toggledState} onCheckedChange={onCheckedChange} />}
         </Button>
     );
 }

@@ -11,6 +11,13 @@ type Completion = {
     onClose: () => void;
 };
 
+type MockStore = {
+    topics: string[][];
+    setTopics: (topics: string[][]) => void;
+    isOpen: boolean;
+    onOpen: () => void;
+    onClose: () => void;
+};
 
 type AiStore = {
     toggle: boolean;
@@ -24,12 +31,15 @@ type AiStore = {
     onClose: () => void;
     setClear: () => void;
     completion: Completion;
+    mock: MockStore;
 };
 
 type AiSummarizer = {
     isOpen: boolean;
     topic: string;
     currentTab: string;
+    toggled: boolean;
+    setToggled: (toggled: boolean) => void;
     setTopic: (input: string) => void;
     setTab: (input: string) => void;
     onOpen: () => void;
@@ -69,6 +79,24 @@ export const useAi = create<AiStore>()(
                     });
                 },
             },
+            mock: {
+                isOpen: false,
+                topics: [],
+                setTopics: (topics) => {
+                    let prevMock = _.omit(get().mock, "topics");
+                    return set({ mock: { topics, ...prevMock } });
+                },
+                onOpen: () => {
+                    let prevMock = _.omit(get().mock, "isOpen");
+                    return set({
+                        mock: { isOpen: true, ...prevMock },
+                    });
+                },
+                onClose: () => {
+                    let prevMock = _.omit(get().mock, "isOpen");
+                    return set({ mock: { isOpen: false, ...prevMock } });
+                },
+            },
         }),
         {
             name: "ai",
@@ -83,17 +111,22 @@ export const useAi = create<AiStore>()(
 
 export const useAiSummarizer = create<AiSummarizer>()(
     persist(
-        (set, get) => ({
+        (set) => ({
             topic: "",
             currentTab: "",
             isOpen: false,
+            toggled: false,
+            setToggled: (toggled) => set({ toggled }),
             setTopic: (input: string) => set({ topic: input }),
             setTab: (input: string) => set({ currentTab: input }),
             onOpen: () => set({ isOpen: true }),
-            onClose: () => set({ isOpen: false })
+            onClose: () => set({ isOpen: false }),
         }),
         {
-            name: "aiSummarizer"
+            name: "aiSummarizer",
+            partialize: (state) => ({
+                toggled: state.toggled,
+            }),
         }
     )
 );

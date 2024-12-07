@@ -91,6 +91,31 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab, tab }) => {
         });
     }, [theory, completed]);
 
+    const handleHoverEnter = (topic: string) => {
+        if (!aiSummarizer?.toggled) return;
+        const timer = setTimeout(() => {
+            setIsHovered((prev) => ({
+                ...prev,
+                [topic]: true,
+            }));
+        }, 500);
+        setHoverTimers((prev) => ({
+            ...prev,
+            [topic]: timer,
+        }));
+    };
+
+    const handleHoverLeave = (topic: string) => {
+        if (!aiSummarizer?.toggled) return;
+        if (hoverTimers[topic]) {
+            clearTimeout(hoverTimers[topic]);
+        }
+        setIsHovered((prev) => ({
+            ...prev,
+            [topic]: false,
+        }));
+    };
+
     const handleAiClick = async (topic: string) => {
         if (!ai?.toggle) {
             toast.error("Toggle AI first!");
@@ -117,6 +142,13 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab, tab }) => {
         };
     }, [hoverTimers]);
 
+    useEffect(() => {
+        if (ai) {
+            ai.mock.setTopics(theory.map((t) => t.topics));
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ai?.mock.isOpen]);
+
     return (
         <>
             <TabsContent value={Tab.THEORY}>
@@ -140,66 +172,48 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab, tab }) => {
                                 <div className="flex flex-col items-center gap-2 first:mt-2">
                                     {t.topics.map((topic, index) => (
                                         <div
-                                            onMouseEnter={() => {
-                                                const timer = setTimeout(() => {
-                                                    setIsHovered((prev) => ({
-                                                        ...prev,
-                                                        [`${topic}-${index}`]: true,
-                                                    }));
-                                                }, 500);
-                                                setHoverTimers((prev) => ({
-                                                    ...prev,
-                                                    [`${topic}-${index}`]: timer,
-                                                }));
-                                            }}
-                                            onMouseLeave={() => {
-                                                if (hoverTimers[`${topic}-${index}`]) {
-                                                    clearTimeout(hoverTimers[`${topic}-${index}`]);
-                                                }
-                                                setIsHovered((prev) => ({
-                                                    ...prev,
-                                                    [`${topic}-${index}`]: false,
-                                                }));
-                                            }}
+                                            onMouseEnter={() => handleHoverEnter(`${topic}-${index}`)}
+                                            onMouseLeave={() => handleHoverLeave(`${topic}-${index}`)}
                                             key={index}
                                             className={cn(
                                                 "relative flex w-full items-center gap-4 rounded-md p-2 text-sm shadow-sm transition-colors lg:text-base",
                                                 completed.includes(topic + index) ? "bg-accent" : "bg-background"
                                             )}
                                         >
-                                            <AnimatePresence>
-                                                {isHovered[`${topic}-${index}`] && (
-                                                    <motion.button
-                                                        title="Summarise with AI"
-                                                        key={`${topic}-${index}`}
-                                                        initial={{
-                                                            top: "50%",
-                                                            translateY: "-50%",
-                                                            right: 0,
-                                                            opacity: 0,
-                                                            width: 0,
-                                                            height: 0,
-                                                        }}
-                                                        animate={{
-                                                            right: "12px",
-                                                            opacity: 100,
-                                                            width: "fit-content",
-                                                            height: "fit-content",
-                                                        }}
-                                                        exit={{ right: 0, opacity: 0, width: 0, height: 0 }}
-                                                        transition={{ duration: 0.12 }}
-                                                        className={cn(
-                                                            buttonVariants({
-                                                                className:
-                                                                    "absolute overflow-hidden px-1 py-0.5",
-                                                            })
-                                                        )}
-                                                        onClick={() => handleAiClick(topic)}
-                                                    >
-                                                        <Sparkles className="h-4 w-4" />
-                                                    </motion.button>
-                                                )}
-                                            </AnimatePresence>
+                                            {aiSummarizer?.toggled && (
+                                                <AnimatePresence>
+                                                    {isHovered[`${topic}-${index}`] && (
+                                                        <motion.button
+                                                            title="Summarise with AI"
+                                                            key={`${topic}-${index}`}
+                                                            initial={{
+                                                                top: "50%",
+                                                                translateY: "-50%",
+                                                                right: 0,
+                                                                opacity: 0,
+                                                                width: 0,
+                                                                height: 0,
+                                                            }}
+                                                            animate={{
+                                                                right: "12px",
+                                                                opacity: 100,
+                                                                width: "fit-content",
+                                                                height: "fit-content",
+                                                            }}
+                                                            exit={{ right: 0, opacity: 0, width: 0, height: 0 }}
+                                                            transition={{ duration: 0.12 }}
+                                                            className={cn(
+                                                                buttonVariants({
+                                                                    className: "absolute overflow-hidden px-1 py-0.5",
+                                                                })
+                                                            )}
+                                                            onClick={() => handleAiClick(topic)}
+                                                        >
+                                                            <Sparkles className="h-4 w-4" />
+                                                        </motion.button>
+                                                    )}
+                                                </AnimatePresence>
+                                            )}
                                             <Checkbox
                                                 checked={completed.includes(topic + index)}
                                                 onCheckedChange={() => handleComplete(topic + index)}
@@ -239,62 +253,47 @@ const Syllabus: FC<SyllabusProps> = ({ theory, lab, tab }) => {
                                 <AccordionContent>
                                     <div className="flex flex-col items-center gap-2 first:mt-2">
                                         <div
-                                            onMouseEnter={() => {
-                                                const timer = setTimeout(() => {
-                                                    setIsHovered((prev) => ({
-                                                        ...prev,
-                                                        [`${l.aim.objective}-${i}`]: true,
-                                                    }));
-                                                }, 500);
-                                                setHoverTimers((prev) => ({
-                                                    ...prev,
-                                                    [`${l.aim.objective}-${i}`]: timer,
-                                                }));
-                                            }}
-                                            onMouseLeave={() => {
-                                                if (hoverTimers[`${l.aim.objective}-${i}`]) {
-                                                    clearTimeout(hoverTimers[`${l.aim.objective}-${i}`]);
-                                                }
-                                                setIsHovered((prev) => ({
-                                                    ...prev,
-                                                    [`${l.aim.objective}-${i}`]: false,
-                                                }));
-                                            }}
+                                            onMouseEnter={() => handleHoverEnter(`${l.aim.objective}-${i}`)}
+                                            onMouseLeave={() => handleHoverLeave(`${l.aim.objective}-${i}`)}
                                             className={cn(
                                                 "relative flex w-full items-center gap-4 rounded-md p-2 text-sm shadow-sm transition-colors lg:text-base",
                                                 completed.includes(l.aim.objective) ? "bg-accent" : "bg-background"
                                             )}
                                         >
-                                            <AnimatePresence>
-                                                {isHovered[`${l.aim.objective}-${i}`] && (
-                                                    <motion.button
-                                                        title="Summarise with AI"
-                                                        key={`${l.aim.objective}-${i}`}
-                                                        initial={{
-                                                            top: "50%",
-                                                            translateY: "-50%",
-                                                            right: 0,
-                                                            opacity: 0,
-                                                            width: 0,
-                                                            height: 0,
-                                                        }}
-                                                        animate={{
-                                                            right: "12px",
-                                                            opacity: 100,
-                                                            width: "fit-content",
-                                                            height: "fit-content",
-                                                        }}
-                                                        exit={{ right: 0, opacity: 0, width: 0, height: 0 }}
-                                                        transition={{ duration: 0.12 }}
-                                                        className={cn(
-                                                            buttonVariants({ className: "absolute overflow-hidden px-1 py-0.5" })
-                                                        )}
-                                                        onClick={() => handleAiClick(l.aim.objective)}
-                                                    >
-                                                        <Sparkles className="h-4 w-4" />
-                                                    </motion.button>
-                                                )}
-                                            </AnimatePresence>
+                                            {aiSummarizer?.toggled && (
+                                                <AnimatePresence>
+                                                    {isHovered[`${l.aim.objective}-${i}`] && (
+                                                        <motion.button
+                                                            title="Summarise with AI"
+                                                            key={`${l.aim.objective}-${i}`}
+                                                            initial={{
+                                                                top: "50%",
+                                                                translateY: "-50%",
+                                                                right: 0,
+                                                                opacity: 0,
+                                                                width: 0,
+                                                                height: 0,
+                                                            }}
+                                                            animate={{
+                                                                right: "12px",
+                                                                opacity: 100,
+                                                                width: "fit-content",
+                                                                height: "fit-content",
+                                                            }}
+                                                            exit={{ right: 0, opacity: 0, width: 0, height: 0 }}
+                                                            transition={{ duration: 0.12 }}
+                                                            className={cn(
+                                                                buttonVariants({
+                                                                    className: "absolute overflow-hidden px-1 py-0.5",
+                                                                })
+                                                            )}
+                                                            onClick={() => handleAiClick(l.aim.objective)}
+                                                        >
+                                                            <Sparkles className="h-4 w-4" />
+                                                        </motion.button>
+                                                    )}
+                                                </AnimatePresence>
+                                            )}
                                             <Checkbox
                                                 checked={completed.includes(l.aim.objective)}
                                                 onCheckedChange={() => handleComplete(l.aim.objective)}

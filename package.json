@@ -1,6 +1,6 @@
 {
     "name": "syllabusx-client",
-    "version": "4.9.2",
+    "version": "4.10.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/akshat-OwO/syllabusx-client.git"
@@ -42,6 +42,7 @@
         "@radix-ui/react-toast": "^1.2.1",
         "@radix-ui/react-tooltip": "^1.1.2",
         "@react-email/components": "^0.0.14",
+        "@react-pdf/renderer": "^4.1.5",
         "@tailwindcss/typography": "^0.5.13",
         "@tanstack/query-sync-storage-persister": "^5.51.9",
         "@tanstack/react-query": "^5.51.11",
