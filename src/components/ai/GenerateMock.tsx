@@ -54,6 +54,7 @@ GenerateMock.Content = function GenerateMockContent() {
         unit3: false,
         unit4: false,
     });
+    const [maxMarks, setMaxMarks] = useState<60 | 75>(60);
     const [error, setError] = useState<string | null>(null);
 
     const [data, setData] = useState<TMockSchema | undefined>(undefined);
@@ -87,6 +88,8 @@ GenerateMock.Content = function GenerateMockContent() {
                 return;
             }
 
+            setData(undefined);
+
             if (type === "midSem") {
                 const selectedUnitCount = Object.values(selectedUnits).filter((value) => value).length;
 
@@ -109,6 +112,7 @@ GenerateMock.Content = function GenerateMockContent() {
                 {
                     key: ai.key,
                     model: ai.model,
+                    maxMarks: maxMarks,
                     semester: params.slug[0],
                     branch: params.slug[1],
                     subject: params.slug[2],
@@ -198,13 +202,13 @@ GenerateMock.Content = function GenerateMockContent() {
                         <p className="text-sm font-semibold">End Sem</p>
                     </div>
                     <p className="text-xs font-medium text-muted-foreground">
-                        The exam carries a total weightage of <span className="text-primary">75 marks</span>, consists
-                        of <span className="text-primary">9 questions</span> covering{" "}
+                        The exam carries a total weightage of <span className="text-primary">60/75 marks</span>,
+                        consists of <span className="text-primary">9 questions</span> covering{" "}
                         <span className="text-primary">4 units</span>, and has a duration of{" "}
                         <span className="text-primary">3 hours</span>.
                     </p>
                 </div>
-                <AnimatePresence mode="wait">
+                <AnimatePresence mode="sync">
                     {type === "midSem" && (
                         <motion.div
                             initial={{ maxHeight: 0 }}
@@ -246,6 +250,35 @@ GenerateMock.Content = function GenerateMockContent() {
                                     variant={units["unit4"] ? "secondary" : "outline"}
                                 >
                                     Unit 4
+                                </Button>
+                            </div>
+                        </motion.div>
+                    )}
+                    {type === "endSem" && (
+                        <motion.div
+                            initial={{ maxHeight: 0 }}
+                            animate={{ maxHeight: "64px" }}
+                            exit={{ maxHeight: 0 }}
+                            transition={{ duration: 0.125 }}
+                            className="flex flex-col gap-2 overflow-hidden transition-all"
+                        >
+                            <p className="text-sm font-semibold">Choose Max Marks</p>
+                            <div className="flex items-center gap-1.5">
+                                <Button
+                                    onClick={() => setMaxMarks(60)}
+                                    className="flex-1"
+                                    size="sm"
+                                    variant={maxMarks === 60 ? "secondary" : "outline"}
+                                >
+                                    60 marks
+                                </Button>
+                                <Button
+                                    onClick={() => setMaxMarks(75)}
+                                    className="flex-1"
+                                    size="sm"
+                                    variant={maxMarks === 75 ? "secondary" : "outline"}
+                                >
+                                    75 marks
                                 </Button>
                             </div>
                         </motion.div>

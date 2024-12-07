@@ -1,4 +1,4 @@
-import { endSemMockTemplate, midSemMockTemplate } from "@/lib/prompt";
+import { endSemMockTemplate, midSemMockTemplate, newEndSemMockTemplate } from "@/lib/prompt";
 import { AiSchema, MockPayloadSchema, MockSchema } from "@/lib/schemas";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { generateObject } from "ai";
@@ -6,7 +6,7 @@ import { generateObject } from "ai";
 export const runtime = "edge";
 
 export async function POST(req: Request) {
-    const { key, model, semester, branch, subject, topics, type } = await req.json();
+    const { key, model, maxMarks, semester, branch, subject, topics, type } = await req.json();
 
     const validatedAi = AiSchema.safeParse({ key, model });
 
@@ -27,7 +27,9 @@ export async function POST(req: Request) {
             prompt:
                 validatedPayload.data.type === "midSem"
                     ? midSemMockTemplate`${semester}${branch}${subject}${topics}`
-                    : endSemMockTemplate`${semester}${branch}${subject}${topics}`,
+                    : maxMarks === 75
+                      ? endSemMockTemplate`${semester}${branch}${subject}${topics}`
+                      : newEndSemMockTemplate`${semester}${branch}${subject}${topics}`,
         });
         return Response.json(object, { status: 200 });
     } catch (error) {
