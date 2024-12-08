@@ -4,18 +4,41 @@ import { useAi } from "@/hooks/use-ai";
 import { useMediaQuery } from "@mantine/hooks";
 import { useStore } from "zustand";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "../ui/drawer";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+} from "../ui/dialog";
 import { AlertTriangle, Download, Loader2, NotepadText } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
-import { Document, PDFDownloadLink, Page, StyleSheet, Text, View } from "@react-pdf/renderer";
 import { motion, AnimatePresence } from "framer-motion";
 import { useParams } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
 import { TMockSchema } from "@/lib/schemas";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "../ui/tooltip";
+import dynamic from "next/dynamic";
+
+const PDFDownloadButton = dynamic(
+    () => import("../MockPDF").then((mod) => mod.PDFDownloadButton),
+    {
+        ssr: false,
+        loading: () => (
+            <Button disabled variant="outline" size="icon">
+                <Loader2 className="h-4 w-4 animate-spin" />
+            </Button>
+        ),
+    }
+);
 
 const GenerateMock = () => {
     const ai = useStore(useAi, (state) => state);
@@ -23,7 +46,11 @@ const GenerateMock = () => {
 
     if (!isDesktop) {
         return (
-            <Drawer open={ai?.mock.isOpen} onOpenChange={ai?.onClose} onClose={ai?.mock.onClose}>
+            <Drawer
+                open={ai?.mock.isOpen}
+                onOpenChange={ai?.onClose}
+                onClose={ai?.mock.onClose}
+            >
                 <DrawerContent className="mt-0 max-h-[90vh] px-5 pb-10">
                     <DrawerHeader className="px-0">
                         <DrawerTitle>Generate Mock Tests</DrawerTitle>
@@ -38,7 +65,9 @@ const GenerateMock = () => {
             <DialogContent onInteractOutside={(e) => e.preventDefault()}>
                 <DialogHeader>
                     <DialogTitle>Generate Mock Tests</DialogTitle>
-                    <DialogDescription>Generate important questions that may come in your exam.</DialogDescription>
+                    <DialogDescription>
+                        Generate important questions that may come in your exam.
+                    </DialogDescription>
                 </DialogHeader>
                 <GenerateMock.Content />
             </DialogContent>
@@ -91,10 +120,14 @@ GenerateMock.Content = function GenerateMockContent() {
             setData(undefined);
 
             if (type === "midSem") {
-                const selectedUnitCount = Object.values(selectedUnits).filter((value) => value).length;
+                const selectedUnitCount = Object.values(selectedUnits).filter(
+                    (value) => value
+                ).length;
 
                 if (selectedUnitCount !== 2) {
-                    throw new Error("Exactly two units must be selected for mid semester exam");
+                    throw new Error(
+                        "Exactly two units must be selected for mid semester exam"
+                    );
                 }
             }
 
@@ -107,19 +140,22 @@ GenerateMock.Content = function GenerateMockContent() {
                 })
                 .filter((topic): topic is string[] => topic !== null);
 
-            const response: AxiosResponse<TMockSchema, { error: string }> = await axios.post(
-                ai?.model.includes("gemini") ? "/api/google-generate-mock" : "/api/openai-generate-mock",
-                {
-                    key: ai.key,
-                    model: ai.model,
-                    maxMarks: maxMarks,
-                    semester: params.slug[0],
-                    branch: params.slug[1],
-                    subject: params.slug[2],
-                    type,
-                    topics: selectedTopics,
-                }
-            );
+            const response: AxiosResponse<TMockSchema, { error: string }> =
+                await axios.post(
+                    ai?.model.includes("gemini")
+                        ? "/api/google-generate-mock"
+                        : "/api/openai-generate-mock",
+                    {
+                        key: ai.key,
+                        model: ai.model,
+                        maxMarks: maxMarks,
+                        semester: params.slug[0],
+                        branch: params.slug[1],
+                        subject: params.slug[2],
+                        type,
+                        topics: selectedTopics,
+                    }
+                );
 
             return response.data;
         },
@@ -134,7 +170,11 @@ GenerateMock.Content = function GenerateMockContent() {
                     setError(error.message);
                 }
             } else {
-                setError(error instanceof Error ? error.message : "Something went wrong");
+                setError(
+                    error instanceof Error
+                        ? error.message
+                        : "Something went wrong"
+                );
             }
         },
     });
@@ -147,7 +187,12 @@ GenerateMock.Content = function GenerateMockContent() {
     };
 
     if (!ai) return <></>;
-    if (params.slug === undefined || !params.slug[0] || !params.slug[1] || !params.slug[2]) {
+    if (
+        params.slug === undefined ||
+        !params.slug[0] ||
+        !params.slug[1] ||
+        !params.slug[2]
+    ) {
         return (
             <div className="flex items-center gap-2 rounded-md border border-border p-2">
                 <div className="flex items-center justify-center rounded-md border border-border p-2">
@@ -156,7 +201,8 @@ GenerateMock.Content = function GenerateMockContent() {
                 <div className="flex flex-col gap-0.5">
                     <p className="text-sm font-semibold">No Subject Selected</p>
                     <p className="text-xs font-medium text-muted-foreground">
-                        Please open a subject first then try to generate a mock test
+                        Please open a subject first then try to generate a mock
+                        test
                     </p>
                 </div>
             </div>
@@ -181,9 +227,11 @@ GenerateMock.Content = function GenerateMockContent() {
                         <p className="text-sm font-semibold">Mid Sem</p>
                     </div>
                     <p className="text-xs font-medium text-muted-foreground">
-                        The exam carries a total weightage of <span className="text-primary">30 marks</span>, consists
-                        of <span className="text-primary">4 questions</span> covering{" "}
-                        <span className="text-primary">2 units</span>, and has a duration of{" "}
+                        The exam carries a total weightage of{" "}
+                        <span className="text-primary">30 marks</span>, consists
+                        of <span className="text-primary">4 questions</span>{" "}
+                        covering <span className="text-primary">2 units</span>,
+                        and has a duration of{" "}
                         <span className="text-primary">1.5 hours</span>.
                     </p>
                 </div>
@@ -202,9 +250,12 @@ GenerateMock.Content = function GenerateMockContent() {
                         <p className="text-sm font-semibold">End Sem</p>
                     </div>
                     <p className="text-xs font-medium text-muted-foreground">
-                        The exam carries a total weightage of <span className="text-primary">60/75 marks</span>,
-                        consists of <span className="text-primary">9 questions</span> covering{" "}
-                        <span className="text-primary">4 units</span>, and has a duration of{" "}
+                        The exam carries a total weightage of{" "}
+                        <span className="text-primary">60/75 marks</span>,
+                        consists of{" "}
+                        <span className="text-primary">9 questions</span>{" "}
+                        covering <span className="text-primary">4 units</span>,
+                        and has a duration of{" "}
                         <span className="text-primary">3 hours</span>.
                     </p>
                 </div>
@@ -217,13 +268,17 @@ GenerateMock.Content = function GenerateMockContent() {
                             transition={{ duration: 0.125 }}
                             className="flex flex-col gap-2 overflow-hidden transition-all"
                         >
-                            <p className="text-sm font-semibold">Choose Units</p>
+                            <p className="text-sm font-semibold">
+                                Choose Units
+                            </p>
                             <div className="flex items-center gap-1.5">
                                 <Button
                                     onClick={() => handleUnits("unit1")}
                                     className="flex-1"
                                     size="sm"
-                                    variant={units["unit1"] ? "secondary" : "outline"}
+                                    variant={
+                                        units["unit1"] ? "secondary" : "outline"
+                                    }
                                 >
                                     Unit 1
                                 </Button>
@@ -231,7 +286,9 @@ GenerateMock.Content = function GenerateMockContent() {
                                     onClick={() => handleUnits("unit2")}
                                     className="flex-1"
                                     size="sm"
-                                    variant={units["unit2"] ? "secondary" : "outline"}
+                                    variant={
+                                        units["unit2"] ? "secondary" : "outline"
+                                    }
                                 >
                                     Unit 2
                                 </Button>
@@ -239,7 +296,9 @@ GenerateMock.Content = function GenerateMockContent() {
                                     onClick={() => handleUnits("unit3")}
                                     className="flex-1"
                                     size="sm"
-                                    variant={units["unit3"] ? "secondary" : "outline"}
+                                    variant={
+                                        units["unit3"] ? "secondary" : "outline"
+                                    }
                                 >
                                     Unit 3
                                 </Button>
@@ -247,7 +306,9 @@ GenerateMock.Content = function GenerateMockContent() {
                                     onClick={() => handleUnits("unit4")}
                                     className="flex-1"
                                     size="sm"
-                                    variant={units["unit4"] ? "secondary" : "outline"}
+                                    variant={
+                                        units["unit4"] ? "secondary" : "outline"
+                                    }
                                 >
                                     Unit 4
                                 </Button>
@@ -262,13 +323,19 @@ GenerateMock.Content = function GenerateMockContent() {
                             transition={{ duration: 0.125 }}
                             className="flex flex-col gap-2 overflow-hidden transition-all"
                         >
-                            <p className="text-sm font-semibold">Choose Max Marks</p>
+                            <p className="text-sm font-semibold">
+                                Choose Max Marks
+                            </p>
                             <div className="flex items-center gap-1.5">
                                 <Button
                                     onClick={() => setMaxMarks(60)}
                                     className="flex-1"
                                     size="sm"
-                                    variant={maxMarks === 60 ? "secondary" : "outline"}
+                                    variant={
+                                        maxMarks === 60
+                                            ? "secondary"
+                                            : "outline"
+                                    }
                                 >
                                     60 marks
                                 </Button>
@@ -276,7 +343,11 @@ GenerateMock.Content = function GenerateMockContent() {
                                     onClick={() => setMaxMarks(75)}
                                     className="flex-1"
                                     size="sm"
-                                    variant={maxMarks === 75 ? "secondary" : "outline"}
+                                    variant={
+                                        maxMarks === 75
+                                            ? "secondary"
+                                            : "outline"
+                                    }
                                 >
                                     75 marks
                                 </Button>
@@ -294,19 +365,25 @@ GenerateMock.Content = function GenerateMockContent() {
                             className={cn(
                                 "flex items-center gap-2 overflow-hidden rounded-md border border-border p-1 transition-all",
                                 {
-                                    "bg-destructive text-destructive-foreground": error !== null,
+                                    "bg-destructive text-destructive-foreground":
+                                        error !== null,
                                 }
                             )}
                         >
                             <div
-                                className={cn("flex h-8 w-8 items-center justify-center rounded border border-border", {
-                                    "border-white": error !== null,
-                                })}
+                                className={cn(
+                                    "flex h-8 w-8 items-center justify-center rounded border border-border",
+                                    {
+                                        "border-white": error !== null,
+                                    }
+                                )}
                             >
                                 <AlertTriangle className="h-4 w-4" />
                             </div>
                             <p className="text-xs font-medium">
-                                {error === null ? "This is a highly experimental feature. May or may not work." : error}
+                                {error === null
+                                    ? "This is a highly experimental feature. May or may not work."
+                                    : error}
                             </p>
                         </motion.div>
                     )}
@@ -320,7 +397,11 @@ GenerateMock.Content = function GenerateMockContent() {
                                 exit={{ maxWidth: 0 }}
                                 transition={{ exit: { duration: 0.2 } }}
                             >
-                                <Button variant="outline" className="overflow-hidden" onClick={() => ai.mock.onClose()}>
+                                <Button
+                                    variant="outline"
+                                    className="overflow-hidden"
+                                    onClick={() => ai.mock.onClose()}
+                                >
                                     Cancel
                                 </Button>
                             </motion.div>
@@ -328,7 +409,13 @@ GenerateMock.Content = function GenerateMockContent() {
                         <Button
                             className="flex-1 gap-2"
                             disabled={isPending}
-                            onClick={() => mutate({ type, selectedUnits: units, topics: ai.mock.topics })}
+                            onClick={() =>
+                                mutate({
+                                    type,
+                                    selectedUnits: units,
+                                    topics: ai.mock.topics,
+                                })
+                            }
                         >
                             {isPending ? (
                                 <>
@@ -340,162 +427,11 @@ GenerateMock.Content = function GenerateMockContent() {
                             )}
                         </Button>
 
-                        {data && (
-                            <PDFDownloadLink
-                                document={<MockExamPDF data={data} />}
-                                fileName={`${data.output.examMetadata.subject}_${data.output.examMetadata.type}_${new Date().toLocaleString(
-                                    "en-IN",
-                                    {
-                                        day: "2-digit",
-                                        month: "2-digit",
-                                        year: "numeric",
-                                        hour: "2-digit",
-                                        minute: "2-digit",
-                                        hour12: false,
-                                    }
-                                )}_exam.pdf`}
-                            >
-                                {/* @ts-ignore */}
-                                {({ blob, url, loading, error }) => {
-                                    if (loading) {
-                                        return (
-                                            <Button disabled variant="outline" size="icon">
-                                                <Loader2 className="h-4 w-4" />
-                                            </Button>
-                                        );
-                                    }
-                                    if (blob || url) {
-                                        return (
-                                            <Button variant="default" size="icon">
-                                                <Download className="h-4 w-4" />
-                                            </Button>
-                                        );
-                                    }
-                                    if (error) {
-                                        return (
-                                            <TooltipProvider>
-                                                <Tooltip>
-                                                    <TooltipTrigger asChild>
-                                                        <Button size="icon" variant="outline">
-                                                            <AlertTriangle className="h-4 w-4" />
-                                                        </Button>
-                                                    </TooltipTrigger>
-                                                    <TooltipContent>Couldn&apos;t create PDF.</TooltipContent>
-                                                </Tooltip>
-                                            </TooltipProvider>
-                                        );
-                                    }
-                                    return <></>;
-                                }}
-                            </PDFDownloadLink>
-                        )}
+                        {data && <PDFDownloadButton data={data} />}
                     </AnimatePresence>
                 </div>
             </div>
         </div>
-    );
-};
-
-const styles = StyleSheet.create({
-    page: {
-        padding: 30,
-        fontSize: 12,
-    },
-    header: {
-        marginBottom: 15,
-        textAlign: "center",
-    },
-    title: {
-        fontSize: 18,
-        fontWeight: "bold",
-        marginBottom: 10,
-    },
-    metadata: {
-        marginBottom: 15,
-    },
-    metadataRow: {
-        flexDirection: "row",
-        marginBottom: 5,
-    },
-    question: {
-        marginBottom: 15,
-    },
-    questionHeader: {
-        flexDirection: "row",
-        marginBottom: 5,
-    },
-    subQuestion: {
-        marginLeft: 20,
-        marginBottom: 5,
-    },
-    watermark: {
-        position: "absolute",
-        top: 10,
-        right: 30,
-        fontSize: 8,
-        color: "#666",
-    },
-});
-
-const MockExamPDF = ({ data }: { data: TMockSchema }) => {
-    const timestamp = new Date().toLocaleString("en-IN", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false,
-    });
-
-    return (
-        <Document>
-            <Page size="A4" style={styles.page}>
-                <View style={styles.header}>
-                    <Text style={styles.title}>
-                        {data.output.examMetadata.subject} -{" "}
-                        {data.output.examMetadata.type === "midSem" ? "Mid Semester" : "End Semester"} Examination
-                    </Text>
-                </View>
-
-                <View style={styles.metadata}>
-                    <View style={styles.metadataRow}>
-                        <Text>Total Marks: {data.output.examMetadata.totalMarks}</Text>
-                    </View>
-                    <View style={styles.metadataRow}>
-                        <Text>Duration: {data.output.examMetadata.duration}</Text>
-                    </View>
-                    <View style={styles.metadataRow}>
-                        <Text>
-                            Questions to Attempt: {data.output.examMetadata.questionsToAttempt} out of{" "}
-                            {data.output.examMetadata.totalQuestions}
-                        </Text>
-                    </View>
-                </View>
-
-                {data.output.questions.map((question) => (
-                    <View key={question.questionNumber} style={styles.question}>
-                        <View style={styles.questionHeader}>
-                            <Text>Q{question.questionNumber}. </Text>
-                            {question.isCompulsory && <Text>(Compulsory) </Text>}
-                            {question.alternativeQuestionNumber && (
-                                <Text>(OR Q{question.alternativeQuestionNumber}) </Text>
-                            )}
-                            <Text>[{question.totalMarks} Marks]</Text>
-                        </View>
-
-                        {question.content.map((subQ, idx) => (
-                            <View key={idx} style={styles.subQuestion}>
-                                <Text>
-                                    {String.fromCharCode(97 + idx)}. {subQ.subQuestion} [{subQ.marks} Marks]
-                                </Text>
-                            </View>
-                        ))}
-                    </View>
-                ))}
-
-                <Text style={styles.watermark}>Generated By SyllabusX on {timestamp}</Text>
-            </Page>
-        </Document>
     );
 };
 

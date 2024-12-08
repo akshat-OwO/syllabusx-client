@@ -1,5 +1,11 @@
 # syllabusx-client
 
+## 4.10.1
+
+### Patch Changes
+
+-   fix [`f8ca42`](https://github.com/akshat-OwO/syllabusx-client/commit/f8ca420cd77902a061e8afe3fd3869e8ad7ed1e4): dynamic importing react-pdf to avoid revalidation errors
+
 ## 4.10.0
 
 ### Minor Changes

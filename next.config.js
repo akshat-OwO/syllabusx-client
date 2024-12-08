@@ -1,4 +1,3 @@
-/** @type {import('next').NextConfig} */
 const withPWA = require("@ducanh2912/next-pwa").default({
     dest: "public",
     cacheOnFrontEndNav: true,
@@ -11,6 +10,7 @@ const withPWA = require("@ducanh2912/next-pwa").default({
         disableDevLogs: true,
     },
 });
+/** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
         remotePatterns: [
@@ -20,6 +20,20 @@ const nextConfig = {
                 pathname: "**",
             },
         ],
+    },
+    webpack: (config) => {
+        config.resolve.alias = {
+            ...config.resolve.alias,
+        };
+
+        if (config.name === "server") {
+            config.externals = [
+                ...(config.externals || []),
+                "@react-pdf/renderer",
+            ];
+        }
+
+        return config;
     },
 };
 
