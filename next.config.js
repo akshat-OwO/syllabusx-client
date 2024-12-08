@@ -21,20 +21,6 @@ const nextConfig = {
             },
         ],
     },
-    webpack: (config) => {
-        config.resolve.alias = {
-            ...config.resolve.alias,
-        };
-
-        if (config.name === "server") {
-            config.externals = [
-                ...(config.externals || []),
-                "@react-pdf/renderer",
-            ];
-        }
-
-        return config;
-    },
 };
 
 module.exports = withPWA(nextConfig);

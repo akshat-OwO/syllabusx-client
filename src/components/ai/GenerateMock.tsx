@@ -20,25 +20,7 @@ import { useParams } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
 import { TMockSchema } from "@/lib/schemas";
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from "../ui/tooltip";
-import dynamic from "next/dynamic";
-
-const PDFDownloadButton = dynamic(
-    () => import("../MockPDF").then((mod) => mod.PDFDownloadButton),
-    {
-        ssr: false,
-        loading: () => (
-            <Button disabled variant="outline" size="icon">
-                <Loader2 className="h-4 w-4 animate-spin" />
-            </Button>
-        ),
-    }
-);
+import { PDFDownloadButton } from "../MockPDF";
 
 const GenerateMock = () => {
     const ai = useStore(useAi, (state) => state);
