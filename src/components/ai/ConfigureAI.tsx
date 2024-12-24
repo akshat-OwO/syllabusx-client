@@ -136,15 +136,21 @@ function AiForm() {
                                         >
                                             <SelectGroup>
                                                 <SelectLabel>Google</SelectLabel>
-                                                <SelectItem value="gemini-1.5-pro">gemini-1.5-pro</SelectItem>
-                                                <SelectItem value="gemini-1.5-flash">gemini-1.5-flash</SelectItem>
+                                                <SelectItem value={"gemini-1.5-pro"}>gemini-1.5-pro</SelectItem>
+                                                <SelectItem value={"gemini-1.5-flash"}>gemini-1.5-flash</SelectItem>
                                             </SelectGroup>
                                             <SelectGroup>
                                                 <SelectLabel>OpenAI</SelectLabel>
-                                                <SelectItem value="gpt-4o">gpt-4o</SelectItem>
-                                                <SelectItem value="gpt-4o-mini">gpt-4o-mini</SelectItem>
-                                                <SelectItem value="gpt-4-turbo">gpt-4-turbo</SelectItem>
-                                                <SelectItem value="gpt-4">gpt-4</SelectItem>
+                                                <SelectItem value={"gpt-4o"}>gpt-4o</SelectItem>
+                                                <SelectItem value={"gpt-4o-mini"}>gpt-4o-mini</SelectItem>
+                                                <SelectItem value={"gpt-4-turbo"}>gpt-4-turbo</SelectItem>
+                                                <SelectItem value={"gpt-4"}>gpt-4</SelectItem>
+                                            </SelectGroup>
+                                            <SelectGroup>
+                                                <SelectLabel>Anthropic</SelectLabel>
+                                                <SelectItem value={"claude3-sonnet"}>claude3-sonnet </SelectItem>
+                                                <SelectItem value={"claude3-opus"}>claude3-opus </SelectItem>
+                                                <SelectItem value={"claude3-haiku"}>claude3-haiku </SelectItem>
                                             </SelectGroup>
                                         </SelectContent>
                                         <FormDescription>Check pricing before using.</FormDescription>
