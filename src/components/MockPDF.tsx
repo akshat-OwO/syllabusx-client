@@ -45,7 +45,7 @@ export const PDFDownloadButton = ({ data }: { data: TMockSchema }) => {
             let height = 16 + SPACING.AFTER_QUESTION_BOX; // Question box height + spacing
             
             question.content.forEach((subQ: any, idx: number) => {
-                const subQuestionText = `${String.fromCharCode(97 + idx)}. ${subQ.subQuestion}`;
+                const subQuestionText = `${String.fromCharCode(97 + idx)}) ${subQ.subQuestion}`;
                 const marksText = `[${subQ.marks} Marks]`;
                 const marksWidth = doc.getStringUnitWidth(marksText) * 11 * 0.352778 + 10;
                 height += calculateTextHeight(subQuestionText, 11, 8, marksWidth);
@@ -171,15 +171,25 @@ export const PDFDownloadButton = ({ data }: { data: TMockSchema }) => {
 
             // Sub-questions
             question.content.forEach((subQ, idx) => {
-                const subQuestionText = `${String.fromCharCode(97 + idx)}. ${subQ.subQuestion}`;
+                // Split sub-question into label and content
+                const label = `${String.fromCharCode(97 + idx)})`;
+                const subQuestionText = `${subQ.subQuestion}`;
                 const marksText = `[${subQ.marks} Marks]`;
                 
+                // Add bold label
+                doc.setFont("helvetica", "bold");
+                doc.text(label, margin + 8, y);
+                
+                // Calculate space taken by label
+                const labelWidth = doc.getStringUnitWidth(label) * 11 * 0.352778;
+                
+                // Add content with proper indent after label
                 y = addWrappedText(
                     subQuestionText,
                     margin,
                     11,
                     false,
-                    8,
+                    8 + labelWidth + 4, // Add extra indent after label
                     [40, 40, 40],
                     marksText
                 );
