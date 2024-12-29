@@ -13,6 +13,12 @@ export const PDFDownloadButton = ({ data }: { data: TMockSchema }) => {
         const pageHeight = doc.internal.pageSize.getHeight();
         const margin = 15;
         const maxWidth = pageWidth - margin * 2;
+        const SPACING = {
+            AFTER_HEADER: 8,
+            AFTER_QUESTION_BOX: 4,
+            BETWEEN_SUBQUESTIONS: 4,
+            BETWEEN_QUESTIONS: 6
+        };
 
         let y = margin;
 
@@ -34,18 +40,20 @@ export const PDFDownloadButton = ({ data }: { data: TMockSchema }) => {
             return Array.isArray(lines) ? lines.length * fontSize * 0.5 : fontSize * 0.5;
         };
 
-        // Check if content fits on current page, if not add a new page
-        const ensureSpace = (requiredHeight: number) => {
-            if (y + requiredHeight > pageHeight - margin) {
-                doc.addPage();
-                y = margin;
-                // Add header to new page
-                doc.setFillColor(40, 40, 40);
-                doc.rect(margin, margin, maxWidth, 0.5, 'F');
-                y += 8;
-                return true;
-            }
-            return false;
+        // Calculate total height for a question and its sub-questions
+        const calculateQuestionHeight = (question: any) => {
+            let height = 16 + SPACING.AFTER_QUESTION_BOX; // Question box height + spacing
+            
+            question.content.forEach((subQ: any, idx: number) => {
+                const subQuestionText = `${String.fromCharCode(97 + idx)}. ${subQ.subQuestion}`;
+                const marksText = `[${subQ.marks} Marks]`;
+                const marksWidth = doc.getStringUnitWidth(marksText) * 11 * 0.352778 + 10;
+                height += calculateTextHeight(subQuestionText, 11, 8, marksWidth);
+                height += (idx < question.content.length - 1) ? SPACING.BETWEEN_SUBQUESTIONS : 0;
+            });
+            
+            height += SPACING.BETWEEN_QUESTIONS;
+            return height;
         };
 
         const addHeader = () => {
@@ -84,10 +92,10 @@ export const PDFDownloadButton = ({ data }: { data: TMockSchema }) => {
                 margin + maxWidth/2, y + 12
             );
             
-            y += metadataBoxHeight + 10;
+            y += metadataBoxHeight + 8;
             doc.setFillColor(40, 40, 40);
             doc.rect(margin, y, maxWidth, 0.5, 'F');
-            y += 8;
+            y += SPACING.AFTER_HEADER;
         };
 
         const addWrappedText = (
@@ -133,20 +141,11 @@ export const PDFDownloadButton = ({ data }: { data: TMockSchema }) => {
 
         // Questions
         data.output.questions.forEach((question, index) => {
-            // Calculate total height needed for this question
-            let questionHeight = 16; // Question box height
-            question.content.forEach((subQ) => {
-                const subQuestionText = `${String.fromCharCode(97)}.  ${subQ.subQuestion}`;
-                const marksText = `[${subQ.marks} Marks]`;
-                const marksWidth = doc.getStringUnitWidth(marksText) * 11 * 0.352778 + 10;
-                questionHeight += calculateTextHeight(subQuestionText, 11, 8, marksWidth) + 4;
-            });
-            questionHeight += 8; // Additional spacing
-
-            // Check if question fits on current page
+            // Calculate height and check page break
+            const questionHeight = calculateQuestionHeight(question);
             if (y + questionHeight > pageHeight - margin) {
                 doc.addPage();
-                y = margin + 8;
+                y = margin + SPACING.AFTER_HEADER;
             }
 
             const questionText = `Q${question.questionNumber}. ${
@@ -168,7 +167,7 @@ export const PDFDownloadButton = ({ data }: { data: TMockSchema }) => {
             doc.setTextColor(40, 40, 40);
             doc.text(questionText, margin + 4, y + 5);
             
-            y += 16 + 4;
+            y += 16 + SPACING.AFTER_QUESTION_BOX;
 
             // Sub-questions
             question.content.forEach((subQ, idx) => {
@@ -185,10 +184,14 @@ export const PDFDownloadButton = ({ data }: { data: TMockSchema }) => {
                     marksText
                 );
                 
-                y += 4; // Reduced space between sub-questions
+                // Add spacing only between sub-questions, not after the last one
+                if (idx < question.content.length - 1) {
+                    y += SPACING.BETWEEN_SUBQUESTIONS;
+                }
             });
 
-            y += 8; // Reduced space between questions
+            // Add spacing between questions
+            y += SPACING.BETWEEN_QUESTIONS;
         });
 
         // Footer
