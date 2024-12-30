@@ -56,18 +56,47 @@ export const PDFDownloadButton = ({ data }: { data: TMockSchema }) => {
             return height;
         };
 
+        const formatTitleCase = (text: string) => {
+            // Split by hyphens and spaces
+            return text.split(/[-\s]+/)
+                .map(word => {
+                    // Don't capitalize certain words unless they're at the start
+                    const lowercaseWords = ['and', 'or', 'in', 'of', 'the', 'to', 'for', 'with', 'on', 'at'];
+                    return lowercaseWords.includes(word.toLowerCase()) ? 
+                        word.toLowerCase() : 
+                        word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+                })
+                .join(' ');
+        };
+
+        const addWrappedTitle = (title: string) => {
+            doc.setFontSize(20);
+            doc.setFont("helvetica", "bold");
+            doc.setTextColor(40, 40, 40);
+            
+            // Format title to Title Case
+            const formattedTitle = formatTitleCase(title);
+            
+            // Calculate wrapped lines with slightly reduced width for better appearance
+            const titleLines = doc.splitTextToSize(formattedTitle, maxWidth * 0.95);
+            
+            // Add each line of the title
+            titleLines.forEach((line: string, index: number) => {
+                doc.text(line, margin, y + (index * 12));
+            });
+            
+            // Update y position based on number of lines
+            y += (titleLines.length * 12);
+        };
+
         const addHeader = () => {
             // Top border
             doc.setFillColor(40, 40, 40);
             doc.rect(margin, margin, maxWidth, 0.5, 'F');
             y += 10;
             
-            // Title
-            doc.setFontSize(20);
-            doc.setFont("helvetica", "bold");
-            doc.setTextColor(40, 40, 40);
-            doc.text(data.output.examMetadata.subject, margin, y);
-            y += 8;
+            // Add wrapped title
+            addWrappedTitle(data.output.examMetadata.subject);
             
             // Subtitle
             doc.setFontSize(14);
