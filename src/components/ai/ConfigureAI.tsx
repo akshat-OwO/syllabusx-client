@@ -148,9 +148,9 @@ function AiForm() {
                                             </SelectGroup>
                                             <SelectGroup>
                                                 <SelectLabel>Anthropic</SelectLabel>
-                                                <SelectItem value={"claude3-sonnet"}>claude3-sonnet </SelectItem>
-                                                <SelectItem value={"claude3-opus"}>claude3-opus </SelectItem>
-                                                <SelectItem value={"claude3-haiku"}>claude3-haiku </SelectItem>
+                                                <SelectItem value={"claude-3-5-sonnet-latest"}>claude-3.5-sonnet</SelectItem>
+                                                <SelectItem value={"claude-3-opus-latest"}>claude-3-opus</SelectItem>
+                                                <SelectItem value={"claude-3-5-haiku-latest"}>claude-3.5-haiku</SelectItem>
                                             </SelectGroup>
                                         </SelectContent>
                                         <FormDescription>Check pricing before using.</FormDescription>
