@@ -89,7 +89,9 @@ function AiCompletionForm() {
     const { messages, append, isLoading, stop } = useChat({
         api: ai?.model.includes("gemini-pro")
             ? "/api/google-search"
-            : "/api/openai-search",
+            : ai?.model.includes("claude")
+                ? "/api/claude-search"
+                : "/api/openai-search",
         body: {
             key: ai?.key,
             model: ai?.model,
