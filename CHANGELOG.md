@@ -1,5 +1,12 @@
 # syllabusx-client
 
+## 4.10.2
+
+### Patch Changes
+
+-   fix: mock pdf layout [#124](https://github.com/akshat-OwO/syllabusx-client/pull/124) by [@rahulpatel902](https://github.com/rahulpatel902)
+-   feat: claude ai models [#123](https://github.com/akshat-OwO/syllabusx-client/pull/123) by [@Shivoo29](https://github.com/Shivoo29)
+
 ## 4.10.1
 
 ### Patch Changes
