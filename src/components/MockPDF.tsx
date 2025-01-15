@@ -1,23 +1,31 @@
 "use client";
-
 import { useMutation } from "@tanstack/react-query";
 import { TMockSchema } from "@/lib/schemas";
 import { Button } from "./ui/button";
 import { Download, Loader2 } from "lucide-react";
-import axios from "axios";
+import { compress, compressToEncodedURIComponent } from "lz-string";
 
 export const PDFDownloadButton = ({ data }: { data: TMockSchema }) => {
     const { mutate, isPending } = useMutation({
         mutationKey: ["generate", "pdf"],
         mutationFn: async () => {
-            const response = await axios.post("/api/generate-pdf", data, {
-                responseType: "blob", // Important for handling PDF data
+            const compressedData = compressToEncodedURIComponent(
+                compress(JSON.stringify(data))
+            );
+
+            const url = `/api/generate-pdf?data=${compressedData}`;
+
+            const response = await fetch(url, {
+                method: "GET",
             });
 
-            return response.data;
+            if (!response.ok) {
+                throw new Error("Failed to generate PDF");
+            }
+
+            return response.blob();
         },
         onSuccess: (pdfBlob) => {
-            // Create timestamp for filename
             const timestamp = new Date().toLocaleString("en-IN", {
                 day: "2-digit",
                 month: "2-digit",
@@ -31,7 +39,7 @@ export const PDFDownloadButton = ({ data }: { data: TMockSchema }) => {
                 data.output.examMetadata.type
             }_${timestamp.replace(/[/: ]/g, "-")}_exam.pdf`;
 
-            const url = window.URL.createObjectURL(new Blob([pdfBlob]));
+            const url = window.URL.createObjectURL(pdfBlob);
             const link = document.createElement("a");
             link.href = url;
             link.setAttribute("download", filename);

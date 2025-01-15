@@ -1,10 +1,31 @@
 import { NextResponse } from "next/server";
 import jsPDF from "jspdf";
 import { TMockSchema } from "@/lib/schemas";
+import { decompress, decompressFromEncodedURIComponent } from "lz-string";
 
-export async function POST(req: Request) {
+export async function GET(req: Request) {
     try {
-        const data: TMockSchema = await req.json();
+        const url = new URL(req.url);
+        const compressedData = url.searchParams.get("data");
+
+        if (!compressedData) {
+            return NextResponse.json(
+                { success: false, error: "No data provided" },
+                { status: 400 }
+            );
+        }
+        const decompressedStr = decompress(
+            decompressFromEncodedURIComponent(compressedData)
+        );
+        if (!decompressedStr) {
+            return NextResponse.json(
+                { success: false, error: "Invalid compressed data" },
+                { status: 400 }
+            );
+        }
+
+        const data: TMockSchema = JSON.parse(decompressedStr);
+
         const doc = new jsPDF();
 
         const pageWidth = doc.internal.pageSize.getWidth();
@@ -270,16 +291,14 @@ export async function POST(req: Request) {
             y += SPACING.BETWEEN_QUESTIONS;
         });
 
-        const pdfBase64 = doc.output("datauristring");
-        const filename = `${data.output.examMetadata.subject}_${
-            data.output.examMetadata.type
-        }_${timestamp.replace(/[/: ]/g, "-")}_exam.pdf`;
+        const pdfBuffer = Buffer.from(doc.output("arraybuffer"));
 
-        return NextResponse.json({
-            success: true,
-            data: {
-                pdf: pdfBase64,
-                filename: filename,
+        return new NextResponse(pdfBuffer, {
+            headers: {
+                "Content-Type": "application/pdf",
+                "Content-Disposition": `attachment; filename="${data.output.examMetadata.subject}_${
+                    data.output.examMetadata.type
+                }_${timestamp.replace(/[/: ]/g, "-")}_exam.pdf"`,
             },
         });
     } catch (error) {

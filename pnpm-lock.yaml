@@ -152,6 +152,9 @@ importers:
       discord-api-types:
         specifier: ^0.37.115
         version: 0.37.115
+      discord-interactions:
+        specifier: ^4.1.0
+        version: 4.1.0
       eslint:
         specifier: 8.54.0
         version: 8.54.0
@@ -3120,6 +3123,10 @@ packages:
 
   discord-api-types@0.37.115:
     resolution: {integrity: sha512-ivPnJotSMrXW8HLjFu+0iCVs8zP6KSliMelhr7HgcB2ki1QzpORkb26m71l1pzSnnGfm7gb5n/VtRTtpw8kXFA==}
+
+  discord-interactions@4.1.0:
+    resolution: {integrity: sha512-7DyXvsnp9FxjMPD+cPHG3DbttveVgOcWOBtWqyjSQ2bsfkTVpJF2l4c8+XujXaC45NXpRV67Da3go5O2DI0/hw==}
+    engines: {node: '>=18.4.0'}
 
   dlv@1.1.3:
     resolution: {integrity: sha512-+HlytyjlPKnIG8XuRG8WvmBP8xs8P71y+SKKS6ZXWoEgLuePxtDoUEiH7WkdePWrQ5JBpE6aoVqfZfJUQkjXwA==}
@@ -9125,6 +9132,8 @@ snapshots:
       path-type: 4.0.0
 
   discord-api-types@0.37.115: {}
+
+  discord-interactions@4.1.0: {}
 
   dlv@1.1.3: {}
 

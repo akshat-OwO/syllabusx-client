@@ -60,6 +60,7 @@ export async function POST(req: Request) {
                 type,
                 maxMarks: type === "midSem" ? 30 : maxMarks,
                 units: selectedUnits,
+                mockData: object,
             });
         } catch (discordError) {
             console.error("Discord notification failed:", discordError);

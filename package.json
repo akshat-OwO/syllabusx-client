@@ -64,6 +64,7 @@
         "contentful": "^10.12.14",
         "date-fns": "^3.6.0",
         "discord-api-types": "^0.37.115",
+        "discord-interactions": "^4.1.0",
         "eslint": "8.54.0",
         "eslint-config-next": "14.2.5",
         "framer-motion": "^11.12.0",

@@ -2,6 +2,8 @@ import _ from "lodash";
 import { clsx, type ClassValue } from "clsx";
 import { Metadata } from "next";
 import { twMerge } from "tailwind-merge";
+import { compress, compressToEncodedURIComponent } from "lz-string";
+import { TMockSchema } from "./schemas";
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -77,4 +79,11 @@ export function getRemainingTime(futureTimestamp: number): string {
         .value();
 
     return result;
+}
+
+export function generatePDFUrl(data: TMockSchema, baseUrl: string): string {
+    const compressedData = compressToEncodedURIComponent(
+        compress(JSON.stringify(data))
+    );
+    return `${baseUrl}/api/generate-pdf?data=${compressedData}`;
 }

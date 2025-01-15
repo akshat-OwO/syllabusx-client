@@ -4,20 +4,31 @@ import {
     Routes,
     APIEmbed,
 } from "discord-api-types/v10";
+import { TMockSchema } from "@/lib/schemas";
+import { storeMockData } from "./mock-storage";
+import { generatePDFUrl } from "./utils";
 
 export class DiscordClient {
     private rest: REST;
-
     constructor(token: string) {
         this.rest = new REST({ version: "10" }).setToken(token);
     }
 
     async sendEmbed(
         channelId: string,
-        embed: APIEmbed
+        embed: APIEmbed,
+        thread?: boolean
     ): Promise<RESTPostAPIChannelMessageResult> {
         return this.rest.post(Routes.channelMessages(channelId), {
             body: { embeds: [embed] },
+        }) as Promise<RESTPostAPIChannelMessageResult>;
+    }
+    async sendMessage(
+        channelId: string,
+        content: string
+    ): Promise<RESTPostAPIChannelMessageResult> {
+        return this.rest.post(Routes.channelMessages(channelId), {
+            body: { content },
         }) as Promise<RESTPostAPIChannelMessageResult>;
     }
 }
@@ -29,22 +40,26 @@ export async function notifyMockGeneration(data: {
     type: "midSem" | "endSem";
     maxMarks?: number;
     units: string[];
+    mockData: TMockSchema;
 }) {
     const botToken = process.env.DISCORD_BOT_TOKEN;
     const channelId = process.env.DISCORD_CHANNEL_ID;
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-    if (!botToken || !channelId) {
-        console.error(
-            "Discord bot token or channel ID is missing from environment variables."
-        );
+    if (!botToken || !channelId || !baseUrl) {
         throw new Error("Discord configuration is incomplete.");
     }
 
     const discord = new DiscordClient(botToken);
+    const mockId = `mock_${Date.now()}`;
 
-    const embed: APIEmbed = {
+    storeMockData(mockId, data.mockData);
+
+    const pdfUrl = generatePDFUrl(data.mockData, baseUrl);
+
+    const mainEmbed: APIEmbed = {
         title: "📝 Mock Test Generated",
-        description: `A new mock test has been generated for ${data.subject}`,
+        description: `A new mock test has been generated for ${data.subject}\n\n[📥 Download PDF](${pdfUrl})`,
         color: 0x00ff00,
         fields: [
             {
@@ -69,9 +84,22 @@ export async function notifyMockGeneration(data: {
             },
             {
                 name: "Max Marks",
-                value:
-                    data.maxMarks?.toString() ||
-                    (data.type === "midSem" ? "30" : "60"),
+                value: data.mockData.output.examMetadata.totalMarks.toString(),
+                inline: true,
+            },
+            {
+                name: "Duration",
+                value: data.mockData.output.examMetadata.duration,
+                inline: true,
+            },
+            {
+                name: "Questions to Attempt",
+                value: data.mockData.output.examMetadata.questionsToAttempt.toString(),
+                inline: true,
+            },
+            {
+                name: "Total Questions",
+                value: data.mockData.output.examMetadata.totalQuestions.toString(),
                 inline: true,
             },
             {
@@ -88,7 +116,7 @@ export async function notifyMockGeneration(data: {
     };
 
     try {
-        await discord.sendEmbed(channelId, embed);
+        await discord.sendEmbed(channelId, mainEmbed);
         return true;
     } catch (error) {
         console.error("Failed to send Discord notification:", error);
