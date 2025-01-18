@@ -7,6 +7,7 @@ import {
 import { TMockSchema } from "@/lib/schemas";
 import { storeMockData } from "./mock-storage";
 import { generatePDFUrl } from "./utils";
+import { createShortUrl } from "./url-shortner";
 
 export class DiscordClient {
     private rest: REST;
@@ -52,14 +53,15 @@ export async function notifyMockGeneration(data: {
 
     const discord = new DiscordClient(botToken);
     const mockId = `mock_${Date.now()}`;
-
     storeMockData(mockId, data.mockData);
 
-    const pdfUrl = generatePDFUrl(data.mockData, baseUrl);
+    const fullPdfUrl = generatePDFUrl(data.mockData, baseUrl);
+
+    const shortPdfUrl = await createShortUrl(fullPdfUrl);
 
     const mainEmbed: APIEmbed = {
         title: "📝 Mock Test Generated",
-        description: `A new mock test has been generated for ${data.subject}\n\n[📥 Download PDF](${pdfUrl})`,
+        description: `A new mock test has been generated for ${data.subject}\n\n[📥 Download PDF](${shortPdfUrl})`,
         color: 0x00ff00,
         fields: [
             {
