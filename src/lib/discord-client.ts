@@ -45,7 +45,7 @@ export async function notifyMockGeneration(data: {
 }) {
     const botToken = process.env.DISCORD_BOT_TOKEN;
     const channelId = process.env.DISCORD_CHANNEL_ID;
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    const baseUrl = process.env.NEXT_PUBLIC_URL;
 
     if (!botToken || !channelId || !baseUrl) {
         throw new Error("Discord configuration is incomplete.");

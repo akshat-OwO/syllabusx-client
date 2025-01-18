@@ -10,7 +10,7 @@ interface ShortenedURL {
 
 export async function createShortUrl(originalUrl: string): Promise<string> {
     const shortId = nanoid(8);
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    const baseUrl = process.env.NEXT_PUBLIC_URL;
 
     const urlData: ShortenedURL = {
         originalUrl,
@@ -19,7 +19,7 @@ export async function createShortUrl(originalUrl: string): Promise<string> {
 
     await redis.setex(`url:${shortId}`, URL_EXPIRATION, urlData);
 
-    return `${baseUrl}/s/${shortId}`;
+    return `${baseUrl}/api/short/${shortId}`;
 }
 
 export async function resolveShortUrl(shortId: string): Promise<string | null> {
