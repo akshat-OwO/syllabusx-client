@@ -19,7 +19,7 @@ export async function createShortUrl(originalUrl: string): Promise<string> {
 
     await redis.setex(`url:${shortId}`, URL_EXPIRATION, urlData);
 
-    return `${baseUrl}/api/short/${shortId}`;
+    return `${baseUrl}api/short/${shortId}`;
 }
 
 export async function resolveShortUrl(shortId: string): Promise<string | null> {
