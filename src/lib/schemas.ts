@@ -35,6 +35,10 @@ export const AiSchema = z.object({
 
 export type TAiSchema = z.infer<typeof AiSchema>;
 
+export const AiOperations = z.enum(["search", "mock"]);
+
+export type TAiOperations = z.infer<typeof AiOperations>;
+
 export const AiSearchSchema = z.object({
     prompt: z.string().min(10),
 });

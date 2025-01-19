@@ -87,14 +87,13 @@ function AiCompletionForm() {
     });
 
     const { messages, append, isLoading, stop } = useChat({
-        api: ai?.model.includes("gemini-pro")
-            ? "/api/google-search"
-            : ai?.model.includes("claude")
-                ? "/api/claude-search"
-                : "/api/openai-search",
+        api: "/api/ai",
         body: {
-            key: ai?.key,
-            model: ai?.model,
+            type: "search",
+            ai: {
+                key: ai?.key,
+                model: ai?.model,
+            }
         },
     });
 
