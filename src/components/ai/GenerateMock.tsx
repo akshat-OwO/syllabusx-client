@@ -124,23 +124,23 @@ GenerateMock.Content = function GenerateMockContent() {
 
             const response: AxiosResponse<TMockSchema, { error: string }> = await axios.post(
                 // Determine which API endpoint to use based on the model
-                ai?.model.includes("gemini")
-                    ? "/api/google-generate-mock"
-                    : ai?.model.includes("claude")
-                        ? "/api/claude-generate-mock"
-                        : "/api/openai-generate-mock",
+                "/api/ai",
                 {
-                    key: ai.key,
-                    model: ai.model,
-                    maxMarks: maxMarks,
-                    semester: params.slug[0],
-                    branch: params.slug[1],
-                    subject: params.slug[2],
-                    type,
-                    topics: selectedTopics,
+                    type: "mock",
+                    ai: {
+                        key: ai.key,
+                        model: ai.model,
+                    },
+                    mock: {
+                        maxMarks: maxMarks,
+                        semester: params.slug[0],
+                        branch: params.slug[1],
+                        subject: params.slug[2],
+                        type,
+                        topics: selectedTopics,
+                    },
                 }
             );
-                
             return response.data;
         },
         onSuccess: (data) => {

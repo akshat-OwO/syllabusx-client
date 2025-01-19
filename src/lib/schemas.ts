@@ -54,6 +54,7 @@ export type TDatesheetSchema = z.infer<typeof datesheetSchema>;
 
 export const MockPayloadSchema = z.object({
     type: z.enum(["midSem", "endSem"]),
+    maxMarks: z.union([z.literal(60), z.literal(75)]),
     topics: z.array(z.array(z.string())),
     semester: z.string(),
     branch: z.string(),

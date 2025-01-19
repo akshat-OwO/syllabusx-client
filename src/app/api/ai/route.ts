@@ -1,13 +1,15 @@
-import { AiOperations, AiSchema } from "@/lib/schemas";
+import { notifyMockGeneration } from "@/lib/discord-client";
+import { endSemMockTemplate, midSemMockTemplate, newEndSemMockTemplate } from "@/lib/prompt";
+import { AiOperations, AiSchema, MockPayloadSchema, MockSchema } from "@/lib/schemas";
 import { AnthropicProvider, createAnthropic } from "@ai-sdk/anthropic";
 import { GoogleGenerativeAIProvider, createGoogleGenerativeAI } from "@ai-sdk/google";
 import { OpenAIProvider, createOpenAI } from "@ai-sdk/openai";
-import { streamText } from "ai";
+import { generateObject, streamText } from "ai";
 
 export const runtime = "edge";
 
 export async function POST(req: Request) {
-    const { type, ai, messages } = await req.json();
+    const { type, ai, messages, mock } = await req.json();
 
     const validatedAI = AiSchema.safeParse(ai);
 
@@ -53,7 +55,47 @@ export async function POST(req: Request) {
 
             return result.toDataStreamResponse();
         case "mock":
-            break;
+            const validatedMockPayload = MockPayloadSchema.safeParse(mock);
+
+            if (!validatedMockPayload.success) return Response.json({ error: "Bad Request" }, { status: 400 });
+
+            const { maxMarks, semester, branch, subject, topics } = validatedMockPayload.data;
+
+            try {
+                const { object } = await generateObject({
+                    model: aiProvider(validatedAI.data.model),
+                    schema: MockSchema,
+                    prompt:
+                        validatedMockPayload.data.type === "midSem"
+                            ? midSemMockTemplate`${semester}${branch}${subject}${topics}`
+                            : maxMarks === 75
+                              ? endSemMockTemplate`${semester}${branch}${subject}${topics}`
+                              : newEndSemMockTemplate`${semester}${branch}${subject}${topics}`,
+                });
+
+                const selectedUnits = topics
+                    .map((topicArray: string[], index: number) => (topicArray.length > 0 ? `Unit ${index + 1}` : null))
+                    .filter((unit: string | null): unit is string => unit !== null);
+
+                try {
+                    await notifyMockGeneration({
+                        subject,
+                        semester,
+                        branch,
+                        type: validatedMockPayload.data.type,
+                        maxMarks: validatedMockPayload.data.type === "midSem" ? 30 : maxMarks,
+                        units: selectedUnits,
+                        mockData: object,
+                    });
+                } catch (discordError) {
+                    console.error("Discord notification failed:", discordError);
+                }
+
+                return Response.json(object, { status: 200 });
+            } catch (error) {
+                console.error("Error generating mock test:", error);
+                return Response.json({ error: "Failed to generate mock test" }, { status: 500 });
+            }
         default:
             return Response.json({ error: "No AI Operation was provided" }, { status: 403 });
     }
