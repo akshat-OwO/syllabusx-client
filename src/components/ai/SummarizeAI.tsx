@@ -24,13 +24,6 @@ import { Tab } from '@/config';
 
 interface SummarizeAiProps { }
 
-const getApiEndpoint = (model?: string) => {
-    if (!model) return "/api/openai-search"; // default
-    if (model.includes("gemini")) return "/api/google-search";
-    if (model.includes("claude")) return "/api/claude-search";
-    return "/api/openai-search";
-};
-
 const SummarizeAI: FC<SummarizeAiProps> = ({ }) => {
     const ai = useStore(useAi, (state) => state);
     const aiSummarizer = useStore(useAiSummarizer, (state) => state);
@@ -41,10 +34,13 @@ const SummarizeAI: FC<SummarizeAiProps> = ({ }) => {
 
 
     const { messages, setMessages, isLoading, stop, reload, append } = useChat({
-        api: getApiEndpoint(ai?.model),
+        api: "/api/ai",
         body: {
-            key: ai?.key,
-            model: ai?.model,
+            type: "search",
+            ai: {
+                key: ai?.key,
+                model: ai?.model,
+            }
         },
     });
 
