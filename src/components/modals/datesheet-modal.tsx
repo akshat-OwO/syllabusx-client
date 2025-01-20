@@ -3,7 +3,7 @@
 import { useDatesheet } from "@/hooks/use-datesheet";
 import { Sheet, SheetClose, SheetContent } from "../ui/sheet";
 import { Button } from "../ui/button";
-import { CalendarIcon, X } from "lucide-react";
+import { CalendarIcon, Share2Icon, X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { TDatesheetSchema, datesheetSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,6 +29,7 @@ import {
     DrawerHeader,
     DrawerTitle,
 } from "../ui/drawer";
+import { ShareDatesheetDialog } from "../share-datesheet-dialog";
 
 const DatesheetModal = () => {
     const { isOpen, onClose } = useDatesheet();
@@ -99,6 +100,9 @@ DatesheetModal.ContentHeader = function DatesheetModalContentHeader({
 }: {
     closeTriggerHidden: boolean;
 }) {
+    const [isShareOpen, setIsShareOpen] = useState(false);
+    const { dates } = useDatesheet();
+
     return (
         <div className="flex items-start justify-between pr-6 pt-6 md:pt-0">
             <div className="space-y-1">
@@ -110,6 +114,16 @@ DatesheetModal.ContentHeader = function DatesheetModalContentHeader({
                 </div>
             </div>
             <div className="flex items-center gap-2">
+                <Button
+                    variant="outline"
+                    size="icon"
+                    className="rounded-[0.5rem]"
+                    disabled={dates.length === 0}
+                    onClick={() => setIsShareOpen(true)}
+                >
+                    <Share2Icon className="h-4 w-4" />
+                    <span className="sr-only">Share Datesheet</span>
+                </Button>
                 {!closeTriggerHidden && (
                     <SheetClose asChild>
                         <Button
@@ -123,6 +137,10 @@ DatesheetModal.ContentHeader = function DatesheetModalContentHeader({
                     </SheetClose>
                 )}
             </div>
+            <ShareDatesheetDialog
+                open={isShareOpen}
+                onOpenChange={setIsShareOpen}
+            />
         </div>
     );
 };
