@@ -17,6 +17,7 @@ type DatesheetStore = {
         newDate: { name: string; date: number }
     ) => void;
     removeDate: (date: { name: string; date: number }) => void;
+    importDatesheet: (dates: Array<{ name: string; date: number }>) => void;
 };
 
 export const useDatesheet = create<DatesheetStore>()(
@@ -60,6 +61,11 @@ export const useDatesheet = create<DatesheetStore>()(
                                 !(d.name === date.name && d.date === date.date)
                         )
                         .sort((a, b) => a.date - b.date),
+                }));
+            },
+            importDatesheet: (newDates) => {
+                set((state) => ({
+                    dates: [...newDates].sort((a, b) => a.date - b.date),
                 }));
             },
         }),
