@@ -115,7 +115,7 @@ DatesheetModal.ContentHeader = function DatesheetModalContentHeader({
             </div>
             <div className="flex items-center gap-2">
                 <Button
-                    variant="outline"
+                    variant="ghost"
                     size="icon"
                     className="rounded-[0.5rem]"
                     disabled={dates.length === 0}
