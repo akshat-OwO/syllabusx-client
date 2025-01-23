@@ -30,6 +30,7 @@ import {
     DrawerTitle,
 } from "../ui/drawer";
 import { ShareDatesheetDialog } from "../share-datesheet-dialog";
+import { DatesheetTimeline } from "../DatesheetTimeline";
 
 const DatesheetModal = () => {
     const { isOpen, onClose } = useDatesheet();
@@ -282,107 +283,34 @@ DatesheetModal.Dates = function DatesheetModalDates({
 }) {
     const [openPopoverId, setOpenPopoverId] = useState<number | null>(null);
 
-    const handleOpenChange = (isOpen: boolean, index: number) => {
-        setOpenPopoverId(isOpen ? index : null);
+    const handleItemClick = (date: { name: string; date: number }) => {
+        const index = dates.findIndex((d) => d.date === date.date);
+        setOpenPopoverId(index);
     };
+
     return (
         <div className="flex h-full flex-col pr-2">
-            <ScrollArea className="flex-grow">
-                <div className="flex flex-1 flex-col gap-2 pr-4">
-                    {dates.map((d, index) => (
-                        <div key={d.date} className="flex items-center">
-                            <div className="relative">
-                                <div className="flex items-center">
-                                    <div
-                                        className={cn(
-                                            "h-3 w-3 rounded-full bg-muted",
-                                            {
-                                                "bg-primary":
-                                                    d.date >
-                                                    new Date().getTime(),
-                                            }
-                                        )}
-                                    />
-                                    <div
-                                        className={cn("h-1 w-4 bg-muted", {
-                                            "bg-primary":
-                                                d.date > new Date().getTime(),
-                                        })}
-                                    />
-                                    {index !== 0 && (
-                                        <div
-                                            className={cn(
-                                                "absolute bottom-full left-1 h-8 w-1 bg-muted",
-                                                {
-                                                    "bg-primary":
-                                                        d.date >
-                                                        new Date().getTime(),
-                                                }
-                                            )}
-                                        />
-                                    )}
-                                    {index !== dates.length - 1 && (
-                                        <div
-                                            className={cn(
-                                                "absolute left-1 top-full h-8 w-1 bg-muted",
-                                                {
-                                                    "bg-primary":
-                                                        d.date >
-                                                        new Date().getTime(),
-                                                }
-                                            )}
-                                        />
-                                    )}
-                                </div>
-                            </div>
-                            <Popover
-                                open={openPopoverId === index}
-                                onOpenChange={(isOpen) =>
-                                    handleOpenChange(isOpen, index)
-                                }
-                            >
-                                <PopoverTrigger asChild>
-                                    <Button
-                                        variant="outline"
-                                        size="sm"
-                                        className="group h-fit w-full whitespace-normal py-1.5 pl-3 pr-2 text-start"
-                                    >
-                                        <div className="flex flex-1 flex-col">
-                                            <p className="line-clamp-1 text-sm font-semibold">
-                                                {d.name}
-                                            </p>
-                                            <span className="text-muted-foregound text-xs font-medium">
-                                                {format(
-                                                    new Date(d.date),
-                                                    "do MMMM yyyy hh:mm aaa"
-                                                )}
-                                            </span>
-                                        </div>
-                                        <div className="relative inline-flex items-center justify-center rounded-md border border-input p-1.5 transition-colors group-hover:bg-background">
-                                            <CalendarIcon className="h-8 w-8" />
-                                            <span className="pointer-events-none absolute bottom-2.5 left-1/2 -translate-x-1/2 text-xs font-semibold">
-                                                {new Date(d.date).getDate()}
-                                            </span>
-                                        </div>
-                                    </Button>
-                                </PopoverTrigger>
-                                <PopoverContent align="start">
-                                    <DatesheetModal.Form
-                                        isEditForm
-                                        currentDate={{
-                                            name: d.name,
-                                            date: d.date,
-                                        }}
-                                        onFormAction={() =>
-                                            setOpenPopoverId(null)
-                                        }
-                                    />
-                                </PopoverContent>
-                            </Popover>
-                        </div>
-                    ))}
-                </div>
-            </ScrollArea>
+            <DatesheetTimeline dates={dates} onItemClick={handleItemClick} />
+            {dates.map((d, index) => (
+                <Popover
+                    key={d.date}
+                    open={openPopoverId === index}
+                    onOpenChange={(isOpen) =>
+                        setOpenPopoverId(isOpen ? index : null)
+                    }
+                >
+                    <PopoverContent align="start">
+                        <DatesheetModal.Form
+                            isEditForm
+                            currentDate={{
+                                name: d.name,
+                                date: d.date,
+                            }}
+                            onFormAction={() => setOpenPopoverId(null)}
+                        />
+                    </PopoverContent>
+                </Popover>
+            ))}
         </div>
     );
 };
