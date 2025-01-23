@@ -103,10 +103,3 @@ export const DatesheetTimeline: React.FC<DatesheetTimelineProps> = ({
         </ScrollArea>
     );
 };
-
-// Client-side wrapper for shared datesheet page
-export const SharedDatesheetTimeline: React.FC<
-    Omit<DatesheetTimelineProps, "interactive">
-> = (props) => {
-    return <DatesheetTimeline {...props} interactive={false} />;
-};

@@ -1,11 +1,9 @@
 import { getSharedDatesheet } from "@/lib/shared-datesheet";
 import { notFound } from "next/navigation";
-import { ImportDatesheetButton } from "@/components/ImportDatesheetButton";
+import { ClientButton } from "@/components/ImportDatesheetButton";
 import LayoutWrapper from "@/layouts/LayoutWrapper";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
-import { CalendarIcon } from "lucide-react";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { DatesheetTimeline } from "@/components/DatesheetTimeline";
 
 export default async function SharedDatesheetPage({
@@ -42,7 +40,7 @@ export default async function SharedDatesheetPage({
 
                     <DatesheetTimeline dates={datesheet.dates} />
                     <div className="mt-6">
-                        <ImportDatesheetButton dates={datesheet.dates} />
+                        <ClientButton dates={datesheet.dates} />
                         <p className="mt-2 text-center text-sm text-muted-foreground">
                             Note: This will override your existing datesheet if
                             you have one
