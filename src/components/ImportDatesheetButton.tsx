@@ -11,9 +11,11 @@ export function ClientButton({
 }) {
     const { importDatesheet } = useDatesheet();
     const { toast } = useToast();
+    const { onOpen } = useDatesheet();
 
     const handleImport = () => {
         importDatesheet(dates);
+        onOpen();
         toast({
             title: "Datesheet imported successfully!",
             description: "Your datesheet has been updated.",

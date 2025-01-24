@@ -3,6 +3,8 @@ import jsPDF from "jspdf";
 import { TMockSchema } from "@/lib/schemas";
 import { decompress, decompressFromEncodedURIComponent } from "lz-string";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(req: Request) {
     try {
         const url = new URL(req.url);

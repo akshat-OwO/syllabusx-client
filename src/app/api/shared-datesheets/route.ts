@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
-import { createSharedDatesheet } from "@/lib/shared-datesheet";
+import {
+    createSharedDatesheet,
+    getAllSharedDatesheets,
+} from "@/lib/shared-datesheet";
 
 export async function POST(req: Request) {
     try {
@@ -19,5 +22,18 @@ export async function POST(req: Request) {
     } catch (error) {
         console.error("Error creating shared datesheet:", error);
         return new NextResponse("Internal Server Error", { status: 500 });
+    }
+}
+
+export async function GET() {
+    try {
+        const datesheets = await getAllSharedDatesheets();
+        return NextResponse.json(datesheets);
+    } catch (error) {
+        console.error("Error fetching shared datesheets:", error);
+        return NextResponse.json(
+            { error: "Failed to fetch shared datesheets" },
+            { status: 500 }
+        );
     }
 }

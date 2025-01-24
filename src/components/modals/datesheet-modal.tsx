@@ -31,6 +31,7 @@ import {
 } from "../ui/drawer";
 import { ShareDatesheetDialog } from "../share-datesheet-dialog";
 import { DatesheetTimeline } from "../DatesheetTimeline";
+import Link from "next/link"; // Import Link from next/link
 
 const DatesheetModal = () => {
     const { isOpen, onClose } = useDatesheet();
@@ -89,6 +90,12 @@ DatesheetModal.Content = function DatesheetModalContent({
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
+            {/* Add "All Datesheets" Button */}
+            <Link href="/shared-datesheets" className="w-full pr-6">
+                <Button variant="outline" className="w-full pr-6">
+                    All Datesheets
+                </Button>
+            </Link>
             <div className="flex-grow overflow-hidden">
                 <DatesheetModal.Dates dates={dates} />
             </div>

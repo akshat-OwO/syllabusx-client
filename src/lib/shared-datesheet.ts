@@ -1,3 +1,4 @@
+"use server";
 import { nanoid } from "nanoid";
 import { redis } from "./redis";
 
@@ -32,7 +33,6 @@ export async function getSharedDatesheet(
         const data = await redis.get<SharedDatesheet>(`datesheet:${shareId}`);
         if (!data) return null;
 
-        // Extend expiry by 1 day when accessed
         await redis.setex(`datesheet:${shareId}`, DATESHEET_EXPIRATION, data);
 
         return data;
