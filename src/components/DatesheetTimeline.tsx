@@ -9,13 +9,13 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 interface DatesheetTimelineProps {
     dates: { name: string; date: number }[];
     interactive?: boolean;
-    onItemClick?: (date: { name: string; date: number }) => void;
+    renderItem?: (date: { name: string; date: number }) => React.ReactNode;
 }
 
 export const DatesheetTimeline: React.FC<DatesheetTimelineProps> = ({
     dates,
     interactive = false,
-    onItemClick,
+    renderItem,
 }) => {
     return (
         <ScrollArea className="flex-grow pr-4">
@@ -65,38 +65,39 @@ export const DatesheetTimeline: React.FC<DatesheetTimelineProps> = ({
                                 )}
                             </div>
                         </div>
-                        <div
-                            onClick={
-                                interactive ? () => onItemClick?.(d) : undefined
-                            }
-                            className={cn(
-                                "group h-fit w-full whitespace-normal rounded-md border py-1.5 pl-3 pr-2",
-                                {
-                                    "cursor-pointer transition-colors hover:bg-secondary/50":
-                                        interactive,
-                                }
-                            )}
-                        >
-                            <div className="flex flex-1 items-center justify-between">
-                                <div className="flex flex-col">
-                                    <p className="line-clamp-1 text-sm font-semibold">
-                                        {d.name}
-                                    </p>
-                                    <span className="text-muted-foregound text-xs font-medium">
-                                        {format(
-                                            new Date(d.date),
-                                            "do MMMM yyyy hh:mm aaa"
-                                        )}
-                                    </span>
-                                </div>
-                                <div className="relative inline-flex items-center justify-center rounded-md border border-input p-1.5">
-                                    <CalendarIcon className="h-8 w-8" />
-                                    <span className="pointer-events-none absolute bottom-2.5 left-1/2 -translate-x-1/2 text-xs font-semibold">
-                                        {new Date(d.date).getDate()}
-                                    </span>
+                        {renderItem ? (
+                            renderItem(d)
+                        ) : (
+                            <div
+                                className={cn(
+                                    "group h-fit w-full whitespace-normal rounded-md border py-1.5 pl-3 pr-2",
+                                    {
+                                        "cursor-pointer transition-colors hover:bg-secondary/50":
+                                            interactive,
+                                    }
+                                )}
+                            >
+                                <div className="flex flex-1 items-center justify-between">
+                                    <div className="flex flex-col">
+                                        <p className="line-clamp-1 text-sm font-semibold">
+                                            {d.name}
+                                        </p>
+                                        <span className="text-muted-foregound text-xs font-medium">
+                                            {format(
+                                                new Date(d.date),
+                                                "do MMMM yyyy hh:mm aaa"
+                                            )}
+                                        </span>
+                                    </div>
+                                    <div className="relative inline-flex items-center justify-center rounded-md border border-input p-1.5">
+                                        <CalendarIcon className="h-8 w-8" />
+                                        <span className="pointer-events-none absolute bottom-2.5 left-1/2 -translate-x-1/2 text-xs font-semibold">
+                                            {new Date(d.date).getDate()}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        )}
                     </div>
                 ))}
             </div>
