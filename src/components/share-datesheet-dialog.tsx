@@ -29,7 +29,12 @@ export function ShareDatesheetDialog({
                 body: JSON.stringify({ title, authorName, dates }),
             });
 
-            if (!res.ok) throw new Error("Failed to share datesheet");
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(
+                    errorData.message || "Failed to share datesheet"
+                );
+            }
 
             const { url } = await res.json();
             await navigator.clipboard.writeText(url);
@@ -42,7 +47,8 @@ export function ShareDatesheetDialog({
         } catch (error) {
             toast({
                 title: "Error sharing datesheet",
-                description: "Please try again later.",
+                description:
+                    "Please try again later.You can share only 1 datesheet in 24hrs.",
                 variant: "destructive",
             });
         } finally {
@@ -82,6 +88,15 @@ export function ShareDatesheetDialog({
                     >
                         {isLoading ? "Sharing..." : "Share Datesheet"}
                     </Button>
+                </div>
+
+                <div className="mt-4 text-sm text-muted-foreground">
+                    <p>
+                        Note: This datesheet will expire after{" "}
+                        <strong>1 day</strong>. If someone imports it, the
+                        expiration will be extended by <strong>24 hours</strong>
+                        .
+                    </p>
                 </div>
             </DialogContent>
         </Dialog>

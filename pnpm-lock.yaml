@@ -137,6 +137,9 @@ importers:
       axios:
         specifier: ^1.7.2
         version: 1.7.3
+      bad-words:
+        specifier: ^4.0.0
+        version: 4.0.0
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.0
@@ -276,6 +279,9 @@ importers:
       '@tanstack/eslint-plugin-query':
         specifier: ^5.51.12
         version: 5.51.15(eslint@8.54.0)(typescript@5.2.2)
+      '@types/bad-words':
+        specifier: ^3.0.3
+        version: 3.0.3
       '@types/lodash':
         specifier: ^4.17.7
         version: 4.17.7
@@ -2443,6 +2449,9 @@ packages:
   '@types/aws-lambda@8.10.142':
     resolution: {integrity: sha512-wy2y/2hQKrS6myOS++koXg3N1Hg+LLyPjaggCFajczSHZPqBnOMuT2sdH3kiASrmdBYyM3pmjyz5SoWraRllCQ==}
 
+  '@types/bad-words@3.0.3':
+    resolution: {integrity: sha512-jYdpTxDOJ+EENnsCwt8cOZhV/+4+qcwhks1igrOSg4zwwA17rsPqLsZpTo1l+OwViNu+5SPus0v5g7iGx+ofzA==}
+
   '@types/btoa-lite@1.0.2':
     resolution: {integrity: sha512-ZYbcE2x7yrvNFJiU7xJGrpF/ihpkM7zKgw8bha3LNJSesvTtUNxbpzaT7WXBIryf6jovisrxTBvymxMeLLj1Mg==}
 
@@ -2877,6 +2886,13 @@ packages:
     resolution: {integrity: sha512-2R25rQZWP63nGwaAswvDazbPXfrM3HwVoBXK6HcqeKrSrL/JqcC/rDcf95l4r7LXLyxDXc8uQDa064GubtCABg==}
     peerDependencies:
       '@babel/core': ^7.4.0 || ^8.0.0-0 <8.0.0
+
+  bad-words@4.0.0:
+    resolution: {integrity: sha512-fLjG/I0N3I7xhurqGnGitSRD10UeEE63a7hyXtutQDpxo4+Eal+i7veWeZxZJPNtsl6X1mUIoWPwt8gQ7NMQUw==}
+    engines: {node: '>=8.0.0'}
+
+  badwords-list@2.0.1-4:
+    resolution: {integrity: sha512-FxfZUp7B9yCnesNtFQS9v6PvZdxTYa14Q60JR6vhjdQdWI4naTjJIyx22JzoER8ooeT8SAAKoHLjKfCV7XgYUQ==}
 
   bail@2.0.2:
     resolution: {integrity: sha512-0xO6mYd7JB2YesxDKplafRpsiOzPt9V02ddPCLbY1xYGPOX24NTyN50qnUxgCPcSoYMhKpAuBTjQoRZCAkUDRw==}
@@ -8538,6 +8554,8 @@ snapshots:
 
   '@types/aws-lambda@8.10.142': {}
 
+  '@types/bad-words@3.0.3': {}
+
   '@types/btoa-lite@1.0.2': {}
 
   '@types/debug@4.1.12':
@@ -9051,6 +9069,12 @@ snapshots:
       '@babel/helper-define-polyfill-provider': 0.6.2(@babel/core@7.25.2)
     transitivePeerDependencies:
       - supports-color
+
+  bad-words@4.0.0:
+    dependencies:
+      badwords-list: 2.0.1-4
+
+  badwords-list@2.0.1-4: {}
 
   bail@2.0.2: {}
 

@@ -1,6 +1,9 @@
 "use server";
+
 import { nanoid } from "nanoid";
 import { redis } from "./redis";
+import { ratelimit } from "./rate-limit";
+import { headers } from "next/headers";
 
 const DATESHEET_EXPIRATION = 60 * 60 * 24;
 
@@ -14,6 +17,21 @@ export interface SharedDatesheet {
 export async function createSharedDatesheet(
     data: Omit<SharedDatesheet, "createdAt">
 ): Promise<string> {
+    const headersList = headers();
+    const ip = headersList.get("X-Forwarded-For") || "127.0.0.1";
+    const userAgent = headersList.get("User-Agent") || "";
+    const fingerprint = `${ip}:${userAgent}`;
+
+    const { success, reset } = await ratelimit.limit(fingerprint);
+
+    if (!success) {
+        throw new Error(
+            `You can only create one shared datesheet per 24 hours. Please try again after ${new Date(
+                reset
+            ).toLocaleTimeString()}.`
+        );
+    }
+
     const shareId = nanoid(8);
     const baseUrl = process.env.NEXT_PUBLIC_URL;
 
