@@ -3,7 +3,7 @@
 import { useDatesheet } from "@/hooks/use-datesheet";
 import { Sheet, SheetClose, SheetContent } from "../ui/sheet";
 import { Button } from "../ui/button";
-import { CalendarIcon, X } from "lucide-react";
+import { CalendarIcon, Share2Icon, X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { TDatesheetSchema, datesheetSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,6 +29,9 @@ import {
     DrawerHeader,
     DrawerTitle,
 } from "../ui/drawer";
+import { ShareDatesheetDialog } from "../share-datesheet-dialog";
+import { DatesheetTimeline } from "../DatesheetTimeline";
+import Link from "next/link"; // Import Link from next/link
 
 const DatesheetModal = () => {
     const { isOpen, onClose } = useDatesheet();
@@ -87,6 +90,12 @@ DatesheetModal.Content = function DatesheetModalContent({
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
+            {/* Add "All Datesheets" Button */}
+            <Link href="/shared-datesheets" className="w-full pr-6">
+                <Button variant="outline" className="w-full pr-6">
+                    All Datesheets
+                </Button>
+            </Link>
             <div className="flex-grow overflow-hidden">
                 <DatesheetModal.Dates dates={dates} />
             </div>
@@ -99,6 +108,9 @@ DatesheetModal.ContentHeader = function DatesheetModalContentHeader({
 }: {
     closeTriggerHidden: boolean;
 }) {
+    const [isShareOpen, setIsShareOpen] = useState(false);
+    const { dates } = useDatesheet();
+
     return (
         <div className="flex items-start justify-between pr-6 pt-6 md:pt-0">
             <div className="space-y-1">
@@ -110,6 +122,16 @@ DatesheetModal.ContentHeader = function DatesheetModalContentHeader({
                 </div>
             </div>
             <div className="flex items-center gap-2">
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    className="rounded-[0.5rem]"
+                    disabled={dates.length === 0}
+                    onClick={() => setIsShareOpen(true)}
+                >
+                    <Share2Icon className="h-4 w-4" />
+                    <span className="sr-only">Share Datesheet</span>
+                </Button>
                 {!closeTriggerHidden && (
                     <SheetClose asChild>
                         <Button
@@ -123,6 +145,10 @@ DatesheetModal.ContentHeader = function DatesheetModalContentHeader({
                     </SheetClose>
                 )}
             </div>
+            <ShareDatesheetDialog
+                open={isShareOpen}
+                onOpenChange={setIsShareOpen}
+            />
         </div>
     );
 };
@@ -264,109 +290,78 @@ DatesheetModal.Dates = function DatesheetModalDates({
 }) {
     const [openPopoverId, setOpenPopoverId] = useState<number | null>(null);
 
-    const handleOpenChange = (isOpen: boolean, index: number) => {
-        setOpenPopoverId(isOpen ? index : null);
+    const handleItemClick = (date: { name: string; date: number }) => {
+        const index = dates.findIndex((d) => d.date === date.date);
+        setOpenPopoverId(index);
     };
+
     return (
         <div className="flex h-full flex-col pr-2">
-            <ScrollArea className="flex-grow">
-                <div className="flex flex-1 flex-col gap-2 pr-4">
-                    {dates.map((d, index) => (
-                        <div key={d.date} className="flex items-center">
-                            <div className="relative">
-                                <div className="flex items-center">
-                                    <div
-                                        className={cn(
-                                            "h-3 w-3 rounded-full bg-muted",
-                                            {
-                                                "bg-primary":
-                                                    d.date >
-                                                    new Date().getTime(),
-                                            }
-                                        )}
-                                    />
-                                    <div
-                                        className={cn("h-1 w-4 bg-muted", {
-                                            "bg-primary":
-                                                d.date > new Date().getTime(),
-                                        })}
-                                    />
-                                    {index !== 0 && (
-                                        <div
-                                            className={cn(
-                                                "absolute bottom-full left-1 h-8 w-1 bg-muted",
-                                                {
-                                                    "bg-primary":
-                                                        d.date >
-                                                        new Date().getTime(),
-                                                }
+            <DatesheetTimeline
+                dates={dates}
+                interactive
+                renderItem={(date) => (
+                    <Popover
+                        key={date.date}
+                        open={
+                            openPopoverId ===
+                            dates.findIndex((d) => d.date === date.date)
+                        }
+                        onOpenChange={(isOpen) =>
+                            setOpenPopoverId(
+                                isOpen
+                                    ? dates.findIndex(
+                                          (d) => d.date === date.date
+                                      )
+                                    : null
+                            )
+                        }
+                    >
+                        <PopoverTrigger asChild>
+                            <div
+                                className={cn(
+                                    "group h-fit w-full whitespace-normal rounded-md border py-1.5 pl-3 pr-2",
+                                    {
+                                        "cursor-pointer transition-colors hover:bg-secondary/50":
+                                            true,
+                                    }
+                                )}
+                            >
+                                <div className="flex flex-1 items-center justify-between">
+                                    <div className="flex flex-col">
+                                        <p className="line-clamp-1 text-sm font-semibold">
+                                            {date.name}
+                                        </p>
+                                        <span className="text-muted-foregound text-xs font-medium">
+                                            {format(
+                                                new Date(date.date),
+                                                "do MMMM yyyy hh:mm aaa"
                                             )}
-                                        />
-                                    )}
-                                    {index !== dates.length - 1 && (
-                                        <div
-                                            className={cn(
-                                                "absolute left-1 top-full h-8 w-1 bg-muted",
-                                                {
-                                                    "bg-primary":
-                                                        d.date >
-                                                        new Date().getTime(),
-                                                }
-                                            )}
-                                        />
-                                    )}
+                                        </span>
+                                    </div>
+                                    <div className="relative inline-flex items-center justify-center rounded-md border border-input p-1.5">
+                                        <CalendarIcon className="h-8 w-8" />
+                                        <span className="pointer-events-none absolute bottom-2.5 left-1/2 -translate-x-1/2 text-xs font-semibold">
+                                            {new Date(date.date).getDate()}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                            <Popover
-                                open={openPopoverId === index}
-                                onOpenChange={(isOpen) =>
-                                    handleOpenChange(isOpen, index)
-                                }
-                            >
-                                <PopoverTrigger asChild>
-                                    <Button
-                                        variant="outline"
-                                        size="sm"
-                                        className="group h-fit w-full whitespace-normal py-1.5 pl-3 pr-2 text-start"
-                                    >
-                                        <div className="flex flex-1 flex-col">
-                                            <p className="line-clamp-1 text-sm font-semibold">
-                                                {d.name}
-                                            </p>
-                                            <span className="text-muted-foregound text-xs font-medium">
-                                                {format(
-                                                    new Date(d.date),
-                                                    "do MMMM yyyy hh:mm aaa"
-                                                )}
-                                            </span>
-                                        </div>
-                                        <div className="relative inline-flex items-center justify-center rounded-md border border-input p-1.5 transition-colors group-hover:bg-background">
-                                            <CalendarIcon className="h-8 w-8" />
-                                            <span className="pointer-events-none absolute bottom-2.5 left-1/2 -translate-x-1/2 text-xs font-semibold">
-                                                {new Date(d.date).getDate()}
-                                            </span>
-                                        </div>
-                                    </Button>
-                                </PopoverTrigger>
-                                <PopoverContent align="start">
-                                    <DatesheetModal.Form
-                                        isEditForm
-                                        currentDate={{
-                                            name: d.name,
-                                            date: d.date,
-                                        }}
-                                        onFormAction={() =>
-                                            setOpenPopoverId(null)
-                                        }
-                                    />
-                                </PopoverContent>
-                            </Popover>
-                        </div>
-                    ))}
-                </div>
-            </ScrollArea>
+                        </PopoverTrigger>
+                        <PopoverContent align="start">
+                            <DatesheetModal.Form
+                                isEditForm
+                                currentDate={{
+                                    name: date.name,
+                                    date: date.date,
+                                }}
+                                onFormAction={() => setOpenPopoverId(null)}
+                            />
+                        </PopoverContent>
+                    </Popover>
+                )}
+            />
         </div>
     );
 };
-
 export default DatesheetModal;

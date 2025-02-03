@@ -35,6 +35,10 @@ export const AiSchema = z.object({
 
 export type TAiSchema = z.infer<typeof AiSchema>;
 
+export const AiOperations = z.enum(["search", "mock"]);
+
+export type TAiOperations = z.infer<typeof AiOperations>;
+
 export const AiSearchSchema = z.object({
     prompt: z.string().min(10),
 });
@@ -50,6 +54,7 @@ export type TDatesheetSchema = z.infer<typeof datesheetSchema>;
 
 export const MockPayloadSchema = z.object({
     type: z.enum(["midSem", "endSem"]),
+    maxMarks: z.union([z.literal(60), z.literal(75)]),
     topics: z.array(z.array(z.string())),
     semester: z.string(),
     branch: z.string(),

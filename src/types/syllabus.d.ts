@@ -24,3 +24,10 @@ type Embed = {
     embedLink: string;
     name: string;
 };
+
+type SharedDatesheet = {
+    title: string;
+    authorName: string;
+    dates: Array<{ name: string; date: number }>;
+    createdAt: number;
+};
