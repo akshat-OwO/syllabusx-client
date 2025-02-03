@@ -1,5 +1,17 @@
 # syllabusx-client
 
+## 4.11.0
+
+### Minor Changes
+
+-   feat [`#131`](https://github.com/akshat-OwO/syllabusx-client/pull/131): datesheets are shareable now
+
+### Patch Changes
+
+-   perf [`#128`](https://github.com/akshat-OwO/syllabusx-client/pull/128): dc telemetry to gather failure and usage rate for mock pdfs
+-   refactor [`#129`](https://github.com/akshat-OwO/syllabusx-client/pull/129): refactored ai endpoints into one
+-   chore [`#130`](https://github.com/akshat-OwO/syllabusx-client/pull/130): commit linters are back
+
 ## 4.10.2
 
 ### Patch Changes
