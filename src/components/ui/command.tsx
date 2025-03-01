@@ -37,7 +37,7 @@ const CommandDialog = ({
     return (
         <Dialog {...props}>
             <DialogContent
-                className={cn("overflow-hidden p-0 shadow-lg", dialogClassName)}
+                className={cn("overflow-auto p-0 shadow-lg", dialogClassName)}
             >
                 <Command
                     className={cn(

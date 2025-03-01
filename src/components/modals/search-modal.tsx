@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocalStorage, useMediaQuery } from "@mantine/hooks";
+import { useElementSize, useLocalStorage, useMediaQuery } from "@mantine/hooks";
 import {
     CommandDialog,
     CommandEmpty,
@@ -45,12 +45,24 @@ const SearchModal = () => {
     const [query, setQuery] = useState<string>("");
     const [debouncedQuery, setDebouncedQuery] = useState<string>("");
 
-    const [searchType, setSearchType] = useState<
+    const [searchType, setSearchType] = useLocalStorage<
         "all" | "subject" | "theory" | "lab"
-    >("all");
-    const [course, setCourse] = useState<Courses | undefined>(undefined);
-    const [sem, setSem] = useState<Semesters | undefined>(undefined);
-    const [dept, setDept] = useState<Departments | undefined>(undefined);
+    >({
+        key: "search-type",
+        defaultValue: "all",
+    });
+    const [course, setCourse] = useLocalStorage<Courses | "undefined">({
+        key: "search-course",
+        defaultValue: "undefined",
+    });
+    const [sem, setSem] = useLocalStorage<Semesters | "undefined">({
+        key: "search-semester",
+        defaultValue: "undefined",
+    });
+    const [dept, setDept] = useLocalStorage<Departments | "undefined">({
+        key: "search-department",
+        defaultValue: "undefined",
+    });
 
     const [subjectHistory, setSubjectHistory] = useLocalStorage<string[]>({
         key: "subject-history",
@@ -68,11 +80,25 @@ const SearchModal = () => {
             search({
                 query: debouncedQuery,
                 type: searchType,
-                course,
-                sem,
-                dept,
+                course: course === "undefined" ? undefined : course,
+                sem: sem === "undefined" ? undefined : sem,
+                dept: dept === "undefined" ? undefined : dept,
             }),
     });
+
+    const handleHistory = (path: string) => {
+        setSubjectHistory((prev) => {
+            let history: string[] = [];
+            if (prev.includes(path)) {
+                prev.splice(prev.indexOf(path), 1);
+            }
+            history = [path, ...prev];
+            if (history.length > 7) {
+                history.pop();
+            }
+            return history;
+        });
+    };
 
     const debouncedUpdate = useCallback(
         _.debounce((value: string) => setDebouncedQuery(value), 500),
@@ -99,9 +125,9 @@ const SearchModal = () => {
         } else if (course === Courses.BTECH) {
             setCourse(Courses.BCA);
         } else if (course === Courses.BCA) {
-            setCourse(undefined);
+            setCourse("undefined");
         } else {
-            setCourse(undefined);
+            setCourse("undefined");
         }
     }, [course]);
 
@@ -233,39 +259,39 @@ const SearchModal = () => {
                                 {_.startCase(searchType)}
                             </Badge>
                         )}
-                        {course && (
+                        {course !== "undefined" && (
                             <Badge
                                 variant="outline"
                                 className="cursor-pointer rounded-md border-secondary bg-background"
-                                onClick={() => setCourse(undefined)}
+                                onClick={() => setCourse("undefined")}
                             >
                                 {_.startCase(course.toLowerCase())}
                             </Badge>
                         )}
-                        {sem && (
+                        {sem !== "undefined" && (
                             <Badge
                                 variant="outline"
                                 className="cursor-pointer rounded-md border-secondary bg-background"
-                                onClick={() => setSem(undefined)}
+                                onClick={() => setSem("undefined")}
                             >
-                                {!sem
-                                    ? "Semester"
-                                    : Object.entries(Semesters).find(
-                                          ([_, val]) => val === sem
-                                      )?.[0]}
+                                {
+                                    Object.entries(Semesters).find(
+                                        ([_, val]) => val === sem
+                                    )?.[0]
+                                }
                             </Badge>
                         )}
-                        {dept && (
+                        {dept !== "undefined" && (
                             <Badge
                                 variant="outline"
                                 className="cursor-pointer rounded-md border-secondary bg-background"
-                                onClick={() => setDept(undefined)}
+                                onClick={() => setDept("undefined")}
                             >
-                                {!dept
-                                    ? "Department"
-                                    : Object.entries(Departments).find(
-                                          ([_, val]) => val === dept
-                                      )?.[0]}
+                                {
+                                    Object.entries(Departments).find(
+                                        ([_, val]) => val === dept
+                                    )?.[0]
+                                }
                             </Badge>
                         )}
                     </div>
@@ -301,11 +327,15 @@ const SearchModal = () => {
                     <Tooltip>
                         <TooltipTrigger>
                             <Badge
-                                variant={!course ? "secondary" : "default"}
+                                variant={
+                                    course === "undefined"
+                                        ? "secondary"
+                                        : "default"
+                                }
                                 className="cursor-pointer gap-2 rounded-md"
                                 onClick={() => toggleCourseTypes()}
                             >
-                                {!course
+                                {course === "undefined"
                                     ? "Course"
                                     : _.startCase(course.toLowerCase())}
                             </Badge>
@@ -325,31 +355,29 @@ const SearchModal = () => {
                         <TooltipTrigger>
                             <Select
                                 value={sem}
-                                onValueChange={(value) => {
-                                    if (value === "__empty__") {
-                                        setSem(undefined);
-                                    } else setSem(value as Semesters);
-                                }}
+                                onValueChange={(value) =>
+                                    setSem(value as Semesters)
+                                }
                             >
                                 <SelectTrigger
                                     data-semester-trigger="true"
                                     className={cn(
                                         "h-fit gap-0.5 bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground",
-                                        sem &&
+                                        sem !== "undefined" &&
                                             "bg-primary text-primary-foreground"
                                     )}
                                 >
                                     <SelectValue placeholder="Semester">
-                                        {!sem
+                                        {sem === "undefined"
                                             ? "Semester"
                                             : Object.entries(Semesters).find(
                                                   ([_, val]) => val === sem
                                               )?.[0] + " Semester"}
                                     </SelectValue>
                                 </SelectTrigger>
-                                <SelectContent className="max-h-40">
+                                <SelectContent className="max-h-40 border-secondary">
                                     <SelectItem
-                                        value={"__empty__"}
+                                        value={"undefined"}
                                         className="py-1 text-xs"
                                     >
                                         Select Semester
@@ -383,31 +411,29 @@ const SearchModal = () => {
                         <TooltipTrigger>
                             <Select
                                 value={dept}
-                                onValueChange={(value) => {
-                                    if (value === "__empty__") {
-                                        setDept(undefined);
-                                    } else setDept(value as Departments);
-                                }}
+                                onValueChange={(value) =>
+                                    setDept(value as Departments)
+                                }
                             >
                                 <SelectTrigger
                                     data-department-trigger="true"
                                     className={cn(
                                         "h-fit gap-0.5 bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground",
-                                        dept &&
+                                        dept !== "undefined" &&
                                             "bg-primary text-primary-foreground"
                                     )}
                                 >
                                     <SelectValue placeholder="Department">
-                                        {!dept
+                                        {dept === "undefined"
                                             ? "Department"
                                             : Object.entries(Departments).find(
                                                   ([_, val]) => val === dept
                                               )?.[0]}
                                     </SelectValue>
                                 </SelectTrigger>
-                                <SelectContent className="max-h-40">
+                                <SelectContent className="max-h-40 border-secondary">
                                     <SelectItem
-                                        value={"__empty__"}
+                                        value={"undefined"}
                                         className="py-1 text-xs"
                                     >
                                         Select Department
@@ -440,7 +466,7 @@ const SearchModal = () => {
                 </div>
             </div>
             <CommandList>
-                <CommandEmpty className="min-h-36 flex w-full items-center justify-center">
+                <CommandEmpty className="mx-auto flex min-h-[9rem] w-full items-center justify-center text-sm">
                     {isLoading ? (
                         <Loader2 className="h-4 w-4 animate-spin" />
                     ) : (
@@ -455,6 +481,32 @@ const SearchModal = () => {
                                 key={`${subject.camelCase} ${subject.theoryCode} ${subject.semester} ${subject.department?.join(",")} ${i}`}
                                 value={`${subject.camelCase} ${subject.subject} ${subject.theoryCode}  ${subject.semester} ${subject.department?.join(",")} ${i}`}
                                 className="group cursor-pointer text-xs font-semibold"
+                                onSelect={() =>
+                                    runCommand(() => {
+                                        let routePath = "/courses";
+
+                                        routePath += `/${subject.course.toLowerCase()}`;
+                                        routePath += `/${Object.entries(Semesters).find(([_, val]) => val === subject.semester)?.[0]}`;
+                                        if (
+                                            subject?.department &&
+                                            subject.department.length > 0
+                                        ) {
+                                            routePath += `/${Object.entries(
+                                                Departments
+                                            )
+                                                .find(
+                                                    ([_, val]) =>
+                                                        val ===
+                                                        subject.department?.[0]
+                                                )?.[0]
+                                                .toLowerCase()}`;
+                                        }
+                                        routePath += `/${subject.subject.toLowerCase().split(" ").join("-")}`;
+
+                                        handleHistory(routePath);
+                                        router.push(routePath);
+                                    })
+                                }
                             >
                                 <div className="flex w-full flex-col gap-2.5">
                                     <div className="flex items-center justify-between">
@@ -533,7 +585,10 @@ const SearchModal = () => {
                                 key={subject}
                                 className="cursor-pointer text-xs font-semibold"
                                 onSelect={() => {
-                                    runCommand(() => router.push(subject));
+                                    runCommand(() => {
+                                        handleHistory(subject);
+                                        router.push(subject);
+                                    });
                                 }}
                             >
                                 {_.startCase(subject.split("/").pop())
