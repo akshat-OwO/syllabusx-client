@@ -15,11 +15,14 @@ import {
     navigationMenuTriggerStyle,
 } from "./ui/navigation-menu";
 import { useDatesheet } from "@/hooks/use-datesheet";
+import { useSearch } from "@/hooks/use-search";
 
 interface NavMenuProps {}
 
 const NavMenu: FC<NavMenuProps> = ({}) => {
     const { onOpen } = useDatesheet();
+    const search = useSearch();
+
     return (
         <NavigationMenu>
             <NavigationMenuList>

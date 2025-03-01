@@ -9,6 +9,7 @@ import {
     CommandItem,
     CommandList,
     CommandSeparator,
+    CommandShortcut,
 } from "../ui/command";
 import _ from "lodash";
 import { useCallback, useEffect, useState } from "react";
@@ -319,9 +320,9 @@ const SearchModal = () => {
                             className="border-secondary text-xs"
                         >
                             Toggle Search type{" "}
-                            <span className="rounded-md bg-secondary px-1 py-0.5 text-xs text-secondary-foreground">
+                            <CommandShortcut>
                                 {kbdKey({ isMobile: !!isMobile })} K T
-                            </span>
+                            </CommandShortcut>
                         </TooltipContent>
                     </Tooltip>
                     <Tooltip>
