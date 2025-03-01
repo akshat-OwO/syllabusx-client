@@ -1,5 +1,7 @@
 import {
     Courses,
+    Departments,
+    Semesters,
     Tab,
     bcaSemesterList,
     branchList,
@@ -274,3 +276,49 @@ export const getBcaStudyMaterial = async ({
 
     return null;
 };
+
+export async function search({
+    query,
+    type = "all",
+    course,
+    sem,
+    dept,
+}: {
+    query: string;
+    type?: "subject" | "theory" | "lab" | "all";
+    course?: Courses;
+    sem?: Semesters;
+    dept?: Departments;
+}) {
+    try {
+        const response: AxiosResponse<
+            {
+                subject: string;
+                camelCase: string;
+                semester: Semesters;
+                department: Departments[] | null;
+                course: Courses;
+                theoryCode: string | null;
+                labCode: string | null;
+                theoryCredits: number | null;
+                labCredits: number | null;
+                matches: {
+                    field: string;
+                    snippet: string;
+                }[];
+            }[],
+            { error: string }
+        > = await axios.get(
+            `${server}search?q=${query}${type ? `&type=${type}` : ""}${course ? `&course=${course}` : ""}${sem ? `&sem=${sem}` : ""}${dept ? `&dept=${dept}` : ""}`
+        );
+        return response.data;
+    } catch (error) {
+        let res;
+        if (error instanceof AxiosError) {
+            res = { error: error?.response?.data as string };
+        } else {
+            res = { error: "Something went wrong" };
+        }
+        throw new Error(res.error);
+    }
+}
