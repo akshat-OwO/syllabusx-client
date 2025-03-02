@@ -1,6 +1,5 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { FC } from "react";
 import { Button, buttonVariants } from "./ui/button";
@@ -20,6 +19,7 @@ interface NavMenuProps {}
 
 const NavMenu: FC<NavMenuProps> = ({}) => {
     const { onOpen } = useDatesheet();
+
     return (
         <NavigationMenu>
             <NavigationMenuList>

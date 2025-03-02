@@ -6,6 +6,7 @@ import { Toaster } from "../ui/toaster";
 import ModalProvider from "./modal-provider";
 import QueryProvider from "./query-provider";
 import { ThemeProvider } from "./theme-provider";
+import { TooltipProvider } from "../ui/tooltip";
 
 interface ProvidersProps {
     children: ReactNode;
@@ -15,8 +16,10 @@ const Providers: FC<ProvidersProps> = ({ children }) => {
     return (
         <QueryProvider>
             <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-                {children}
-                <ModalProvider />
+                <TooltipProvider>
+                    {children}
+                    <ModalProvider />
+                </TooltipProvider>
                 <Toaster />
                 <SonnerToaster />
                 <ThemeSwitcher />
