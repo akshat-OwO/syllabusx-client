@@ -28,7 +28,19 @@ import {
     SelectValue,
 } from "../ui/select";
 import { cn } from "@/lib/utils";
-import { Loader2 } from "lucide-react";
+import {
+    Bug,
+    Instagram,
+    Loader2,
+    MessageSquarePlus,
+    NotepadTextDashedIcon,
+    Search,
+    Sparkles,
+    Star,
+} from "lucide-react";
+import { useAi } from "@/hooks/use-ai";
+import useStore from "@/hooks/use-store";
+import { useFeedback } from "@/hooks/use-feedback";
 
 const kbdKey = ({ isMobile }: { isMobile: boolean }) => {
     if (isMobile) return null;
@@ -41,11 +53,13 @@ const kbdKey = ({ isMobile }: { isMobile: boolean }) => {
 
 const SearchModal = () => {
     const { isOpen, onOpen, onClose } = useSearch();
+    const ai = useStore(useAi, (state) => state);
+    const feedback = useFeedback();
 
     const [isSearching, setIsSearching] = useState<boolean>(true);
     const [query, setQuery] = useState<string>("");
     const [debouncedQuery, setDebouncedQuery] = useState<string>("");
-    const [currentValue, setCurrentValue] = useState<string>("");
+    const [currentValue, setCurrentValue] = useState<string>("-");
     const [selectedSubject, setSelectedSubject] =
         useState<SubjectSearchResult | null>(null);
 
@@ -237,13 +251,14 @@ const SearchModal = () => {
         } else if (selectedSubject) {
             setCurrentValue("back-to-search");
         } else {
-            setCurrentValue("");
+            setCurrentValue("-");
         }
     }, [data, selectedSubject]);
 
     const runCommand = useCallback(
         (command: () => unknown) => {
             onClose();
+            setCurrentValue("-");
             command();
         },
         [onClose]
@@ -317,7 +332,7 @@ const SearchModal = () => {
                         onValueChange={setQuery}
                         onKeyDown={(e) => {
                             if (!isSearching) {
-                                if (e.key === "Backspace")
+                                if (e.key === "Backspace" && query.length === 0)
                                     goBackToSearchResults();
                             }
                         }}
@@ -560,13 +575,13 @@ const SearchModal = () => {
                 selectedSubject.department.length > 0 ? (
                     <>
                         <CommandItem
-                            className="mx-2 cursor-pointer text-xs font-semibold"
+                            className="group mx-2 cursor-pointer text-xs font-semibold"
                             onSelect={() => goBackToSearchResults()}
                             forceMount
                         >
                             <Badge
                                 variant="outline"
-                                className="mr-2 rounded-md border-secondary bg-background"
+                                className="mr-2 rounded-md border-secondary bg-background text-muted-foreground group-aria-selected:text-foreground"
                             >
                                 ←
                             </Badge>
@@ -584,7 +599,7 @@ const SearchModal = () => {
                                     return (
                                         <CommandItem
                                             key={departmentValue}
-                                            className="cursor-pointer text-xs font-semibold"
+                                            className="group cursor-pointer text-xs font-semibold"
                                             onSelect={() =>
                                                 navigateToSubject(
                                                     selectedSubject,
@@ -729,26 +744,179 @@ const SearchModal = () => {
                                 ))}
                         </CommandGroup>
                         {data && <CommandSeparator />}
-                        <CommandGroup heading="history">
-                            <ScrollArea className="flex max-h-40 flex-col overflow-y-auto">
-                                {subjectHistory.map((subject) => (
-                                    <CommandItem
-                                        key={subject}
-                                        className="cursor-pointer text-xs font-semibold"
-                                        value={subject}
-                                        onSelect={() => {
-                                            runCommand(() => {
-                                                handleHistory(subject);
-                                                router.push(subject);
-                                            });
-                                        }}
-                                    >
+                        <CommandGroup heading="History">
+                            {subjectHistory.map((subject) => (
+                                <CommandItem
+                                    key={subject}
+                                    className="group cursor-pointer text-xs font-normal"
+                                    value={subject}
+                                    onSelect={() => {
+                                        runCommand(() => {
+                                            handleHistory(subject);
+                                            router.push(subject);
+                                        });
+                                    }}
+                                >
+                                    <p className="truncate text-ellipsis text-xs text-muted-foreground group-aria-selected:font-semibold group-aria-selected:text-foreground">
                                         {_.startCase(subject.split("/").pop())
                                             .split("-")
                                             .join(" ")}
-                                    </CommandItem>
-                                ))}
-                            </ScrollArea>
+                                    </p>
+                                </CommandItem>
+                            ))}
+                        </CommandGroup>
+                        <CommandGroup heading="AI">
+                            <CommandItem
+                                value={"search with ai"}
+                                keywords={["ai", "search", "ai"]}
+                                className="group cursor-pointer text-xs font-normal"
+                                onSelect={() =>
+                                    runCommand(() => {
+                                        if (!ai) return;
+                                        ai.completion.onOpen();
+                                    })
+                                }
+                            >
+                                <div className="flex w-full items-center justify-between">
+                                    <div className="flex items-center gap-2">
+                                        <Search className="h-4 w-4 stroke-muted group-aria-selected:stroke-primary" />
+                                        <p className="text-muted-foreground group-aria-selected:font-semibold group-aria-selected:text-foreground">
+                                            Search with AI
+                                        </p>
+                                    </div>
+                                    <Badge
+                                        variant="outline"
+                                        className="rounded-md border-secondary bg-background font-normal text-muted-foreground duration-0 group-aria-selected:bg-primary group-aria-selected:font-semibold group-aria-selected:text-primary-foreground"
+                                    >
+                                        AI
+                                    </Badge>
+                                </div>
+                            </CommandItem>
+                            <CommandItem
+                                value={"generate mock test"}
+                                keywords={["ai", "generate", "mock", "test"]}
+                                className="group cursor-pointer text-xs font-normal"
+                                onSelect={() =>
+                                    runCommand(() => {
+                                        if (!ai) return;
+                                        ai.mock.onOpen();
+                                    })
+                                }
+                            >
+                                <div className="flex w-full items-center justify-between">
+                                    <div className="flex items-center gap-2">
+                                        <NotepadTextDashedIcon className="h-4 w-4 stroke-muted group-aria-selected:stroke-primary" />
+                                        <p className="text-muted-foreground group-aria-selected:font-semibold group-aria-selected:text-foreground">
+                                            Generate mock test
+                                        </p>
+                                    </div>
+                                    <Badge
+                                        variant="outline"
+                                        className="rounded-md border-secondary bg-background font-normal text-muted-foreground duration-0 group-aria-selected:bg-primary group-aria-selected:font-semibold group-aria-selected:text-primary-foreground"
+                                    >
+                                        AI
+                                    </Badge>
+                                </div>
+                            </CommandItem>
+                        </CommandGroup>
+                        <CommandGroup heading="Miscellaneous">
+                            <CommandItem
+                                value={"github"}
+                                keywords={["github", "star"]}
+                                className="group cursor-pointer text-xs font-normal"
+                                onSelect={() =>
+                                    runCommand(() => {
+                                        window.open(
+                                            "https://github.com/akshat-OwO/syllabusx-client",
+                                            "_blank"
+                                        );
+                                    })
+                                }
+                            >
+                                <div className="flex w-full items-center gap-2">
+                                    <Star className="h-4 w-4 stroke-muted group-aria-selected:stroke-primary" />
+                                    <p className="text-muted-foreground group-aria-selected:font-semibold group-aria-selected:text-foreground">
+                                        Star us on Github
+                                    </p>
+                                </div>
+                            </CommandItem>
+                            <CommandItem
+                                value={"instagram"}
+                                keywords={["instagram", "follow"]}
+                                className="group cursor-pointer text-xs font-normal"
+                                onSelect={() =>
+                                    runCommand(() => {
+                                        window.open(
+                                            "https://www.instagram.com/syllabusx_.live/",
+                                            "_blank"
+                                        );
+                                    })
+                                }
+                            >
+                                <div className="flex w-full items-center gap-2">
+                                    <Instagram className="h-4 w-4 stroke-muted group-aria-selected:stroke-primary" />
+                                    <p className="text-muted-foreground group-aria-selected:font-semibold group-aria-selected:text-foreground">
+                                        Follow us on Instagram
+                                    </p>
+                                </div>
+                            </CommandItem>
+                            <CommandItem
+                                value={"bug"}
+                                keywords={["bug", "issue", "report"]}
+                                className="group cursor-pointer text-xs font-normal"
+                                onSelect={() =>
+                                    runCommand(() => {
+                                        window.open(
+                                            "https://github.com/akshat-OwO/syllabusx-client/issues/new?template=bug-report.yml",
+                                            "_blank"
+                                        );
+                                    })
+                                }
+                            >
+                                <div className="flex w-full items-center gap-2">
+                                    <Bug className="h-4 w-4 stroke-muted group-aria-selected:stroke-primary" />
+                                    <p className="text-muted-foreground group-aria-selected:font-semibold group-aria-selected:text-foreground">
+                                        Report an issue on Github
+                                    </p>
+                                </div>
+                            </CommandItem>
+                            <CommandItem
+                                value={"feature-request"}
+                                keywords={["feature", "request"]}
+                                className="group cursor-pointer text-xs font-normal"
+                                onSelect={() =>
+                                    runCommand(() => {
+                                        window.open(
+                                            "https://github.com/akshat-OwO/syllabusx-client/issues/new?template=feature-request.yml",
+                                            "_blank"
+                                        );
+                                    })
+                                }
+                            >
+                                <div className="flex w-full items-center gap-2">
+                                    <Sparkles className="h-4 w-4 stroke-muted group-aria-selected:stroke-primary" />
+                                    <p className="text-muted-foreground group-aria-selected:font-semibold group-aria-selected:text-foreground">
+                                        Request for a new feature on Github
+                                    </p>
+                                </div>
+                            </CommandItem>
+                            <CommandItem
+                                value={"feedback"}
+                                keywords={["feedback", "form"]}
+                                className="group cursor-pointer text-xs font-normal"
+                                onSelect={() =>
+                                    runCommand(() => {
+                                        feedback.onOpen();
+                                    })
+                                }
+                            >
+                                <div className="flex w-full items-center gap-2">
+                                    <MessageSquarePlus className="h-4 w-4 stroke-muted group-aria-selected:stroke-primary" />
+                                    <p className="text-muted-foreground group-aria-selected:font-semibold group-aria-selected:text-foreground">
+                                        Give us Feedback
+                                    </p>
+                                </div>
+                            </CommandItem>
                         </CommandGroup>
                     </>
                 )}
