@@ -61,7 +61,7 @@ export async function POST(req: Request) {
             //     ) as React.ReactElement,
             // }),
             resend.emails.send({
-                from: "SyllabusX <mail@syllabusx.live>",
+                from: "SyllabusX <support@syllabusx.live>",
                 to: [validatedFormFields.email],
                 subject: "Thanks for the feedback",
                 react: EmailTemplate({
