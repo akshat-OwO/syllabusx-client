@@ -7,6 +7,7 @@ import {
     branchList,
     semesterList,
     server,
+    SubjectSearchResult,
 } from "@/config";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import _ from "lodash";
@@ -292,21 +293,7 @@ export async function search({
 }) {
     try {
         const response: AxiosResponse<
-            {
-                subject: string;
-                camelCase: string;
-                semester: Semesters;
-                department: Departments[] | null;
-                course: Courses;
-                theoryCode: string | null;
-                labCode: string | null;
-                theoryCredits: number | null;
-                labCredits: number | null;
-                matches: {
-                    field: string;
-                    snippet: string;
-                }[];
-            }[],
+            SubjectSearchResult[],
             { error: string }
         > = await axios.get(
             `${server}search?q=${query}${type ? `&type=${type}` : ""}${course ? `&course=${course}` : ""}${sem ? `&sem=${sem}` : ""}${dept ? `&dept=${dept}` : ""}`

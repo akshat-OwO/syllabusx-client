@@ -143,6 +143,22 @@ export enum Departments {
     MAE = "MAE",
 }
 
+export type SubjectSearchResult = {
+    subject: string;
+    camelCase: string;
+    semester: Semesters;
+    department: Departments[] | null;
+    course: Courses;
+    theoryCode: string | null;
+    labCode: string | null;
+    theoryCredits: number | null;
+    labCredits: number | null;
+    matches: {
+        field: string;
+        snippet: string;
+    }[];
+};
+
 // export const server = "https://server.syllabusx.live/";
 export const server = "http://localhost:8080/";
 

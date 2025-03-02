@@ -1,6 +1,6 @@
 "use client";
 
-import { useElementSize, useLocalStorage, useMediaQuery } from "@mantine/hooks";
+import { useLocalStorage, useMediaQuery } from "@mantine/hooks";
 import {
     CommandDialog,
     CommandEmpty,
@@ -9,14 +9,13 @@ import {
     CommandItem,
     CommandList,
     CommandSeparator,
-    CommandShortcut,
 } from "../ui/command";
 import _ from "lodash";
 import { useCallback, useEffect, useState } from "react";
 import { useSearch } from "@/hooks/use-search";
 import { useQuery } from "@tanstack/react-query";
 import { search } from "@/lib/server";
-import { Courses, Departments, Semesters } from "@/config";
+import { Courses, Departments, Semesters, SubjectSearchResult } from "@/config";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { useRouter } from "next/navigation";
 import { Badge } from "../ui/badge";
@@ -43,8 +42,12 @@ const kbdKey = ({ isMobile }: { isMobile: boolean }) => {
 const SearchModal = () => {
     const { isOpen, onOpen, onClose } = useSearch();
 
+    const [isSearching, setIsSearching] = useState<boolean>(true);
     const [query, setQuery] = useState<string>("");
     const [debouncedQuery, setDebouncedQuery] = useState<string>("");
+    const [currentValue, setCurrentValue] = useState<string>("");
+    const [selectedSubject, setSelectedSubject] =
+        useState<SubjectSearchResult | null>(null);
 
     const [searchType, setSearchType] = useLocalStorage<
         "all" | "subject" | "theory" | "lab"
@@ -75,7 +78,7 @@ const SearchModal = () => {
     const router = useRouter();
 
     const { data, isLoading } = useQuery({
-        enabled: debouncedQuery.length > 3,
+        enabled: isSearching && debouncedQuery.length > 3,
         queryKey: ["search", debouncedQuery, searchType, course, sem, dept],
         queryFn: () =>
             search({
@@ -118,10 +121,10 @@ const SearchModal = () => {
         } else {
             setSearchType("all");
         }
-    }, [searchType]);
+    }, [searchType, setSearchType]);
 
     const toggleCourseTypes = useCallback(() => {
-        if (!course) {
+        if (course === "undefined") {
             setCourse(Courses.BTECH);
         } else if (course === Courses.BTECH) {
             setCourse(Courses.BCA);
@@ -130,7 +133,7 @@ const SearchModal = () => {
         } else {
             setCourse("undefined");
         }
-    }, [course]);
+    }, [course, setCourse]);
 
     useEffect(() => {
         if (query.length > 0) {
@@ -226,6 +229,18 @@ const SearchModal = () => {
         };
     }, [isOpen, onOpen, toggleSearchTypes, toggleCourseTypes]);
 
+    useEffect(() => {
+        if (data && data.length > 0 && !selectedSubject) {
+            const firstSubject = data[0];
+            const firstItemValue = `${firstSubject.camelCase} ${firstSubject.subject} ${firstSubject.theoryCode} ${firstSubject.semester} ${firstSubject.department?.join(",")} 0`;
+            setCurrentValue(firstItemValue);
+        } else if (selectedSubject) {
+            setCurrentValue("back-to-search");
+        } else {
+            setCurrentValue("");
+        }
+    }, [data, selectedSubject]);
+
     const runCommand = useCallback(
         (command: () => unknown) => {
             onClose();
@@ -234,10 +249,61 @@ const SearchModal = () => {
         [onClose]
     );
 
+    const navigateToSubject = (
+        subject: SubjectSearchResult,
+        specificDept?: Departments
+    ) => {
+        runCommand(() => {
+            let routePath = "/courses";
+
+            routePath += `/${subject.course.toLowerCase()}`;
+            routePath += `/${Object.entries(Semesters).find(([_, val]) => val === subject.semester)?.[0]}`;
+
+            const departmentToUse =
+                specificDept ||
+                (subject?.department && subject.department.length > 0
+                    ? subject.department[0]
+                    : null);
+
+            if (departmentToUse) {
+                routePath += `/${Object.entries(Departments)
+                    .find(([_, val]) => val === departmentToUse)?.[0]
+                    .toLowerCase()}`;
+            }
+
+            routePath += `/${subject.subject.toLowerCase().split(" ").join("-")}`;
+
+            handleHistory(routePath);
+            router.push(routePath);
+        });
+    };
+
+    const handleSelectSubject = (subject: SubjectSearchResult) => {
+        if (subject.department && subject.department.length > 1) {
+            setIsSearching(false);
+            setQuery("");
+            setSelectedSubject(subject);
+        } else {
+            navigateToSubject(subject);
+        }
+    };
+
+    const goBackToSearchResults = () => {
+        setIsSearching(true);
+        setSelectedSubject(null);
+    };
+
     return (
         <CommandDialog
             open={isOpen}
-            onOpenChange={onClose}
+            onOpenChange={(open) => {
+                if (!open) {
+                    onClose();
+                    setSelectedSubject(null);
+                }
+            }}
+            value={currentValue}
+            onValueChange={setCurrentValue}
             className="[&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-2"
             dialogClassName="border-none outline-none"
         >
@@ -245,13 +311,29 @@ const SearchModal = () => {
                 <div className="relative">
                     <CommandInput
                         placeholder="Type a command to search..."
+                        className={cn(!isSearching && "pl")}
                         containerClassName="border-none"
                         value={query}
                         onValueChange={setQuery}
+                        onKeyDown={(e) => {
+                            if (!isSearching) {
+                                if (e.key === "Backspace")
+                                    goBackToSearchResults();
+                            }
+                        }}
                         isLoading={isLoading}
                     />
                     <div className="absolute right-12 top-1/2 flex -translate-y-1/2 items-center gap-2">
-                        {searchType !== "all" && (
+                        {!isSearching && selectedSubject && (
+                            <Badge
+                                variant="outline"
+                                className="cursor-pointer rounded-md border-secondary bg-background"
+                                onClick={() => goBackToSearchResults()}
+                            >
+                                {selectedSubject.subject}
+                            </Badge>
+                        )}
+                        {isSearching && searchType !== "all" && (
                             <Badge
                                 variant="outline"
                                 className="cursor-pointer rounded-md border-secondary bg-background"
@@ -297,308 +379,379 @@ const SearchModal = () => {
                         )}
                     </div>
                 </div>
-                <div className="flex items-center gap-2 px-2">
-                    <Tooltip>
-                        <TooltipTrigger>
-                            <Badge
-                                variant={
-                                    searchType === "all"
-                                        ? "secondary"
-                                        : "default"
-                                }
-                                className="cursor-pointer gap-2 rounded-md"
-                                onClick={() => toggleSearchTypes()}
-                            >
-                                {searchType === "all"
-                                    ? "Subject"
-                                    : _.startCase(searchType)}
-                            </Badge>
-                        </TooltipTrigger>
-                        <TooltipContent
-                            side="bottom"
-                            align="start"
-                            className="border-secondary text-xs"
-                        >
-                            Toggle Search type{" "}
-                            <CommandShortcut>
-                                {kbdKey({ isMobile: !!isMobile })} K T
-                            </CommandShortcut>
-                        </TooltipContent>
-                    </Tooltip>
-                    <Tooltip>
-                        <TooltipTrigger>
-                            <Badge
-                                variant={
-                                    course === "undefined"
-                                        ? "secondary"
-                                        : "default"
-                                }
-                                className="cursor-pointer gap-2 rounded-md"
-                                onClick={() => toggleCourseTypes()}
-                            >
-                                {course === "undefined"
-                                    ? "Course"
-                                    : _.startCase(course.toLowerCase())}
-                            </Badge>
-                        </TooltipTrigger>
-                        <TooltipContent
-                            side="bottom"
-                            align="center"
-                            className="border-secondary text-xs"
-                        >
-                            Toggle Course{" "}
-                            <span className="rounded-md bg-secondary px-1 py-0.5 text-xs text-secondary-foreground">
-                                {kbdKey({ isMobile: !!isMobile })} K C
-                            </span>
-                        </TooltipContent>
-                    </Tooltip>
-                    <Tooltip>
-                        <TooltipTrigger>
-                            <Select
-                                value={sem}
-                                onValueChange={(value) =>
-                                    setSem(value as Semesters)
-                                }
-                            >
-                                <SelectTrigger
-                                    data-semester-trigger="true"
-                                    className={cn(
-                                        "h-fit gap-0.5 bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground",
-                                        sem !== "undefined" &&
-                                            "bg-primary text-primary-foreground"
-                                    )}
+                {!selectedSubject && (
+                    <div className="flex items-center gap-2 px-2">
+                        <Tooltip>
+                            <TooltipTrigger>
+                                <Badge
+                                    variant={
+                                        searchType === "all"
+                                            ? "secondary"
+                                            : "default"
+                                    }
+                                    className="cursor-pointer gap-2 rounded-md"
+                                    onClick={() => toggleSearchTypes()}
                                 >
-                                    <SelectValue placeholder="Semester">
-                                        {sem === "undefined"
-                                            ? "Semester"
-                                            : Object.entries(Semesters).find(
-                                                  ([_, val]) => val === sem
-                                              )?.[0] + " Semester"}
-                                    </SelectValue>
-                                </SelectTrigger>
-                                <SelectContent className="max-h-40 border-secondary">
-                                    <SelectItem
-                                        value={"undefined"}
-                                        className="py-1 text-xs"
-                                    >
-                                        Select Semester
-                                    </SelectItem>
-                                    {Object.entries(Semesters).map(
-                                        ([key, value]) => (
-                                            <SelectItem
-                                                key={value}
-                                                value={value}
-                                                className="py-1 text-xs"
-                                            >
-                                                {key} Semester
-                                            </SelectItem>
-                                        )
-                                    )}
-                                </SelectContent>
-                            </Select>
-                        </TooltipTrigger>
-                        <TooltipContent
-                            side="bottom"
-                            align="center"
-                            className="border-secondary text-xs"
-                        >
-                            Select Semester{" "}
-                            <span className="rounded-md bg-secondary px-1 py-0.5 text-xs text-secondary-foreground">
-                                {kbdKey({ isMobile: !!isMobile })} K S
-                            </span>
-                        </TooltipContent>
-                    </Tooltip>
-                    <Tooltip>
-                        <TooltipTrigger>
-                            <Select
-                                value={dept}
-                                onValueChange={(value) =>
-                                    setDept(value as Departments)
-                                }
+                                    {searchType === "all"
+                                        ? "Subject"
+                                        : _.startCase(searchType)}
+                                </Badge>
+                            </TooltipTrigger>
+                            <TooltipContent
+                                side="bottom"
+                                align="start"
+                                className="border-secondary text-xs"
                             >
-                                <SelectTrigger
-                                    data-department-trigger="true"
-                                    className={cn(
-                                        "h-fit gap-0.5 bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground",
-                                        dept !== "undefined" &&
-                                            "bg-primary text-primary-foreground"
-                                    )}
+                                Toggle Search type{" "}
+                                <span className="rounded-md bg-secondary px-1 py-0.5 text-xs text-secondary-foreground">
+                                    {kbdKey({ isMobile: !!isMobile })} K T
+                                </span>
+                            </TooltipContent>
+                        </Tooltip>
+                        <Tooltip>
+                            <TooltipTrigger>
+                                <Badge
+                                    variant={
+                                        course === "undefined"
+                                            ? "secondary"
+                                            : "default"
+                                    }
+                                    className="cursor-pointer gap-2 rounded-md"
+                                    onClick={() => toggleCourseTypes()}
                                 >
-                                    <SelectValue placeholder="Department">
-                                        {dept === "undefined"
-                                            ? "Department"
-                                            : Object.entries(Departments).find(
-                                                  ([_, val]) => val === dept
-                                              )?.[0]}
-                                    </SelectValue>
-                                </SelectTrigger>
-                                <SelectContent className="max-h-40 border-secondary">
-                                    <SelectItem
-                                        value={"undefined"}
-                                        className="py-1 text-xs"
+                                    {course === "undefined"
+                                        ? "Course"
+                                        : _.startCase(course.toLowerCase())}
+                                </Badge>
+                            </TooltipTrigger>
+                            <TooltipContent
+                                side="bottom"
+                                align="center"
+                                className="border-secondary text-xs"
+                            >
+                                Toggle Course{" "}
+                                <span className="rounded-md bg-secondary px-1 py-0.5 text-xs text-secondary-foreground">
+                                    {kbdKey({ isMobile: !!isMobile })} K C
+                                </span>
+                            </TooltipContent>
+                        </Tooltip>
+                        <Tooltip>
+                            <TooltipTrigger>
+                                <Select
+                                    value={sem}
+                                    onValueChange={(value) =>
+                                        setSem(value as Semesters)
+                                    }
+                                >
+                                    <SelectTrigger
+                                        data-semester-trigger="true"
+                                        className={cn(
+                                            "h-fit gap-0.5 bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground",
+                                            sem !== "undefined" &&
+                                                "bg-primary text-primary-foreground"
+                                        )}
                                     >
-                                        Select Department
-                                    </SelectItem>
-                                    {Object.entries(Departments).map(
-                                        ([key, value]) => (
-                                            <SelectItem
-                                                key={value}
-                                                value={value}
-                                                className="py-1 text-xs"
-                                            >
-                                                {key} Department
-                                            </SelectItem>
-                                        )
-                                    )}
-                                </SelectContent>
-                            </Select>
-                        </TooltipTrigger>
-                        <TooltipContent
-                            side="bottom"
-                            align="center"
-                            className="border-secondary text-xs"
-                        >
-                            Select Department{" "}
-                            <span className="rounded-md bg-secondary px-1 py-0.5 text-xs text-secondary-foreground">
-                                {kbdKey({ isMobile: !!isMobile })} K D
-                            </span>
-                        </TooltipContent>
-                    </Tooltip>
-                </div>
+                                        <SelectValue placeholder="Semester">
+                                            {sem === "undefined"
+                                                ? "Semester"
+                                                : Object.entries(
+                                                      Semesters
+                                                  ).find(
+                                                      ([_, val]) => val === sem
+                                                  )?.[0] + " Semester"}
+                                        </SelectValue>
+                                    </SelectTrigger>
+                                    <SelectContent className="max-h-40 border-secondary">
+                                        <SelectItem
+                                            value={"undefined"}
+                                            className="py-1 text-xs"
+                                        >
+                                            Select Semester
+                                        </SelectItem>
+                                        {Object.entries(Semesters).map(
+                                            ([key, value]) => (
+                                                <SelectItem
+                                                    key={value}
+                                                    value={value}
+                                                    className="py-1 text-xs"
+                                                >
+                                                    {key} Semester
+                                                </SelectItem>
+                                            )
+                                        )}
+                                    </SelectContent>
+                                </Select>
+                            </TooltipTrigger>
+                            <TooltipContent
+                                side="bottom"
+                                align="center"
+                                className="border-secondary text-xs"
+                            >
+                                Select Semester{" "}
+                                <span className="rounded-md bg-secondary px-1 py-0.5 text-xs text-secondary-foreground">
+                                    {kbdKey({ isMobile: !!isMobile })} K S
+                                </span>
+                            </TooltipContent>
+                        </Tooltip>
+                        <Tooltip>
+                            <TooltipTrigger>
+                                <Select
+                                    value={dept}
+                                    onValueChange={(value) =>
+                                        setDept(value as Departments)
+                                    }
+                                >
+                                    <SelectTrigger
+                                        data-department-trigger="true"
+                                        className={cn(
+                                            "h-fit gap-0.5 bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground",
+                                            dept !== "undefined" &&
+                                                "bg-primary text-primary-foreground"
+                                        )}
+                                    >
+                                        <SelectValue placeholder="Department">
+                                            {dept === "undefined"
+                                                ? "Department"
+                                                : Object.entries(
+                                                      Departments
+                                                  ).find(
+                                                      ([_, val]) => val === dept
+                                                  )?.[0]}
+                                        </SelectValue>
+                                    </SelectTrigger>
+                                    <SelectContent className="max-h-40 border-secondary">
+                                        <SelectItem
+                                            value={"undefined"}
+                                            className="py-1 text-xs"
+                                        >
+                                            Select Department
+                                        </SelectItem>
+                                        {Object.entries(Departments).map(
+                                            ([key, value]) => (
+                                                <SelectItem
+                                                    key={value}
+                                                    value={value}
+                                                    className="py-1 text-xs"
+                                                >
+                                                    {key} Department
+                                                </SelectItem>
+                                            )
+                                        )}
+                                    </SelectContent>
+                                </Select>
+                            </TooltipTrigger>
+                            <TooltipContent
+                                side="bottom"
+                                align="center"
+                                className="border-secondary text-xs"
+                            >
+                                Select Department{" "}
+                                <span className="rounded-md bg-secondary px-1 py-0.5 text-xs text-secondary-foreground">
+                                    {kbdKey({ isMobile: !!isMobile })} K D
+                                </span>
+                            </TooltipContent>
+                        </Tooltip>
+                    </div>
+                )}
             </div>
             <CommandList>
-                <CommandEmpty className="mx-auto flex min-h-[9rem] w-full items-center justify-center text-sm">
-                    {isLoading ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                        "No results found."
-                    )}
-                </CommandEmpty>
-                <CommandGroup heading={data && "subject"}>
-                    {data &&
-                        data.length > 0 &&
-                        data.map((subject, i) => (
-                            <CommandItem
-                                key={`${subject.camelCase} ${subject.theoryCode} ${subject.semester} ${subject.department?.join(",")} ${i}`}
-                                value={`${subject.camelCase} ${subject.subject} ${subject.theoryCode}  ${subject.semester} ${subject.department?.join(",")} ${i}`}
-                                className="group cursor-pointer text-xs font-semibold"
-                                onSelect={() =>
-                                    runCommand(() => {
-                                        let routePath = "/courses";
+                {selectedSubject &&
+                selectedSubject?.department &&
+                selectedSubject.department.length > 0 ? (
+                    <>
+                        <CommandItem
+                            className="mx-2 cursor-pointer text-xs font-semibold"
+                            onSelect={() => goBackToSearchResults()}
+                            forceMount
+                        >
+                            <Badge
+                                variant="outline"
+                                className="mr-2 rounded-md border-secondary bg-background"
+                            >
+                                ←
+                            </Badge>
+                            Back to search results
+                        </CommandItem>
+                        <CommandGroup heading="Select Department">
+                            {selectedSubject.department.map(
+                                (departmentValue) => {
+                                    const departmentName = Object.entries(
+                                        Departments
+                                    ).find(
+                                        ([_, val]) => val === departmentValue
+                                    )?.[0];
 
-                                        routePath += `/${subject.course.toLowerCase()}`;
-                                        routePath += `/${Object.entries(Semesters).find(([_, val]) => val === subject.semester)?.[0]}`;
-                                        if (
-                                            subject?.department &&
-                                            subject.department.length > 0
-                                        ) {
-                                            routePath += `/${Object.entries(
-                                                Departments
-                                            )
-                                                .find(
-                                                    ([_, val]) =>
-                                                        val ===
-                                                        subject.department?.[0]
-                                                )?.[0]
-                                                .toLowerCase()}`;
-                                        }
-                                        routePath += `/${subject.subject.toLowerCase().split(" ").join("-")}`;
-
-                                        handleHistory(routePath);
-                                        router.push(routePath);
-                                    })
+                                    return (
+                                        <CommandItem
+                                            key={departmentValue}
+                                            className="cursor-pointer text-xs font-semibold"
+                                            onSelect={() =>
+                                                navigateToSubject(
+                                                    selectedSubject,
+                                                    departmentValue
+                                                )
+                                            }
+                                        >
+                                            <div className="flex w-full items-center justify-between">
+                                                <div className="flex items-center gap-2">
+                                                    <Badge
+                                                        variant="outline"
+                                                        className="rounded-md border-secondary bg-background"
+                                                    >
+                                                        {departmentName}
+                                                    </Badge>
+                                                    <p className="max-w-[9rem] truncate text-ellipsis text-xs text-muted-foreground group-aria-selected:text-foreground">
+                                                        {
+                                                            selectedSubject.subject
+                                                        }
+                                                    </p>
+                                                </div>
+                                                <div className="flex items-center gap-2">
+                                                    <Badge
+                                                        variant="outline"
+                                                        className="whitespace-nowrap rounded-md border-secondary bg-background text-xs font-normal text-muted-foreground group-aria-selected:text-foreground"
+                                                    >
+                                                        {
+                                                            selectedSubject.theoryCode
+                                                        }
+                                                    </Badge>
+                                                    {selectedSubject.labCode && (
+                                                        <Badge
+                                                            variant="outline"
+                                                            className="whitespace-nowrap rounded-md border-secondary bg-background text-xs font-normal text-muted-foreground group-aria-selected:text-foreground"
+                                                        >
+                                                            {
+                                                                selectedSubject.labCode
+                                                            }
+                                                        </Badge>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </CommandItem>
+                                    );
                                 }
-                            >
-                                <div className="flex w-full flex-col gap-2.5">
-                                    <div className="flex items-center justify-between">
-                                        <p className="max-w-36 truncate text-ellipsis text-xs text-muted-foreground group-aria-selected:text-foreground">
-                                            {subject.subject}
-                                        </p>
-                                        <div className="flex items-center gap-2">
-                                            <Badge
-                                                variant="outline"
-                                                className="whitespace-nowrap rounded-md border-secondary bg-background text-xs font-normal text-muted-foreground group-aria-selected:text-foreground"
-                                            >
-                                                {subject.theoryCode}
-                                            </Badge>
-                                            {subject.labCode && (
-                                                <Badge
-                                                    variant="outline"
-                                                    className="whitespace-nowrap rounded-md border-secondary bg-background text-xs font-normal text-muted-foreground group-aria-selected:text-foreground"
-                                                >
-                                                    {subject.labCode}
-                                                </Badge>
-                                            )}
+                            )}
+                        </CommandGroup>
+                    </>
+                ) : (
+                    <>
+                        <CommandEmpty className="mx-auto flex min-h-[9rem] w-full items-center justify-center text-sm">
+                            {isLoading ? (
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                            ) : (
+                                "No results found."
+                            )}
+                        </CommandEmpty>
+                        <CommandGroup heading={data && "subject"}>
+                            {data &&
+                                data.length > 0 &&
+                                data.map((subject, i) => (
+                                    <CommandItem
+                                        key={`${subject.camelCase} ${subject.theoryCode} ${subject.semester} ${subject.department?.join(",")} ${i}`}
+                                        value={`${subject.camelCase} ${subject.subject} ${subject.theoryCode}  ${subject.semester} ${subject.department?.join(",")} ${i}`}
+                                        className="group cursor-pointer text-xs font-semibold"
+                                        onSelect={() =>
+                                            handleSelectSubject(subject)
+                                        }
+                                    >
+                                        <div className="flex w-full flex-col gap-2.5">
+                                            <div className="flex items-center justify-between">
+                                                <p className="truncate text-ellipsis text-xs text-muted-foreground group-aria-selected:text-foreground">
+                                                    {subject.subject}
+                                                </p>
+                                                <div className="flex items-center gap-2">
+                                                    <Badge
+                                                        variant="outline"
+                                                        className="whitespace-nowrap rounded-md border-secondary bg-background text-xs font-normal text-muted-foreground group-aria-selected:text-foreground"
+                                                    >
+                                                        {subject.theoryCode}
+                                                    </Badge>
+                                                    {subject.labCode && (
+                                                        <Badge
+                                                            variant="outline"
+                                                            className="whitespace-nowrap rounded-md border-secondary bg-background text-xs font-normal text-muted-foreground group-aria-selected:text-foreground"
+                                                        >
+                                                            {subject.labCode}
+                                                        </Badge>
+                                                    )}
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center justify-between gap-4">
+                                                <div className="flex items-center gap-2">
+                                                    <Badge
+                                                        variant="outline"
+                                                        className="rounded-md border-secondary bg-background font-normal text-muted-foreground duration-0 group-aria-selected:bg-primary group-aria-selected:text-primary-foreground"
+                                                    >
+                                                        {subject.course}
+                                                    </Badge>
+                                                    <Badge
+                                                        variant="outline"
+                                                        className="rounded-md border-secondary bg-background font-normal text-muted-foreground duration-0 group-aria-selected:bg-primary group-aria-selected:text-primary-foreground"
+                                                    >
+                                                        {
+                                                            Object.entries(
+                                                                Semesters
+                                                            ).find(
+                                                                ([_, val]) =>
+                                                                    val ===
+                                                                    subject.semester
+                                                            )?.[0]
+                                                        }
+                                                    </Badge>
+                                                </div>
+                                                {subject.department &&
+                                                    subject.department.length >
+                                                        0 && (
+                                                        <ScrollArea className="flex-1">
+                                                            <div className="flex items-center gap-2">
+                                                                {subject.department.map(
+                                                                    (dept) => (
+                                                                        <Badge
+                                                                            key={
+                                                                                dept
+                                                                            }
+                                                                            variant="outline"
+                                                                            className="rounded-md border-secondary bg-background text-xs font-normal text-muted-foreground"
+                                                                        >
+                                                                            {
+                                                                                dept
+                                                                            }
+                                                                        </Badge>
+                                                                    )
+                                                                )}
+                                                            </div>
+                                                            <ScrollBar orientation="horizontal" />
+                                                        </ScrollArea>
+                                                    )}
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="flex items-center justify-between gap-4">
-                                        <div className="flex items-center gap-2">
-                                            <Badge
-                                                variant="outline"
-                                                className="rounded-md border-secondary bg-background font-normal text-muted-foreground duration-0 group-aria-selected:bg-primary group-aria-selected:text-primary-foreground"
-                                            >
-                                                {subject.course}
-                                            </Badge>
-                                            <Badge
-                                                variant="outline"
-                                                className="rounded-md border-secondary bg-background font-normal text-muted-foreground duration-0 group-aria-selected:bg-primary group-aria-selected:text-primary-foreground"
-                                            >
-                                                {
-                                                    Object.entries(
-                                                        Semesters
-                                                    ).find(
-                                                        ([_, val]) =>
-                                                            val ===
-                                                            subject.semester
-                                                    )?.[0]
-                                                }
-                                            </Badge>
-                                        </div>
-                                        {subject.department &&
-                                            subject.department.length > 0 && (
-                                                <ScrollArea className="flex-1">
-                                                    <div className="flex items-center gap-2">
-                                                        {subject.department.map(
-                                                            (dept) => (
-                                                                <Badge
-                                                                    key={dept}
-                                                                    variant="outline"
-                                                                    className="rounded-md border-secondary bg-background text-xs font-normal text-muted-foreground"
-                                                                >
-                                                                    {dept}
-                                                                </Badge>
-                                                            )
-                                                        )}
-                                                    </div>
-                                                    <ScrollBar orientation="horizontal" />
-                                                </ScrollArea>
-                                            )}
-                                    </div>
-                                </div>
-                            </CommandItem>
-                        ))}
-                </CommandGroup>
-                {data && <CommandSeparator />}
-                <CommandGroup heading="history">
-                    <ScrollArea className="flex max-h-40 flex-col overflow-y-auto">
-                        {subjectHistory.map((subject) => (
-                            <CommandItem
-                                key={subject}
-                                className="cursor-pointer text-xs font-semibold"
-                                onSelect={() => {
-                                    runCommand(() => {
-                                        handleHistory(subject);
-                                        router.push(subject);
-                                    });
-                                }}
-                            >
-                                {_.startCase(subject.split("/").pop())
-                                    .split("-")
-                                    .join(" ")}
-                            </CommandItem>
-                        ))}
-                    </ScrollArea>
-                </CommandGroup>
+                                    </CommandItem>
+                                ))}
+                        </CommandGroup>
+                        {data && <CommandSeparator />}
+                        <CommandGroup heading="history">
+                            <ScrollArea className="flex max-h-40 flex-col overflow-y-auto">
+                                {subjectHistory.map((subject) => (
+                                    <CommandItem
+                                        key={subject}
+                                        className="cursor-pointer text-xs font-semibold"
+                                        value={subject}
+                                        onSelect={() => {
+                                            runCommand(() => {
+                                                handleHistory(subject);
+                                                router.push(subject);
+                                            });
+                                        }}
+                                    >
+                                        {_.startCase(subject.split("/").pop())
+                                            .split("-")
+                                            .join(" ")}
+                                    </CommandItem>
+                                ))}
+                            </ScrollArea>
+                        </CommandGroup>
+                    </>
+                )}
             </CommandList>
         </CommandDialog>
     );
