@@ -26,7 +26,7 @@ export const semesterList = [
     {
         value: "seventhsemesters",
         label: "7th",
-    }
+    },
 ];
 
 export const bcaSemesterList = [
@@ -117,6 +117,47 @@ export enum Courses {
     BTECH = "BTECH",
     BCA = "BCA",
 }
+
+export enum Semesters {
+    "1st" = "firstsemesters",
+    "2nd" = "secondsemesters",
+    "3rd" = "thirdsemesters",
+    "4th" = "fourthsemesters",
+    "5th" = "fifthsemesters",
+    "6th" = "sixthsemesters",
+    "7th" = "seventhsemesters",
+    "8th" = "eighthsemesters",
+}
+
+export enum Departments {
+    CSE = "CSE",
+    IT = "IT",
+    CST = "CST",
+    ITE = "ITE",
+    ECE = "ECE",
+    EE = "EE",
+    EEE = "EEE",
+    ICE = "ICE",
+    ME = "ME",
+    CE = "CE",
+    MAE = "MAE",
+}
+
+export type SubjectSearchResult = {
+    subject: string;
+    camelCase: string;
+    semester: Semesters;
+    department: Departments[] | null;
+    course: Courses;
+    theoryCode: string | null;
+    labCode: string | null;
+    theoryCredits: number | null;
+    labCredits: number | null;
+    matches: {
+        field: string;
+        snippet: string;
+    }[];
+};
 
 export const server = "https://server.syllabusx.live/";
 // export const server = "http://localhost:8080/";

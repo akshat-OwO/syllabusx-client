@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { Calendar, Github, Instagram, Menu, Star } from "lucide-react";
+import { Calendar, Github, Instagram, Menu, Search, Star } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FC } from "react";
 import ConfigureAI from "./ai/ConfigureAI";
@@ -18,21 +18,43 @@ import {
     SheetTrigger,
 } from "./ui/sheet";
 import { useDatesheet } from "@/hooks/use-datesheet";
+import { useSearch } from "@/hooks/use-search";
+import { CommandShortcut } from "./ui/command";
 
 interface NavLinksProps {}
 
+const kbdKey = () => {
+    let isMac = false;
+    if (navigator?.userAgent) {
+        isMac = navigator.userAgent.includes("Mac");
+    }
+    return isMac ? "⌘" : "Ctrl";
+};
+
 const NavLinks: FC<NavLinksProps> = ({}) => {
     const { onOpen } = useDatesheet();
+    const search = useSearch();
 
     return (
         <>
             <div className="hidden items-center gap-2 md:flex">
+                <AccessibleToolTip label="Search">
+                    <Button
+                        variant="outline"
+                        className="gap-2"
+                        onClick={() => search.onOpen()}
+                    >
+                        <Search className="h-4 w-4" />
+                        Search
+                        <CommandShortcut>{kbdKey()} K</CommandShortcut>
+                    </Button>
+                </AccessibleToolTip>
                 <AccessibleToolTip label="Github">
                     <a
                         className={cn(
                             buttonVariants({
                                 variant: "ghost",
-                                className: "gap-2",
+                                size: "icon",
                             })
                         )}
                         href="https://github.com/akshat-OwO/syllabusx-client"
@@ -40,7 +62,6 @@ const NavLinks: FC<NavLinksProps> = ({}) => {
                         rel="noopener noreferrer"
                     >
                         <Star className="h-4 w-4" />
-                        Star this project
                     </a>
                 </AccessibleToolTip>
                 <AccessibleToolTip label="Instagram">
@@ -59,6 +80,13 @@ const NavLinks: FC<NavLinksProps> = ({}) => {
                 <ThemeCustomizer />
             </div>
             <div className="flex gap-2 md:hidden">
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => search.onOpen()}
+                >
+                    <Search className="h-4 w-4" />
+                </Button>
                 <Button variant="ghost" size="icon" onClick={() => onOpen()}>
                     <Calendar className="h-4 w-4" />
                 </Button>
