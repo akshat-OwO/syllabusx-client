@@ -52,7 +52,7 @@ const SearchCard: FC<SearchCardProps> = ({
     const updateURL = (sem: string | null, br: string | null) => {
         if (sem && (br || !hasBranches)) {
             const newPath = hasBranches
-                ? `/courses/btech/${sem}/${br}`
+                ? `/courses/btech/${sem}/${br?.toLowerCase}`
                 : `/courses/bca/${sem}`;
             if (newPath !== pathname) {
                 router.push(newPath, { scroll: false });

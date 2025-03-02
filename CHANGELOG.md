@@ -1,5 +1,11 @@
 # syllabusx-client
 
+## 4.12.1
+
+### Patch Changes
+
+-   fix: [`765913`](https://github.com/akshat-OwO/syllabusx-client/commit/765913447892) lowercased branch search in search cards
+
 ## 4.12.0
 
 ### Minor Changes
