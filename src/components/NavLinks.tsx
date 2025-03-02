@@ -25,7 +25,7 @@ interface NavLinksProps {}
 
 const kbdKey = () => {
     let isMac = false;
-    if (navigator?.userAgent) {
+    if (typeof window !== "undefined" && navigator?.userAgent) {
         isMac = navigator.userAgent.includes("Mac");
     }
     return isMac ? "⌘" : "Ctrl";
