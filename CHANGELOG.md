@@ -1,5 +1,15 @@
 # syllabusx-client
 
+## 4.12.0
+
+### Minor Changes
+
+-   feat: [`#133`](https://github.com/akshat-OwO/syllabusx-client/pull/133) global command search
+
+### Patch Changes
+
+-   fix: [`#134`](https://github.com/akshat-OwO/syllabusx-client/pull/134) dc feedback msgs for maintainers
+
 ## 4.11.0
 
 ### Minor Changes
