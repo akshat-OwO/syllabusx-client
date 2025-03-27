@@ -1,6 +1,8 @@
 "use client";
 
 import { Courses, Tab } from "@/config";
+import { useAi } from "@/hooks/use-ai";
+import useStore from "@/hooks/use-store";
 import { useEmbed } from "@/hooks/use-embed";
 import { useFeedback } from "@/hooks/use-feedback";
 import { getBcaStudyMaterial, getBtechStudyMaterial } from "@/lib/server";
@@ -12,13 +14,20 @@ import {
     useQuery,
     useQueryClient,
 } from "@tanstack/react-query";
-import { AlertCircle, Download, RotateCw } from "lucide-react";
+import {
+    AlertCircle,
+    Download,
+    NotepadTextDashed,
+    RotateCw,
+} from "lucide-react";
 import Upvote from "./Upvote";
+import AccessibleToolTip from "./ui/accessible-tooltip";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
 import { TabsContent } from "./ui/tabs";
 import axios, { AxiosResponse } from "axios";
+// import { useStore } from "zustand";
 
 interface StudyMaterialProps {
     tab: Tab;
@@ -122,7 +131,19 @@ const StudyMaterial = ({
 
     return (
         <TabsContent value={tab}>
-            <StudyMaterial.Header isFetching={isFetching} refetch={refetch} />
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: "1rem",
+                    justifyContent: "flex-end",
+                }}
+            >
+                <StudyMaterial.Header
+                    isFetching={isFetching}
+                    refetch={refetch}
+                />
+            </div>
             {error ? <StudyMaterial.Error /> : null}
 
             {isLoading ? <StudyMaterial.Skeleton /> : null}
@@ -234,8 +255,22 @@ StudyMaterial.Header = function StudyMaterialHeader({
 }) {
     const queryClient = useQueryClient();
 
+    const ai = useStore(useAi, (state) => state);
+
     return (
         <div className="mb-2 flex items-center justify-end gap-2">
+            <AccessibleToolTip label="Generate mock test">
+                <Button
+                    variant={"secondary"}
+                    size={"icon"}
+                    onClick={() => {
+                        ai?.mock.onOpen();
+                    }}
+                >
+                    <NotepadTextDashed className="h-5 w-5" />
+                </Button>
+            </AccessibleToolTip>
+
             <Button
                 variant={"secondary"}
                 size={"icon"}
