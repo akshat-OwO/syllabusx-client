@@ -1,6 +1,6 @@
 {
     "name": "syllabusx-client",
-    "version": "4.12.1",
+    "version": "4.12.2",
     "repository": {
         "type": "git",
         "url": "https://github.com/akshat-OwO/syllabusx-client.git"
@@ -116,5 +116,10 @@
         "prettier": "^3.3.3",
         "prettier-plugin-tailwindcss": "^0.5.14",
         "webpack": "^5.93.0"
+    },
+    "pnpm": {
+        "onlyBuiltDependencies": [
+            "core-js"
+        ]
     }
 }
