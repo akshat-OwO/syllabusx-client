@@ -1,5 +1,15 @@
 # syllabusx-client
 
+## 4.13.0
+
+### Minor Changes
+
+- a563e50: feat: preview generated mock before downloading
+
+### Patch Changes
+
+- a563e50: fix: cancellation of mock generation mid request
+
 ## 4.12.2
 
 ### Patch Changes
