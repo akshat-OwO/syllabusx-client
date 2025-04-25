@@ -1,25 +1,46 @@
 import { notifyMockGeneration } from "@/lib/discord-client";
-import { endSemMockTemplate, midSemMockTemplate, newEndSemMockTemplate } from "@/lib/prompt";
-import { AiOperations, AiSchema, MockPayloadSchema, MockSchema } from "@/lib/schemas";
+import {
+    endSemMockTemplate,
+    midSemMockTemplate,
+    newEndSemMockTemplate,
+} from "@/lib/prompt";
+import {
+    AiOperations,
+    AiSchema,
+    MockPayloadSchema,
+    MockSchema,
+} from "@/lib/schemas";
 import { AnthropicProvider, createAnthropic } from "@ai-sdk/anthropic";
-import { GoogleGenerativeAIProvider, createGoogleGenerativeAI } from "@ai-sdk/google";
+import {
+    GoogleGenerativeAIProvider,
+    createGoogleGenerativeAI,
+} from "@ai-sdk/google";
 import { OpenAIProvider, createOpenAI } from "@ai-sdk/openai";
-import { generateObject, streamText } from "ai";
+import { streamObject, streamText } from "ai";
 
 export const runtime = "edge";
+export const maxDuration = 30;
 
 export async function POST(req: Request) {
     const { type, ai, messages, mock } = await req.json();
 
     const validatedAI = AiSchema.safeParse(ai);
 
-    if (!validatedAI.success) return Response.json({ error: "Invalid AI model" }, { status: 403 });
+    if (!validatedAI.success)
+        return Response.json({ error: "Invalid AI model" }, { status: 403 });
 
     const validatedAIOperations = AiOperations.safeParse(type);
 
-    if (!validatedAIOperations.success) return Response.json({ error: "Invalid AI Operation" }, { status: 403 });
+    if (!validatedAIOperations.success)
+        return Response.json(
+            { error: "Invalid AI Operation" },
+            { status: 403 }
+        );
 
-    let aiProvider: GoogleGenerativeAIProvider | AnthropicProvider | OpenAIProvider;
+    let aiProvider:
+        | GoogleGenerativeAIProvider
+        | AnthropicProvider
+        | OpenAIProvider;
     switch (validatedAI.data.model) {
         case "gemini-1.5-pro":
         case "gemini-1.5-flash":
@@ -43,7 +64,10 @@ export async function POST(req: Request) {
             });
             break;
         default:
-            return Response.json({ error: "AI model not supported" }, { status: 403 });
+            return Response.json(
+                { error: "AI model not supported" },
+                { status: 403 }
+            );
     }
 
     switch (validatedAIOperations.data) {
@@ -57,12 +81,14 @@ export async function POST(req: Request) {
         case "mock":
             const validatedMockPayload = MockPayloadSchema.safeParse(mock);
 
-            if (!validatedMockPayload.success) return Response.json({ error: "Bad Request" }, { status: 400 });
+            if (!validatedMockPayload.success)
+                return Response.json({ error: "Bad Request" }, { status: 400 });
 
-            const { maxMarks, semester, branch, subject, topics } = validatedMockPayload.data;
+            const { maxMarks, semester, branch, subject, topics } =
+                validatedMockPayload.data;
 
             try {
-                const { object } = await generateObject({
+                const stream = streamObject({
                     model: aiProvider(validatedAI.data.model),
                     schema: MockSchema,
                     prompt:
@@ -73,30 +99,53 @@ export async function POST(req: Request) {
                               : newEndSemMockTemplate`${semester}${branch}${subject}${topics}`,
                 });
 
-                const selectedUnits = topics
-                    .map((topicArray: string[], index: number) => (topicArray.length > 0 ? `Unit ${index + 1}` : null))
-                    .filter((unit: string | null): unit is string => unit !== null);
+                (async () => {
+                    try {
+                        const object = await stream.object;
 
-                try {
-                    await notifyMockGeneration({
-                        subject,
-                        semester,
-                        branch,
-                        type: validatedMockPayload.data.type,
-                        maxMarks: validatedMockPayload.data.type === "midSem" ? 30 : maxMarks,
-                        units: selectedUnits,
-                        mockData: object,
-                    });
-                } catch (discordError) {
-                    console.error("Discord notification failed:", discordError);
-                }
+                        const selectedUnits = topics
+                            .map((topicArray: string[], index: number) =>
+                                topicArray.length > 0
+                                    ? `Unit ${index + 1}`
+                                    : null
+                            )
+                            .filter(
+                                (unit: string | null): unit is string =>
+                                    unit !== null
+                            );
 
-                return Response.json(object, { status: 200 });
+                        await notifyMockGeneration({
+                            subject,
+                            semester,
+                            branch,
+                            type: validatedMockPayload.data.type,
+                            maxMarks:
+                                validatedMockPayload.data.type === "midSem"
+                                    ? 30
+                                    : maxMarks,
+                            units: selectedUnits,
+                            mockData: object,
+                        });
+                    } catch (discordError) {
+                        console.error(
+                            "Discord notification failed:",
+                            discordError
+                        );
+                    }
+                })();
+
+                return stream.toTextStreamResponse();
             } catch (error) {
                 console.error("Error generating mock test:", error);
-                return Response.json({ error: "Failed to generate mock test" }, { status: 500 });
+                return Response.json(
+                    { error: "Failed to generate mock test" },
+                    { status: 500 }
+                );
             }
         default:
-            return Response.json({ error: "No AI Operation was provided" }, { status: 403 });
+            return Response.json(
+                { error: "No AI Operation was provided" },
+                { status: 403 }
+            );
     }
 }
