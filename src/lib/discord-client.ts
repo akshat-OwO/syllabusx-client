@@ -5,7 +5,6 @@ import {
     APIEmbed,
 } from "discord-api-types/v10";
 import { TMockSchema } from "@/lib/schemas";
-import { storeMockData } from "./mock-storage";
 import { generatePDFUrl } from "./utils";
 import { createShortUrl } from "./url-shortner";
 
@@ -52,9 +51,6 @@ export async function notifyMockGeneration(data: {
     }
 
     const discord = new DiscordClient(botToken);
-    const mockId = `mock_${Date.now()}`;
-    storeMockData(mockId, data.mockData);
-
     const fullPdfUrl = generatePDFUrl(data.mockData, baseUrl);
 
     const shortPdfUrl = await createShortUrl(fullPdfUrl);
