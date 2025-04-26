@@ -1,5 +1,11 @@
 # syllabusx-client
 
+## 4.13.2
+
+### Patch Changes
+
+- [#144](https://github.com/akshat-OwO/syllabusx-client/pull/144) [`5124dc7`](https://github.com/akshat-OwO/syllabusx-client/commit/5124dc71bb3717c763abb1fa3597a37d909b0e87) Thanks [@akshat-OwO](https://github.com/akshat-OwO)! - fix: mock telemetry not working because of termination
+
 ## 4.13.1
 
 ### Patch Changes
