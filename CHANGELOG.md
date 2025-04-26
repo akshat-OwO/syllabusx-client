@@ -1,5 +1,11 @@
 # syllabusx-client
 
+## 4.13.1
+
+### Patch Changes
+
+- [#142](https://github.com/akshat-OwO/syllabusx-client/pull/142) [`3b4af42`](https://github.com/akshat-OwO/syllabusx-client/commit/3b4af425a89fc07dd764252147e5d38490fbfb5d) Thanks [@akshat-OwO](https://github.com/akshat-OwO)! - chore: dependency upgrades
+
 ## 4.13.0
 
 ### Minor Changes
