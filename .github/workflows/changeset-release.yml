@@ -22,12 +22,12 @@ jobs:
         with:
             version: latest
 
-      - name: Setup Node.js LTS
+      - name: Setup Node.js
         # https://github.com/actions/setup-node
         uses: actions/setup-node@v3
         with:
-          node-version: latest
-          cache: 'pnpm'
+          node-version: "22"
+          cache: "pnpm"
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
@@ -36,7 +36,8 @@ jobs:
         # https://github.com/changesets/action
         uses: changesets/action@v1
         with:
-          # this expects you to have a script called release which does a build for your packages and calls changeset publish
+          title: "release: new version"
+          commit: "chore(release): version package(s)"
           publish: pnpm release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
