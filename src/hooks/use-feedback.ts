@@ -6,7 +6,7 @@ type FeedbackStore = {
     onClose: () => void;
 };
 
-export const useFeedback = create<FeedbackStore>((set, get) => ({
+export const useFeedback = create<FeedbackStore>((set) => ({
     isOpen: false,
     onOpen: () => set({ isOpen: true }),
     onClose: () => set({ isOpen: false }),

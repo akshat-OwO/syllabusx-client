@@ -1,12 +1,9 @@
 import LayoutWrapper from "@/layouts/LayoutWrapper";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { FC } from "react";
 import { buttonVariants } from "./ui/button";
 
-interface FooterProps {}
-
-const Footer: FC<FooterProps> = ({}) => {
+const Footer = () => {
     return (
         <LayoutWrapper className="hidden border-t border-border md:block md:max-w-none md:px-16">
             <div className="flex w-full items-center justify-end">

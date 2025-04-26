@@ -16,8 +16,8 @@ export class DiscordClient {
 
     async sendEmbed(
         channelId: string,
-        embed: APIEmbed,
-        thread?: boolean
+        embed: APIEmbed
+        // thread?: boolean
     ): Promise<RESTPostAPIChannelMessageResult> {
         return this.rest.post(Routes.channelMessages(channelId), {
             body: { embeds: [embed] },

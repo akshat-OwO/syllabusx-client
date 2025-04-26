@@ -3,6 +3,7 @@ import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 import { FC } from "react";
 
 interface LetterProps {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     content: any;
 }
 

@@ -80,7 +80,6 @@ const StudyMaterial = ({
     };
 
     const { data, isLoading, error, refetch, isFetching } = useQuery({
-        // eslint-disable-next-line @tanstack/query/exhaustive-deps
         queryKey: generateQueryKey(),
         queryFn: async () => {
             if (course === Courses.BTECH) {
@@ -110,7 +109,6 @@ const StudyMaterial = ({
     });
 
     const { data: votes, isLoading: isVoteLoading } = useQuery({
-        // eslint-disable-next-line @tanstack/query/exhaustive-deps
         queryKey: generateUpvoteQueryKey(),
         enabled: Array.isArray(data) && data.length > 0,
         queryFn: async () => {

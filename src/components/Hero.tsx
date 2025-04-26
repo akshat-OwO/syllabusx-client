@@ -8,6 +8,7 @@ import { badgeVariants } from "./ui/badge";
 import { buttonVariants } from "./ui/button";
 
 interface HeroProps {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     content: any;
     releaseTag: string;
     releaseUrl: string;

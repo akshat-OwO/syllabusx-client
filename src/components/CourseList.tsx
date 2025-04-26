@@ -6,6 +6,7 @@ import { FC } from "react";
 import { buttonVariants } from "./ui/button";
 
 interface CourseListProps {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     content: any;
 }
 

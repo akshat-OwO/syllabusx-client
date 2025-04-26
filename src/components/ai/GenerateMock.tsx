@@ -14,7 +14,6 @@ import {
 import {
     AlertTriangle,
     ChevronRight,
-    Download,
     Loader2,
     NotepadText,
     StopCircle,
@@ -25,7 +24,7 @@ import { Button } from "../ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { useParams } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { MockSchema, TMockSchema } from "@/lib/schemas";
 import { PDFDownloadButton } from "../MockPDF";
 import { experimental_useObject as useObject } from "@ai-sdk/react";
@@ -134,7 +133,7 @@ GenerateMock.Content = function GenerateMockContent() {
             }
 
             const selectedTopics = Object.entries(selectedUnits)
-                .map(([_, isSelected], index) => {
+                .map(([, isSelected], index) => {
                     if (isSelected) {
                         return topics[index];
                     }

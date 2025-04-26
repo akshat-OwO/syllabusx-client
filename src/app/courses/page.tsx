@@ -3,7 +3,6 @@ import LayoutWrapper from "@/layouts/LayoutWrapper";
 import { cn } from "@/lib/utils";
 import { Metadata } from "next";
 import Link from "next/link";
-import { FC } from "react";
 
 export const metadata: Metadata = {
     title: "Courses",
@@ -27,9 +26,7 @@ export const metadata: Metadata = {
     },
 };
 
-interface pageProps {}
-
-const page: FC<pageProps> = async ({}) => {
+const page = async () => {
     return (
         <LayoutWrapper className="min-h-[calc(100vh-7rem)] py-20">
             <div className="flex flex-col items-center gap-y-2">

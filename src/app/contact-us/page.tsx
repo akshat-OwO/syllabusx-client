@@ -4,7 +4,6 @@ import LayoutWrapper from "@/layouts/LayoutWrapper";
 import { cn } from "@/lib/utils";
 import { Instagram, Mail } from "lucide-react";
 import { Metadata } from "next";
-import { FC } from "react";
 
 export const metadata: Metadata = {
     title: "Contact Us",
@@ -28,9 +27,7 @@ export const metadata: Metadata = {
     },
 };
 
-interface pageProps {}
-
-const Page: FC<pageProps> = ({}) => {
+const Page = () => {
     return (
         <LayoutWrapper className="min-h-[calc(100vh-7rem)] py-20">
             <div className="flex flex-col items-center gap-y-2">

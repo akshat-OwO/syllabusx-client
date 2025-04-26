@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ConfigureAI from "../ai/ConfigureAI";
 import SearchAI from "../ai/SearchAI";
 import EmbedModal from "../modals/embed-modal";
@@ -10,9 +10,7 @@ import SummarizeAI from "../ai/SummarizeAI";
 import GenerateMock from "../ai/GenerateMock";
 import SearchModal from "../modals/search-modal";
 
-interface ModalProviderProps {}
-
-const ModalProvider: FC<ModalProviderProps> = ({}) => {
+const ModalProvider = () => {
     const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {

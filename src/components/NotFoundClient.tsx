@@ -7,7 +7,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-const Error = () => {
+const NotFoundClient = () => {
     const queryClient = useQueryClient();
     const router = useRouter();
 
@@ -27,29 +27,21 @@ const Error = () => {
             <div className="flex flex-col items-center gap-y-2">
                 <div className="prose prose-sm prose-neutral dark:prose-invert md:prose-base">
                     <h1 className="text-center">
-                        Uh-oh! Something Went{" "}
+                        Oops! Page Not{" "}
                         <span className="bg-gradient-to-r from-teal-500 via-teal-600 to-teal-500 bg-clip-text text-transparent">
-                            Wrong
+                            Found
                         </span>
                     </h1>
                 </div>
                 <div className="prose prose-sm prose-neutral dark:prose-invert">
                     <p className="text-center">
-                        Looks like there&apos;s a glitch in the matrix.
-                        Meanwhile, you can try refreshing the page, checking
-                        your internet connection, or returning to the{" "}
-                        <Link href="/">Homepage</Link>.
+                        It seems you&apos;ve ventured into uncharted territory.
+                        The page you are looking for might have taken a detour
+                        or never existed in the first place.
                     </p>
                     <p className="text-center">
-                        If the problem persists, feel free to{" "}
-                        <a
-                            href="https://forms.gle/BFTv1uy8L33ptic6A"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            contact us
-                        </a>{" "}
-                        for assistance. We appreciate your patience!
+                        You can return to the <Link href="/">Homepage</Link> or
+                        try searching for what you&apos;re looking for.
                     </p>
                     <p className="text-center text-xs">
                         P.S. You can clear cache using this{" "}
@@ -68,4 +60,4 @@ const Error = () => {
     );
 };
 
-export default Error;
+export default NotFoundClient;

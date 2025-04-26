@@ -15,7 +15,12 @@ interface ProvidersProps {
 const Providers: FC<ProvidersProps> = ({ children }) => {
     return (
         <QueryProvider>
-            <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+            <ThemeProvider
+                attribute="class"
+                defaultTheme="dark"
+                enableSystem
+                disableTransitionOnChange
+            >
                 <TooltipProvider>
                     {children}
                     <ModalProvider />

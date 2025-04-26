@@ -1,11 +1,8 @@
 "use client";
 
 import Script from "next/script";
-import { FC } from "react";
 
-interface ScriptsProps {}
-
-const Scripts: FC<ScriptsProps> = ({}) => {
+const Scripts = () => {
     return (
         <>
             <Script
@@ -51,6 +48,12 @@ const Scripts: FC<ScriptsProps> = ({}) => {
                     });`}
             </Script>
             <Script async src="https://stpd.cloud/saas/6965" />
+            <Script
+                async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7334463510301650"
+                crossOrigin="anonymous"
+                strategy="lazyOnload"
+            />
         </>
     );
 };

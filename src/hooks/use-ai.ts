@@ -62,18 +62,18 @@ export const useAi = create<AiStore>()(
             completion: {
                 prompt: "",
                 setPrompt: (prompt) => {
-                    let prevCompletion = _.omit(get().completion, "prompt");
+                    const prevCompletion = _.omit(get().completion, "prompt");
                     return set({ completion: { prompt, ...prevCompletion } });
                 },
                 isOpen: false,
                 onOpen: () => {
-                    let prevCompletion = _.omit(get().completion, "isOpen");
+                    const prevCompletion = _.omit(get().completion, "isOpen");
                     return set({
                         completion: { isOpen: true, ...prevCompletion },
                     });
                 },
                 onClose: () => {
-                    let prevCompletion = _.omit(get().completion, "isOpen");
+                    const prevCompletion = _.omit(get().completion, "isOpen");
                     return set({
                         completion: { isOpen: false, ...prevCompletion },
                     });
@@ -83,17 +83,17 @@ export const useAi = create<AiStore>()(
                 isOpen: false,
                 topics: [],
                 setTopics: (topics) => {
-                    let prevMock = _.omit(get().mock, "topics");
+                    const prevMock = _.omit(get().mock, "topics");
                     return set({ mock: { topics, ...prevMock } });
                 },
                 onOpen: () => {
-                    let prevMock = _.omit(get().mock, "isOpen");
+                    const prevMock = _.omit(get().mock, "isOpen");
                     return set({
                         mock: { isOpen: true, ...prevMock },
                     });
                 },
                 onClose: () => {
-                    let prevMock = _.omit(get().mock, "isOpen");
+                    const prevMock = _.omit(get().mock, "isOpen");
                     return set({ mock: { isOpen: false, ...prevMock } });
                 },
             },

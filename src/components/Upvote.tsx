@@ -44,14 +44,12 @@ const Upvote: FC<VoteProps> = ({ material, vote, isLoading }) => {
 
             return response.data;
         },
-        onMutate: async (newCount: {
-            voteCount: number;
-            hasVoted: boolean;
-        }) => {
+        onMutate: async () => {
             setClientVote((prev) => prev + 1);
             setClientHasVoted(true);
         },
-        onError: (err: any, variables, context) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        onError: (err: any) => {
             if (err) {
                 setClientVote((prev) => prev - 1);
                 setClientHasVoted(false);
@@ -83,10 +81,7 @@ const Upvote: FC<VoteProps> = ({ material, vote, isLoading }) => {
             onClick={(e) => {
                 e.stopPropagation();
                 if (!clientHasVoted) {
-                    mutate({
-                        voteCount: clientVote,
-                        hasVoted: clientHasVoted,
-                    });
+                    mutate();
                 }
             }}
         >

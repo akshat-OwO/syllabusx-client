@@ -17,7 +17,7 @@ export interface SharedDatesheet {
 export async function createSharedDatesheet(
     data: Omit<SharedDatesheet, "createdAt">
 ): Promise<string> {
-    const headersList = headers();
+    const headersList = await headers();
     const ip = headersList.get("X-Forwarded-For") || "127.0.0.1";
     const userAgent = headersList.get("User-Agent") || "";
     const fingerprint = `${ip}:${userAgent}`;

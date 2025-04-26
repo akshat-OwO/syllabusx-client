@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { ContentfulClientApi, createClient } from "contentful";
 
 var contentful: ContentfulClientApi<undefined>;

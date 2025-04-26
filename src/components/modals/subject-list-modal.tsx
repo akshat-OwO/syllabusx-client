@@ -21,7 +21,7 @@ import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";
 import { Checkbox } from "../ui/checkbox";
 import Fuse from "fuse.js";
-import type { IFuseOptions, FuseResult } from "fuse.js";
+import type { IFuseOptions } from "fuse.js";
 
 interface Subject {
     name: string;
@@ -65,7 +65,7 @@ SubjectListModal.List = function SubjectListModalList() {
     const subjectList = useSubjectList();
     const { activeSubjects, toggleSubject } = useActiveSubjectsStore();
 
-    const [subjectHistory, setSubjectHistory] = useLocalStorage<string[]>({
+    const [, setSubjectHistory] = useLocalStorage<string[]>({
         key: "subject-history",
         defaultValue: [],
     });

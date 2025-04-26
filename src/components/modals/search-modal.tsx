@@ -118,6 +118,7 @@ const SearchModal = () => {
         });
     };
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const debouncedUpdate = useCallback(
         _.debounce((value: string) => setDebouncedQuery(value), 500),
         []
@@ -272,7 +273,7 @@ const SearchModal = () => {
             let routePath = "/courses";
 
             routePath += `/${subject.course.toLowerCase()}`;
-            routePath += `/${Object.entries(Semesters).find(([_, val]) => val === subject.semester)?.[0]}`;
+            routePath += `/${Object.entries(Semesters).find(([, val]) => val === subject.semester)?.[0]}`;
 
             const departmentToUse =
                 specificDept ||
@@ -282,7 +283,7 @@ const SearchModal = () => {
 
             if (departmentToUse) {
                 routePath += `/${Object.entries(Departments)
-                    .find(([_, val]) => val === departmentToUse)?.[0]
+                    .find(([, val]) => val === departmentToUse)?.[0]
                     .toLowerCase()}`;
             }
 
@@ -374,7 +375,7 @@ const SearchModal = () => {
                             >
                                 {
                                     Object.entries(Semesters).find(
-                                        ([_, val]) => val === sem
+                                        ([, val]) => val === sem
                                     )?.[0]
                                 }
                             </Badge>
@@ -387,7 +388,7 @@ const SearchModal = () => {
                             >
                                 {
                                     Object.entries(Departments).find(
-                                        ([_, val]) => val === dept
+                                        ([, val]) => val === dept
                                     )?.[0]
                                 }
                             </Badge>
@@ -472,7 +473,7 @@ const SearchModal = () => {
                                                 : Object.entries(
                                                       Semesters
                                                   ).find(
-                                                      ([_, val]) => val === sem
+                                                      ([, val]) => val === sem
                                                   )?.[0] + " Semester"}
                                         </SelectValue>
                                     </SelectTrigger>
@@ -530,7 +531,7 @@ const SearchModal = () => {
                                                 : Object.entries(
                                                       Departments
                                                   ).find(
-                                                      ([_, val]) => val === dept
+                                                      ([, val]) => val === dept
                                                   )?.[0]}
                                         </SelectValue>
                                     </SelectTrigger>
@@ -593,7 +594,7 @@ const SearchModal = () => {
                                     const departmentName = Object.entries(
                                         Departments
                                     ).find(
-                                        ([_, val]) => val === departmentValue
+                                        ([, val]) => val === departmentValue
                                     )?.[0];
 
                                     return (
@@ -707,7 +708,7 @@ const SearchModal = () => {
                                                             Object.entries(
                                                                 Semesters
                                                             ).find(
-                                                                ([_, val]) =>
+                                                                ([, val]) =>
                                                                     val ===
                                                                     subject.semester
                                                             )?.[0]

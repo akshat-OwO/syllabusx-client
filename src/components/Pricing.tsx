@@ -1,12 +1,9 @@
 import LayoutWrapper from "@/layouts/LayoutWrapper";
 import { cn } from "@/lib/utils";
 import { Gift, Heart, MessageSquarePlus, Star } from "lucide-react";
-import { FC } from "react";
 import { buttonVariants } from "./ui/button";
 
-interface PricingProps {}
-
-const Pricing: FC<PricingProps> = ({}) => {
+const Pricing = () => {
     return (
         <LayoutWrapper className="py-20">
             <div className="mx-auto flex max-w-md flex-col justify-center gap-8">
