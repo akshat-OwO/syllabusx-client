@@ -167,7 +167,7 @@ const SummarizeAI = () => {
     );
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const Content = ({
     messages,
     isLoading,
@@ -183,6 +183,7 @@ const Content = ({
     prompt: string;
     isDesktop: boolean;
 }) => {
+    /* eslint-enable @typescript-eslint/no-explicit-any */
     const inputRef = useRef<HTMLInputElement>(null);
     const aiSummarizer = useStore(useAiSummarizer, (state) => state);
 
