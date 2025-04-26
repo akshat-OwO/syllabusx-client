@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     branches:
-      - prod
+      - main
 
 permissions: write-all
 concurrency: ${{ github.workflow }}-${{ github.ref }}
