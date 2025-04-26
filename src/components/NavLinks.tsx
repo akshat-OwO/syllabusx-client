@@ -21,8 +21,6 @@ import { useDatesheet } from "@/hooks/use-datesheet";
 import { useSearch } from "@/hooks/use-search";
 import { CommandShortcut } from "./ui/command";
 
-interface NavLinksProps {}
-
 const kbdKey = () => {
     let isMac = false;
     if (typeof window !== "undefined" && navigator?.userAgent) {
@@ -31,7 +29,7 @@ const kbdKey = () => {
     return isMac ? "⌘" : "Ctrl";
 };
 
-const NavLinks: FC<NavLinksProps> = ({}) => {
+const NavLinks = () => {
     const { onOpen } = useDatesheet();
     const search = useSearch();
 

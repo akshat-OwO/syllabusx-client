@@ -13,7 +13,6 @@ import { format } from "date-fns";
 import { Input } from "../ui/input";
 import { useState } from "react";
 import { DateTimePicker } from "../ui/datetime-picker";
-import { ScrollArea } from "../ui/scroll-area";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import {
     Accordion,
@@ -22,13 +21,7 @@ import {
     AccordionTrigger,
 } from "../ui/accordion";
 import { useMediaQuery } from "@mantine/hooks";
-import {
-    Drawer,
-    DrawerContent,
-    DrawerDescription,
-    DrawerHeader,
-    DrawerTitle,
-} from "../ui/drawer";
+import { Drawer, DrawerContent } from "../ui/drawer";
 import { ShareDatesheetDialog } from "../share-datesheet-dialog";
 import { DatesheetTimeline } from "../DatesheetTimeline";
 import Link from "next/link"; // Import Link from next/link
@@ -290,10 +283,10 @@ DatesheetModal.Dates = function DatesheetModalDates({
 }) {
     const [openPopoverId, setOpenPopoverId] = useState<number | null>(null);
 
-    const handleItemClick = (date: { name: string; date: number }) => {
-        const index = dates.findIndex((d) => d.date === date.date);
-        setOpenPopoverId(index);
-    };
+    // const handleItemClick = (date: { name: string; date: number }) => {
+    //     const index = dates.findIndex((d) => d.date === date.date);
+    //     setOpenPopoverId(index);
+    // };
 
     return (
         <div className="flex h-full flex-col pr-2">

@@ -3,19 +3,19 @@ import SubjectViewModal from "@/components/modals/subject-view-modal";
 import SubjectList from "@/components/SubjectList";
 import SubjectView from "@/components/SubjectView";
 import { bcaSemesterList, Courses } from "@/config";
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 
-export async function generateMetadata(
-    { params }: { params: { slug: string[] } },
-    parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata(props: {
+    params: Promise<{ slug: string[] }>;
+}): Promise<Metadata> {
+    const params = await props.params;
     const [semester, subject] = params.slug;
 
     if (semester) {
-        const subjects = await getSubjects({
-            course: Courses.BCA,
-            semester,
-        });
+        // const subjects = await getSubjects({
+        //     course: Courses.BCA,
+        //     semester,
+        // });
 
         if (subject) {
             const subjectDetail = await getSubjectDetails({
@@ -129,7 +129,10 @@ export async function generateStaticParams() {
     return params;
 }
 
-export default async function Page({ params }: { params: { slug: string[] } }) {
+export default async function Page(props: {
+    params: Promise<{ slug: string[] }>;
+}) {
+    const params = await props.params;
     const [semester, subject] = params.slug;
 
     if (semester) {

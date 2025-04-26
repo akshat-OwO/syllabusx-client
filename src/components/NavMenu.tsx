@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FC } from "react";
-import { Button, buttonVariants } from "./ui/button";
+import { Button } from "./ui/button";
 import {
     ListItem,
     NavigationMenu,
@@ -15,9 +14,7 @@ import {
 } from "./ui/navigation-menu";
 import { useDatesheet } from "@/hooks/use-datesheet";
 
-interface NavMenuProps {}
-
-const NavMenu: FC<NavMenuProps> = ({}) => {
+const NavMenu = () => {
     const { onOpen } = useDatesheet();
 
     return (
@@ -46,13 +43,12 @@ const NavMenu: FC<NavMenuProps> = ({}) => {
                     Datesheet
                 </Button>
                 <NavigationMenuItem>
-                    <Link href="/changelog" legacyBehavior passHref>
-                        <NavigationMenuLink
-                            className={navigationMenuTriggerStyle()}
-                        >
-                            Change Log
-                        </NavigationMenuLink>
-                    </Link>
+                    <NavigationMenuLink
+                        href="/changelog"
+                        className={navigationMenuTriggerStyle()}
+                    >
+                        Change Log
+                    </NavigationMenuLink>
                 </NavigationMenuItem>
             </NavigationMenuList>
         </NavigationMenu>

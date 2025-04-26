@@ -2,18 +2,14 @@ import LayoutWrapper from "@/layouts/LayoutWrapper";
 import {
     BookCheck,
     CalendarCheck,
-    CheckCircle2,
     MessageSquarePlus,
     PackageOpen,
     Repeat,
     TabletSmartphone,
 } from "lucide-react";
-import { FC } from "react";
 import ShowCard from "./ui/show-card";
 
-interface FeaturesProps {}
-
-const Features: FC<FeaturesProps> = ({}) => {
+const Features = () => {
     return (
         <div className="w-full">
             <LayoutWrapper className="z-10 py-20">

@@ -45,6 +45,7 @@ export function ShareDatesheetDialog({
             });
             onOpenChange(false);
         } catch (error) {
+            console.error(error);
             toast({
                 title: "Error sharing datesheet",
                 description:

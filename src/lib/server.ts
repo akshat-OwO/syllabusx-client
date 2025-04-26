@@ -184,6 +184,7 @@ export const getBtechStudyMaterial = async ({
             )) as AxiosResponse;
             return response.data as Drive[];
         } catch (error) {
+            console.error(error);
             throw new Error("Something went wrong! Please try again later.");
         }
     } else if (tab === Tab.PYQ) {
@@ -193,6 +194,7 @@ export const getBtechStudyMaterial = async ({
             )) as AxiosResponse;
             return response.data as Drive[];
         } catch (error) {
+            console.error(error);
             throw new Error("Something went wrong! Please try again later.");
         }
     } else if (tab === Tab.BOOKS) {
@@ -202,6 +204,7 @@ export const getBtechStudyMaterial = async ({
             )) as AxiosResponse;
             return response.data as Drive[];
         } catch (error) {
+            console.error(error);
             throw new Error("Something went wrong! Please try again later.");
         }
     } else if (tab === Tab.FILES) {
@@ -211,6 +214,7 @@ export const getBtechStudyMaterial = async ({
             )) as AxiosResponse;
             return response.data as Drive[];
         } catch (error) {
+            console.error(error);
             throw new Error("Something went wrong! Please try again later.");
         }
     }
@@ -244,6 +248,7 @@ export const getBcaStudyMaterial = async ({
             )) as AxiosResponse;
             return response.data as Drive[];
         } catch (error) {
+            console.error(error);
             throw new Error("Something went wrong! Please try again later.");
         }
     } else if (tab === Tab.PYQ) {
@@ -253,6 +258,7 @@ export const getBcaStudyMaterial = async ({
             )) as AxiosResponse;
             return response.data as Drive[];
         } catch (error) {
+            console.error(error);
             throw new Error("Something went wrong! Please try again later.");
         }
     } else if (tab === Tab.BOOKS) {
@@ -262,6 +268,7 @@ export const getBcaStudyMaterial = async ({
             )) as AxiosResponse;
             return response.data as Drive[];
         } catch (error) {
+            console.error(error);
             throw new Error("Something went wrong! Please try again later.");
         }
     } else if (tab === Tab.FILES) {
@@ -271,6 +278,7 @@ export const getBcaStudyMaterial = async ({
             )) as AxiosResponse;
             return response.data as Drive[];
         } catch (error) {
+            console.error(error);
             throw new Error("Something went wrong! Please try again later.");
         }
     }

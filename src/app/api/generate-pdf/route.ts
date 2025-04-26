@@ -66,9 +66,10 @@ export async function GET(req: Request) {
                 : fontSize * 0.5;
         };
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const calculateQuestionHeight = (question: any) => {
             let height = 16 + SPACING.AFTER_QUESTION_BOX;
-
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             question.content.forEach((subQ: any, idx: number) => {
                 const subQuestionText = `${String.fromCharCode(97 + idx)}) ${subQ.subQuestion}`;
                 const marksText = `[${subQ.marks} Marks]`;
@@ -237,7 +238,7 @@ export async function GET(req: Request) {
         addHeader();
         addWatermark();
 
-        data.output.questions.forEach((question, index) => {
+        data.output.questions.forEach((question) => {
             const questionHeight = calculateQuestionHeight(question);
             if (y + questionHeight > pageHeight - margin) {
                 doc.addPage();

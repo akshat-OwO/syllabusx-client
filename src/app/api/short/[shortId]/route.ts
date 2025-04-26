@@ -3,8 +3,9 @@ import { resolveShortUrl } from "@/lib/url-shortner";
 
 export async function GET(
     request: NextRequest,
-    { params }: { params: { shortId: string } }
+    props: { params: Promise<{ shortId: string }> }
 ) {
+    const params = await props.params;
     try {
         const originalUrl = await resolveShortUrl(params.shortId);
 

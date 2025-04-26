@@ -8,7 +8,7 @@ type SubjectViewStore = {
     onClose: () => void;
 };
 
-export const useSubjectView = create<SubjectViewStore>((set, get) => ({
+export const useSubjectView = create<SubjectViewStore>((set) => ({
     course: Courses.BTECH,
     isOpen: false,
     onOpen: (course) => set({ isOpen: true, course }),

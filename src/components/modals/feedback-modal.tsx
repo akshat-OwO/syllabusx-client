@@ -2,14 +2,11 @@
 
 import { useFeedback } from "@/hooks/use-feedback";
 import { useMediaQuery } from "@mantine/hooks";
-import { FC } from "react";
 import FeedbackForm from "../FeedbackForm";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "../ui/drawer";
 
-interface FeedbackModalProps {}
-
-const FeedbackModal: FC<FeedbackModalProps> = ({}) => {
+const FeedbackModal = () => {
     const feedback = useFeedback();
     const isDesktop = useMediaQuery("(min-width: 768px)");
 

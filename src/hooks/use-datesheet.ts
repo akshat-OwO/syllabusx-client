@@ -22,7 +22,7 @@ type DatesheetStore = {
 
 export const useDatesheet = create<DatesheetStore>()(
     persist(
-        (set, get) => ({
+        (set) => ({
             isOpen: false,
             onOpen: () => set({ isOpen: true }),
             onClose: () => set({ isOpen: false }),
@@ -64,7 +64,7 @@ export const useDatesheet = create<DatesheetStore>()(
                 }));
             },
             importDatesheet: (newDates) => {
-                set((state) => ({
+                set(() => ({
                     dates: [...newDates].sort((a, b) => a.date - b.date),
                 }));
             },

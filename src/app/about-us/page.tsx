@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils";
 import { Github, Instagram, Link2 } from "lucide-react";
 import { Metadata } from "next";
 import Image from "next/image";
-import { FC } from "react";
 
 export const revalidate = 43200;
 
@@ -31,11 +30,11 @@ export const metadata: Metadata = {
     },
 };
 
-interface pageProps {}
-
-const page: FC<pageProps> = async ({}) => {
+const page = async () => {
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     const team: any = await getSyllabusxTeam();
     const aboutContent: any = await getAboutUs();
+    /* eslint-enable @typescript-eslint/no-explicit-any */
 
     return (
         <LayoutWrapper className="min-h-[calc(100vh-7rem)] py-20">
@@ -73,6 +72,7 @@ const page: FC<pageProps> = async ({}) => {
             </div>
             {team ? (
                 <div className="grid gap-10 py-10 sm:grid-cols-2 lg:grid-cols-3">
+                    {/*  eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                     {team.map((member: any) => (
                         <div
                             key={member.sys.id}

@@ -2,7 +2,6 @@ import LayoutWrapper from "@/layouts/LayoutWrapper";
 import { getTAndC } from "@/lib/contentful";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { Metadata } from "next";
-import { FC } from "react";
 
 export const revalidate = 86400;
 
@@ -28,9 +27,8 @@ export const metadata: Metadata = {
     },
 };
 
-interface pageProps {}
-
-const page: FC<pageProps> = async ({}) => {
+const page = async () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const content: any = await getTAndC();
 
     return (

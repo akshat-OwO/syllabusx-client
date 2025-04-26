@@ -28,8 +28,6 @@ export const metadata: Metadata = {
     },
 };
 
-interface pageProps {}
-
 async function getReleases(pageSize = 8, page = 1) {
     const response = await octokit.request(
         "GET /repos/{owner}/{repo}/releases",
@@ -44,7 +42,7 @@ async function getReleases(pageSize = 8, page = 1) {
     return response.data;
 }
 
-const page: FC<pageProps> = async ({}) => {
+const page = async () => {
     const releases = await getReleases();
 
     return (

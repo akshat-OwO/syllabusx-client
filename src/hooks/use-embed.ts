@@ -12,7 +12,7 @@ type EmbedStore = Embed & {
     onClose: () => void;
 };
 
-export const useEmbed = create<EmbedStore>((set, get) => ({
+export const useEmbed = create<EmbedStore>((set) => ({
     embedId: "",
     embedLink: "",
     name: "",

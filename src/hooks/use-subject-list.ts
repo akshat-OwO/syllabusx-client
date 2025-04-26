@@ -8,7 +8,7 @@ type SubjectListStore = {
     subjectList: string[];
 };
 
-export const useSubjectList = create<SubjectListStore>((set, get) => ({
+export const useSubjectList = create<SubjectListStore>((set) => ({
     isOpen: false,
     onOpen: (value) => set({ isOpen: true, subjectList: value }),
     onClose: () => set({ isOpen: false, subjectList: [] }),

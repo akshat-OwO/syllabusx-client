@@ -5,27 +5,48 @@ import useStore from "@/hooks/use-store";
 import { AiSchema, TAiSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMediaQuery } from "@mantine/hooks";
-import { BookOpenIcon, NotebookPen, NotepadTextDashed, Search, Sparkles, Undo } from "lucide-react";
+import {
+    BookOpenIcon,
+    NotebookPen,
+    NotepadTextDashed,
+    Search,
+    Sparkles,
+    Undo,
+} from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import AccessibleToolTip from "../ui/accessible-tooltip";
 import { Button } from "../ui/button";
 import { Drawer, DrawerContent } from "../ui/drawer";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
+import {
+    Form,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "../ui/form";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../ui/select";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "../ui/select";
 import { Separator } from "../ui/separator";
 import { Switch } from "../ui/switch";
 import { cn } from "@/lib/utils";
 import { Checkbox } from "../ui/checkbox";
 import { ScrollArea } from "../ui/scroll-area";
 
-interface ConfigureAIProps {}
-
-const ConfigureAI = ({}: ConfigureAIProps) => {
+const ConfigureAI = () => {
     const [mounted, setMounted] = useState<boolean>(false);
 
     useEffect(() => {
@@ -38,12 +59,19 @@ const ConfigureAI = ({}: ConfigureAIProps) => {
                 <Popover>
                     <AccessibleToolTip label="AI">
                         <PopoverTrigger asChild>
-                            <Button variant="ghost" disabled={!mounted} size="icon">
+                            <Button
+                                variant="ghost"
+                                disabled={!mounted}
+                                size="icon"
+                            >
                                 <Sparkles className="h-4 w-4" />
                             </Button>
                         </PopoverTrigger>
                     </AccessibleToolTip>
-                    <PopoverContent align="end" className="z-50 w-[340px] rounded-[0.5rem] p-6">
+                    <PopoverContent
+                        align="end"
+                        className="z-50 w-[340px] rounded-[0.5rem] p-6"
+                    >
                         {mounted && <AiForm />}
                     </PopoverContent>
                 </Popover>
@@ -84,23 +112,41 @@ function AiForm() {
         <div className="flex flex-col space-y-4">
             <div className="flex items-start pt-6 md:pt-0">
                 <div className="space-y-1 pr-2">
-                    <div className="font-semibold leading-none tracking-tight">AI (Beta)</div>
-                    <div className="text-xs text-muted-foreground">Configure AI</div>
+                    <div className="font-semibold leading-none tracking-tight">
+                        AI (Beta)
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                        Configure AI
+                    </div>
                 </div>
-                <Button variant="ghost" size="icon" className="ml-auto rounded-[0.5rem]" onClick={ai?.setClear}>
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    className="ml-auto rounded-[0.5rem]"
+                    onClick={ai?.setClear}
+                >
                     <Undo />
                     <span className="sr-only">Reset</span>
                 </Button>
             </div>
             <div className="flex flex-1 flex-col space-y-4">
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+                    <form
+                        onSubmit={form.handleSubmit(onSubmit)}
+                        className="space-y-2"
+                    >
                         <div className="flex items-center justify-between space-y-0.5">
                             <Label htmlFor="toggle-ai" className="space-y-1">
                                 <span>Toggle AI</span>
-                                <p className="text-sm text-muted-foreground">You hate it, you turn it off.</p>
+                                <p className="text-sm text-muted-foreground">
+                                    You hate it, you turn it off.
+                                </p>
                             </Label>
-                            <Switch id="toggle-ai" checked={ai.toggle} onCheckedChange={ai.setToggle} />
+                            <Switch
+                                id="toggle-ai"
+                                checked={ai.toggle}
+                                onCheckedChange={ai.setToggle}
+                            />
                         </div>
                         <FormField
                             control={form.control}
@@ -109,9 +155,15 @@ function AiForm() {
                                 <FormItem>
                                     <FormLabel>API key</FormLabel>
                                     <FormControl>
-                                        <Input type="password" {...field} placeholder="xxxxxxxxxxxxxxx" />
+                                        <Input
+                                            type="password"
+                                            {...field}
+                                            placeholder="xxxxxxxxxxxxxxx"
+                                        />
                                     </FormControl>
-                                    <FormDescription>API key provided by model.</FormDescription>
+                                    <FormDescription>
+                                        API key provided by model.
+                                    </FormDescription>
                                     <FormMessage />
                                 </FormItem>
                             )}
@@ -122,7 +174,10 @@ function AiForm() {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Model</FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={ai.model}>
+                                    <Select
+                                        onValueChange={field.onChange}
+                                        defaultValue={ai.model}
+                                    >
                                         <FormControl>
                                             <SelectTrigger>
                                                 <SelectValue placeholder="Choose your preferred AI model..." />
@@ -131,29 +186,76 @@ function AiForm() {
                                         <SelectContent
                                             ref={(ref) => {
                                                 if (!ref) return;
-                                                ref.ontouchstart = (e) => e.preventDefault();
+                                                ref.ontouchstart = (e) =>
+                                                    e.preventDefault();
                                             }}
                                         >
                                             <SelectGroup>
-                                                <SelectLabel>Google</SelectLabel>
-                                                <SelectItem value={"gemini-1.5-pro"}>gemini-1.5-pro</SelectItem>
-                                                <SelectItem value={"gemini-1.5-flash"}>gemini-1.5-flash</SelectItem>
+                                                <SelectLabel>
+                                                    Google
+                                                </SelectLabel>
+                                                <SelectItem
+                                                    value={"gemini-1.5-pro"}
+                                                >
+                                                    gemini-1.5-pro
+                                                </SelectItem>
+                                                <SelectItem
+                                                    value={"gemini-1.5-flash"}
+                                                >
+                                                    gemini-1.5-flash
+                                                </SelectItem>
                                             </SelectGroup>
                                             <SelectGroup>
-                                                <SelectLabel>OpenAI</SelectLabel>
-                                                <SelectItem value={"gpt-4o"}>gpt-4o</SelectItem>
-                                                <SelectItem value={"gpt-4o-mini"}>gpt-4o-mini</SelectItem>
-                                                <SelectItem value={"gpt-4-turbo"}>gpt-4-turbo</SelectItem>
-                                                <SelectItem value={"gpt-4"}>gpt-4</SelectItem>
+                                                <SelectLabel>
+                                                    OpenAI
+                                                </SelectLabel>
+                                                <SelectItem value={"gpt-4o"}>
+                                                    gpt-4o
+                                                </SelectItem>
+                                                <SelectItem
+                                                    value={"gpt-4o-mini"}
+                                                >
+                                                    gpt-4o-mini
+                                                </SelectItem>
+                                                <SelectItem
+                                                    value={"gpt-4-turbo"}
+                                                >
+                                                    gpt-4-turbo
+                                                </SelectItem>
+                                                <SelectItem value={"gpt-4"}>
+                                                    gpt-4
+                                                </SelectItem>
                                             </SelectGroup>
                                             <SelectGroup>
-                                                <SelectLabel>Anthropic</SelectLabel>
-                                                <SelectItem value={"claude-3-5-sonnet-latest"}>claude-3.5-sonnet</SelectItem>
-                                                <SelectItem value={"claude-3-opus-latest"}>claude-3-opus</SelectItem>
-                                                <SelectItem value={"claude-3-5-haiku-latest"}>claude-3.5-haiku</SelectItem>
+                                                <SelectLabel>
+                                                    Anthropic
+                                                </SelectLabel>
+                                                <SelectItem
+                                                    value={
+                                                        "claude-3-5-sonnet-latest"
+                                                    }
+                                                >
+                                                    claude-3.5-sonnet
+                                                </SelectItem>
+                                                <SelectItem
+                                                    value={
+                                                        "claude-3-opus-latest"
+                                                    }
+                                                >
+                                                    claude-3-opus
+                                                </SelectItem>
+                                                <SelectItem
+                                                    value={
+                                                        "claude-3-5-haiku-latest"
+                                                    }
+                                                >
+                                                    claude-3.5-haiku
+                                                </SelectItem>
                                             </SelectGroup>
                                         </SelectContent>
-                                        <FormDescription>Check pricing before using.</FormDescription>
+                                        <FormDescription>
+                                            Check pricing before using.
+                                        </FormDescription>
                                         <FormMessage />
                                     </Select>
                                 </FormItem>
@@ -166,7 +268,10 @@ function AiForm() {
                 </Form>
                 <Separator />
                 <Label>AI Features</Label>
-                <ScrollArea type="scroll" className="flex max-h-40 flex-col overflow-y-scroll">
+                <ScrollArea
+                    type="scroll"
+                    className="flex max-h-40 flex-col overflow-y-scroll"
+                >
                     <div className="w-full space-y-4">
                         <AIFeature
                             title="Search with AI"
@@ -229,7 +334,12 @@ ConfigureAI.MobileTrigger = function ConfigureAIMobileTrigger() {
 
     return (
         <AccessibleToolTip label="AI">
-            <Button onClick={ai?.onOpen} variant="ghost" disabled={!mounted} size="icon">
+            <Button
+                onClick={ai?.onOpen}
+                variant="ghost"
+                disabled={!mounted}
+                size="icon"
+            >
                 <Sparkles className="h-4 w-4" />
             </Button>
         </AccessibleToolTip>
@@ -268,13 +378,22 @@ function AIFeature({
             )}
         >
             <div className="flex items-center gap-2">
-                <div className="rounded-md border border-border p-2">{icon}</div>
+                <div className="rounded-md border border-border p-2">
+                    {icon}
+                </div>
                 <div className="flex flex-col justify-center gap-0.5">
                     <p className="text-sm font-medium leading-none">{title}</p>
-                    <span className="text-sm text-muted-foreground">{preview ? "Coming soon..." : description}</span>
+                    <span className="text-sm text-muted-foreground">
+                        {preview ? "Coming soon..." : description}
+                    </span>
                 </div>
             </div>
-            {togglable && <Checkbox checked={toggledState} onCheckedChange={onCheckedChange} />}
+            {togglable && (
+                <Checkbox
+                    checked={toggledState}
+                    onCheckedChange={onCheckedChange}
+                />
+            )}
         </Button>
     );
 }

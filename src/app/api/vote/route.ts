@@ -42,6 +42,7 @@ async function handleGetVotes(req: NextRequest, fingerprint: string) {
     try {
         files = await req.json();
     } catch (error) {
+        console.error(error);
         return NextResponse.json(
             { error: "Bad Request! Invalid JSON in request body." },
             { status: 400 }

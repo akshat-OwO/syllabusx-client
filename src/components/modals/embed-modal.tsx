@@ -2,13 +2,10 @@
 
 import { useEmbed } from "@/hooks/use-embed";
 import { useMediaQuery } from "@mantine/hooks";
-import { FC } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "../ui/drawer";
 
-interface EmbedModalProps {}
-
-const EmbedModal: FC<EmbedModalProps> = ({}) => {
+const EmbedModal = () => {
     const embed = useEmbed();
     const isDesktop = useMediaQuery("(min-width: 768px)");
 

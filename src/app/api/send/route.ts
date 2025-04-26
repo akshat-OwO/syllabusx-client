@@ -1,4 +1,4 @@
-import EmailTemplate, { EmailAdminTemplate } from "@/components/EmailTemplate";
+import EmailTemplate from "@/components/EmailTemplate";
 import { FeedbackSchema, TFeedbackSchema } from "@/lib/schemas";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Resend } from "resend";
@@ -9,6 +9,7 @@ import { DiscordClient } from "@/lib/discord-client";
 import { APIEmbed } from "discord-api-types/v10";
 
 declare global {
+    // eslint-disable-next-line no-var
     var resend: Resend;
 }
 
@@ -25,8 +26,8 @@ const ratelimit = new Ratelimit({
 });
 
 export async function POST(req: Request) {
-    const url = new URL(req.url);
-    const action = url.searchParams.get("action");
+    // const url = new URL(req.url);
+    // const action = url.searchParams.get("action");
     const RAW_IP = req.headers.get("X-Forwarded-For") || "127.0.0.1";
     const userAgent = req.headers.get("User-Agent") || "";
     const fingerprint = `${RAW_IP}:${userAgent}`;
@@ -66,7 +67,7 @@ export async function POST(req: Request) {
                 subject: "Thanks for the feedback",
                 react: EmailTemplate({
                     name: validatedFormFields.name,
-                }) as React.ReactElement,
+                }) as React.ReactElement<any>, // eslint-disable-line @typescript-eslint/no-explicit-any
             }),
         ]);
         return Response.json(data);

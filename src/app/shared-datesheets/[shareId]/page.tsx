@@ -2,15 +2,12 @@ import { getSharedDatesheet } from "@/lib/shared-datesheet";
 import { notFound } from "next/navigation";
 import { ClientButton } from "@/components/ImportDatesheetButton";
 import LayoutWrapper from "@/layouts/LayoutWrapper";
-import { format } from "date-fns";
-import { cn } from "@/lib/utils";
 import { DatesheetTimeline } from "@/components/DatesheetTimeline";
 
-export default async function SharedDatesheetPage({
-    params,
-}: {
-    params: { shareId: string };
+export default async function SharedDatesheetPage(props: {
+    params: Promise<{ shareId: string }>;
 }) {
+    const params = await props.params;
     const datesheet = await getSharedDatesheet(params.shareId);
     if (!datesheet) return notFound();
 

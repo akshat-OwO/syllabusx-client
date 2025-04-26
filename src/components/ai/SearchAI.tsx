@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMediaQuery } from "@mantine/hooks";
 import { useChat } from "ai/react";
 import { Sparkles, StopCircle, User } from "lucide-react";
-import { FC, useRef } from "react";
+import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import Markdown from "react-markdown";
 import { toast } from "sonner";
@@ -32,9 +32,7 @@ import {
 import { ScrollArea } from "../ui/scroll-area";
 import { Textarea } from "../ui/textarea";
 
-interface SearchAIProps {}
-
-const SearchAI: FC<SearchAIProps> = ({}) => {
+const SearchAI = () => {
     const ai = useStore(useAi, (state) => state);
     const isDesktop = useMediaQuery("(min-width: 768px)");
 
@@ -93,7 +91,7 @@ function AiCompletionForm() {
             ai: {
                 key: ai?.key,
                 model: ai?.model,
-            }
+            },
         },
     });
 
@@ -116,7 +114,7 @@ function AiCompletionForm() {
         if (isLoading) return stop();
 
         await append({ content: values.prompt, role: "user" })
-            .catch((error) => {
+            .catch(() => {
                 toast.error("Something went wrong!");
                 form.setError("prompt", { message: "Something went wrong!" });
             })
