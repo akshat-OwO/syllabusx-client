@@ -22,6 +22,7 @@
         "@ai-sdk/openai": "^1.0.5",
         "@ai-sdk/react": "^1.2.9",
         "@changesets/changelog-github": "^0.5.1",
+        "@changesets/get-github-info": "^0.6.0",
         "@contentful/rich-text-react-renderer": "^16.0.1",
         "@discordjs/rest": "^2.4.2",
         "@ducanh2912/next-pwa": "^10.2.8",
