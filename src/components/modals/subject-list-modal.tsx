@@ -217,14 +217,16 @@ SubjectListModal.List = function SubjectListModalList() {
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="flex-1"
                 />
-                <Button
-                    className="gap-2"
-                    onClick={() => setIsEditMode(!isEditMode)}
-                    variant={isEditMode ? "default" : "outline"}
-                >
-                    <Pencil className="h-4 w-4" />
-                    <span className="hidden md:block">Toggle Edit</span>
-                </Button>
+                {filteredSubjects.length > 7 && (
+                    <Button
+                        className="gap-2"
+                        onClick={() => setIsEditMode(!isEditMode)}
+                        variant={isEditMode ? "default" : "outline"}
+                    >
+                        <Pencil className="h-4 w-4" />
+                        <span className="hidden md:block">Toggle Edit</span>
+                    </Button>
+                )}
             </div>
             <ScrollArea className="h-screen">
                 <div className="flex flex-col gap-3 py-1 pl-1 pr-4">
@@ -270,13 +272,13 @@ SubjectListModal.List = function SubjectListModalList() {
                             className="group h-fit justify-between whitespace-normal transition-all"
                             onClick={() => handleSubjectClick(subject)}
                         >
-                            <span className="flex flex-col items-start transition-all group-hover:gap-0.5">
+                            <span className="flex flex-col items-start transition-all">
                                 <span className="text-truncate line-clamp-1 text-start">
                                     {_.startCase(subject.split("-").join(" "))}
                                 </span>
-                                <span className="max-h-0 overflow-hidden text-xs transition-all md:group-hover:max-h-4">
+                                {/* <span className="max-h-0 overflow-hidden text-xs transition-all md:group-hover:max-h-4">
                                     /{subject}
-                                </span>
+                                </span> */}
                             </span>
                             <div className="flex items-center gap-2">
                                 {isEditMode ? (
