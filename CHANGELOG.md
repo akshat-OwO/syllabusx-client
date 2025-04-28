@@ -1,5 +1,11 @@
 # syllabusx-client
 
+## 4.13.3
+
+### Patch Changes
+
+- fix: remove subject list hover animation ([#146](https://github.com/akshat-OwO/syllabusx-client/pull/146)) by [@ShouryaPal](https://github.com/ShouryaPal)
+
 ## 4.13.2
 
 ### Patch Changes
