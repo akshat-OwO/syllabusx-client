@@ -43,8 +43,8 @@ export async function POST(req: Request) {
         | AnthropicProvider
         | OpenAIProvider;
     switch (validatedAI.data.model) {
-        case "gemini-1.5-pro":
-        case "gemini-1.5-flash":
+        case "gemini-2.5-pro-exp-03-25":
+        case "gemini-2.5-flash-preview-04-17":
             aiProvider = createGoogleGenerativeAI({
                 apiKey: validatedAI.data.key,
             });
