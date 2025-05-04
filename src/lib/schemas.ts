@@ -16,8 +16,8 @@ export const FeedbackSchema = z.object({
 export type TFeedbackSchema = z.infer<typeof FeedbackSchema>;
 
 const aiModels = z.enum([
-    "gemini-1.5-flash",
-    "gemini-1.5-pro",
+    "gemini-2.5-pro-exp-03-25",
+    "gemini-2.5-flash-preview-04-17",
     "gpt-4o",
     "gpt-4o-mini",
     "gpt-4-turbo",
