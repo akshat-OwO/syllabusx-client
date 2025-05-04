@@ -1,5 +1,11 @@
 # syllabusx-client
 
+## 4.13.4
+
+### Patch Changes
+
+- update AI model options to support new Gemini versions ([#148](https://github.com/akshat-OwO/syllabusx-client/pull/148)) by [@sakshamg567](https://github.com/sakshamg567)
+
 ## 4.13.3
 
 ### Patch Changes
