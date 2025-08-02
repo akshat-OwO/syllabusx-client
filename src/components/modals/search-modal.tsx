@@ -41,6 +41,7 @@ import {
 import { useAi } from "@/hooks/use-ai";
 import useStore from "@/hooks/use-store";
 import { useFeedback } from "@/hooks/use-feedback";
+import { DialogTitle } from "../ui/dialog";
 
 const kbdKey = ({ isMobile }: { isMobile: boolean }) => {
     if (isMobile) return null;
@@ -322,7 +323,9 @@ const SearchModal = () => {
             onValueChange={setCurrentValue}
             className="[&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-2"
             dialogClassName="border-none outline-none"
+            aria-labelledby="search-dialog"
         >
+            <DialogTitle className="sr-only">Search</DialogTitle>
             <div className="flex flex-col gap-2">
                 <div className="relative">
                     <CommandInput
@@ -398,20 +401,22 @@ const SearchModal = () => {
                 {!selectedSubject && (
                     <div className="flex items-center gap-2 px-2">
                         <Tooltip>
-                            <TooltipTrigger>
-                                <Badge
-                                    variant={
-                                        searchType === "all"
-                                            ? "secondary"
-                                            : "default"
-                                    }
-                                    className="cursor-pointer gap-2 rounded-md"
-                                    onClick={() => toggleSearchTypes()}
-                                >
-                                    {searchType === "all"
-                                        ? "Subject"
-                                        : _.startCase(searchType)}
-                                </Badge>
+                            <TooltipTrigger asChild>
+                                <div>
+                                    <Badge
+                                        variant={
+                                            searchType === "all"
+                                                ? "secondary"
+                                                : "default"
+                                        }
+                                        className="cursor-pointer gap-2 rounded-md"
+                                        onClick={() => toggleSearchTypes()}
+                                    >
+                                        {searchType === "all"
+                                            ? "Subject"
+                                            : _.startCase(searchType)}
+                                    </Badge>
+                                </div>
                             </TooltipTrigger>
                             <TooltipContent
                                 side="bottom"
@@ -424,21 +429,24 @@ const SearchModal = () => {
                                 </span>
                             </TooltipContent>
                         </Tooltip>
+
                         <Tooltip>
-                            <TooltipTrigger>
-                                <Badge
-                                    variant={
-                                        course === "undefined"
-                                            ? "secondary"
-                                            : "default"
-                                    }
-                                    className="cursor-pointer gap-2 rounded-md"
-                                    onClick={() => toggleCourseTypes()}
-                                >
-                                    {course === "undefined"
-                                        ? "Course"
-                                        : _.startCase(course.toLowerCase())}
-                                </Badge>
+                            <TooltipTrigger asChild>
+                                <div>
+                                    <Badge
+                                        variant={
+                                            course === "undefined"
+                                                ? "secondary"
+                                                : "default"
+                                        }
+                                        className="cursor-pointer gap-2 rounded-md"
+                                        onClick={() => toggleCourseTypes()}
+                                    >
+                                        {course === "undefined"
+                                            ? "Course"
+                                            : _.startCase(course.toLowerCase())}
+                                    </Badge>
+                                </div>
                             </TooltipTrigger>
                             <TooltipContent
                                 side="bottom"
@@ -451,52 +459,56 @@ const SearchModal = () => {
                                 </span>
                             </TooltipContent>
                         </Tooltip>
+
                         <Tooltip>
-                            <TooltipTrigger>
-                                <Select
-                                    value={sem}
-                                    onValueChange={(value) =>
-                                        setSem(value as Semesters)
-                                    }
-                                >
-                                    <SelectTrigger
-                                        data-semester-trigger="true"
-                                        className={cn(
-                                            "h-fit gap-0.5 bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground",
-                                            sem !== "undefined" &&
-                                                "bg-primary text-primary-foreground"
-                                        )}
+                            <TooltipTrigger asChild>
+                                <div>
+                                    <Select
+                                        value={sem}
+                                        onValueChange={(value) =>
+                                            setSem(value as Semesters)
+                                        }
                                     >
-                                        <SelectValue placeholder="Semester">
-                                            {sem === "undefined"
-                                                ? "Semester"
-                                                : Object.entries(
-                                                      Semesters
-                                                  ).find(
-                                                      ([, val]) => val === sem
-                                                  )?.[0] + " Semester"}
-                                        </SelectValue>
-                                    </SelectTrigger>
-                                    <SelectContent className="max-h-40 border-secondary">
-                                        <SelectItem
-                                            value={"undefined"}
-                                            className="py-1 text-xs"
+                                        <SelectTrigger
+                                            data-semester-trigger="true"
+                                            className={cn(
+                                                "h-fit gap-0.5 bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground",
+                                                sem !== "undefined" &&
+                                                    "bg-primary text-primary-foreground"
+                                            )}
                                         >
-                                            Select Semester
-                                        </SelectItem>
-                                        {Object.entries(Semesters).map(
-                                            ([key, value]) => (
-                                                <SelectItem
-                                                    key={value}
-                                                    value={value}
-                                                    className="py-1 text-xs"
-                                                >
-                                                    {key} Semester
-                                                </SelectItem>
-                                            )
-                                        )}
-                                    </SelectContent>
-                                </Select>
+                                            <SelectValue placeholder="Semester">
+                                                {sem === "undefined"
+                                                    ? "Semester"
+                                                    : Object.entries(
+                                                          Semesters
+                                                      ).find(
+                                                          ([, val]) =>
+                                                              val === sem
+                                                      )?.[0] + " Semester"}
+                                            </SelectValue>
+                                        </SelectTrigger>
+                                        <SelectContent className="max-h-40 border-secondary">
+                                            <SelectItem
+                                                value={"undefined"}
+                                                className="py-1 text-xs"
+                                            >
+                                                Select Semester
+                                            </SelectItem>
+                                            {Object.entries(Semesters).map(
+                                                ([key, value]) => (
+                                                    <SelectItem
+                                                        key={value}
+                                                        value={value}
+                                                        className="py-1 text-xs"
+                                                    >
+                                                        {key} Semester
+                                                    </SelectItem>
+                                                )
+                                            )}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
                             </TooltipTrigger>
                             <TooltipContent
                                 side="bottom"
@@ -509,52 +521,56 @@ const SearchModal = () => {
                                 </span>
                             </TooltipContent>
                         </Tooltip>
+
                         <Tooltip>
-                            <TooltipTrigger>
-                                <Select
-                                    value={dept}
-                                    onValueChange={(value) =>
-                                        setDept(value as Departments)
-                                    }
-                                >
-                                    <SelectTrigger
-                                        data-department-trigger="true"
-                                        className={cn(
-                                            "h-fit gap-0.5 bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground",
-                                            dept !== "undefined" &&
-                                                "bg-primary text-primary-foreground"
-                                        )}
+                            <TooltipTrigger asChild>
+                                <div>
+                                    <Select
+                                        value={dept}
+                                        onValueChange={(value) =>
+                                            setDept(value as Departments)
+                                        }
                                     >
-                                        <SelectValue placeholder="Department">
-                                            {dept === "undefined"
-                                                ? "Department"
-                                                : Object.entries(
-                                                      Departments
-                                                  ).find(
-                                                      ([, val]) => val === dept
-                                                  )?.[0]}
-                                        </SelectValue>
-                                    </SelectTrigger>
-                                    <SelectContent className="max-h-40 border-secondary">
-                                        <SelectItem
-                                            value={"undefined"}
-                                            className="py-1 text-xs"
+                                        <SelectTrigger
+                                            data-department-trigger="true"
+                                            className={cn(
+                                                "h-fit gap-0.5 bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground",
+                                                dept !== "undefined" &&
+                                                    "bg-primary text-primary-foreground"
+                                            )}
                                         >
-                                            Select Department
-                                        </SelectItem>
-                                        {Object.entries(Departments).map(
-                                            ([key, value]) => (
-                                                <SelectItem
-                                                    key={value}
-                                                    value={value}
-                                                    className="py-1 text-xs"
-                                                >
-                                                    {key} Department
-                                                </SelectItem>
-                                            )
-                                        )}
-                                    </SelectContent>
-                                </Select>
+                                            <SelectValue placeholder="Department">
+                                                {dept === "undefined"
+                                                    ? "Department"
+                                                    : Object.entries(
+                                                          Departments
+                                                      ).find(
+                                                          ([, val]) =>
+                                                              val === dept
+                                                      )?.[0]}
+                                            </SelectValue>
+                                        </SelectTrigger>
+                                        <SelectContent className="max-h-40 border-secondary">
+                                            <SelectItem
+                                                value={"undefined"}
+                                                className="py-1 text-xs"
+                                            >
+                                                Select Department
+                                            </SelectItem>
+                                            {Object.entries(Departments).map(
+                                                ([key, value]) => (
+                                                    <SelectItem
+                                                        key={value}
+                                                        value={value}
+                                                        className="py-1 text-xs"
+                                                    >
+                                                        {key} Department
+                                                    </SelectItem>
+                                                )
+                                            )}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
                             </TooltipTrigger>
                             <TooltipContent
                                 side="bottom"
