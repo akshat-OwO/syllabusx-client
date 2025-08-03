@@ -10,8 +10,9 @@ import {
     CommandList,
     CommandSeparator,
 } from "../ui/command";
+import { DialogTitle } from "../ui/dialog";
 import _ from "lodash";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useMemo } from "react";
 import { useSearch } from "@/hooks/use-search";
 import { useQuery } from "@tanstack/react-query";
 import { search } from "@/lib/server";
@@ -41,7 +42,24 @@ import {
 import { useAi } from "@/hooks/use-ai";
 import useStore from "@/hooks/use-store";
 import { useFeedback } from "@/hooks/use-feedback";
-import { DialogTitle } from "../ui/dialog";
+
+// Define types for completion items
+interface CompletionItem {
+    value: string;
+    label: string;
+    type: "history" | "course" | "semester" | "department" | "ai" | "misc";
+    data?: string;
+    category?: string;
+}
+
+interface CompletionCategories {
+    history: CompletionItem[];
+    courses: CompletionItem[];
+    semesters: CompletionItem[];
+    departments: CompletionItem[];
+    ai: CompletionItem[];
+    miscellaneous: CompletionItem[];
+}
 
 const kbdKey = ({ isMobile }: { isMobile: boolean }) => {
     if (isMobile) return null;
@@ -51,6 +69,66 @@ const kbdKey = ({ isMobile }: { isMobile: boolean }) => {
     }
     return isMac ? "⌘" : "Ctrl";
 };
+
+// Completion categories in priority order
+const getCompletionCategories = (
+    subjectHistory: string[]
+): CompletionCategories => ({
+    history: subjectHistory.map((path) => ({
+        value: path,
+        label: _.startCase(path.split("/").pop()?.split("-").join(" ") || ""),
+        type: "history" as const,
+    })),
+    courses: Object.entries(Courses).map(([value]) => ({
+        value: value.toLowerCase(),
+        label: _.startCase(value.toLowerCase()),
+        type: "course" as const,
+        data: value,
+    })),
+    semesters: Object.entries(Semesters).map(([key, value]) => ({
+        value: key.toLowerCase(),
+        label: `${key} Semester`,
+        type: "semester" as const,
+        data: value,
+    })),
+    departments: Object.entries(Departments).map(([key, value]) => ({
+        value: key.toLowerCase(),
+        label: `${key} Department`,
+        type: "department" as const,
+        data: value,
+    })),
+    ai: [
+        {
+            value: "search with ai",
+            label: "Search with AI",
+            type: "ai" as const,
+        },
+        {
+            value: "generate mock test",
+            label: "Generate mock test",
+            type: "ai" as const,
+        },
+    ],
+    miscellaneous: [
+        { value: "github", label: "Star us on Github", type: "misc" as const },
+        {
+            value: "instagram",
+            label: "Follow us on Instagram",
+            type: "misc" as const,
+        },
+        {
+            value: "bug",
+            label: "Report an issue on Github",
+            type: "misc" as const,
+        },
+        {
+            value: "feature-request",
+            label: "Request for a new feature on Github",
+            type: "misc" as const,
+        },
+        { value: "feedback", label: "Give us Feedback", type: "misc" as const },
+    ],
+});
 
 const SearchModal = () => {
     const { isOpen, onOpen, onClose } = useSearch();
@@ -63,6 +141,15 @@ const SearchModal = () => {
     const [currentValue, setCurrentValue] = useState<string>("-");
     const [selectedSubject, setSelectedSubject] =
         useState<SubjectSearchResult | null>(null);
+
+    // Completion states
+    const [completions, setCompletions] = useState<CompletionItem[]>([]);
+    const [showCompletions, setShowCompletions] = useState<boolean>(false);
+    const [selectedParams, setSelectedParams] = useState<{
+        course?: Courses;
+        semester?: Semesters;
+        department?: Departments;
+    }>({});
 
     const [searchType, setSearchType] = useLocalStorage<
         "all" | "subject" | "theory" | "lab"
@@ -89,11 +176,226 @@ const SearchModal = () => {
     });
 
     const isMobile = useMediaQuery("(max-width: 768px)");
-
     const router = useRouter();
 
+    const handleHistory = useCallback(
+        (path: string) => {
+            setSubjectHistory((prev) => {
+                let history: string[] = [];
+                if (prev.includes(path)) {
+                    prev.splice(prev.indexOf(path), 1);
+                }
+                history = [path, ...prev];
+                if (history.length > 7) {
+                    history.pop();
+                }
+                return history;
+            });
+        },
+        [setSubjectHistory]
+    );
+
+    const runCommand = useCallback(
+        (command: () => unknown) => {
+            onClose();
+            setCurrentValue("-");
+            setCompletions([]);
+            setShowCompletions(false);
+            setSelectedParams({});
+            command();
+        },
+        [onClose]
+    );
+
+    // Handle miscellaneous actions
+    const handleMiscAction = useCallback(
+        (action: string) => {
+            runCommand(() => {
+                switch (action) {
+                    case "github":
+                        window.open(
+                            "https://github.com/akshat-OwO/syllabusx-client",
+                            "_blank"
+                        );
+                        break;
+                    case "instagram":
+                        window.open(
+                            "https://www.instagram.com/syllabusx_.live/",
+                            "_blank"
+                        );
+                        break;
+                    case "bug":
+                        window.open(
+                            "https://github.com/akshat-OwO/syllabusx-client/issues/new?template=bug-report.yml",
+                            "_blank"
+                        );
+                        break;
+                    case "feature-request":
+                        window.open(
+                            "https://github.com/akshat-OwO/syllabusx-client/issues/new?template=feature-request.yml",
+                            "_blank"
+                        );
+                        break;
+                    case "feedback":
+                        feedback.onOpen();
+                        break;
+                }
+            });
+        },
+        [runCommand, feedback]
+    );
+
+    // Search completions function
+    const searchCompletions = useCallback(
+        (queryText: string) => {
+            if (!queryText.trim()) {
+                setCompletions([]);
+                setShowCompletions(false);
+                return;
+            }
+
+            const categories = getCompletionCategories(subjectHistory);
+            const foundCompletions: CompletionItem[] = [];
+            const queryLower = queryText.toLowerCase();
+            const queryWords = queryLower
+                .split(" ")
+                .filter((word) => word.length > 0);
+
+            // Search in priority order
+            Object.entries(categories).forEach(([categoryName, items]) => {
+                items.forEach((item: CompletionItem) => {
+                    // Check if any query word matches the item value
+                    const matches = queryWords.some(
+                        (word) =>
+                            item.value.toLowerCase().includes(word) ||
+                            item.label.toLowerCase().includes(word)
+                    );
+
+                    if (
+                        matches &&
+                        !foundCompletions.find((c) => c.value === item.value)
+                    ) {
+                        foundCompletions.push({
+                            ...item,
+                            category: categoryName,
+                        });
+                    }
+                });
+
+                // Stop searching if we found completions in a higher priority category
+                if (
+                    foundCompletions.length > 0 &&
+                    categoryName !== "miscellaneous"
+                ) {
+                    return;
+                }
+            });
+
+            setCompletions(foundCompletions.slice(0, 5)); // Limit to 5 completions
+            setShowCompletions(foundCompletions.length > 0);
+        },
+        [subjectHistory]
+    );
+
+    const handleCompletionSelect = useCallback(
+        (completion: CompletionItem) => {
+            const newParams = { ...selectedParams };
+
+            switch (completion.type) {
+                case "course":
+                    setCourse(completion.data as Courses);
+                    newParams.course = completion.data as Courses;
+                    break;
+                case "semester":
+                    setSem(completion.data as Semesters);
+                    newParams.semester = completion.data as Semesters;
+                    break;
+                case "department":
+                    setDept(completion.data as Departments);
+                    newParams.department = completion.data as Departments;
+                    break;
+                case "history":
+                    runCommand(() => {
+                        handleHistory(completion.value);
+                        router.push(completion.value);
+                    });
+                    return;
+                case "ai":
+                    if (completion.value === "search with ai") {
+                        runCommand(() => {
+                            if (!ai) return;
+                            ai.completion.onOpen();
+                        });
+                    } else if (completion.value === "generate mock test") {
+                        runCommand(() => {
+                            if (!ai) return;
+                            ai.mock.onOpen();
+                        });
+                    }
+                    return;
+                case "misc":
+                    handleMiscAction(completion.value);
+                    return;
+            }
+
+            setSelectedParams(newParams);
+
+            const queryWords = query.toLowerCase().split(" ");
+            const completionWords = completion.value.toLowerCase().split(" ");
+            const filteredWords = queryWords.filter(
+                (word) =>
+                    !completionWords.some((compWord) => word.includes(compWord))
+            );
+
+            setQuery(filteredWords.join(" "));
+            setCompletions([]);
+            setShowCompletions(false);
+        },
+        [
+            selectedParams,
+            query,
+            ai,
+            setCourse,
+            setSem,
+            setDept,
+            router,
+            runCommand,
+            handleHistory,
+            handleMiscAction,
+        ]
+    );
+
+    const handleTabCompletion = useCallback(() => {
+        if (completions.length === 1) {
+            const completion = completions[0];
+            handleCompletionSelect(completion);
+        } else if (completions.length > 1) {
+            return;
+        } else {
+            searchCompletions(query);
+        }
+    }, [completions, query, searchCompletions, handleCompletionSelect]);
+
+    useEffect(() => {
+        if (query.trim() && isSearching && !selectedSubject) {
+            searchCompletions(query);
+        } else {
+            setCompletions([]);
+            setShowCompletions(false);
+        }
+    }, [query, isSearching, selectedSubject, searchCompletions]);
+
+    const shouldCallApi = useMemo(() => {
+        return (
+            isSearching &&
+            debouncedQuery.length > 3 &&
+            completions.length === 0 &&
+            !showCompletions
+        );
+    }, [isSearching, debouncedQuery, completions.length, showCompletions]);
+
     const { data, isLoading } = useQuery({
-        enabled: isSearching && debouncedQuery.length > 3,
+        enabled: shouldCallApi,
         queryKey: ["search", debouncedQuery, searchType, course, sem, dept],
         queryFn: () =>
             search({
@@ -104,20 +406,6 @@ const SearchModal = () => {
                 dept: dept === "undefined" ? undefined : dept,
             }),
     });
-
-    const handleHistory = (path: string) => {
-        setSubjectHistory((prev) => {
-            let history: string[] = [];
-            if (prev.includes(path)) {
-                prev.splice(prev.indexOf(path), 1);
-            }
-            history = [path, ...prev];
-            if (history.length > 7) {
-                history.pop();
-            }
-            return history;
-        });
-    };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const debouncedUpdate = useCallback(
@@ -252,19 +540,12 @@ const SearchModal = () => {
             setCurrentValue(firstItemValue);
         } else if (selectedSubject) {
             setCurrentValue("back-to-search");
+        } else if (showCompletions && completions.length > 0) {
+            setCurrentValue(completions[0].value);
         } else {
             setCurrentValue("-");
         }
-    }, [data, selectedSubject]);
-
-    const runCommand = useCallback(
-        (command: () => unknown) => {
-            onClose();
-            setCurrentValue("-");
-            command();
-        },
-        [onClose]
-    );
+    }, [data, selectedSubject, showCompletions, completions]);
 
     const navigateToSubject = (
         subject: SubjectSearchResult,
@@ -308,6 +589,8 @@ const SearchModal = () => {
     const goBackToSearchResults = () => {
         setIsSearching(true);
         setSelectedSubject(null);
+        setCompletions([]);
+        setShowCompletions(false);
     };
 
     return (
@@ -317,24 +600,36 @@ const SearchModal = () => {
                 if (!open) {
                     onClose();
                     setSelectedSubject(null);
+                    setCompletions([]);
+                    setShowCompletions(false);
+                    setSelectedParams({});
                 }
             }}
             value={currentValue}
             onValueChange={setCurrentValue}
             className="[&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-2"
             dialogClassName="border-none outline-none"
-            aria-labelledby="search-dialog"
         >
             <DialogTitle className="sr-only">Search</DialogTitle>
             <div className="flex flex-col gap-2">
                 <div className="relative">
                     <CommandInput
-                        placeholder="Type a command to search..."
+                        placeholder={
+                            Object.keys(selectedParams).length > 0
+                                ? "Type to search with selected parameters..."
+                                : "Type a command to search... (Press Tab for completions)"
+                        }
                         className={cn(!isSearching && "pl")}
                         containerClassName="border-none"
                         value={query}
                         onValueChange={setQuery}
                         onKeyDown={(e) => {
+                            if (e.key === "Tab") {
+                                e.preventDefault();
+                                handleTabCompletion();
+                                return;
+                            }
+
                             if (!isSearching) {
                                 if (e.key === "Backspace" && query.length === 0)
                                     goBackToSearchResults();
@@ -429,7 +724,6 @@ const SearchModal = () => {
                                 </span>
                             </TooltipContent>
                         </Tooltip>
-
                         <Tooltip>
                             <TooltipTrigger asChild>
                                 <div>
@@ -459,7 +753,6 @@ const SearchModal = () => {
                                 </span>
                             </TooltipContent>
                         </Tooltip>
-
                         <Tooltip>
                             <TooltipTrigger asChild>
                                 <div>
@@ -521,7 +814,6 @@ const SearchModal = () => {
                                 </span>
                             </TooltipContent>
                         </Tooltip>
-
                         <Tooltip>
                             <TooltipTrigger asChild>
                                 <div>
@@ -674,6 +966,46 @@ const SearchModal = () => {
                                 "No results found."
                             )}
                         </CommandEmpty>
+
+                        {/* Tab Completions */}
+                        {showCompletions && completions.length > 0 && (
+                            <CommandGroup heading="Completions">
+                                {completions.map((completion) => (
+                                    <CommandItem
+                                        key={completion.value}
+                                        value={completion.value}
+                                        className="group cursor-pointer text-xs font-semibold"
+                                        onSelect={() =>
+                                            handleCompletionSelect(completion)
+                                        }
+                                    >
+                                        <div className="flex w-full items-center justify-between">
+                                            <div className="flex items-center gap-2">
+                                                <Badge
+                                                    variant="outline"
+                                                    className="rounded-md border-secondary bg-background text-xs"
+                                                >
+                                                    {_.startCase(
+                                                        completion.category
+                                                    )}
+                                                </Badge>
+                                                <p className="text-xs text-muted-foreground group-aria-selected:text-foreground">
+                                                    {completion.label}
+                                                </p>
+                                            </div>
+                                            <Badge
+                                                variant="outline"
+                                                className="text-xs text-muted-foreground"
+                                            >
+                                                Tab
+                                            </Badge>
+                                        </div>
+                                    </CommandItem>
+                                ))}
+                            </CommandGroup>
+                        )}
+
+                        {/* Regular search results */}
                         <CommandGroup heading={data && "subject"}>
                             {data &&
                                 data.length > 0 &&
