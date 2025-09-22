@@ -1,5 +1,11 @@
 # syllabusx-client
 
+## 4.13.5
+
+### Patch Changes
+
+- Fix datesheet issue ([#153](https://github.com/akshat-OwO/syllabusx-client/pull/153)) by [@ShouryaPal](https://github.com/ShouryaPal)
+
 ## 4.13.4
 
 ### Patch Changes
