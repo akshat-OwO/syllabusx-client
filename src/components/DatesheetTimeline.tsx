@@ -5,11 +5,12 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { type DateEntry } from "@/hooks/use-datesheet";
 
 interface DatesheetTimelineProps {
-    dates: { name: string; date: number }[];
+    dates: DateEntry[];
     interactive?: boolean;
-    renderItem?: (date: { name: string; date: number }) => React.ReactNode;
+    renderItem?: (date: DateEntry, index: number) => React.ReactNode;
 }
 
 export const DatesheetTimeline: React.FC<DatesheetTimelineProps> = ({
@@ -21,7 +22,10 @@ export const DatesheetTimeline: React.FC<DatesheetTimelineProps> = ({
         <ScrollArea className="flex-grow pr-4">
             <div className="flex flex-1 flex-col gap-2">
                 {dates.map((d, index) => (
-                    <div key={d.date} className="flex items-center">
+                    <div
+                        key={`${d.date}-${d.name}-${index}`}
+                        className="flex items-center"
+                    >
                         <div className="relative">
                             <div className="flex items-center">
                                 <div
@@ -66,7 +70,7 @@ export const DatesheetTimeline: React.FC<DatesheetTimelineProps> = ({
                             </div>
                         </div>
                         {renderItem ? (
-                            renderItem(d)
+                            renderItem(d, index)
                         ) : (
                             <div
                                 className={cn(

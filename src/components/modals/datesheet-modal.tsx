@@ -1,6 +1,6 @@
 "use client";
 
-import { useDatesheet } from "@/hooks/use-datesheet";
+import { useDatesheet, type DateEntry } from "@/hooks/use-datesheet";
 import { Sheet, SheetClose, SheetContent } from "../ui/sheet";
 import { Button } from "../ui/button";
 import { CalendarIcon, Share2Icon, X } from "lucide-react";
@@ -24,7 +24,7 @@ import { useMediaQuery } from "@mantine/hooks";
 import { Drawer, DrawerContent } from "../ui/drawer";
 import { ShareDatesheetDialog } from "../share-datesheet-dialog";
 import { DatesheetTimeline } from "../DatesheetTimeline";
-import Link from "next/link"; // Import Link from next/link
+import Link from "next/link";
 
 const DatesheetModal = () => {
     const { isOpen, onClose } = useDatesheet();
@@ -85,7 +85,7 @@ DatesheetModal.Content = function DatesheetModalContent({
             </Accordion>
             {/* Add "All Datesheets" Button */}
             <Link href="/shared-datesheets" className="w-full pr-6">
-                <Button variant="outline" className="w-full pr-6">
+                <Button variant="outline" className="w-full">
                     All Datesheets
                 </Button>
             </Link>
@@ -149,19 +149,17 @@ DatesheetModal.ContentHeader = function DatesheetModalContentHeader({
 DatesheetModal.Form = function DatesheetModalForm({
     isEditForm,
     currentDate,
+    currentIndex,
     onFormAction,
 }: {
-    currentDate?: { name: string; date: number };
+    currentDate?: DateEntry;
+    currentIndex?: number;
     isEditForm?: boolean;
     onFormAction?: () => void;
 }) {
-    const [currDate, setCurrDate] = useState<
-        | {
-              name: string;
-              date: number;
-          }
-        | undefined
-    >(currentDate);
+    const [currDate, setCurrDate] = useState<DateEntry | undefined>(
+        currentDate
+    );
     const form = useForm<TDatesheetSchema>({
         resolver: zodResolver(datesheetSchema),
         defaultValues: {
@@ -174,8 +172,8 @@ DatesheetModal.Form = function DatesheetModalForm({
 
     const onSubmit = (values: TDatesheetSchema) => {
         if (isEditForm) {
-            if (currDate) {
-                editDate(currDate, {
+            if (currentIndex !== undefined) {
+                editDate(currentIndex, {
                     name: values.name,
                     date: values.date.getTime(),
                 });
@@ -187,8 +185,8 @@ DatesheetModal.Form = function DatesheetModalForm({
     };
 
     const handleDelete = () => {
-        if (currDate) {
-            removeDate(currDate);
+        if (currentIndex !== undefined) {
+            removeDate(currentIndex);
             onFormAction?.();
         }
     };
@@ -229,7 +227,7 @@ DatesheetModal.Form = function DatesheetModalForm({
                                                         e?.getTime();
                                                     if (timestamp) {
                                                         return {
-                                                            name: prev.name,
+                                                            ...prev,
                                                             date: timestamp,
                                                         };
                                                     }
@@ -279,82 +277,70 @@ DatesheetModal.Form = function DatesheetModalForm({
 DatesheetModal.Dates = function DatesheetModalDates({
     dates,
 }: {
-    dates: { name: string; date: number }[];
+    dates: DateEntry[];
 }) {
-    const [openPopoverId, setOpenPopoverId] = useState<number | null>(null);
-
-    // const handleItemClick = (date: { name: string; date: number }) => {
-    //     const index = dates.findIndex((d) => d.date === date.date);
-    //     setOpenPopoverId(index);
-    // };
+    const [openPopoverId, setOpenPopoverId] = useState<string | null>(null);
 
     return (
         <div className="flex h-full flex-col pr-2">
             <DatesheetTimeline
                 dates={dates}
                 interactive
-                renderItem={(date) => (
-                    <Popover
-                        key={date.date}
-                        open={
-                            openPopoverId ===
-                            dates.findIndex((d) => d.date === date.date)
-                        }
-                        onOpenChange={(isOpen) =>
-                            setOpenPopoverId(
-                                isOpen
-                                    ? dates.findIndex(
-                                          (d) => d.date === date.date
-                                      )
-                                    : null
-                            )
-                        }
-                    >
-                        <PopoverTrigger asChild>
-                            <div
-                                className={cn(
-                                    "group h-fit w-full whitespace-normal rounded-md border py-1.5 pl-3 pr-2",
-                                    {
-                                        "cursor-pointer transition-colors hover:bg-secondary/50":
-                                            true,
-                                    }
-                                )}
-                            >
-                                <div className="flex flex-1 items-center justify-between">
-                                    <div className="flex flex-col">
-                                        <p className="line-clamp-1 text-sm font-semibold">
-                                            {date.name}
-                                        </p>
-                                        <span className="text-muted-foregound text-xs font-medium">
-                                            {format(
-                                                new Date(date.date),
-                                                "do MMMM yyyy hh:mm aaa"
-                                            )}
-                                        </span>
-                                    </div>
-                                    <div className="relative inline-flex items-center justify-center rounded-md border border-input p-1.5">
-                                        <CalendarIcon className="h-8 w-8" />
-                                        <span className="pointer-events-none absolute bottom-2.5 left-1/2 -translate-x-1/2 text-xs font-semibold">
-                                            {new Date(date.date).getDate()}
-                                        </span>
+                renderItem={(date, index) => {
+                    const uniqueId = `${date.date}-${date.name}-${index}`;
+                    return (
+                        <Popover
+                            key={uniqueId}
+                            open={openPopoverId === uniqueId}
+                            onOpenChange={(isOpen) =>
+                                setOpenPopoverId(isOpen ? uniqueId : null)
+                            }
+                        >
+                            <PopoverTrigger asChild>
+                                <div
+                                    className={cn(
+                                        "group h-fit w-full whitespace-normal rounded-md border py-1.5 pl-3 pr-2",
+                                        {
+                                            "cursor-pointer transition-colors hover:bg-secondary/50":
+                                                true,
+                                        }
+                                    )}
+                                >
+                                    <div className="flex flex-1 items-center justify-between">
+                                        <div className="flex flex-col">
+                                            <p className="line-clamp-1 text-sm font-semibold">
+                                                {date.name}
+                                            </p>
+                                            <span className="text-muted-foregound text-xs font-medium">
+                                                {format(
+                                                    new Date(date.date),
+                                                    "do MMMM yyyy hh:mm aaa"
+                                                )}
+                                            </span>
+                                        </div>
+                                        <div className="relative inline-flex items-center justify-center rounded-md border border-input p-1.5">
+                                            <CalendarIcon className="h-8 w-8" />
+                                            <span className="pointer-events-none absolute bottom-2.5 left-1/2 -translate-x-1/2 text-xs font-semibold">
+                                                {new Date(date.date).getDate()}
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </PopoverTrigger>
-                        <PopoverContent align="start">
-                            <DatesheetModal.Form
-                                isEditForm
-                                currentDate={{
-                                    name: date.name,
-                                    date: date.date,
-                                }}
-                                onFormAction={() => setOpenPopoverId(null)}
-                            />
-                        </PopoverContent>
-                    </Popover>
-                )}
+                            </PopoverTrigger>
+                            <PopoverContent align="start">
+                                <DatesheetModal.Form
+                                    isEditForm
+                                    currentDate={date}
+                                    currentIndex={index}
+                                    onFormAction={() => setOpenPopoverId(null)}
+                                />
+                            </PopoverContent>
+                        </Popover>
+                    );
+                }}
             />
         </div>
     );
 };
+
 export default DatesheetModal;
