@@ -1,22 +1,21 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
+export type DateEntry = {
+    name: string;
+    date: number;
+};
+
 type DatesheetStore = {
     isOpen: boolean;
     onOpen: () => void;
     onClose: () => void;
     isFirstInter: boolean;
     setIsFirstInter: () => void;
-    dates: {
-        name: string;
-        date: number;
-    }[];
+    dates: DateEntry[];
     addDate: (date: { name: string; date: number }) => void;
-    editDate: (
-        date: { name: string; date: number },
-        newDate: { name: string; date: number }
-    ) => void;
-    removeDate: (date: { name: string; date: number }) => void;
+    editDate: (index: number, newDate: { name: string; date: number }) => void;
+    removeDate: (index: number) => void;
     importDatesheet: (dates: Array<{ name: string; date: number }>) => void;
 };
 
@@ -31,37 +30,25 @@ export const useDatesheet = create<DatesheetStore>()(
             dates: [],
             addDate: (date) => {
                 set((state) => {
-                    const newDates = [...state.dates];
-                    const hasDate = newDates.some(
-                        (d) => d.name === date.name && d.date === date.date
-                    );
-                    if (!hasDate) {
-                        newDates.push(date);
-                        newDates.sort((a, b) => a.date - b.date);
-                    }
-                    return { dates: newDates };
-                });
-            },
-            editDate: (date, newDate) => {
-                set((state) => {
-                    const newDates = state.dates.map((d) =>
-                        d.name === date.name && d.date === date.date
-                            ? newDate
-                            : d
-                    );
+                    const newDates = [...state.dates, date];
                     newDates.sort((a, b) => a.date - b.date);
                     return { dates: newDates };
                 });
             },
-            removeDate: (date) => {
-                set((state) => ({
-                    dates: state.dates
-                        .filter(
-                            (d) =>
-                                !(d.name === date.name && d.date === date.date)
-                        )
-                        .sort((a, b) => a.date - b.date),
-                }));
+            editDate: (index, newDate) => {
+                set((state) => {
+                    const newDates = [...state.dates];
+                    newDates[index] = newDate;
+                    newDates.sort((a, b) => a.date - b.date);
+                    return { dates: newDates };
+                });
+            },
+            removeDate: (index) => {
+                set((state) => {
+                    const newDates = [...state.dates];
+                    newDates.splice(index, 1);
+                    return { dates: newDates };
+                });
             },
             importDatesheet: (newDates) => {
                 set(() => ({
