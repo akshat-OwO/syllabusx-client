@@ -5,13 +5,13 @@ import {
     CommandDialog,
     CommandEmpty,
     CommandGroup,
-    CommandInput,
     CommandItem,
     CommandList,
     CommandSeparator,
 } from "../ui/command";
+import { DialogTitle } from "../ui/dialog";
 import _ from "lodash";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useMemo } from "react";
 import { useSearch } from "@/hooks/use-search";
 import { useQuery } from "@tanstack/react-query";
 import { search } from "@/lib/server";
@@ -42,6 +42,23 @@ import { useAi } from "@/hooks/use-ai";
 import useStore from "@/hooks/use-store";
 import { useFeedback } from "@/hooks/use-feedback";
 
+interface CompletionItem {
+    value: string;
+    label: string;
+    type: "history" | "course" | "semester" | "department" | "ai" | "misc";
+    data?: string;
+    category?: string;
+}
+
+interface CompletionCategories {
+    history: CompletionItem[];
+    courses: CompletionItem[];
+    semesters: CompletionItem[];
+    departments: CompletionItem[];
+    ai: CompletionItem[];
+    miscellaneous: CompletionItem[];
+}
+
 const kbdKey = ({ isMobile }: { isMobile: boolean }) => {
     if (isMobile) return null;
     let isMac = false;
@@ -49,6 +66,154 @@ const kbdKey = ({ isMobile }: { isMobile: boolean }) => {
         isMac = navigator.userAgent.includes("Mac");
     }
     return isMac ? "⌘" : "Ctrl";
+};
+
+const getCompletionCategories = (
+    subjectHistory: string[]
+): CompletionCategories => ({
+    history: subjectHistory.map((path) => ({
+        value: path,
+        label: _.startCase(path.split("/").pop()?.split("-").join(" ") || ""),
+        type: "history" as const,
+    })),
+    courses: Object.entries(Courses).map(([value]) => ({
+        value: value.toLowerCase(),
+        label: _.startCase(value.toLowerCase()),
+        type: "course" as const,
+        data: value,
+    })),
+    semesters: Object.entries(Semesters).map(([key, value]) => ({
+        value: key.toLowerCase(),
+        label: `${key} Semester`,
+        type: "semester" as const,
+        data: value,
+    })),
+    departments: Object.entries(Departments).map(([key, value]) => ({
+        value: key.toLowerCase(),
+        label: `${key} Department`,
+        type: "department" as const,
+        data: value,
+    })),
+    ai: [
+        {
+            value: "search with ai",
+            label: "Search with AI",
+            type: "ai" as const,
+        },
+        {
+            value: "generate mock test",
+            label: "Generate mock test",
+            type: "ai" as const,
+        },
+    ],
+    miscellaneous: [
+        { value: "github", label: "Star us on Github", type: "misc" as const },
+        {
+            value: "instagram",
+            label: "Follow us on Instagram",
+            type: "misc" as const,
+        },
+        {
+            value: "bug",
+            label: "Report an issue on Github",
+            type: "misc" as const,
+        },
+        {
+            value: "feature-request",
+            label: "Request for a new feature on Github",
+            type: "misc" as const,
+        },
+        { value: "feedback", label: "Give us Feedback", type: "misc" as const },
+    ],
+});
+
+interface CommandInputWithCompletionProps {
+    placeholder?: string;
+    className?: string;
+    containerClassName?: string;
+    value: string;
+    onValueChange?: (value: string) => void;
+    onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+    isLoading?: boolean;
+    completions?: CompletionItem[];
+    showCompletions?: boolean;
+}
+
+const CommandInputWithCompletion = ({
+    placeholder,
+    className,
+    containerClassName,
+    value,
+    onValueChange,
+    onKeyDown,
+    isLoading,
+    completions = [],
+    showCompletions = false,
+}: CommandInputWithCompletionProps) => {
+    const getCompletionText = () => {
+        if (!showCompletions || completions.length === 0 || !value) return "";
+
+        const selectedCompletion = completions[0]; // First completion
+        const queryLower = value.toLowerCase().trim();
+        const completionValue = selectedCompletion?.value?.toLowerCase();
+        const completionLabel = selectedCompletion?.label?.toLowerCase();
+
+        if (
+            completionValue &&
+            completionValue.startsWith(queryLower) &&
+            queryLower.length > 0
+        ) {
+            return selectedCompletion.value.slice(value.length);
+        }
+
+        if (
+            completionLabel &&
+            completionLabel.startsWith(queryLower) &&
+            queryLower.length > 0
+        ) {
+            return selectedCompletion.label.slice(value.length);
+        }
+
+        return "";
+    };
+
+    const completionText = getCompletionText();
+
+    return (
+        <div className={cn("relative flex items-center", containerClassName)}>
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <div className="relative flex-1">
+                <input
+                    className={cn(
+                        "flex h-11 w-full rounded-md border-none bg-transparent py-3 pl-10 pr-20 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
+                        className
+                    )}
+                    value={value}
+                    onChange={(e) => onValueChange?.(e.target.value)}
+                    onKeyDown={onKeyDown}
+                    placeholder={placeholder}
+                />
+
+                {completionText && showCompletions && (
+                    <div className="pointer-events-none absolute left-10 top-0 flex h-11 items-center">
+                        <span className="invisible text-sm">{value}</span>
+                        <span className="select-none text-sm text-muted-foreground/40">
+                            {completionText}
+                        </span>
+                        <Badge
+                            variant="outline"
+                            className="border-muted bg-muted/50 px-2 py-0.5 text-xs text-muted-foreground"
+                        >
+                            Tab
+                        </Badge>
+                        {isLoading && (
+                            <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                        )}
+                    </div>
+                )}
+            </div>
+        </div>
+    );
 };
 
 const SearchModal = () => {
@@ -62,6 +227,15 @@ const SearchModal = () => {
     const [currentValue, setCurrentValue] = useState<string>("-");
     const [selectedSubject, setSelectedSubject] =
         useState<SubjectSearchResult | null>(null);
+
+    // Completion states
+    const [completions, setCompletions] = useState<CompletionItem[]>([]);
+    const [showCompletions, setShowCompletions] = useState<boolean>(false);
+    const [selectedParams, setSelectedParams] = useState<{
+        course?: Courses;
+        semester?: Semesters;
+        department?: Departments;
+    }>({});
 
     const [searchType, setSearchType] = useLocalStorage<
         "all" | "subject" | "theory" | "lab"
@@ -88,11 +262,219 @@ const SearchModal = () => {
     });
 
     const isMobile = useMediaQuery("(max-width: 768px)");
-
     const router = useRouter();
 
+    const handleHistory = useCallback(
+        (path: string) => {
+            setSubjectHistory((prev) => {
+                let history: string[] = [];
+                if (prev.includes(path)) {
+                    prev.splice(prev.indexOf(path), 1);
+                }
+                history = [path, ...prev];
+                if (history.length > 7) {
+                    history.pop();
+                }
+                return history;
+            });
+        },
+        [setSubjectHistory]
+    );
+
+    const runCommand = useCallback(
+        (command: () => unknown) => {
+            onClose();
+            setCurrentValue("-");
+            setCompletions([]);
+            setShowCompletions(false);
+            setSelectedParams({});
+            command();
+        },
+        [onClose]
+    );
+
+    const handleMiscAction = useCallback(
+        (action: string) => {
+            runCommand(() => {
+                switch (action) {
+                    case "github":
+                        window.open(
+                            "https://github.com/akshat-OwO/syllabusx-client",
+                            "_blank"
+                        );
+                        break;
+                    case "instagram":
+                        window.open(
+                            "https://www.instagram.com/syllabusx_.live/",
+                            "_blank"
+                        );
+                        break;
+                    case "bug":
+                        window.open(
+                            "https://github.com/akshat-OwO/syllabusx-client/issues/new?template=bug-report.yml",
+                            "_blank"
+                        );
+                        break;
+                    case "feature-request":
+                        window.open(
+                            "https://github.com/akshat-OwO/syllabusx-client/issues/new?template=feature-request.yml",
+                            "_blank"
+                        );
+                        break;
+                    case "feedback":
+                        feedback.onOpen();
+                        break;
+                }
+            });
+        },
+        [runCommand, feedback]
+    );
+
+    const searchCompletions = useCallback(
+        (queryText: string) => {
+            if (!queryText.trim()) {
+                setCompletions([]);
+                setShowCompletions(false);
+                return;
+            }
+
+            const categories = getCompletionCategories(subjectHistory);
+            const foundCompletions: CompletionItem[] = [];
+            const queryLower = queryText.toLowerCase();
+            const queryWords = queryLower
+                .split(" ")
+                .filter((word) => word.length > 0);
+
+            Object.entries(categories).forEach(([categoryName, items]) => {
+                items.forEach((item: CompletionItem) => {
+                    const matches = queryWords.some(
+                        (word) =>
+                            item.value.toLowerCase().includes(word) ||
+                            item.label.toLowerCase().includes(word)
+                    );
+
+                    if (
+                        matches &&
+                        !foundCompletions.find((c) => c.value === item.value)
+                    ) {
+                        foundCompletions.push({
+                            ...item,
+                            category: categoryName,
+                        });
+                    }
+                });
+                if (
+                    foundCompletions.length > 0 &&
+                    categoryName !== "miscellaneous"
+                ) {
+                    return;
+                }
+            });
+
+            setCompletions(foundCompletions.slice(0, 5));
+            setShowCompletions(foundCompletions.length > 0);
+        },
+        [subjectHistory]
+    );
+
+    const handleCompletionSelect = useCallback(
+        (completion: CompletionItem) => {
+            const newParams = { ...selectedParams };
+
+            switch (completion.type) {
+                case "course":
+                    setCourse(completion.data as Courses);
+                    newParams.course = completion.data as Courses;
+                    // runCommand(() => router.push(`/courses/${completion.value}`));
+                    break;
+                case "semester":
+                    setSem(completion.data as Semesters);
+                    newParams.semester = completion.data as Semesters;
+                    break;
+                case "department":
+                    setDept(completion.data as Departments);
+                    newParams.department = completion.data as Departments;
+                    break;
+                case "history":
+                    runCommand(() => {
+                        handleHistory(completion.value);
+                        router.push(completion.value);
+                    });
+                    return;
+                case "ai":
+                    if (completion.value === "search with ai") {
+                        runCommand(() => {
+                            if (!ai) return;
+                            ai.completion.onOpen();
+                        });
+                    } else if (completion.value === "generate mock test") {
+                        runCommand(() => {
+                            if (!ai) return;
+                            ai.mock.onOpen();
+                        });
+                    }
+                    return;
+                case "misc":
+                    handleMiscAction(completion.value);
+                    return;
+            }
+
+            setSelectedParams(newParams);
+
+            const queryWords = query.toLowerCase().split(" ");
+            const completionWords = completion.value.toLowerCase().split(" ");
+            const filteredWords = queryWords.filter(
+                (word) =>
+                    !completionWords.some((compWord) =>
+                        word.includes(compWord)
+                    ) && !completion.label.toLowerCase().includes(word)
+            );
+
+            setQuery(filteredWords.join(" "));
+            setCompletions([]);
+            setShowCompletions(false);
+        },
+        [
+            selectedParams,
+            query,
+            ai,
+            setCourse,
+            setSem,
+            setDept,
+            router,
+            runCommand,
+            handleHistory,
+            handleMiscAction,
+        ]
+    );
+
+    const handleTabCompletion = useCallback(() => {
+        if (completions.length > 0) {
+            const completion = completions[0];
+            handleCompletionSelect(completion);
+        }
+    }, [completions, handleCompletionSelect]);
+
+    useEffect(() => {
+        if (query.trim() && isSearching && !selectedSubject) {
+            searchCompletions(query);
+        } else {
+            setCompletions([]);
+            setShowCompletions(false);
+        }
+    }, [query, isSearching, selectedSubject, searchCompletions]);
+
+    const shouldCallApi = useMemo(() => {
+        return (
+            isSearching &&
+            debouncedQuery.length > 3 &&
+            completions.length === 0 &&
+            !showCompletions
+        );
+    }, [isSearching, debouncedQuery, completions.length, showCompletions]);
+
     const { data, isLoading } = useQuery({
-        enabled: isSearching && debouncedQuery.length > 3,
+        enabled: shouldCallApi,
         queryKey: ["search", debouncedQuery, searchType, course, sem, dept],
         queryFn: () =>
             search({
@@ -103,20 +485,6 @@ const SearchModal = () => {
                 dept: dept === "undefined" ? undefined : dept,
             }),
     });
-
-    const handleHistory = (path: string) => {
-        setSubjectHistory((prev) => {
-            let history: string[] = [];
-            if (prev.includes(path)) {
-                prev.splice(prev.indexOf(path), 1);
-            }
-            history = [path, ...prev];
-            if (history.length > 7) {
-                history.pop();
-            }
-            return history;
-        });
-    };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const debouncedUpdate = useCallback(
@@ -138,17 +506,18 @@ const SearchModal = () => {
         }
     }, [searchType, setSearchType]);
 
-    const toggleCourseTypes = useCallback(() => {
-        if (course === "undefined") {
-            setCourse(Courses.BTECH);
-        } else if (course === Courses.BTECH) {
-            setCourse(Courses.BCA);
-        } else if (course === Courses.BCA) {
-            setCourse("undefined");
-        } else {
-            setCourse("undefined");
-        }
-    }, [course, setCourse]);
+    // toggleCourseTypes is now removed as we use a Select for Course
+    // const toggleCourseTypes = useCallback(() => {
+    //     if (course === "undefined") {
+    //         setCourse(Courses.BTECH);
+    //     } else if (course === Courses.BTECH) {
+    //         setCourse(Courses.BCA);
+    //     } else if (course === Courses.BCA) {
+    //         setCourse("undefined");
+    //     } else {
+    //         setCourse("undefined");
+    //     }
+    // }, [course, setCourse]);
 
     useEffect(() => {
         if (query.length > 0) {
@@ -208,7 +577,11 @@ const SearchModal = () => {
                             break;
                         case "c":
                             e.preventDefault();
-                            toggleCourseTypes();
+                            document
+                                .querySelector<HTMLButtonElement>(
+                                    '[data-course-trigger="true"]'
+                                )
+                                ?.click();
                             resetKeySequence();
                             break;
                         case "s":
@@ -242,7 +615,7 @@ const SearchModal = () => {
             document.removeEventListener("keydown", down);
             if (keyTimeout) clearTimeout(keyTimeout);
         };
-    }, [isOpen, onOpen, toggleSearchTypes, toggleCourseTypes]);
+    }, [isOpen, onOpen, toggleSearchTypes]);
 
     useEffect(() => {
         if (data && data.length > 0 && !selectedSubject) {
@@ -251,19 +624,12 @@ const SearchModal = () => {
             setCurrentValue(firstItemValue);
         } else if (selectedSubject) {
             setCurrentValue("back-to-search");
+        } else if (showCompletions && completions.length > 0) {
+            setCurrentValue(completions[0].value);
         } else {
             setCurrentValue("-");
         }
-    }, [data, selectedSubject]);
-
-    const runCommand = useCallback(
-        (command: () => unknown) => {
-            onClose();
-            setCurrentValue("-");
-            command();
-        },
-        [onClose]
-    );
+    }, [data, selectedSubject, showCompletions, completions]);
 
     const navigateToSubject = (
         subject: SubjectSearchResult,
@@ -307,6 +673,8 @@ const SearchModal = () => {
     const goBackToSearchResults = () => {
         setIsSearching(true);
         setSelectedSubject(null);
+        setCompletions([]);
+        setShowCompletions(false);
     };
 
     return (
@@ -316,6 +684,9 @@ const SearchModal = () => {
                 if (!open) {
                     onClose();
                     setSelectedSubject(null);
+                    setCompletions([]);
+                    setShowCompletions(false);
+                    setSelectedParams({});
                 }
             }}
             value={currentValue}
@@ -323,15 +694,28 @@ const SearchModal = () => {
             className="[&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-2"
             dialogClassName="border-none outline-none"
         >
+            <DialogTitle className="sr-only">Search</DialogTitle>
             <div className="flex flex-col gap-2">
                 <div className="relative">
-                    <CommandInput
-                        placeholder="Type a command to search..."
+                    <CommandInputWithCompletion
+                        placeholder={
+                            Object.keys(selectedParams).length > 0
+                                ? "Type to search with selected parameters..."
+                                : "Type a command to search... (Press Tab for completions)"
+                        }
                         className={cn(!isSearching && "pl")}
                         containerClassName="border-none"
                         value={query}
                         onValueChange={setQuery}
+                        completions={completions}
+                        showCompletions={showCompletions}
                         onKeyDown={(e) => {
+                            if (e.key === "Tab") {
+                                e.preventDefault();
+                                handleTabCompletion();
+                                return;
+                            }
+
                             if (!isSearching) {
                                 if (e.key === "Backspace" && query.length === 0)
                                     goBackToSearchResults();
@@ -398,20 +782,22 @@ const SearchModal = () => {
                 {!selectedSubject && (
                     <div className="flex items-center gap-2 px-2">
                         <Tooltip>
-                            <TooltipTrigger>
-                                <Badge
-                                    variant={
-                                        searchType === "all"
-                                            ? "secondary"
-                                            : "default"
-                                    }
-                                    className="cursor-pointer gap-2 rounded-md"
-                                    onClick={() => toggleSearchTypes()}
-                                >
-                                    {searchType === "all"
-                                        ? "Subject"
-                                        : _.startCase(searchType)}
-                                </Badge>
+                            <TooltipTrigger asChild>
+                                <div>
+                                    <Badge
+                                        variant={
+                                            searchType === "all"
+                                                ? "secondary"
+                                                : "default"
+                                        }
+                                        className="cursor-pointer gap-2 rounded-md"
+                                        onClick={() => toggleSearchTypes()}
+                                    >
+                                        {searchType === "all"
+                                            ? "Subject"
+                                            : _.startCase(searchType)}
+                                    </Badge>
+                                </div>
                             </TooltipTrigger>
                             <TooltipContent
                                 side="bottom"
@@ -424,79 +810,116 @@ const SearchModal = () => {
                                 </span>
                             </TooltipContent>
                         </Tooltip>
+                        {/* Course Selector - Restored as a Select */}
                         <Tooltip>
-                            <TooltipTrigger>
-                                <Badge
-                                    variant={
-                                        course === "undefined"
-                                            ? "secondary"
-                                            : "default"
-                                    }
-                                    className="cursor-pointer gap-2 rounded-md"
-                                    onClick={() => toggleCourseTypes()}
-                                >
-                                    {course === "undefined"
-                                        ? "Course"
-                                        : _.startCase(course.toLowerCase())}
-                                </Badge>
+                            <TooltipTrigger asChild>
+                                <div>
+                                    <Select
+                                        value={course}
+                                        onValueChange={(value) =>
+                                            setCourse(value as Courses)
+                                        }
+                                    >
+                                        <SelectTrigger
+                                            data-course-trigger="true"
+                                            className={cn(
+                                                "h-fit gap-0.5 bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground",
+                                                course !== "undefined" &&
+                                                    "bg-primary text-primary-foreground"
+                                            )}
+                                        >
+                                            <SelectValue placeholder="Course">
+                                                {course === "undefined"
+                                                    ? "Course"
+                                                    : _.startCase(
+                                                          course.toLowerCase()
+                                                      )}
+                                            </SelectValue>
+                                        </SelectTrigger>
+                                        <SelectContent className="max-h-40 border-secondary">
+                                            <SelectItem
+                                                value={"undefined"}
+                                                className="py-1 text-xs"
+                                            >
+                                                Select Course
+                                            </SelectItem>
+                                            {Object.entries(Courses).map(
+                                                ([key, value]) => (
+                                                    <SelectItem
+                                                        key={value}
+                                                        value={value}
+                                                        className="py-1 text-xs"
+                                                    >
+                                                        {_.startCase(
+                                                            key.toLowerCase()
+                                                        )}
+                                                    </SelectItem>
+                                                )
+                                            )}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
                             </TooltipTrigger>
                             <TooltipContent
                                 side="bottom"
                                 align="center"
                                 className="border-secondary text-xs"
                             >
-                                Toggle Course{" "}
+                                Select Course{" "}
                                 <span className="rounded-md bg-secondary px-1 py-0.5 text-xs text-secondary-foreground">
                                     {kbdKey({ isMobile: !!isMobile })} K C
                                 </span>
                             </TooltipContent>
                         </Tooltip>
                         <Tooltip>
-                            <TooltipTrigger>
-                                <Select
-                                    value={sem}
-                                    onValueChange={(value) =>
-                                        setSem(value as Semesters)
-                                    }
-                                >
-                                    <SelectTrigger
-                                        data-semester-trigger="true"
-                                        className={cn(
-                                            "h-fit gap-0.5 bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground",
-                                            sem !== "undefined" &&
-                                                "bg-primary text-primary-foreground"
-                                        )}
+                            <TooltipTrigger asChild>
+                                <div>
+                                    <Select
+                                        value={sem}
+                                        onValueChange={(value) =>
+                                            setSem(value as Semesters)
+                                        }
                                     >
-                                        <SelectValue placeholder="Semester">
-                                            {sem === "undefined"
-                                                ? "Semester"
-                                                : Object.entries(
-                                                      Semesters
-                                                  ).find(
-                                                      ([, val]) => val === sem
-                                                  )?.[0] + " Semester"}
-                                        </SelectValue>
-                                    </SelectTrigger>
-                                    <SelectContent className="max-h-40 border-secondary">
-                                        <SelectItem
-                                            value={"undefined"}
-                                            className="py-1 text-xs"
+                                        <SelectTrigger
+                                            data-semester-trigger="true"
+                                            className={cn(
+                                                "h-fit gap-0.5 bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground",
+                                                sem !== "undefined" &&
+                                                    "bg-primary text-primary-foreground"
+                                            )}
                                         >
-                                            Select Semester
-                                        </SelectItem>
-                                        {Object.entries(Semesters).map(
-                                            ([key, value]) => (
-                                                <SelectItem
-                                                    key={value}
-                                                    value={value}
-                                                    className="py-1 text-xs"
-                                                >
-                                                    {key} Semester
-                                                </SelectItem>
-                                            )
-                                        )}
-                                    </SelectContent>
-                                </Select>
+                                            <SelectValue placeholder="Semester">
+                                                {sem === "undefined"
+                                                    ? "Semester"
+                                                    : Object.entries(
+                                                          Semesters
+                                                      ).find(
+                                                          ([, val]) =>
+                                                              val === sem
+                                                      )?.[0] + " Semester"}
+                                            </SelectValue>
+                                        </SelectTrigger>
+                                        <SelectContent className="max-h-40 border-secondary">
+                                            <SelectItem
+                                                value={"undefined"}
+                                                className="py-1 text-xs"
+                                            >
+                                                Select Semester
+                                            </SelectItem>
+                                            {Object.entries(Semesters).map(
+                                                ([key, value]) => (
+                                                    <SelectItem
+                                                        key={value}
+                                                        value={value}
+                                                        className="py-1 text-xs"
+                                                    >
+                                                        {key} Semester
+                                                    </SelectItem>
+                                                )
+                                            )}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
                             </TooltipTrigger>
                             <TooltipContent
                                 side="bottom"
@@ -510,51 +933,54 @@ const SearchModal = () => {
                             </TooltipContent>
                         </Tooltip>
                         <Tooltip>
-                            <TooltipTrigger>
-                                <Select
-                                    value={dept}
-                                    onValueChange={(value) =>
-                                        setDept(value as Departments)
-                                    }
-                                >
-                                    <SelectTrigger
-                                        data-department-trigger="true"
-                                        className={cn(
-                                            "h-fit gap-0.5 bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground",
-                                            dept !== "undefined" &&
-                                                "bg-primary text-primary-foreground"
-                                        )}
+                            <TooltipTrigger asChild>
+                                <div>
+                                    <Select
+                                        value={dept}
+                                        onValueChange={(value) =>
+                                            setDept(value as Departments)
+                                        }
                                     >
-                                        <SelectValue placeholder="Department">
-                                            {dept === "undefined"
-                                                ? "Department"
-                                                : Object.entries(
-                                                      Departments
-                                                  ).find(
-                                                      ([, val]) => val === dept
-                                                  )?.[0]}
-                                        </SelectValue>
-                                    </SelectTrigger>
-                                    <SelectContent className="max-h-40 border-secondary">
-                                        <SelectItem
-                                            value={"undefined"}
-                                            className="py-1 text-xs"
+                                        <SelectTrigger
+                                            data-department-trigger="true"
+                                            className={cn(
+                                                "h-fit gap-0.5 bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground",
+                                                dept !== "undefined" &&
+                                                    "bg-primary text-primary-foreground"
+                                            )}
                                         >
-                                            Select Department
-                                        </SelectItem>
-                                        {Object.entries(Departments).map(
-                                            ([key, value]) => (
-                                                <SelectItem
-                                                    key={value}
-                                                    value={value}
-                                                    className="py-1 text-xs"
-                                                >
-                                                    {key} Department
-                                                </SelectItem>
-                                            )
-                                        )}
-                                    </SelectContent>
-                                </Select>
+                                            <SelectValue placeholder="Department">
+                                                {dept === "undefined"
+                                                    ? "Department"
+                                                    : Object.entries(
+                                                          Departments
+                                                      ).find(
+                                                          ([, val]) =>
+                                                              val === dept
+                                                      )?.[0]}
+                                            </SelectValue>
+                                        </SelectTrigger>
+                                        <SelectContent className="max-h-40 border-secondary">
+                                            <SelectItem
+                                                value={"undefined"}
+                                                className="py-1 text-xs"
+                                            >
+                                                Select Department
+                                            </SelectItem>
+                                            {Object.entries(Departments).map(
+                                                ([key, value]) => (
+                                                    <SelectItem
+                                                        key={value}
+                                                        value={value}
+                                                        className="py-1 text-xs"
+                                                    >
+                                                        {key} Department
+                                                    </SelectItem>
+                                                )
+                                            )}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
                             </TooltipTrigger>
                             <TooltipContent
                                 side="bottom"
@@ -658,6 +1084,46 @@ const SearchModal = () => {
                                 "No results found."
                             )}
                         </CommandEmpty>
+
+                        {/* Tab Completions */}
+                        {showCompletions && completions.length > 0 && (
+                            <CommandGroup heading="Completions">
+                                {completions.map((completion) => (
+                                    <CommandItem
+                                        key={completion.value}
+                                        value={completion.value}
+                                        className="group cursor-pointer text-xs font-semibold"
+                                        onSelect={() =>
+                                            handleCompletionSelect(completion)
+                                        }
+                                    >
+                                        <div className="flex w-full items-center justify-between">
+                                            <div className="flex items-center gap-2">
+                                                <Badge
+                                                    variant="outline"
+                                                    className="rounded-md border-secondary bg-background text-xs"
+                                                >
+                                                    {_.startCase(
+                                                        completion.category
+                                                    )}
+                                                </Badge>
+                                                <p className="text-xs text-muted-foreground group-aria-selected:text-foreground">
+                                                    {completion.label}
+                                                </p>
+                                            </div>
+                                            <Badge
+                                                variant="outline"
+                                                className="text-xs text-muted-foreground"
+                                            >
+                                                Tab
+                                            </Badge>
+                                        </div>
+                                    </CommandItem>
+                                ))}
+                            </CommandGroup>
+                        )}
+
+                        {/* Regular search results */}
                         <CommandGroup heading={data && "subject"}>
                             {data &&
                                 data.length > 0 &&
