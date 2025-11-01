@@ -1,7 +1,5 @@
 import {
     Courses,
-    Departments,
-    Semesters,
     Tab,
     bcaSemesterList,
     branchList,
@@ -286,26 +284,12 @@ export const getBcaStudyMaterial = async ({
     return null;
 };
 
-export async function search({
-    query,
-    type = "all",
-    course,
-    sem,
-    dept,
-}: {
-    query: string;
-    type?: "subject" | "theory" | "lab" | "all";
-    course?: Courses;
-    sem?: Semesters;
-    dept?: Departments;
-}) {
+export async function search({ query }: { query: string }) {
     try {
         const response: AxiosResponse<
             SubjectSearchResult[],
             { error: string }
-        > = await axios.get(
-            `${server}search?q=${query}${type ? `&type=${type}` : ""}${course ? `&course=${course}` : ""}${sem ? `&sem=${sem}` : ""}${dept ? `&dept=${dept}` : ""}`
-        );
+        > = await axios.get(`${server}search?q=${query}`);
         return response.data;
     } catch (error) {
         let res;
