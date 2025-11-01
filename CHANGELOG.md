@@ -1,5 +1,13 @@
 # syllabusx-client
 
+## 4.13.6
+
+### Patch Changes
+
+- changed server api url ([#155](https://github.com/akshat-OwO/syllabusx-client/pull/155)) by [@akshat-OwO](https://github.com/akshat-OwO)
+
+- changed search modal changes ([#155](https://github.com/akshat-OwO/syllabusx-client/pull/155)) by [@akshat-OwO](https://github.com/akshat-OwO)
+
 ## 4.13.5
 
 ### Patch Changes
