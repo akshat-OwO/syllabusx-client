@@ -144,22 +144,30 @@ export enum Departments {
 }
 
 export type SubjectSearchResult = {
-    subject: string;
-    camelCase: string;
-    semester: Semesters;
-    department: Departments[] | null;
-    course: Courses;
-    theoryCode: string | null;
-    labCode: string | null;
-    theoryCredits: number | null;
-    labCredits: number | null;
-    matches: {
-        field: string;
-        snippet: string;
-    }[];
+    id: string;
+    content: {
+        course: string;
+        name: string;
+        dept?: Departments[];
+        sem: string;
+        theorypapercode: string;
+        labpapercode?: string;
+        theorycredits: number;
+        labcredits?: number;
+        theory?: {
+            unit: number;
+            topics: string[];
+        }[];
+        units?: {
+            unit: number;
+            topics: string[];
+        }[];
+    };
+    metadata: Record<string, unknown>;
+    score: number;
 };
 
-export const server = "https://server.syllabusx.live/";
+export const server = "https://api.syllabusx.live/";
 // export const server = "http://localhost:8080/";
 
 export const STALE_TIME = 1000 * 60 * 60 * 24 * 15;
