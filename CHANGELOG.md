@@ -1,5 +1,11 @@
 # syllabusx-client
 
+## 4.13.7
+
+### Patch Changes
+
+- chore: upgrade Next.js to 15.5.18 ([#157](https://github.com/akshat-OwO/syllabusx-client/pull/157)) by [@akshat-OwO](https://github.com/akshat-OwO)
+
 ## 4.13.6
 
 ### Patch Changes
