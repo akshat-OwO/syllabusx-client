@@ -16,14 +16,18 @@ import {
     createGoogleGenerativeAI,
 } from "@ai-sdk/google";
 import { OpenAIProvider, createOpenAI } from "@ai-sdk/openai";
-import { streamObject, streamText } from "ai";
-import { waitUntil } from "@vercel/functions";
+import { streamObject, streamText, type CoreMessage } from "ai";
+import { after } from "next/server";
 
-export const runtime = "edge";
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
-    const { type, ai, messages, mock } = await req.json();
+    const { type, ai, messages, mock } = (await req.json()) as {
+        type: unknown;
+        ai: unknown;
+        messages: CoreMessage[];
+        mock: unknown;
+    };
 
     const validatedAI = AiSchema.safeParse(ai);
 
@@ -100,42 +104,40 @@ export async function POST(req: Request) {
                               : newEndSemMockTemplate`${semester}${branch}${subject}${topics}`,
                 });
 
-                waitUntil(
-                    (async () => {
-                        try {
-                            const object = await stream.object;
+                after(async () => {
+                    try {
+                        const object = await stream.object;
 
-                            const selectedUnits = topics
-                                .map((topicArray: string[], index: number) =>
-                                    topicArray.length > 0
-                                        ? `Unit ${index + 1}`
-                                        : null
-                                )
-                                .filter(
-                                    (unit: string | null): unit is string =>
-                                        unit !== null
-                                );
-
-                            await notifyMockGeneration({
-                                subject,
-                                semester,
-                                branch,
-                                type: validatedMockPayload.data.type,
-                                maxMarks:
-                                    validatedMockPayload.data.type === "midSem"
-                                        ? 30
-                                        : maxMarks,
-                                units: selectedUnits,
-                                mockData: object,
-                            });
-                        } catch (discordError) {
-                            console.error(
-                                "Discord notification failed:",
-                                discordError
+                        const selectedUnits = topics
+                            .map((topicArray: string[], index: number) =>
+                                topicArray.length > 0
+                                    ? `Unit ${index + 1}`
+                                    : null
+                            )
+                            .filter(
+                                (unit: string | null): unit is string =>
+                                    unit !== null
                             );
-                        }
-                    })()
-                );
+
+                        await notifyMockGeneration({
+                            subject,
+                            semester,
+                            branch,
+                            type: validatedMockPayload.data.type,
+                            maxMarks:
+                                validatedMockPayload.data.type === "midSem"
+                                    ? 30
+                                    : maxMarks,
+                            units: selectedUnits,
+                            mockData: object,
+                        });
+                    } catch (discordError) {
+                        console.error(
+                            "Discord notification failed:",
+                            discordError
+                        );
+                    }
+                });
 
                 return stream.toTextStreamResponse();
             } catch (error) {

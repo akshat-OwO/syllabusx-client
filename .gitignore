@@ -31,6 +31,14 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env
+
+# alchemy / cloudflare
+.alchemy/
+.open-next/
+wrangler.jsonc
+.dev.vars
+.wrangler
 
 # vercel
 .vercel

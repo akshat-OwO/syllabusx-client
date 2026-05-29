@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
 async function handleGetVotes(req: NextRequest, fingerprint: string) {
     let files: File[];
     try {
-        files = await req.json();
+        files = (await req.json()) as File[];
     } catch (error) {
         console.error(error);
         return NextResponse.json(
@@ -99,7 +99,10 @@ async function handleGetVotes(req: NextRequest, fingerprint: string) {
 }
 
 async function handleVote(req: NextRequest, fingerprint: string) {
-    const { id, name } = await req.json();
+    const { id, name } = (await req.json()) as {
+        id?: string;
+        name?: string;
+    };
 
     if (!id || !name) {
         return NextResponse.json(

@@ -56,7 +56,7 @@ const Hero: FC<HeroProps> = ({ content, releaseTag, releaseUrl }) => {
                 </Link>
                 <div className="relative h-full w-full self-center">
                     <div className="conic-center absolute h-full w-full" />
-                    <div className="z-10 hidden aspect-video w-full rounded-md bg-accent/20 p-2 shadow-2xl dark:block">
+                    <div className="relative z-10 hidden aspect-video w-full rounded-md bg-accent/20 p-2 shadow-2xl dark:block">
                         <Image
                             src={
                                 content
@@ -66,11 +66,11 @@ const Hero: FC<HeroProps> = ({ content, releaseTag, releaseUrl }) => {
                             }
                             alt="Hero Image"
                             fill
-                            quality={100}
-                            className="rounded-md p-2"
+                            sizes="(max-width: 768px) 100vw, 80vw"
+                            className="rounded-md object-contain p-2"
                         />
                     </div>
-                    <div className="z-10 aspect-video w-full rounded-md bg-accent/20 p-2 shadow-2xl dark:hidden">
+                    <div className="relative z-10 aspect-video w-full rounded-md bg-accent/20 p-2 shadow-2xl dark:hidden">
                         <Image
                             src={
                                 content
@@ -80,8 +80,8 @@ const Hero: FC<HeroProps> = ({ content, releaseTag, releaseUrl }) => {
                             }
                             alt="Hero Image Light"
                             fill
-                            quality={100}
-                            className="rounded-md p-2"
+                            sizes="(max-width: 768px) 100vw, 80vw"
+                            className="rounded-md object-contain p-2"
                         />
                     </div>
                 </div>

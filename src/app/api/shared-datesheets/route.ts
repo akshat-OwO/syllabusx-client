@@ -2,11 +2,16 @@ import { NextResponse } from "next/server";
 import {
     createSharedDatesheet,
     getAllSharedDatesheets,
+    type SharedDatesheet,
 } from "@/lib/shared-datesheet";
 
 export async function POST(req: Request) {
     try {
-        const body = await req.json();
+        const body = (await req.json()) as {
+            title?: string;
+            authorName?: string;
+            dates?: SharedDatesheet["dates"];
+        };
         const { title, authorName, dates } = body;
 
         if (!title || !authorName || !dates) {

@@ -32,7 +32,7 @@ export async function POST(req: Request) {
     const userAgent = req.headers.get("User-Agent") || "";
     const fingerprint = `${RAW_IP}:${userAgent}`;
 
-    const { values } = await req.json();
+    const { values } = (await req.json()) as { values: unknown };
 
     const { success, reset } = await ratelimit.limit(fingerprint);
     if (!success) {

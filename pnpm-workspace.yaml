@@ -1,0 +1,10 @@
+allowBuilds:
+  core-js: false
+  esbuild: false
+  sharp: false
+  unrs-resolver: false
+  workerd: false
+
+overrides:
+   "@types/react": "19.1.2"
+   "@types/react-dom": "19.1.2"
