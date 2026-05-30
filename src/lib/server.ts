@@ -18,14 +18,14 @@ export async function getSubjects({
     branch?: string;
     course: Courses;
     semester: string;
-}) {
+}): Promise<string[]> {
     if (course === Courses.BTECH) {
         try {
             const response = await fetch(
                 `${server}btech/${semesterList.find((s) => s.label === semester)?.value}/${branchList.find((b) => b.label === branch.toUpperCase())?.value}`
             );
 
-            const subjects = await response.json();
+            const subjects = (await response.json()) as string[];
 
             return subjects;
         } catch (error) {
@@ -40,7 +40,7 @@ export async function getSubjects({
                 `${server}bca/${bcaSemesterList.find((s) => s.label === semester)?.value}`
             );
 
-            const subjects = await response.json();
+            const subjects = (await response.json()) as string[];
 
             return subjects;
         } catch (error) {
@@ -284,7 +284,11 @@ export const getBcaStudyMaterial = async ({
     return null;
 };
 
-export async function search({ query }: { query: string }) {
+export async function search({
+    query,
+}: {
+    query: string;
+}): Promise<SubjectSearchResult[]> {
     try {
         const response: AxiosResponse<
             SubjectSearchResult[],

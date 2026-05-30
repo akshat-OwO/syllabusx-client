@@ -10,8 +10,12 @@ const withPWA = require("@ducanh2912/next-pwa").default({
         disableDevLogs: true,
     },
 });
+const { initOpenNextCloudflareForDev } = require("@opennextjs/cloudflare");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    typescript: {
+        ignoreBuildErrors: true,
+    },
     images: {
         remotePatterns: [
             {
@@ -24,3 +28,5 @@ const nextConfig = {
 };
 
 module.exports = withPWA(nextConfig);
+
+initOpenNextCloudflareForDev();

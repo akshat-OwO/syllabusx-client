@@ -53,7 +53,7 @@ const SearchModal = () => {
 
     const router = useRouter();
 
-    const { data, isLoading } = useQuery({
+    const { data, isLoading } = useQuery<SubjectSearchResult[]>({
         enabled: isSearching && debouncedQuery.length > 3,
         queryKey: ["search", debouncedQuery],
         queryFn: () =>
@@ -326,97 +326,105 @@ const SearchModal = () => {
                         <CommandGroup heading={data && "subject"}>
                             {data &&
                                 data.length > 0 &&
-                                data.map((subject, i) => (
-                                    <CommandItem
-                                        key={`${_.camelCase(subject.content.name)} ${subject.content.theorypapercode} ${subject.content.sem} ${subject.content.dept?.join(",")} ${i}`}
-                                        value={`${_.camelCase(subject.content.name)} ${subject.content.theorypapercode} ${subject.content.sem} ${subject.content.dept?.join(",")} ${i}`}
-                                        className="group cursor-pointer text-xs font-semibold"
-                                        onSelect={() =>
-                                            handleSelectSubject(subject)
-                                        }
-                                    >
-                                        <div className="flex w-full flex-col gap-2.5">
-                                            <div className="flex items-center justify-between">
-                                                <p className="truncate text-ellipsis text-xs text-muted-foreground group-aria-selected:text-foreground">
-                                                    {subject.content.name}
-                                                </p>
-                                                <div className="flex items-center gap-2">
-                                                    <Badge
-                                                        variant="outline"
-                                                        className="whitespace-nowrap rounded-md border-secondary bg-background text-xs font-normal text-muted-foreground group-aria-selected:text-foreground"
-                                                    >
-                                                        {
-                                                            subject.content
-                                                                .theorypapercode
-                                                        }
-                                                    </Badge>
-                                                    {subject.content
-                                                        .labpapercode && (
+                                data.map(
+                                    (
+                                        subject: SubjectSearchResult,
+                                        i: number
+                                    ) => (
+                                        <CommandItem
+                                            key={`${_.camelCase(subject.content.name)} ${subject.content.theorypapercode} ${subject.content.sem} ${subject.content.dept?.join(",")} ${i}`}
+                                            value={`${_.camelCase(subject.content.name)} ${subject.content.theorypapercode} ${subject.content.sem} ${subject.content.dept?.join(",")} ${i}`}
+                                            className="group cursor-pointer text-xs font-semibold"
+                                            onSelect={() =>
+                                                handleSelectSubject(subject)
+                                            }
+                                        >
+                                            <div className="flex w-full flex-col gap-2.5">
+                                                <div className="flex items-center justify-between">
+                                                    <p className="truncate text-ellipsis text-xs text-muted-foreground group-aria-selected:text-foreground">
+                                                        {subject.content.name}
+                                                    </p>
+                                                    <div className="flex items-center gap-2">
                                                         <Badge
                                                             variant="outline"
                                                             className="whitespace-nowrap rounded-md border-secondary bg-background text-xs font-normal text-muted-foreground group-aria-selected:text-foreground"
                                                         >
                                                             {
                                                                 subject.content
-                                                                    .labpapercode
+                                                                    .theorypapercode
                                                             }
                                                         </Badge>
-                                                    )}
-                                                </div>
-                                            </div>
-                                            <div className="flex items-center justify-between gap-4">
-                                                <div className="flex items-center gap-2">
-                                                    <Badge
-                                                        variant="outline"
-                                                        className="rounded-md border-secondary bg-background font-normal text-muted-foreground duration-0 group-aria-selected:bg-primary group-aria-selected:text-primary-foreground"
-                                                    >
-                                                        {subject.content.course.toUpperCase()}
-                                                    </Badge>
-                                                    <Badge
-                                                        variant="outline"
-                                                        className="rounded-md border-secondary bg-background font-normal text-muted-foreground duration-0 group-aria-selected:bg-primary group-aria-selected:text-primary-foreground"
-                                                    >
-                                                        {
-                                                            Object.entries(
-                                                                Semesters
-                                                            ).find(
-                                                                ([, val]) =>
-                                                                    val ===
+                                                        {subject.content
+                                                            .labpapercode && (
+                                                            <Badge
+                                                                variant="outline"
+                                                                className="whitespace-nowrap rounded-md border-secondary bg-background text-xs font-normal text-muted-foreground group-aria-selected:text-foreground"
+                                                            >
+                                                                {
                                                                     subject
                                                                         .content
-                                                                        .sem
-                                                            )?.[0]
-                                                        }
-                                                    </Badge>
+                                                                        .labpapercode
+                                                                }
+                                                            </Badge>
+                                                        )}
+                                                    </div>
                                                 </div>
-                                                {subject.content.dept &&
-                                                    subject.content.dept
-                                                        .length > 0 && (
-                                                        <ScrollArea className="flex-1">
-                                                            <div className="flex items-center gap-2">
-                                                                {subject.content.dept.map(
-                                                                    (dept) => (
-                                                                        <Badge
-                                                                            key={
-                                                                                dept
-                                                                            }
-                                                                            variant="outline"
-                                                                            className="rounded-md border-secondary bg-background text-xs font-normal text-muted-foreground"
-                                                                        >
-                                                                            {
-                                                                                dept
-                                                                            }
-                                                                        </Badge>
-                                                                    )
-                                                                )}
-                                                            </div>
-                                                            <ScrollBar orientation="horizontal" />
-                                                        </ScrollArea>
-                                                    )}
+                                                <div className="flex items-center justify-between gap-4">
+                                                    <div className="flex items-center gap-2">
+                                                        <Badge
+                                                            variant="outline"
+                                                            className="rounded-md border-secondary bg-background font-normal text-muted-foreground duration-0 group-aria-selected:bg-primary group-aria-selected:text-primary-foreground"
+                                                        >
+                                                            {subject.content.course.toUpperCase()}
+                                                        </Badge>
+                                                        <Badge
+                                                            variant="outline"
+                                                            className="rounded-md border-secondary bg-background font-normal text-muted-foreground duration-0 group-aria-selected:bg-primary group-aria-selected:text-primary-foreground"
+                                                        >
+                                                            {
+                                                                Object.entries(
+                                                                    Semesters
+                                                                ).find(
+                                                                    ([, val]) =>
+                                                                        val ===
+                                                                        subject
+                                                                            .content
+                                                                            .sem
+                                                                )?.[0]
+                                                            }
+                                                        </Badge>
+                                                    </div>
+                                                    {subject.content.dept &&
+                                                        subject.content.dept
+                                                            .length > 0 && (
+                                                            <ScrollArea className="flex-1">
+                                                                <div className="flex items-center gap-2">
+                                                                    {subject.content.dept.map(
+                                                                        (
+                                                                            dept
+                                                                        ) => (
+                                                                            <Badge
+                                                                                key={
+                                                                                    dept
+                                                                                }
+                                                                                variant="outline"
+                                                                                className="rounded-md border-secondary bg-background text-xs font-normal text-muted-foreground"
+                                                                            >
+                                                                                {
+                                                                                    dept
+                                                                                }
+                                                                            </Badge>
+                                                                        )
+                                                                    )}
+                                                                </div>
+                                                                <ScrollBar orientation="horizontal" />
+                                                            </ScrollArea>
+                                                        )}
+                                                </div>
                                             </div>
-                                        </div>
-                                    </CommandItem>
-                                ))}
+                                        </CommandItem>
+                                    )
+                                )}
                         </CommandGroup>
                         {data && <CommandSeparator />}
                         <CommandGroup heading="History">

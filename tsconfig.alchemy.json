@@ -1,0 +1,9 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "target": "ES2022",
+        "module": "ESNext",
+        "plugins": []
+    },
+    "include": ["alchemy.run.ts", "types/env.d.ts"]
+}
