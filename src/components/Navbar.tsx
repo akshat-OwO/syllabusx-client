@@ -1,10 +1,17 @@
 import LayoutWrapper from "@/layouts/LayoutWrapper";
+import { headers } from "next/headers";
 import Link from "next/link";
 import { Icons } from "./Icons";
 import NavLinks from "./NavLinks";
 import NavMenu from "./NavMenu";
 
-const Navbar = () => {
+function getModKeyLabel(userAgent: string) {
+    return /Mac|iPhone|iPad|iPod/i.test(userAgent) ? "⌘" : "Ctrl";
+}
+
+const Navbar = async () => {
+    const userAgent = (await headers()).get("user-agent") ?? "";
+    const modKey = getModKeyLabel(userAgent);
     return (
         <nav className="sticky inset-x-0 top-0 z-50 h-14 w-full bg-background/50 backdrop-blur-lg transition-all">
             <LayoutWrapper className="md:max-w-none md:px-16">
@@ -29,7 +36,7 @@ const Navbar = () => {
                             <NavMenu />
                         </div>
                     </div>
-                    <NavLinks />
+                    <NavLinks modKey={modKey} />
                 </div>
             </LayoutWrapper>
         </nav>
