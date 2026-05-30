@@ -21,15 +21,11 @@ import { useDatesheet } from "@/hooks/use-datesheet";
 import { useSearch } from "@/hooks/use-search";
 import { CommandShortcut } from "./ui/command";
 
-const kbdKey = () => {
-    let isMac = false;
-    if (typeof window !== "undefined" && navigator?.userAgent) {
-        isMac = navigator.userAgent.includes("Mac");
-    }
-    return isMac ? "⌘" : "Ctrl";
-};
+interface NavLinksProps {
+    modKey: string;
+}
 
-const NavLinks = () => {
+const NavLinks = ({ modKey }: NavLinksProps) => {
     const { onOpen } = useDatesheet();
     const search = useSearch();
 
@@ -44,7 +40,7 @@ const NavLinks = () => {
                     >
                         <Search className="h-4 w-4" />
                         Search
-                        <CommandShortcut>{kbdKey()} K</CommandShortcut>
+                        <CommandShortcut>{modKey} K</CommandShortcut>
                     </Button>
                 </AccessibleToolTip>
                 <AccessibleToolTip label="Github">
@@ -97,7 +93,7 @@ const NavLinks = () => {
                             <Menu className="h-4 w-4" />
                         </Button>
                     </SheetTrigger>
-                    <SheetContent>
+                    <SheetContent accessibleTitle={false}>
                         <SheetHeader>
                             <SheetTitle>Menu</SheetTitle>
                         </SheetHeader>

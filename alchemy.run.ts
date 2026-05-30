@@ -70,7 +70,6 @@ export const web = await Nextjs("web", {
         {
             adopt: true,
             domainName: "www.syllabusx.live",
-            overrideExistingOrigin: true,
         },
     ],
 });
