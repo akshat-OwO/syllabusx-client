@@ -1,5 +1,11 @@
 # syllabusx-client
 
+## 4.14.0
+
+### Minor Changes
+
+- Deploy to Cloudflare Workers with Alchemy and OpenNext, including ISR, custom domains for syllabusx.live, and automatic production deploys via the changeset release pipeline. ([#159](https://github.com/akshat-OwO/syllabusx-client/pull/159)) by [@akshat-OwO](https://github.com/akshat-OwO)
+
 ## 4.13.7
 
 ### Patch Changes
@@ -263,7 +269,6 @@
     ## 4.1.2
 
     ### Patch Changes
-
     - prettier formatting fix
 
 ## 4.1.2
