@@ -1,49 +1,61 @@
 name: Release
 
 on:
-  push:
-    branches:
-      - main
+    push:
+        branches:
+            - main
 
 permissions: write-all
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-  release:
-    name: Release
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        # https://github.com/actions/checkout
-        uses: actions/checkout@v3
+    release:
+        name: Release
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Repo
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
 
-        # https://github.com/pnpm/action-setup
-      - uses: pnpm/action-setup@v2
-        with:
-            version: latest
+            - name: Setup pnpm
+              uses: pnpm/action-setup@v4
+              with:
+                  version: 10
 
-      - name: Setup Node.js
-        # https://github.com/actions/setup-node
-        uses: actions/setup-node@v3
-        with:
-          node-version: "22"
-          cache: "pnpm"
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "22"
+                  cache: "pnpm"
 
+            - name: Install Dependencies
+              run: pnpm install --frozen-lockfile
 
-      - name: setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-            version: 10
+            - name: Create Release Pull Request or Publish
+              id: changesets
+              uses: changesets/action@v1
+              with:
+                  title: "release: new version"
+                  commit: "chore(release): version package(s)"
+                  publish: pnpm release
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install Dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Create Release Pull Request or Publish to npm
-        # https://github.com/changesets/action
-        uses: changesets/action@v1
-        with:
-          title: "release: new version"
-          commit: "chore(release): version package(s)"
-          publish: pnpm release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Deploy to Cloudflare
+              if: steps.changesets.outputs.published == 'true'
+              run: pnpm alchemy deploy --stage prod
+              env:
+                  CI: true
+                  ALCHEMY_PASSWORD: ${{ secrets.ALCHEMY_PASSWORD }}
+                  ALCHEMY_STATE_TOKEN: ${{ secrets.ALCHEMY_STATE_TOKEN }}
+                  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+                  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+                  NEXT_PUBLIC_URL: ${{ secrets.NEXT_PUBLIC_URL }}
+                  CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
+                  CONTENTFUL_ACCESS_TOKEN: ${{ secrets.CONTENTFUL_ACCESS_TOKEN }}
+                  RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+                  UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
+                  UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
+                  DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+                  DISCORD_CHANNEL_ID: ${{ secrets.DISCORD_CHANNEL_ID }}

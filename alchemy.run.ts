@@ -7,8 +7,13 @@ import {
     Self,
     type Bindings,
 } from "alchemy/cloudflare";
+import { CloudflareStateStore } from "alchemy/state";
 
-const app = await alchemy("syllabusx-client");
+const app = await alchemy("syllabusx-client", {
+    ...(process.env.CI || process.env.ALCHEMY_STATE_TOKEN
+        ? { stateStore: (scope) => new CloudflareStateStore(scope) }
+        : {}),
+});
 const isLocal = Scope.current.local;
 
 const isrCache = isLocal
@@ -60,6 +65,14 @@ export const web = await Nextjs("web", {
             CONTENTFUL_ACCESS_TOKEN: process.env.CONTENTFUL_ACCESS_TOKEN ?? "",
         },
     },
+    domains: [
+        "syllabusx.live",
+        {
+            adopt: true,
+            domainName: "www.syllabusx.live",
+            overrideExistingOrigin: true,
+        },
+    ],
 });
 
 console.log({
