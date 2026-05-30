@@ -1,5 +1,11 @@
 # syllabusx-client
 
+## 4.14.1
+
+### Patch Changes
+
+- fixes hydration issue on macos for keyboard key ([#161](https://github.com/akshat-OwO/syllabusx-client/pull/161)) by [@akshat-OwO](https://github.com/akshat-OwO)
+
 ## 4.14.0
 
 ### Minor Changes
